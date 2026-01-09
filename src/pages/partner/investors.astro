@@ -1,0 +1,251 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout title="Partner - Investors">
+  <Navigation />
+  <main>
+    <section class="partner-hero">
+      <div class="container">
+        <h1>Partner With Us: Investors</h1>
+        <p class="hero-subtitle">Invest in technical founders who can actually execute on their vision.</p>
+      </div>
+    </section>
+
+    <section class="investors-partner">
+      <div class="container">
+        <div class="investor-content">
+          <div class="investor-text">
+            <p class="section-intro">Most accelerators produce founders who can pitch. We produce founders who can build. Our companies don't need to outsource their technical vision—they are the technical vision.</p>
+            <p>Every founder in our program:</p>
+            <ul>
+              <li>Has deep technical expertise in their domain</li>
+              <li>Can make architecture decisions without hiring consultants</li>
+              <li>Understands the technical feasibility of their roadmap</li>
+              <li>Can evaluate and hire technical talent effectively</li>
+              <li>Builds products that scale because they've built products that scale</li>
+            </ul>
+          </div>
+          <div class="investor-stats">
+            <h2>Investment Track Record</h2>
+            <div class="stat-item">
+              <div class="stat-number">83%</div>
+              <div class="stat-label">Follow-on Funding Rate</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">£2.1M</div>
+              <div class="stat-label">Raised by First Cohort</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">12</div>
+              <div class="stat-label">Companies in First Cohort</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="investor-benefits">
+          <h2>Investor Benefits</h2>
+          <div class="benefits-grid">
+            <div class="benefit-item">
+              <h3>Exclusive Access</h3>
+              <p>First look at all companies in our program. Pre-Demo Day meetings. Priority term sheets.</p>
+            </div>
+            <div class="benefit-item">
+              <h3>Technical Due Diligence</h3>
+              <p>We've already vetted these companies for technical excellence. You're investing in proven technical founders.</p>
+            </div>
+            <div class="benefit-item">
+              <h3>Co-Investment Opportunities</h3>
+              <p>Join our investment syndicate. Co-invest alongside us in exceptional technical companies.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="investment-details">
+          <h2>What Makes Our Founders Different</h2>
+          <div class="details-grid">
+            <div class="detail-card">
+              <h3>Technical Depth</h3>
+              <p>Our founders don't need to hire a CTO—they are the CTO. They understand the technical challenges because they've solved them before.</p>
+            </div>
+            <div class="detail-card">
+              <h3>Product Execution</h3>
+              <p>Technical founders ship faster. They don't need to translate between technical and non-technical teams. They just build.</p>
+            </div>
+            <div class="detail-card">
+              <h3>Scalable Architecture</h3>
+              <p>They understand scalability from day one. They build products that can handle growth because they've built systems that scale.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center" style="margin-top: 3rem;">
+          <p>Ready to invest in technical founders?</p>
+          <a href="mailto:investors@thetechbros.com" class="btn">Connect With Us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .partner-hero {
+    padding: 6rem 0 3rem;
+    text-align: center;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    margin-top: 1rem;
+  }
+
+  .investors-partner {
+    padding: 4rem 0;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .investor-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    margin-top: 3rem;
+    margin-bottom: 4rem;
+  }
+
+  .section-intro {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    color: var(--color-text);
+    line-height: 1.8;
+    font-weight: 400;
+  }
+
+  .investor-text ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 1rem;
+  }
+
+  .investor-text ul li {
+    padding: 0.75rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    font-size: 1.05rem;
+  }
+
+  .investor-text ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+  }
+
+  .investor-stats {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2.5rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .investor-stats h2 {
+    color: var(--color-accent);
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+  }
+
+  .stat-item {
+    margin-bottom: 2rem;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-shadow: 0 0 20px rgba(239, 31, 159, 0.5);
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .investor-benefits {
+    margin-top: 4rem;
+  }
+
+  .investor-benefits h2 {
+    color: var(--color-accent);
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 1.8rem;
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .benefit-item h3 {
+    color: var(--color-primary);
+    margin-bottom: 0.75rem;
+    font-size: 1.3rem;
+  }
+
+  .benefit-item p {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    font-size: 1.05rem;
+  }
+
+  .investment-details {
+    margin-top: 4rem;
+  }
+
+  .investment-details h2 {
+    color: var(--color-accent);
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 1.8rem;
+  }
+
+  .details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .detail-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 8px;
+  }
+
+  .detail-card h3 {
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+  }
+
+  .detail-card p {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 768px) {
+    .investor-content {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

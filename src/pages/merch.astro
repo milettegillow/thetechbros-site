@@ -1,0 +1,173 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Merch">
+  <Navigation />
+  <main>
+    <!-- Hero -->
+    <section class="merch-hero">
+      <div class="container">
+        <h1>Merch</h1>
+        <p class="hero-subtitle">Wear the mission. Build the movement.</p>
+      </div>
+    </section>
+
+    <!-- Team Wearing Merch -->
+    <section class="merch-showcase">
+      <div class="container">
+        <div class="showcase-grid">
+          <div class="img-placeholder img-placeholder-square">Team Member 1</div>
+          <div class="img-placeholder img-placeholder-square">Team Member 2</div>
+          <div class="img-placeholder img-placeholder-square">Team Member 3</div>
+          <div class="img-placeholder img-placeholder-square">Team Member 4</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Coming Soon -->
+    <section class="coming-soon">
+      <div class="container text-center">
+        <h2>Coming Soon</h2>
+        <p class="coming-soon-text">We're designing merch that reflects our mission: bold, technical, unapologetic. No corporate swag. No generic startup t-shirts. Just gear that actually looks good and says something.</p>
+        <p class="coming-soon-text">Launching Spring 2024. Sign up below to be first in line.</p>
+      </div>
+    </section>
+
+    <!-- Waitlist Form -->
+    <section class="waitlist">
+      <div class="container">
+        <div class="waitlist-content">
+          <div class="waitlist-text">
+            <h2>Join the Waitlist</h2>
+            <p>Be the first to know when our merch launches. Early access, exclusive designs, and special pricing for community members.</p>
+          </div>
+          <form class="waitlist-form">
+            <input type="text" placeholder="Your Name" required />
+            <input type="email" placeholder="Your Email" required />
+            <select required>
+              <option value="">Select Size Preference</option>
+              <option value="xs">XS</option>
+              <option value="s">S</option>
+              <option value="m">M</option>
+              <option value="l">L</option>
+              <option value="xl">XL</option>
+              <option value="xxl">XXL</option>
+            </select>
+            <textarea placeholder="What merch items are you most interested in? (optional)" rows="4"></textarea>
+            <button type="submit" class="btn">Join Waitlist (Placeholder)</button>
+            <p class="form-note">We'll only use your email to notify you about merch launches. No spam, ever.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .merch-hero {
+    padding: 6rem 0 3rem;
+    text-align: center;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    margin-top: 1rem;
+  }
+
+  .merch-showcase {
+    padding: 4rem 0;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .coming-soon {
+    padding: 4rem 0;
+  }
+
+  .coming-soon-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    max-width: 700px;
+    margin: 1rem auto;
+    color: var(--color-text-muted);
+  }
+
+  .waitlist {
+    padding: 4rem 0;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .waitlist-content {
+    max-width: 800px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .waitlist-text h2 {
+    color: var(--color-accent);
+    margin-bottom: 1.5rem;
+  }
+
+  .waitlist-text p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-text-muted);
+  }
+
+  .waitlist-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  select {
+    width: 100%;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+
+  select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 10px rgba(239, 31, 159, 0.3);
+  }
+
+  .form-note {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .waitlist-content {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .showcase-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

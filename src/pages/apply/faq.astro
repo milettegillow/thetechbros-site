@@ -1,0 +1,137 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout title="FAQ">
+  <Navigation />
+  <main>
+    <section class="faq-hero">
+      <div class="container">
+        <h1>Frequently Asked Questions</h1>
+        <p class="hero-subtitle">Everything you need to know about The Tech Bros program.</p>
+      </div>
+    </section>
+
+    <section class="faq" id="faq">
+      <div class="container">
+        <div class="faq-list">
+          <div class="faq-item">
+            <h2>Do I need to be technical to apply?</h2>
+            <p>Yes. This program is specifically for technical founders. If you're not writing code, architecting systems, or making core technical decisions, this isn't the right fit. We have other programs for non-technical founders—this just isn't one of them.</p>
+          </div>
+          <div class="faq-item">
+            <h2>What does "all-female" mean?</h2>
+            <p>We accept founders who identify as women, non-binary, or otherwise underrepresented in technical spaces. The goal is creating a space where technical excellence isn't questioned based on gender.</p>
+          </div>
+          <div class="faq-item">
+            <h2>Do you take equity?</h2>
+            <p>Yes. We take a standard accelerator equity stake. We're investors, not just program providers. Our success is tied to yours.</p>
+          </div>
+          <div class="faq-item">
+            <h2>How long is the program?</h2>
+            <p>Our intensive program runs for 12 weeks. It's full-time and immersive. If you're looking for something part-time or low-commitment, this isn't it.</p>
+          </div>
+          <div class="faq-item">
+            <h2>Do you provide funding?</h2>
+            <p>Yes. Every company in our program receives an investment. The amount varies based on stage and needs, but we invest in every company we accept.</p>
+          </div>
+          <div class="faq-item">
+            <h2>What stage companies do you accept?</h2>
+            <p>We work with early-stage companies, from pre-seed to seed. If you have product-market fit and are ready to scale, you're probably a good fit. If you're still in the idea phase, apply when you have something built.</p>
+          </div>
+          <div class="faq-item">
+            <h2>Where is the program located?</h2>
+            <p>We're based in London, but we accept companies from anywhere. You'll need to be in London for the 12-week intensive, but we can help with relocation if needed.</p>
+          </div>
+          <div class="faq-item">
+            <h2>What makes your program different from YC, Techstars, etc.?</h2>
+            <p>Every aspect of our program is designed for technical founders. Our mentors understand code. Our investors get technical products. Our curriculum assumes technical depth. Most accelerators adapt their programs for technical founders—we built ours from scratch for you.</p>
+          </div>
+          <div class="faq-item">
+            <h2>Can I apply if I'm not in London yet?</h2>
+            <p>Yes. We accept applications from anywhere. If you're accepted, you'll need to relocate to London for the 12-week program. We can help with relocation support and connections.</p>
+          </div>
+          <div class="faq-item">
+            <h2>What happens after the program ends?</h2>
+            <p>You join our alumni network. You get continued access to mentors, investors, and the community. We stay involved as investors and advocates. This isn't a 12-week program—it's a lifetime community.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container text-center">
+        <h2>Still Have Questions?</h2>
+        <p>Check out our manifesto or get in touch directly.</p>
+        <div class="btn-group" style="justify-content: center;">
+          <a href="/apply/manifesto" class="btn btn-secondary">Read Manifesto</a>
+          <a href="mailto:hello@thetechbros.com" class="btn">Contact Us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .faq-hero {
+    padding: 6rem 0 3rem;
+    text-align: center;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    margin-top: 1rem;
+  }
+
+  .faq {
+    padding: 4rem 0;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .faq-item:last-child {
+    border-bottom: none;
+  }
+
+  .faq-item h2 {
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .faq-item p {
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    font-size: 1.05rem;
+  }
+
+  .cta-section {
+    padding: 4rem 0;
+  }
+
+  .cta-section p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: var(--color-text);
+  }
+
+  @media (max-width: 768px) {
+    .faq-item h2 {
+      font-size: 1.3rem;
+    }
+  }
+</style>

@@ -1,0 +1,224 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout title="Partner - Universities">
+  <Navigation />
+  <main>
+    <section class="partner-hero">
+      <div class="container">
+        <h1>Partner With Us: Universities</h1>
+        <p class="hero-subtitle">Help your technical students and alumni become exceptional founders.</p>
+      </div>
+    </section>
+
+    <section class="universities-partner">
+      <div class="container">
+        <div class="university-content">
+          <p class="section-intro">Your best technical students and alumni deserve better than generic startup programs. We offer partnerships that give them access to an accelerator built specifically for technical founders.</p>
+          
+          <h2>Partnership Options</h2>
+          <div class="partnership-options">
+            <div class="option-card">
+              <h3>Scholarship Program</h3>
+              <p>Nominate exceptional technical students/alumni for our program. We reserve spots for university partners and provide scholarships.</p>
+              <ul>
+                <li>Reserved spots in each cohort</li>
+                <li>Scholarship funding for selected students</li>
+                <li>Priority application review</li>
+                <li>Dedicated support for university nominees</li>
+              </ul>
+            </div>
+            <div class="option-card">
+              <h3>Technical Workshops</h3>
+              <p>We run technical workshops on your campus. Topics include: building technical products, technical fundraising, scaling technical teams.</p>
+              <ul>
+                <li>On-campus technical workshops</li>
+                <li>Founder panel discussions</li>
+                <li>Investor meetups</li>
+                <li>Technical product demos</li>
+              </ul>
+            </div>
+            <div class="option-card">
+              <h3>Research Partnerships</h3>
+              <p>Connect your research teams with technical founders building commercial applications. Bridge the gap between research and product.</p>
+              <ul>
+                <li>Commercialization support</li>
+                <li>Technical founder mentorship</li>
+                <li>Investment connections</li>
+                <li>Product development guidance</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="university-benefits">
+            <h2>Benefits for Your University</h2>
+            <div class="benefits-grid">
+              <div class="benefit-item">
+                <h3>Alumni Success</h3>
+                <p>Support your technical alumni in building successful companies. Help them scale faster with the right accelerator program.</p>
+              </div>
+              <div class="benefit-item">
+                <h3>Student Development</h3>
+                <p>Give your best technical students access to founder education, mentorship, and community before they graduate.</p>
+              </div>
+              <div class="benefit-item">
+                <h3>Research Commercialization</h3>
+                <p>Bridge the gap between academic research and commercial products. Help your research teams build companies.</p>
+              </div>
+              <div class="benefit-item">
+                <h3>Industry Connections</h3>
+                <p>Connect your university with investors, companies, and technical leaders through our network.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center" style="margin-top: 3rem;">
+          <p>Interested in a university partnership?</p>
+          <a href="mailto:universities@thetechbros.com" class="btn">Start a Conversation</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .partner-hero {
+    padding: 6rem 0 3rem;
+    text-align: center;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    margin-top: 1rem;
+  }
+
+  .universities-partner {
+    padding: 4rem 0;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .university-content {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .section-intro {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+    color: var(--color-text);
+    text-align: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .university-content h2 {
+    color: var(--color-accent);
+    margin: 3rem 0 2rem;
+    font-size: 1.8rem;
+    text-align: center;
+  }
+
+  .partnership-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .option-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .option-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--color-primary);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(239, 31, 159, 0.2);
+  }
+
+  .option-card h3 {
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+  }
+
+  .option-card p {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    font-size: 1.05rem;
+  }
+
+  .option-card ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 1rem;
+  }
+
+  .option-card ul li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+
+  .option-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+  }
+
+  .university-benefits {
+    margin-top: 4rem;
+  }
+
+  .university-benefits h2 {
+    color: var(--color-accent);
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 1.8rem;
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .benefit-item h3 {
+    color: var(--color-primary);
+    margin-bottom: 0.75rem;
+    font-size: 1.3rem;
+  }
+
+  .benefit-item p {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    font-size: 1.05rem;
+  }
+
+  @media (max-width: 768px) {
+    .partnership-options {
+      grid-template-columns: 1fr;
+    }
+
+    .benefits-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

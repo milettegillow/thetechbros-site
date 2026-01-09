@@ -1,0 +1,211 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout title="Apply for the Accelerator">
+  <Navigation />
+  <main>
+    <section class="apply-hero">
+      <div class="container">
+        <h1>Apply for the Accelerator</h1>
+        <p class="hero-subtitle">Technical founders. Serious builders. No fluff.</p>
+      </div>
+    </section>
+
+    <section class="apply-section" id="apply">
+      <div class="container">
+        <div class="apply-intro">
+          <p class="section-intro">Applications are open for our next cohort. Technical founders only. Serious builders only.</p>
+        </div>
+
+        <div class="apply-content">
+          <div class="cohort-stats">
+            <h2>First Cohort by the Numbers</h2>
+            <div class="stats-mini">
+              <div class="stat-mini">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Companies Accepted</div>
+              </div>
+              <div class="stat-mini">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Technical Founders</div>
+              </div>
+              <div class="stat-mini">
+                <div class="stat-number">£2.1M</div>
+                <div class="stat-label">Raised Post-Program</div>
+              </div>
+              <div class="stat-mini">
+                <div class="stat-number">83%</div>
+                <div class="stat-label">Follow-on Funding Rate</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="spotlight">
+            <h2>Spotlight: neurotype.uk</h2>
+            <p>From our first cohort. Building AI-powered tools for neurodivergent professionals. Closed a £500K seed round three months after Demo Day. Technical depth + real impact.</p>
+            <a href="https://neurotype.uk" target="_blank" class="btn btn-secondary">Learn More</a>
+          </div>
+        </div>
+
+        <div class="application-form">
+          <h2>Ready to Apply?</h2>
+          <p>Applications are reviewed on a rolling basis. We'll get back to you within 2 weeks.</p>
+          <form class="apply-form">
+            <input type="text" placeholder="Company Name" required />
+            <input type="email" placeholder="Your Email" required />
+            <input type="text" placeholder="Your Name" required />
+            <textarea placeholder="Tell us about your company and why you're a technical founder (2-3 paragraphs)" rows="6" required></textarea>
+            <textarea placeholder="What's your technical background? (Languages, frameworks, systems you've built)" rows="4" required></textarea>
+            <textarea placeholder="What stage is your company at? (Users, revenue, funding, etc.)" rows="4" required></textarea>
+            <button type="submit" class="btn">Submit Application (Placeholder)</button>
+          </form>
+          <p class="form-note">Applications are reviewed on a rolling basis. We'll get back to you within 2 weeks.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container text-center">
+        <h2>Not Ready to Apply Yet?</h2>
+        <p>Check out our community options or read our FAQ to learn more.</p>
+        <div class="btn-group" style="justify-content: center;">
+          <a href="/apply/join-community" class="btn btn-secondary">Join Community</a>
+          <a href="/apply/faq" class="btn btn-secondary">Read FAQ</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .apply-hero {
+    padding: 6rem 0 3rem;
+    text-align: center;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    margin-top: 1rem;
+  }
+
+  .apply-section {
+    padding: 4rem 0;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .apply-intro {
+    max-width: 800px;
+    margin: 0 auto 4rem;
+  }
+
+  .section-intro {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-bottom: 3rem;
+    color: var(--color-text);
+    line-height: 1.8;
+  }
+
+  .apply-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 3rem;
+    margin-bottom: 4rem;
+  }
+
+  .cohort-stats h2, .spotlight h2 {
+    color: var(--color-accent);
+    margin-bottom: 2rem;
+  }
+
+  .stats-mini {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .stat-mini {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-shadow: 0 0 20px rgba(239, 31, 159, 0.5);
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .spotlight {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2.5rem;
+    border-radius: 8px;
+  }
+
+  .spotlight p {
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-muted);
+  }
+
+  .application-form {
+    max-width: 700px;
+    margin: 4rem auto 0;
+    text-align: center;
+  }
+
+  .application-form h2 {
+    margin-bottom: 1rem;
+  }
+
+  .application-form > p {
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+  }
+
+  .apply-form {
+    text-align: left;
+    margin-top: 2rem;
+  }
+
+  .form-note {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  .cta-section {
+    padding: 4rem 0;
+  }
+
+  .cta-section p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: var(--color-text);
+  }
+
+  @media (max-width: 768px) {
+    .stats-mini {
+      grid-template-columns: 1fr;
+    }
+
+    .apply-content {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="About">
+  <Navigation />
+  <main>
+    <!-- Mission Section -->
+    <section class="mission">
+      <div class="container">
+        <h1>Our Mission</h1>
+        <div class="mission-content">
+          <p class="lead">We exist because technical women deserve better. Better accelerators. Better investors. Better networks. Better spaces.</p>
+          <p>Most accelerators weren't built for technical founders. They were built for hustlers, sales people, and visionaries who delegate the "hard stuff" to their CTOs. That model works for some. It doesn't work for founders who are the technical founders—the ones writing code, architecting systems, and making product decisions based on deep technical knowledge.</p>
+          <p>We're changing that. The Tech Bros is the first accelerator designed from the ground up for technical women. No adaptions. No compromises. Just a program that actually understands what you're building and why it matters.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Origin Story -->
+    <section class="origin">
+      <div class="container">
+        <h2>The Origin Story</h2>
+        <p>Founded in 2023 by technical women who'd been through every accelerator, program, and network out there. We were tired of:</p>
+        <ul class="origin-list">
+          <li>Being told to "find a technical co-founder" when we were the technical co-founder</li>
+          <li>Mentors who couldn't read our code or understand our architecture decisions</li>
+          <li>Investors asking basic technical questions that revealed they didn't get what we were building</li>
+          <li>Programs designed for non-technical founders, with us as an afterthought</li>
+        </ul>
+        <p>So we built something different. Something that assumes you know what you're doing. Something that amplifies technical excellence instead of questioning it.</p>
+      </div>
+    </section>
+
+    <!-- Past Events -->
+    <section class="past-events">
+      <div class="container">
+        <h2>Past Events</h2>
+        <p class="section-intro">We run events, workshops, and community gatherings throughout the year. Here's what we've done:</p>
+        <div class="card-grid">
+          <div class="card">
+            <div class="img-placeholder img-placeholder-square">Event Image</div>
+            <h3>Technical Founders Summit 2024</h3>
+            <p>Our annual gathering of technical founders, investors, and partners. Deep technical talks, honest founder stories, and real conversations.</p>
+            <p class="event-date">March 2024</p>
+          </div>
+          <div class="card">
+            <div class="img-placeholder img-placeholder-square">Event Image</div>
+            <h3>AI & ML Workshop Series</h3>
+            <p>Hands-on workshops for founders building AI/ML products. From model architecture to deployment pipelines.</p>
+            <p class="event-date">January - February 2024</p>
+          </div>
+          <div class="card">
+            <div class="img-placeholder img-placeholder-square">Event Image</div>
+            <h3>Investor Meetup: Technical Founders Edition</h3>
+            <p>Networking event connecting technical founders with investors who actually understand technical products.</p>
+            <p class="event-date">November 2023</p>
+          </div>
+          <div class="card">
+            <div class="img-placeholder img-placeholder-square">Event Image</div>
+            <h3>First Cohort Demo Day</h3>
+            <p>Twelve technical founders. Twelve impressive companies. One day of demos, pitches, and celebration.</p>
+            <p class="event-date">September 2023</p>
+          </div>
+        </div>
+        <div class="text-center" style="margin-top: 3rem;">
+          <p>Want to attend our next event?</p>
+          <a href="/apply/join-community" class="btn">Join the Community</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .mission {
+    padding: 6rem 0 4rem;
+  }
+
+  .mission-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .lead {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    margin-bottom: 2rem;
+    font-weight: 400;
+  }
+
+  .mission-content p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+
+  .origin {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 4rem 0;
+  }
+
+  .origin-list {
+    list-style: none;
+    margin: 2rem 0;
+    padding-left: 0;
+  }
+
+  .origin-list li {
+    padding: 1rem 0;
+    padding-left: 2rem;
+    position: relative;
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+  }
+
+  .origin-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+  }
+
+  .origin p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+
+  .past-events {
+    padding: 4rem 0;
+  }
+
+  .section-intro {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+    color: var(--color-text);
+  }
+
+  .event-date {
+    color: var(--color-accent);
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    font-weight: 500;
+  }
+</style>

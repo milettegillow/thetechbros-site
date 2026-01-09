@@ -1,0 +1,218 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Home">
+  <Navigation />
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <h1>The world's first all-female, 
+			<br>all-technical accelerator</h1>
+        <p class="hero-subtitle">Building the future. No apologies. All code.</p>
+      </div>
+      <div class="hero-image">
+        <div class="img-placeholder">Hero Image Placeholder</div>
+      </div>
+      <div class="container">
+        <div class="btn-group">
+          <a href="/apply" class="btn">Apply Now</a>
+          <a href="/partner" class="btn btn-secondary">Partner With Us</a>
+          <a href="/apply/join-community" class="btn btn-secondary">Join Community</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- What We Do -->
+    <section class="what-we-do">
+      <div class="container">
+        <h2>What We Do</h2>
+        <div class="card-grid">
+          <div class="card">
+            <h3>Accelerate</h3>
+            <p>We run intensive programs designed specifically for technical founders. No fluff. No generic advice. Just the tools, networks, and capital you need to scale.</p>
+          </div>
+          <div class="card">
+            <h3>Connect</h3>
+            <p>Build relationships with investors, partners, and peers who actually understand what you're building. Our community is small by design—high signal, zero noise.</p>
+          </div>
+          <div class="card">
+            <h3>Amplify</h3>
+            <p>We put technical women front and center. No tokenism. No performative diversity. Just real founders building real companies.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Different -->
+    <section class="why-different">
+      <div class="container">
+        <h2>Why This Is Different</h2>
+        <p class="intro-text">Most accelerators treat technical founders as exceptions. We're building for the rule.</p>
+        <div class="features">
+          <div class="feature-item">
+            <h3>100% Technical</h3>
+            <p>Every founder is technical. Every mentor gets code. Every conversation assumes you know what you're doing.</p>
+          </div>
+          <div class="feature-item">
+            <h3>100% Female</h3>
+            <p>We're unapologetic about this. Technical women deserve spaces designed for them, not adapted from existing models.</p>
+          </div>
+          <div class="feature-item">
+            <h3>100% Real</h3>
+            <p>No corporate speak. No VC theater. Just honest feedback, real connections, and actual support.</p>
+          </div>
+        </div>
+        <div class="cta-section">
+          <div class="img-placeholder" style="max-width: 600px; margin: 2rem auto;">Team Image Placeholder</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Stats -->
+    <section class="stats">
+      <div class="container text-center">
+        <h2>First Cohort Impact</h2>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-number">12</div>
+            <div class="stat-label">Companies</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Technical Founders</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">£2.1M</div>
+            <div class="stat-label">Raised Post-Program</div>
+          </div>
+        </div>
+        <p style="margin-top: 2rem; color: var(--color-text-muted);">And we're just getting started.</p>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+      <div class="container text-center">
+        <h2>Ready to Build?</h2>
+        <p>Applications for our next cohort are open. Technical founders only. Serious builders only.</p>
+        <div class="btn-group" style="justify-content: center;">
+          <a href="/apply/apply-accelerator" class="btn">Apply for Accelerator</a>
+          <a href="/apply/join-community" class="btn btn-secondary">Join Community First</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: 6rem 0 4rem;
+    text-align: center;
+  }
+
+  .hero h1 {
+    margin-bottom: 1.5rem;
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+
+  .hero-image {
+    width: 100%;
+    margin: 3rem 0;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
+
+  .hero-image .img-placeholder {
+    width: 100%;
+    max-width: none;
+  }
+
+  .what-we-do {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .why-different {
+    padding: 6rem 0;
+  }
+
+  .intro-text {
+    font-size: 1.25rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--color-text);
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .feature-item h3 {
+    color: var(--color-accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .stats {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4rem 0;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 3rem;
+    margin-top: 3rem;
+  }
+
+  .stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-shadow: 0 0 20px rgba(239, 31, 159, 0.5);
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+  }
+
+  .final-cta {
+    padding: 6rem 0;
+  }
+
+  .final-cta p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: var(--color-text);
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 4rem 0 2rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+    }
+  }
+</style>

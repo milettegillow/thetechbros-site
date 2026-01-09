@@ -1,0 +1,184 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout title="Partner - Companies">
+  <Navigation />
+  <main>
+    <section class="partner-hero">
+      <div class="container">
+        <h1>Partner With Us: Companies</h1>
+        <p class="hero-subtitle">Connect with the world's best technical founders. Build the future together.</p>
+      </div>
+    </section>
+
+    <section class="companies-partner">
+      <div class="container">
+        <p class="section-intro">Partner with technical founders who understand what you're building because they've built it too.</p>
+        
+        <div class="partner-benefits">
+          <div class="benefit-card">
+            <h2>Why Partner?</h2>
+            <ul>
+              <li>Access to a curated pipeline of technical founders</li>
+              <li>Early access to innovative technical products</li>
+              <li>Partnership opportunities with companies solving real technical problems</li>
+              <li>Technical workshops and events for your team</li>
+              <li>Build relationships with the next generation of technical leaders</li>
+            </ul>
+          </div>
+          <div class="benefit-card">
+            <h2>What You Get</h2>
+            <ul>
+              <li>Exclusive access to Demo Day</li>
+              <li>1-on-1 meetings with founders during the program</li>
+              <li>Priority partnership discussions</li>
+              <li>Invitations to technical events and workshops</li>
+              <li>Brand visibility in our community and network</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="partnership-details">
+          <h2>Partnership Options</h2>
+          <div class="details-grid">
+            <div class="detail-card">
+              <h3>Enterprise Partnerships</h3>
+              <p>Connect with technical founders building enterprise solutions. Early access to B2B products, technical integrations, and strategic partnerships.</p>
+            </div>
+            <div class="detail-card">
+              <h3>Technical Integration</h3>
+              <p>Partner with founders building products that integrate with yours. Technical workshops, API partnerships, and co-development opportunities.</p>
+            </div>
+            <div class="detail-card">
+              <h3>Recruitment Partnerships</h3>
+              <p>Access to exceptional technical talent. Our founders know great engineers. Partner with us to find your next technical hire.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center" style="margin-top: 3rem;">
+          <p>Interested in partnering with us?</p>
+          <a href="mailto:partnerships@thetechbros.com" class="btn">Get in Touch</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .partner-hero {
+    padding: 6rem 0 3rem;
+    text-align: center;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    margin-top: 1rem;
+  }
+
+  .companies-partner {
+    padding: 4rem 0;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .section-intro {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-bottom: 3rem;
+    color: var(--color-text);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .partner-benefits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+    margin-bottom: 4rem;
+  }
+
+  .benefit-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2.5rem;
+    border-radius: 8px;
+  }
+
+  .benefit-card h2 {
+    color: var(--color-accent);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+  }
+
+  .benefit-card ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .benefit-card ul li {
+    padding: 0.75rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    font-size: 1.05rem;
+  }
+
+  .benefit-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+  }
+
+  .partnership-details {
+    margin-top: 4rem;
+  }
+
+  .partnership-details h2 {
+    color: var(--color-accent);
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .detail-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 8px;
+  }
+
+  .detail-card h3 {
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+  }
+
+  .detail-card p {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 768px) {
+    .partner-benefits {
+      grid-template-columns: 1fr;
+    }
+
+    .details-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

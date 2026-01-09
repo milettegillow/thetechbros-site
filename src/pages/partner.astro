@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Partner With Us">
+  <Navigation />
+  <main>
+    <!-- Hero -->
+    <section class="partner-hero">
+      <div class="container">
+        <h1>Partner With Us</h1>
+        <p class="hero-subtitle">Connect with the world's best technical founders. Build the future together.</p>
+      </div>
+    </section>
+
+    <!-- Quick Links -->
+    <section class="quick-links">
+      <div class="container">
+        <div class="links-grid">
+          <a href="/partner/companies" class="link-card">
+            <h2>Companies</h2>
+            <p>Partner with technical founders who understand what you're building because they've built it too.</p>
+          </a>
+          <a href="/partner/investors" class="link-card">
+            <h2>Investors</h2>
+            <p>Invest in technical founders who can actually execute on their vision.</p>
+          </a>
+          <a href="/partner/universities" class="link-card">
+            <h2>Universities</h2>
+            <p>Help your technical students and alumni become exceptional founders.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .partner-hero {
+    padding: 6rem 0 3rem;
+    text-align: center;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    margin-top: 1rem;
+  }
+
+  .quick-links {
+    padding: 4rem 0;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .link-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: block;
+  }
+
+  .link-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--color-primary);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(239, 31, 159, 0.2);
+  }
+
+  .link-card h2 {
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .link-card p {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .links-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

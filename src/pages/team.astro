@@ -1,0 +1,188 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Team">
+  <Navigation />
+  <main>
+    <!-- Founders Section -->
+    <section class="founders">
+      <div class="container">
+        <h1>Founders</h1>
+        <p class="section-intro">Built by technical founders, for technical founders.</p>
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-photo img-placeholder-square">Photo</div>
+            <h3>Alex Chen</h3>
+            <p class="team-role">Co-Founder & CEO</p>
+            <p class="team-bio">Former CTO at two YC-backed startups. Built the infrastructure that scaled both to millions of users. Left because she was tired of being the only technical woman in the room.</p>
+          </div>
+          <div class="team-card">
+            <div class="team-photo img-placeholder-square">Photo</div>
+            <h3>Samira Patel</h3>
+            <p class="team-role">Co-Founder & Head of Programs</p>
+            <p class="team-bio">ML engineer turned founder. Sold her first company to a FAANG. Spent two years trying to find an accelerator that understood deep learning products. Didn't find one. Decided to build it.</p>
+          </div>
+          <div class="team-card">
+            <div class="team-photo img-placeholder-square">Photo</div>
+            <h3>Jordan Kim</h3>
+            <p class="team-role">Co-Founder & Head of Community</p>
+            <p class="team-bio">Full-stack engineer and serial founder. Three startups, three different accelerators, three times wondering why the program felt like it was built for someone else. Fourth time's the charm.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Team -->
+    <section class="core-team">
+      <div class="container">
+        <h2>Core Team</h2>
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-photo img-placeholder-square">Photo</div>
+            <h3>Maya Rodriguez</h3>
+            <p class="team-role">Head of Partnerships</p>
+            <p class="team-bio">Connects our founders with the right investors, companies, and technical partners. Built her network over 10 years in the industry. Knows everyone. Introduces thoughtfully.</p>
+          </div>
+          <div class="team-card">
+            <div class="team-photo img-placeholder-square">Photo</div>
+            <h3>River Lee</h3>
+            <p class="team-role">Head of Operations</p>
+            <p class="team-bio">Keeps everything running. Former startup ops lead who's seen it all. Believes in systems, not heroics. Makes the impossible look easy.</p>
+          </div>
+          <div class="team-card">
+            <div class="team-photo img-placeholder-square">Photo</div>
+            <h3>Casey Williams</h3>
+            <p class="team-role">Head of Engineering (Programs)</p>
+            <p class="team-bio">Designs our curriculum and technical workshops. Previously built developer education programs at major tech companies. Knows how to teach without condescending.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work With Us -->
+    <section class="work-with-us">
+      <div class="container">
+        <h2>Work With Us</h2>
+        <p class="section-intro">We're small, focused, and always looking for exceptional people who share our mission.</p>
+        <div class="open-roles">
+          <div class="role-card">
+            <h3>Program Manager</h3>
+            <p>Lead the day-to-day execution of our accelerator program. You'll work directly with founders, coordinate mentors, and ensure our program delivers on its promise.</p>
+            <p class="role-details"><strong>Requirements:</strong> 3+ years in accelerator/startup programs, technical background preferred, exceptional organizational skills.</p>
+            <a href="#" class="btn btn-secondary" style="margin-top: 1rem;">Apply (Coming Soon)</a>
+          </div>
+          <div class="role-card">
+            <h3>Community Manager</h3>
+            <p>Build and nurture our community of technical founders. This is not a social media manager role—you'll facilitate real connections, organize events, and create spaces where technical women can thrive.</p>
+            <p class="role-details"><strong>Requirements:</strong> Experience building technical communities, strong communication skills, deep understanding of the technical founder journey.</p>
+            <a href="#" class="btn btn-secondary" style="margin-top: 1rem;">Apply (Coming Soon)</a>
+          </div>
+        </div>
+        <div class="text-center" style="margin-top: 3rem;">
+          <p>Don't see a role that fits? We're always interested in exceptional people.</p>
+          <a href="mailto:jobs@thetechbros.com" class="btn">Get in Touch</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .founders {
+    padding: 6rem 0 4rem;
+  }
+
+  .section-intro {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+    color: var(--color-text);
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .team-card {
+    text-align: center;
+  }
+
+  .team-photo {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .team-role {
+    color: var(--color-accent);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .team-bio {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+
+  .core-team {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 4rem 0;
+  }
+
+  .work-with-us {
+    padding: 4rem 0;
+  }
+
+  .open-roles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .role-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 8px;
+  }
+
+  .role-card h3 {
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+  }
+
+  .role-card p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+
+  .role-details {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .open-roles {
+      grid-template-columns: 1fr;
+    }
+
+    .team-photo {
+      width: 150px;
+      height: 150px;
+    }
+  }
+</style>

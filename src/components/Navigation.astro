@@ -1,0 +1,204 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/team', label: 'Team' },
+  { 
+    href: '/apply', 
+    label: 'Apply',
+    submenu: [
+      { href: '/apply/manifesto', label: 'Manifesto' },
+      { href: '/apply/faq', label: 'FAQ' },
+      { href: '/apply/join-community', label: 'Join the Community' },
+      { href: '/apply/apply-accelerator', label: 'Apply for the Accelerator' },
+    ]
+  },
+  { 
+    href: '/partner', 
+    label: 'Partner',
+    submenu: [
+      { href: '/partner/companies', label: 'Companies' },
+      { href: '/partner/investors', label: 'Investors' },
+      { href: '/partner/universities', label: 'Universities' },
+    ]
+  },
+  { href: '/merch', label: 'Merch' },
+  { href: '/press', label: 'Press' },
+];
+---
+
+<nav class="nav">
+  <div class="nav-container">
+    <a href="/" class="nav-logo">the tech bros</a>
+    <ul class="nav-links">
+      {navLinks.map((link) => (
+        <li class={link.submenu ? 'nav-item-has-submenu' : ''}>
+          <a href={link.href} class="nav-link">{link.label}</a>
+          {link.submenu && (
+            <ul class="nav-submenu">
+              {link.submenu.map((subItem) => (
+                <li>
+                  <a href={subItem.href} class="nav-sublink">{subItem.label}</a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    background: rgba(66, 0, 33, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(239, 31, 159, 0.3);
+    z-index: 100;
+    padding: 1rem 0;
+  }
+
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-logo {
+    font-family: "Helveticish", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--color-primary);
+    text-shadow: 0 0 10px rgba(239, 31, 159, 0.4);
+    text-decoration: none;
+    text-transform: lowercase;
+    letter-spacing: -0.06em;
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .nav-item-has-submenu {
+    position: relative;
+  }
+
+  .nav-link {
+    font-family: var(--font-secondary);
+    color: var(--color-text-muted);
+    font-weight: 500;
+    transition: color 0.2s ease;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .nav-item-has-submenu .nav-link::after {
+    content: '▼';
+    font-size: 0.6rem;
+    transition: transform 0.2s ease;
+  }
+
+  .nav-item-has-submenu:hover .nav-link::after {
+    transform: rotate(180deg);
+  }
+
+  .nav-link:hover {
+    color: var(--color-primary);
+    text-shadow: 0 0 8px rgba(239, 31, 159, 0.4);
+  }
+
+  .nav-submenu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(66, 0, 33, 0.98);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(239, 31, 159, 0.3);
+    border-radius: 4px;
+    padding: 0.5rem 0;
+    list-style: none;
+    min-width: 220px;
+    margin-top: 0.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+    transform: translateX(-50%) translateY(-10px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-item-has-submenu:hover .nav-submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .nav-sublink {
+    font-family: var(--font-secondary);
+    display: block;
+    padding: 0.75rem 1.5rem;
+    color: var(--color-text-muted);
+    font-weight: 400;
+    text-transform: none;
+    font-size: 0.9rem;
+    letter-spacing: 0;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .nav-sublink:hover {
+    color: var(--color-primary);
+    background: rgba(239, 31, 159, 0.1);
+    text-shadow: 0 0 8px rgba(239, 31, 159, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    .nav-container {
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .nav-links {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      flex-direction: column;
+    }
+
+    .nav-link {
+      font-size: 0.85rem;
+    }
+
+    .nav-item-has-submenu {
+      width: 100%;
+    }
+
+    .nav-submenu {
+      position: static;
+      transform: none;
+      margin-top: 0.5rem;
+      width: 100%;
+      opacity: 1;
+      visibility: visible;
+      border-radius: 0;
+      border-left: 2px solid var(--color-primary);
+    }
+
+    .nav-item-has-submenu:hover .nav-submenu {
+      transform: none;
+    }
+  }
+</style>

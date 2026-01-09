@@ -1,0 +1,167 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout title="Join the Community">
+  <Navigation />
+  <main>
+    <section class="community-hero">
+      <div class="container">
+        <h1>Join the Community</h1>
+        <p class="hero-subtitle">Not ready to apply yet? Start with our community.</p>
+      </div>
+    </section>
+
+    <section class="community" id="community">
+      <div class="container">
+        <div class="community-intro">
+          <p class="section-intro">Join our community of technical founders. Share wins, ask questions, get feedback. Active daily. High signal, zero noise.</p>
+        </div>
+        
+        <div class="community-options">
+          <div class="community-card">
+            <h2>WhatsApp Community</h2>
+            <p>Join our community of technical founders. Share wins, ask questions, get feedback. Active daily. High signal, zero noise.</p>
+            <p class="community-details">Daily conversations, founder spotlights, technical discussions, investor intros, and more.</p>
+            <a href="#" class="btn">Apply to Join (Placeholder)</a>
+          </div>
+          <div class="community-card">
+            <h2>Investor & Company Newsletter</h2>
+            <p>For investors and companies interested in partnering with technical founders. Monthly updates on our companies, events, and opportunities.</p>
+            <p class="community-details">Company spotlights, funding announcements, event invitations, partnership opportunities, and technical insights.</p>
+            <form class="newsletter-form">
+              <input type="email" placeholder="Your email" required />
+              <button type="submit" class="btn btn-secondary">Subscribe (Placeholder)</button>
+            </form>
+            <p class="form-note">We'll only use your email for the newsletter. Unsubscribe anytime.</p>
+          </div>
+          <div class="community-card">
+            <h2>Upcoming Events</h2>
+            <p>We run regular events, workshops, and meetups. Technical talks, founder stories, investor panels. All focused on technical founders.</p>
+            <p class="community-details">Technical workshops, founder panels, investor meetups, demo days, and networking events.</p>
+            <a href="#" class="btn btn-secondary">View Events on Luma (Placeholder)</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container text-center">
+        <h2>Ready to Apply for the Accelerator?</h2>
+        <p>If you're ready to take the next step, check out our accelerator program.</p>
+        <div class="btn-group" style="justify-content: center;">
+          <a href="/apply/apply-accelerator" class="btn">Apply for Accelerator</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .community-hero {
+    padding: 6rem 0 3rem;
+    text-align: center;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    margin-top: 1rem;
+  }
+
+  .community {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 4rem 0;
+  }
+
+  .community-intro {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+  }
+
+  .section-intro {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-bottom: 3rem;
+    color: var(--color-text);
+    line-height: 1.8;
+  }
+
+  .community-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+
+  .community-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .community-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--color-primary);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(239, 31, 159, 0.2);
+  }
+
+  .community-card h2 {
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .community-card p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+  }
+
+  .community-details {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin-bottom: 2rem !important;
+  }
+
+  .newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .form-note {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    text-align: center;
+  }
+
+  .cta-section {
+    padding: 4rem 0;
+  }
+
+  .cta-section p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: var(--color-text);
+  }
+
+  @media (max-width: 768px) {
+    .community-options {
+      grid-template-columns: 1fr;
+    }
+
+    .section-intro {
+      font-size: 1.1rem;
+    }
+  }
+</style>

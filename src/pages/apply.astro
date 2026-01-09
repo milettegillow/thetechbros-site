@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Apply">
+  <Navigation />
+  <main>
+    <!-- Hero -->
+    <section class="apply-hero">
+      <div class="container">
+        <h1>Apply to The Tech Bros</h1>
+        <p class="hero-subtitle">Technical founders. Serious builders. No fluff.</p>
+      </div>
+    </section>
+
+    <!-- Quick Links -->
+    <section class="quick-links">
+      <div class="container">
+        <div class="links-grid">
+          <a href="/apply/manifesto" class="link-card">
+            <h2>Manifesto</h2>
+            <p>Who we are. Who this is for. What we believe.</p>
+          </a>
+          <a href="/apply/faq" class="link-card">
+            <h2>FAQ</h2>
+            <p>Everything you need to know about our program.</p>
+          </a>
+          <a href="/apply/join-community" class="link-card">
+            <h2>Join the Community</h2>
+            <p>Start with our community before applying.</p>
+          </a>
+          <a href="/apply/apply-accelerator" class="link-card">
+            <h2>Apply for the Accelerator</h2>
+            <p>Ready to apply? Start your application here.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .apply-hero {
+    padding: 6rem 0 3rem;
+    text-align: center;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    margin-top: 1rem;
+  }
+
+  .quick-links {
+    padding: 4rem 0;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .link-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: block;
+  }
+
+  .link-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--color-primary);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(239, 31, 159, 0.2);
+  }
+
+  .link-card h2 {
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .link-card p {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .links-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

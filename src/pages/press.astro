@@ -1,0 +1,189 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Press">
+  <Navigation />
+  <main>
+    <!-- Hero -->
+    <section class="press-hero">
+      <div class="container">
+        <h1>Press</h1>
+        <p class="hero-subtitle">Coverage, interviews, and conversations about technical founders.</p>
+      </div>
+    </section>
+
+    <!-- Articles -->
+    <section class="articles">
+      <div class="container">
+        <h2>Articles</h2>
+        <div class="press-list">
+          <article class="press-item">
+            <h3><a href="#">"The First Accelerator Built for Technical Founders, Not Adapted for Them"</a></h3>
+            <p class="press-source">TechCrunch — March 2024</p>
+            <p class="press-excerpt">In a landscape dominated by accelerators designed for non-technical founders, The Tech Bros is taking a different approach: building from scratch for technical women who write code, architect systems, and make technical decisions.</p>
+          </article>
+          <article class="press-item">
+            <h3><a href="#">"Why Technical Founders Need Different Support (And Why It Matters)"</a></h3>
+            <p class="press-source">The Information — February 2024</p>
+            <p class="press-excerpt">A deep dive into why generic startup programs fail technical founders, and how The Tech Bros is filling the gap with a program designed specifically for builders who understand code as well as they understand business.</p>
+          </article>
+          <article class="press-item">
+            <h3><a href="#">"12 Technical Founders, £2.1M Raised: Inside The Tech Bros' First Cohort"</a></h3>
+            <p class="press-source">Sifted — January 2024</p>
+            <p class="press-excerpt">Examining the results of The Tech Bros' inaugural accelerator program, from technical excellence to funding success, and what it means for the future of technical founder support.</p>
+          </article>
+          <article class="press-item">
+            <h3><a href="#">"Building an Accelerator for Technical Women: The Origin Story"</a></h3>
+            <p class="press-source">Wired UK — December 2023</p>
+            <p class="press-excerpt">Founders Alex Chen, Samira Patel, and Jordan Kim discuss why they started The Tech Bros, what they learned from existing accelerators, and why technical founders deserve programs built specifically for them.</p>
+          </article>
+          <article class="press-item">
+            <h3><a href="#">"The Problem with Accelerators: A Technical Founder's Perspective"</a></h3>
+            <p class="press-source">Harvard Business Review — November 2023</p>
+            <p class="press-excerpt">An op-ed from The Tech Bros founders on why most accelerators fail technical founders, and what needs to change in the startup ecosystem to support those building technical products.</p>
+          </article>
+          <article class="press-item">
+            <h3><a href="#">"neurotype.uk Raises £500K: How Technical Founders Are Changing the Game"</a></h3>
+            <p class="press-source">Tech Nation — October 2023</p>
+            <p class="press-excerpt">Case study on neurotype.uk, a graduate from The Tech Bros' first cohort, and how technical depth combined with the right accelerator support led to rapid funding success.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Podcasts -->
+    <section class="podcasts">
+      <div class="container">
+        <h2>Podcasts</h2>
+        <div class="press-list">
+          <article class="press-item">
+            <h3><a href="#">The Tech Bros Founders on "Building Technical Products"</a></h3>
+            <p class="press-source">The Changelog — March 2024</p>
+            <p class="press-excerpt">A technical deep-dive conversation about building accelerators for technical founders, the unique challenges technical women face, and why code-first thinking changes everything.</p>
+          </article>
+          <article class="press-item">
+            <h3><a href="#">"Why We Built The Tech Bros" — Interview with Alex Chen</a></h3>
+            <p class="press-source">The Indie Hackers Podcast — February 2024</p>
+            <p class="press-excerpt">Co-founder Alex Chen shares the origin story, the vision, and the challenges of building an accelerator from scratch for technical founders.</p>
+          </article>
+          <article class="press-item">
+            <h3><a href="#">Technical Founders and the Funding Gap</a></h3>
+            <p class="press-source">The Twenty Minute VC — January 2024</p>
+            <p class="press-excerpt">A discussion about why technical founders struggle to raise funding, how The Tech Bros addresses this, and what investors need to understand about technical products.</p>
+          </article>
+          <article class="press-item">
+            <h3><a href="#">"All-Female, All-Technical" — Building Spaces for Technical Women</a></h3>
+            <p class="press-source">Lady Problems Podcast — December 2023</p>
+            <p class="press-excerpt">Samira Patel and Jordan Kim discuss why they created an accelerator specifically for technical women, and why focused programs create better outcomes than generic ones.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Press Contact -->
+    <section class="press-contact">
+      <div class="container text-center">
+        <h2>Press Inquiries</h2>
+        <p>Interested in covering The Tech Bros, our founders, or our companies?</p>
+        <p>We're always happy to connect with journalists and podcasters who want to tell the story of technical founders building the future.</p>
+        <div style="margin-top: 2rem;">
+          <a href="mailto:press@thetechbros.com" class="btn">Contact Press Team</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .press-hero {
+    padding: 6rem 0 3rem;
+    text-align: center;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    margin-top: 1rem;
+  }
+
+  .articles {
+    padding: 4rem 0;
+  }
+
+  .podcasts {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 4rem 0;
+  }
+
+  .press-list {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .press-item {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .press-item:last-child {
+    border-bottom: none;
+  }
+
+  .press-item h3 {
+    margin-bottom: 0.75rem;
+  }
+
+  .press-item h3 a {
+    color: var(--color-primary);
+    text-shadow: 0 0 10px rgba(239, 31, 159, 0.3);
+    transition: all 0.2s ease;
+  }
+
+  .press-item h3 a:hover {
+    color: var(--color-accent);
+    text-shadow: 0 0 10px rgba(92, 225, 230, 0.3);
+  }
+
+  .press-source {
+    color: var(--color-accent);
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .press-excerpt {
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    font-size: 1rem;
+  }
+
+  .press-contact {
+    padding: 4rem 0;
+  }
+
+  .press-contact h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  .press-contact p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    max-width: 600px;
+    margin: 1rem auto;
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .press-item {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+    }
+  }
+</style>
