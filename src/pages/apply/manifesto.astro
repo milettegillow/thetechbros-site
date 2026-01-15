@@ -9,7 +9,7 @@ import Footer from '../../components/Footer.astro';
   <main>
     <section class="manifesto-hero">
       <div class="container">
-        <h1>Manifesto</h1>
+        <h1>manifesto</h1>
         <p class="hero-subtitle">Who we are. Who this is for. What we believe.</p>
       </div>
     </section>
@@ -17,42 +17,28 @@ import Footer from '../../components/Footer.astro';
     <section class="manifesto" id="manifesto">
       <div class="container">
         <div class="manifesto-content">
-          <h2>Who This Is For</h2>
+          <h2>our vision</h2>
+          <p>We believe technical women should be building and owning the most valuable technology companies in the world.</p>
+          <p>Right now, they aren't. Not because they lack ability, ambition, or ideas, but because the structures designed to support founders were not built with them in mind.</p>
+          <p>So we built something else.</p>
+
+          <h2>who this is for</h2>
+          <p>This programme is for women with STEM backgrounds who want to build something big.</p>
+          <p>You're ambitious. You think deeply. You care about how things actually work. You want to learn from people who respect your intelligence and challenge you properly.</p>
+          <p>You don't need hand-holding.<br />You need the right room.</p>
+
+          <h2>what you get</h2>
           <ul>
-            <li>Technical founders building technical products</li>
-            <li>Women who write code, architect systems, and make technical decisions</li>
-            <li>Founders who are tired of explaining basic technical concepts to investors</li>
-            <li>Builders who want feedback from people who actually understand what they're building</li>
-            <li>Women ready to scale their technical companies with the right support</li>
+            <li>Two weeks in a hacker house in Norway, shoulder-to-shoulder with other exceptional builders.</li>
+            <li>Six weeks of hybrid support, with weekly sessions and check-ins.</li>
+            <li>Access to a venture partner network made up of founders and investors who back serious technical ambition.</li>
+            <li>A demo day designed to lead to real investment.</li>
+            <li>A cohort that becomes part of your professional life long after the programme ends.</li>
           </ul>
 
-          <h2>Who This Is Not For</h2>
-          <ul>
-            <li>Non-technical founders (we love you, but this isn't your program)</li>
-            <li>People looking for a "quick startup fix" or generic business advice</li>
-            <li>Founders who want to be hand-held through every decision</li>
-            <li>Anyone who thinks technical knowledge is optional for building technical products</li>
-          </ul>
-
-          <h2>Our Values</h2>
-          <div class="values-grid">
-            <div class="value-item">
-              <h3>Technical Excellence</h3>
-              <p>We assume you know what you're doing. Our job is to help you do it better, faster, and at scale.</p>
-            </div>
-            <div class="value-item">
-              <h3>Real Talk</h3>
-              <p>No corporate speak. No fake positivity. Just honest feedback and real support.</p>
-            </div>
-            <div class="value-item">
-              <h3>Community Over Competition</h3>
-              <p>We build together. We share knowledge. We amplify each other. Zero drama.</p>
-            </div>
-            <div class="value-item">
-              <h3>Unapologetic Focus</h3>
-              <p>We're here for technical women. That's not exclusionary—it's focused. And it works.</p>
-            </div>
-          </div>
+          <h2>what we're here for</h2>
+          <p>We're not here to inspire you.<br />We're here to back you.</p>
+          <p>If you're ready to build something real, this programme is for you.</p>
         </div>
       </div>
     </section>
@@ -62,7 +48,7 @@ import Footer from '../../components/Footer.astro';
         <h2>Ready to Join Us?</h2>
         <p>If this resonates, you might be the right fit. Check out our FAQ or apply now.</p>
         <div class="btn-group" style="justify-content: center;">
-          <a href="/apply/faq" class="btn btn-secondary">Read FAQ</a>
+          <a href="/apply#faq" class="btn btn-secondary">Read FAQ</a>
           <a href="/apply/apply-accelerator" class="btn">Apply Now</a>
         </div>
       </div>
@@ -101,6 +87,13 @@ import Footer from '../../components/Footer.astro';
 
   .manifesto-content h2:first-child {
     margin-top: 0;
+  }
+
+  .manifesto-content p {
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
   }
 
   .manifesto-content ul {

@@ -10,41 +10,27 @@ import Footer from '../components/Footer.astro';
     <!-- Hero -->
     <section class="merch-hero">
       <div class="container">
-        <h1>Merch</h1>
+        <h1>merch</h1>
         <p class="hero-subtitle">Wear the mission. Build the movement.</p>
-      </div>
-    </section>
-
-    <!-- Team Wearing Merch -->
-    <section class="merch-showcase">
-      <div class="container">
-        <div class="showcase-grid">
-          <div class="img-placeholder img-placeholder-square">Team Member 1</div>
-          <div class="img-placeholder img-placeholder-square">Team Member 2</div>
-          <div class="img-placeholder img-placeholder-square">Team Member 3</div>
-          <div class="img-placeholder img-placeholder-square">Team Member 4</div>
-        </div>
       </div>
     </section>
 
     <!-- Coming Soon -->
     <section class="coming-soon">
-      <div class="container text-center">
-        <h2>Coming Soon</h2>
-        <p class="coming-soon-text">We're designing merch that reflects our mission: bold, technical, unapologetic. No corporate swag. No generic startup t-shirts. Just gear that actually looks good and says something.</p>
-        <p class="coming-soon-text">Launching Spring 2024. Sign up below to be first in line.</p>
-      </div>
-    </section>
-
-    <!-- Waitlist Form -->
-    <section class="waitlist">
       <div class="container">
-        <div class="waitlist-content">
-          <div class="waitlist-text">
-            <h2>Join the Waitlist</h2>
-            <p>Be the first to know when our merch launches. Early access, exclusive designs, and special pricing for community members.</p>
+        <div class="coming-soon-content">
+          <div class="coming-soon-image">
+            <img src="/merch/merch-hero.jpg" alt="Merch" />
           </div>
-          <form class="waitlist-form">
+          <div class="coming-soon-text">
+            <h3>coming soon</h3>
+            <p>We're designing merch that reflects our vibe: bold, techy, unserious.</p>
+            <p>Launching Spring 2026. Sign up below to be first in line.</p>
+            
+            <div class="waitlist-section">
+              <h3>join the waitlist</h3>
+              <p>Be the first to know when our merch launches. Early access, exclusive designs, and special pricing for community members.</p>
+              <form class="waitlist-form">
             <input type="text" placeholder="Your Name" required />
             <input type="email" placeholder="Your Email" required />
             <select required>
@@ -58,8 +44,10 @@ import Footer from '../components/Footer.astro';
             </select>
             <textarea placeholder="What merch items are you most interested in? (optional)" rows="4"></textarea>
             <button type="submit" class="btn">Join Waitlist (Placeholder)</button>
-            <p class="form-note">We'll only use your email to notify you about merch launches. No spam, ever.</p>
-          </form>
+                <p class="form-note">We'll only use your email to notify you about merch launches. No spam, ever.</p>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -79,53 +67,56 @@ import Footer from '../components/Footer.astro';
     margin-top: 1rem;
   }
 
-  .merch-showcase {
-    padding: 4rem 0;
-    background: rgba(0, 0, 0, 0.2);
-  }
-
-  .showcase-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-
   .coming-soon {
     padding: 4rem 0;
-  }
-
-  .coming-soon-text {
-    font-size: 1.2rem;
-    line-height: 1.8;
-    max-width: 700px;
-    margin: 1rem auto;
-    color: var(--color-text-muted);
-  }
-
-  .waitlist {
-    padding: 4rem 0;
     background: rgba(0, 0, 0, 0.2);
   }
 
-  .waitlist-content {
-    max-width: 800px;
-    margin: 0 auto;
+  .coming-soon-content {
     display: grid;
-    grid-template-columns: 1fr 1.5fr;
+    grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: start;
   }
 
-  .waitlist-text h2 {
-    color: var(--color-accent);
-    margin-bottom: 1.5rem;
+  .coming-soon-image {
+    width: 100%;
   }
 
-  .waitlist-text p {
+  .coming-soon-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .coming-soon-text h2 {
+    color: var(--color-accent);
+    margin-bottom: 2rem;
+  }
+
+  .coming-soon-text p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-muted);
+  }
+
+  .waitlist-section {
+    margin-top: 3rem;
+  }
+
+  .waitlist-section h2 {
+    color: var(--color-accent);
+    margin-bottom: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .waitlist-section p {
     font-size: 1.1rem;
     line-height: 1.8;
+    margin-bottom: 1.5rem;
     color: var(--color-text-muted);
   }
 
@@ -161,13 +152,13 @@ import Footer from '../components/Footer.astro';
   }
 
   @media (max-width: 768px) {
-    .waitlist-content {
+    .coming-soon-content {
       grid-template-columns: 1fr;
       gap: 2rem;
     }
 
-    .showcase-grid {
-      grid-template-columns: repeat(2, 1fr);
+    .coming-soon-image {
+      order: -1;
     }
   }
 </style>

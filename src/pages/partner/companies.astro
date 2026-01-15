@@ -9,59 +9,86 @@ import Footer from '../../components/Footer.astro';
   <main>
     <section class="partner-hero">
       <div class="container">
-        <h1>Partner With Us: Companies</h1>
-        <p class="hero-subtitle">Connect with the world's best technical founders. Build the future together.</p>
+        <h1>partner with us: companies</h1>
       </div>
     </section>
 
     <section class="companies-partner">
       <div class="container">
-        <p class="section-intro">Partner with technical founders who understand what you're building because they've built it too.</p>
-        
-        <div class="partner-benefits">
-          <div class="benefit-card">
-            <h2>Why Partner?</h2>
-            <ul>
-              <li>Access to a curated pipeline of technical founders</li>
-              <li>Early access to innovative technical products</li>
-              <li>Partnership opportunities with companies solving real technical problems</li>
-              <li>Technical workshops and events for your team</li>
-              <li>Build relationships with the next generation of technical leaders</li>
-            </ul>
+        <div class="partner-content">
+          <h2>why partner with the tech bros</h2>
+          <p class="section-intro">We work with companies who want access to technical women they wouldn't otherwise meet.</p>
+          <p>Our events are not broad, open meetups. They are highly curated, technical-first spaces that attract senior engineers, researchers, and early-stage founders across AI, robotics, deep tech, and applied science.</p>
+          
+          <h3>partnering with us gives you:</h3>
+          <ul class="partner-list">
+            <li>Direct access to a hard-to-reach technical talent pool</li>
+            <li>High-signal brand exposure in a trusted community</li>
+            <li>A credible way to support women in tech without performative initiatives</li>
+          </ul>
+
+          <h2>what partnership looks like</h2>
+          <p>You sponsor a one-off event that we design with you, aligned to your goals.</p>
+          
+          <h3>typical formats include:</h3>
+          <ul class="partner-list">
+            <li>Hackathons</li>
+            <li>Technical conferences or panels</li>
+            <li>Co-working and community days</li>
+          </ul>
+          <p>We handle curation, audience quality, and delivery. You show up to the right room.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="spotlight-hero-image">
+      <img src="/partner/bang-olufsen-hackathon-hero.jpg" alt="Bang & Olufsen Hackathon" />
+    </div>
+
+    <section class="spotlight-section">
+      <div class="container">
+        <div class="spotlight-content">
+          <div class="spotlight-images-left">
+            <img src="/partner/bang-olufsen-1.jpg" alt="Bang & Olufsen Hackathon" />
+            <img src="/partner/bang-olufsen-2.jpg" alt="Bang & Olufsen Hackathon" />
+            <img src="/partner/bang-olufsen-3.jpg" alt="Bang & Olufsen Hackathon" />
           </div>
-          <div class="benefit-card">
-            <h2>What You Get</h2>
-            <ul>
-              <li>Exclusive access to Demo Day</li>
-              <li>1-on-1 meetings with founders during the program</li>
-              <li>Priority partnership discussions</li>
-              <li>Invitations to technical events and workshops</li>
-              <li>Brand visibility in our community and network</li>
-            </ul>
+          <div class="spotlight-text-column">
+            <h2>spotlight: Bang & Olufsen Hackathon</h2>
+            <p>We partnered with Bang & Olufsen on a bespoke hackathon bringing together technical women across hardware, AI, and engineering.</p>
+            <div class="spotlight-stats">
+              <div class="spotlight-stat">
+                <div class="spotlight-number">25</div>
+                <div class="spotlight-label">participants</div>
+              </div>
+              <div class="spotlight-stat">
+                <div class="spotlight-number">73%</div>
+                <div class="spotlight-label">CS / AI / Engineering background</div>
+              </div>
+              <div class="spotlight-stat">
+                <div class="spotlight-number">4.6 / 5</div>
+                <div class="spotlight-label">Average event rating</div>
+              </div>
+            </div>
+            <p>The event created meaningful technical engagement, high-quality conversations, and strong brand alignment without feeling like a recruitment fair.</p>
+            
+            <div class="spotlight-quotes">
+              <blockquote>"It was ABSOLUTELY FANTASTIC to have an all woman event! Had some great meaningful conversations that wouldn't regularly pop up in mixed events! Great to get other girls inputs and experiences of the STEM industry 🧡This was a true pleasure!"</blockquote>
+              <blockquote>"Keep it going, you make such a great impact 💗"</blockquote>
+              <blockquote>"Thank you for hosting this and we expect more hackathons in the future :)"</blockquote>
+            </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="partnership-details">
-          <h2>Partnership Options</h2>
-          <div class="details-grid">
-            <div class="detail-card">
-              <h3>Enterprise Partnerships</h3>
-              <p>Connect with technical founders building enterprise solutions. Early access to B2B products, technical integrations, and strategic partnerships.</p>
-            </div>
-            <div class="detail-card">
-              <h3>Technical Integration</h3>
-              <p>Partner with founders building products that integrate with yours. Technical workshops, API partnerships, and co-development opportunities.</p>
-            </div>
-            <div class="detail-card">
-              <h3>Recruitment Partnerships</h3>
-              <p>Access to exceptional technical talent. Our founders know great engineers. Partner with us to find your next technical hire.</p>
-            </div>
+    <section class="companies-partner">
+      <div class="container">
+        <div class="partner-content">
+
+          <div class="text-center" style="margin-top: 3rem;">
+            <a href="mailto:team@thetechbros.io" class="btn">Get in Touch</a>
           </div>
-        </div>
-
-        <div class="text-center" style="margin-top: 3rem;">
-          <p>Interested in partnering with us?</p>
-          <a href="mailto:partnerships@thetechbros.com" class="btn">Get in Touch</a>
         </div>
       </div>
     </section>
@@ -86,43 +113,50 @@ import Footer from '../../components/Footer.astro';
     background: rgba(0, 0, 0, 0.2);
   }
 
-  .section-intro {
-    text-align: center;
-    font-size: 1.3rem;
-    margin-bottom: 3rem;
-    color: var(--color-text);
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+  .partner-content {
+    max-width: 900px;
+    margin: 0 auto;
   }
 
-  .partner-benefits {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-    margin-bottom: 4rem;
-  }
-
-  .benefit-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 2.5rem;
-    border-radius: 8px;
-  }
-
-  .benefit-card h2 {
+  .partner-content h2 {
     color: var(--color-accent);
+    margin-top: 3rem;
     margin-bottom: 1.5rem;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
   }
 
-  .benefit-card ul {
+  .partner-content h2:first-of-type {
+    margin-top: 0;
+  }
+
+  .partner-content h3 {
+    color: var(--color-primary);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+  }
+
+  .section-intro {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-text);
+    line-height: 1.8;
+  }
+
+  .partner-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-muted);
+  }
+
+  .partner-list {
     list-style: none;
     padding-left: 0;
+    margin: 1.5rem 0;
   }
 
-  .benefit-card ul li {
+  .partner-list li {
     padding: 0.75rem 0;
     padding-left: 1.5rem;
     position: relative;
@@ -131,54 +165,112 @@ import Footer from '../../components/Footer.astro';
     font-size: 1.05rem;
   }
 
-  .benefit-card ul li::before {
+  .partner-list li::before {
     content: '→';
     position: absolute;
     left: 0;
     color: var(--color-primary);
   }
 
-  .partnership-details {
-    margin-top: 4rem;
+  .spotlight-hero-image {
+    width: 100%;
+    margin: 4rem 0;
   }
 
-  .partnership-details h2 {
+  .spotlight-hero-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  .spotlight-section {
+    padding: 4rem 0;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .spotlight-content {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .spotlight-images-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .spotlight-images-left img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  .spotlight-text-column h2 {
     color: var(--color-accent);
-    margin-bottom: 2rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .spotlight-quotes {
+    margin-top: 2rem;
+  }
+
+  .spotlight-quotes blockquote {
+    font-style: italic;
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    border-left: 3px solid var(--color-primary);
+    font-size: 1.05rem;
+  }
+
+  .spotlight-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+
+  .spotlight-stat {
     text-align: center;
   }
 
-  .details-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-  }
-
-  .detail-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 2rem;
-    border-radius: 8px;
-  }
-
-  .detail-card h3 {
+  .spotlight-number {
+    font-size: 2rem;
+    font-weight: 700;
     color: var(--color-primary);
-    margin-bottom: 1rem;
-    font-size: 1.3rem;
+    text-shadow: 0 0 20px rgba(239, 31, 159, 0.5);
+    margin-bottom: 0.5rem;
   }
 
-  .detail-card p {
+  .spotlight-label {
     color: var(--color-text-muted);
-    line-height: 1.7;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   @media (max-width: 768px) {
-    .partner-benefits {
+    .spotlight-stats {
       grid-template-columns: 1fr;
     }
 
-    .details-grid {
+    .spotlight-content {
       grid-template-columns: 1fr;
+    }
+
+    .spotlight-text-column {
+      order: 1;
+    }
+
+    .spotlight-images-left {
+      order: 2;
     }
   }
 </style>

@@ -2,6 +2,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+
+// Helper function to capitalize first letter
+function capitalize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 ---
 
 <BaseLayout title="About">
@@ -10,11 +15,11 @@ import Footer from '../components/Footer.astro';
     <!-- Mission Section -->
     <section class="mission">
       <div class="container">
-        <h1>Our Mission</h1>
+        <h1>mission</h1>
         <div class="mission-content">
-          <p class="lead">We exist because technical women deserve better. Better accelerators. Better investors. Better networks. Better spaces.</p>
-          <p>Most accelerators weren't built for technical founders. They were built for hustlers, sales people, and visionaries who delegate the "hard stuff" to their CTOs. That model works for some. It doesn't work for founders who are the technical founders—the ones writing code, architecting systems, and making product decisions based on deep technical knowledge.</p>
-          <p>We're changing that. The Tech Bros is the first accelerator designed from the ground up for technical women. No adaptions. No compromises. Just a program that actually understands what you're building and why it matters.</p>
+          <p class="lead">Our ambition is to create more female tech billionaires.</p>
+          <p>We believe the next generation of unicorns can and will be built by women. There is persistent underrepresentation of female technical talent, which is too often overlooked despite its immense potential, and we think this talent is capable of disrupting the industry completely.</p>
+          <p>TTB enables women in highly technical fields to launch their startup through our community, events, & accelerator programme, running every summer.</p>
         </div>
       </div>
     </section>
@@ -22,47 +27,605 @@ import Footer from '../components/Footer.astro';
     <!-- Origin Story -->
     <section class="origin">
       <div class="container">
-        <h2>The Origin Story</h2>
-        <p>Founded in 2023 by technical women who'd been through every accelerator, program, and network out there. We were tired of:</p>
+        <h2>why we exist</h2>
+        <p class="lead">Female-founded startups consistently outperform startups with all-male teams, yet receive a fraction of the venture funding:</p>
         <ul class="origin-list">
-          <li>Being told to "find a technical co-founder" when we were the technical co-founder</li>
-          <li>Mentors who couldn't read our code or understand our architecture decisions</li>
-          <li>Investors asking basic technical questions that revealed they didn't get what we were building</li>
-          <li>Programs designed for non-technical founders, with us as an afterthought</li>
+          <li>Studies show that when presented with identical pitches, both male and female investors rate those pitched by men more favourably.</li>
+          <li>Both male and female investors rate identical pitches more highly when they were told a male investor had already invested in the company (compared to a female investor).</li>
+          <li>When pitching, male founders are more often asked “promotion” questions focused on what might go right, compared to female founders who are asked "prevention" questions focused on what might go wrong; and in comparable companies, entrepreneurs who were asked primarily “prevention” questions raise an average of seven times less than founders who were mostly asked “promotion” questions.</li>
         </ul>
-        <p>So we built something different. Something that assumes you know what you're doing. Something that amplifies technical excellence instead of questioning it.</p>
+        <p class="lead">We believe in creating an entirely new pipeline for backing exceptional female founders, from idea stage to pre-seed all the way through to exit or IPO.</p>
       </div>
     </section>
 
     <!-- Past Events -->
     <section class="past-events">
       <div class="container">
-        <h2>Past Events</h2>
-        <p class="section-intro">We run events, workshops, and community gatherings throughout the year. Here's what we've done:</p>
+        <h2>past events</h2>
+        
+        <!-- Filter Section -->
+        <div class="event-filters">
+          <div class="filter-group">
+            <label for="filter-type">Filter by:</label>
+            <div class="filter-dropdown">
+              <button class="filter-button" id="filter-type-btn" aria-haspopup="true" aria-expanded="false">
+                <span class="filter-label">Type</span>
+                <span class="filter-arrow">▼</span>
+              </button>
+              <ul class="filter-menu" id="filter-type-menu">
+                <li><button class="filter-option" data-filter="type" data-value="">All Types</button></li>
+                <li><button class="filter-option" data-filter="type" data-value="hackathon">Hackathon</button></li>
+                <li><button class="filter-option" data-filter="type" data-value="workshop">Workshop</button></li>
+                <li><button class="filter-option" data-filter="type" data-value="conference">Conference</button></li>
+                <li><button class="filter-option" data-filter="type" data-value="co-working day">Co-working day</button></li>
+                <li><button class="filter-option" data-filter="type" data-value="other">Other</button></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="filter-group">
+            <div class="filter-dropdown">
+              <button class="filter-button" id="filter-location-btn" aria-haspopup="true" aria-expanded="false">
+                <span class="filter-label">Location</span>
+                <span class="filter-arrow">▼</span>
+              </button>
+              <ul class="filter-menu filter-menu-nested" id="filter-location-menu">
+                <li><button class="filter-option" data-filter="location" data-value="">All Locations</button></li>
+                <li class="filter-submenu">
+                  <button class="filter-option filter-submenu-trigger" data-filter="location" data-value="UK">
+                    UK <span class="submenu-arrow">▶</span>
+                  </button>
+                  <ul class="filter-submenu-list">
+                    <li><button class="filter-option" data-filter="location" data-value="London, UK">London</button></li>
+                    <li><button class="filter-option" data-filter="location" data-value="Manchester, UK">Manchester</button></li>
+                    <li><button class="filter-option" data-filter="location" data-value="Cambridge, UK">Cambridge</button></li>
+                    <li><button class="filter-option" data-filter="location" data-value="York, UK">York</button></li>
+                    <li><button class="filter-option" data-filter="location" data-value="Oxford, UK">Oxford</button></li>
+                    <li><button class="filter-option" data-filter="location" data-value="Liverpool, UK">Liverpool</button></li>
+                  </ul>
+                </li>
+                <li class="filter-submenu">
+                  <button class="filter-option filter-submenu-trigger" data-filter="location" data-value="USA">
+                    USA <span class="submenu-arrow">▶</span>
+                  </button>
+                  <ul class="filter-submenu-list">
+                    <li><button class="filter-option" data-filter="location" data-value="New York, USA">New York</button></li>
+                    <li><button class="filter-option" data-filter="location" data-value="San Francisco, USA">San Francisco</button></li>
+                  </ul>
+                </li>
+                <li class="filter-submenu">
+                  <button class="filter-option filter-submenu-trigger" data-filter="location" data-value="Europe">
+                    Europe <span class="submenu-arrow">▶</span>
+                  </button>
+                  <ul class="filter-submenu-list">
+                    <li><button class="filter-option" data-filter="location" data-value="Copenhagen, Denmark">Copenhagen</button></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <button class="clear-filters" id="clear-filters-btn">Clear Filters</button>
+        </div>
+        
         <div class="card-grid">
-          <div class="card">
-            <div class="img-placeholder img-placeholder-square">Event Image</div>
-            <h3>Technical Founders Summit 2024</h3>
-            <p>Our annual gathering of technical founders, investors, and partners. Deep technical talks, honest founder stories, and real conversations.</p>
-            <p class="event-date">March 2024</p>
+          <div class="card" data-event-id="event-1" data-event-type="hackathon" data-event-country="USA" data-event-city="San Francisco">
+            <img src="/about/events/2025-11-17.jpeg" alt="Event on November 17, 2025" class="event-image" />
+            <p class="event-date">17th November, 2025</p>
+            <h3>'no one asked for this'</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("hackathon")}</span>
+              <span class="event-location">San Francisco, USA</span>
+            </div>
+            <div class="card-content">
+              <p>In partnership with AngelList and Glo we ran our 'no one asked for this' hackathon.</p>
+              <p>"I loved it!!!!! I loved meeting so many women in STEM, and it was organized really well!!"</p>
+              <p>"AMAZING i never met so many women and have felt so comfortable in a hackathon."</p>
+              <p>"Was great! Great idea for women to get together and network:) Loved the open format"</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 4.75/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7396486491318820864/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
           </div>
-          <div class="card">
-            <div class="img-placeholder img-placeholder-square">Event Image</div>
-            <h3>AI & ML Workshop Series</h3>
-            <p>Hands-on workshops for founders building AI/ML products. From model architecture to deployment pipelines.</p>
-            <p class="event-date">January - February 2024</p>
+          <div class="card" data-event-id="event-2" data-event-type="hackathon" data-event-country="UK" data-event-city="London">
+            <img src="/about/events/2025-10-29.jpeg" alt="Event on October 29, 2025" class="event-image" />
+            <p class="event-date">29th October, 2025</p>
+            <h3>404: media not found</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("hackathon")}</span>
+              <span class="event-location">London, UK</span>
+            </div>
+            <div class="card-content">
+              <p>In partnership with Mercuri VC, ElevenLabs, Hugging Face and Canva, we ran our 404: media not found hackathon centered around building at the intersection of media and technology.</p>
+              <p>"I loved learning the different approaches taken by different groups and learning from the variety of tech stacks used. I also loved the panel and hearing the experiences of the founders."</p>
+              <p>"It's been a lovely event to brainstorm and network! I definitely feel even more inspired to become a founder in future, knowing I have a solid foundation for that. Thank you once again for the event 💞"</p>
+              <p>"I had so much fun! I thought the set up was amazing and I really appreciated the panel in the morning. The whole experience has definitely improved my confidence and the panel made me really excited about the idea to found or co-found my own startup. I would love to attend future events!"</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 4.5/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7390044391127801856/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
           </div>
-          <div class="card">
-            <div class="img-placeholder img-placeholder-square">Event Image</div>
-            <h3>Investor Meetup: Technical Founders Edition</h3>
-            <p>Networking event connecting technical founders with investors who actually understand technical products.</p>
-            <p class="event-date">November 2023</p>
+          <div class="card" data-event-id="event-3" data-event-type="workshop" data-event-country="UK" data-event-city="Manchester">
+            <img src="/about/events/2025-10-24.jpeg" alt="Event on October 24, 2025" class="event-image" />
+            <p class="event-date">24th-26th October, 2025</p>
+            <h3>startup weekend</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("workshop")}</span>
+              <span class="event-location">Manchester, UK</span>
+            </div>
+            <div class="card-content">
+              <p>In partnership with Unit M at the University of Manchester, we ran a startup weekend in a hotel in Cheshire - complete with a gym, sauna, steam room, and pool - centred around "day 1 of building your startup".</p>
+              <p>"Thank you so much for organising this! I've left with such a desire to actually take action on ideas I have after seeing how much I could do in just a day! We were staying up late, waking up at 5, working non stop but it didn't feel like work at all. Also was amazing to meet so many cool women!!"</p>
+              <p>"I think the presentations were SO SO helpful because they really gave us a foundation of the basics from scratch. I think I left with a much more informed and confident mindset. I think even if business basics are available on the internet, the whole investor/vc angle is near impossible for newcomers to find. Really really loved that!"</p>
+              <p>"Very unique, loved that it emphasised actually just starting, opened my eyes to how much can be done in a small amount of time!"</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 4.7/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7388674886652555264/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
           </div>
-          <div class="card">
-            <div class="img-placeholder img-placeholder-square">Event Image</div>
-            <h3>First Cohort Demo Day</h3>
-            <p>Twelve technical founders. Twelve impressive companies. One day of demos, pitches, and celebration.</p>
-            <p class="event-date">September 2023</p>
+          <div class="card" data-event-id="event-4" data-event-type="hackathon" data-event-country="Denmark" data-event-city="Copenhagen">
+            <img src="/about/events/2025-10-18.jpeg" alt="Event on October 18, 2025" class="event-image" />
+            <p class="event-date">18th October, 2025</p>
+            <h3>ctrl + alt + gesture</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("hackathon")}</span>
+              <span class="event-location">Copenhagen, Denmark</span>
+            </div>
+            <div class="card-content">
+              <p>In partnership with Bang & Olufsen, we ran a hackathon in Copenhagen centered around interaction with technology.</p>
+              <p>"It was ABSOLUTELY FANTASTIC to have an all woman event! Had some great meaningful conversations that wouldn't regularly pop up in mixed events! Great to get other girls inputs and experiences of the STEM industry 🧡 This was a true pleasure!"</p>
+              <p>"[My favourite part was] getting to talk with other people regarding the experience women have with technology and tracking devices."</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 4.6/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7386435309745569792/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="card" data-event-id="event-5" data-event-type="workshop" data-event-country="USA" data-event-city="San Francisco">
+            <img src="/about/events/2025-10-6.jpeg" alt="Event on October 6, 2025" class="event-image" />
+            <p class="event-date">6th October, 2025</p>
+            <h3>bad ideas build</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("workshop")}</span>
+              <span class="event-location">San Francisco, USA</span>
+            </div>
+            <div class="card-content">
+              <p>"This event was fantastic! Great group of people from different backgrounds to meet, hear from, and work with. This event reminded me that creating things with an enthusiastic team is amazing, and that yes in fact l do know what I'm doing and I can make things."</p>
+              <p>"Loved the theme and so much fun with bad ideas and enabled us to think out of the box."</p>
+              <p>"I definitely feel less intimidated about the whole idea."</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 4.8/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7381449854444675072/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="card" data-event-id="event-6" data-event-type="co-working day" data-event-country="UK" data-event-city="London">
+            <img src="/about/events/2025-9-26.jpeg" alt="Event on September 26, 2025" class="event-image" />
+            <p class="event-date">26th September, 2025</p>
+            <h3>friday at the ministry</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("co-working day")}</span>
+              <span class="event-location">London, UK</span>
+            </div>
+            <div class="card-content">
+              <p>In partnership with incident.io and The Ministry, we brought together our TTB community for a day of co-working.</p>
+              <p>"Great vibes, genuine support and advice, new connections - love how it feels to be a part of the community!"</p>
+              <p>"It was so helpful and friendly in terms of discussing ideas and learning what everyone is working on. Really enjoyed that, thank you!"</p>
+              <p>"slay"</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 5/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7378750642560970752/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="card" data-event-id="event-7" data-event-type="co-working day" data-event-country="UK" data-event-city="London">
+            <img src="/about/events/2025-8-18.jpeg" alt="Event on August 18, 2025" class="event-image" />
+            <p class="event-date">18th August, 2025</p>
+            <h3>sunday at cafe granola</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("co-working day")}</span>
+              <span class="event-location">London, UK</span>
+            </div>
+            <div class="card-content">
+              <p>"Walking into the room, I wasn't sure what to expect, but the conversations left me feeling energized, inspired, and a little humbled."</p>
+              <p>"Absolutely love it! Thanks for holding it :) I've made some good connections and was very productive. Happy to join such events more!"</p>
+              <p>"Would love to do it again!"</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 5/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7364693021755346946/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="card" data-event-id="event-8" data-event-type="hackathon" data-event-country="UK" data-event-city="London">
+            <img src="/about/events/2025-6-6.jpeg" alt="Event on June 6, 2025" class="event-image" />
+            <p class="event-date">6th June, 2025</p>
+            <h3>run : wmn()</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("hackathon")}</span>
+              <span class="event-location">London, UK</span>
+            </div>
+            <div class="card-content">
+              <p>In partnership with MMC Ventures, ElevenLabs, AWS and London AI Hub, we hosted our first run:wmn() hackathon.</p>
+              <p>"All of it was great but meeting so many women in tech was amazing!"</p>
+              <p>"Getting to work with new people in a high pressure environment, forming great bonds and actually building a demo."</p>
+              <p>"I like the fact that we got support while we were working on our ideas!"</p>
+              <p>"Ideating and working with my team was so much fun!"</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 4.5/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7339310863033454592/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="card" data-event-id="event-9" data-event-type="workshop" data-event-country="USA" data-event-city="New York">
+            <img src="/about/events/2025-6-4.jpeg" alt="Event on June 4, 2025" class="event-image" />
+            <p class="event-date">4th June, 2025</p>
+            <h3>bad ideas build</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("workshop")}</span>
+              <span class="event-location">New York, USA</span>
+            </div>
+            <div class="card-content">
+              <p>"I love the pace of this event. I love how everyone is really welcoming and ready to build something fun together. I'm more confident in building a startup now!"</p>
+              <p>"Being in a supportive environment for female founders is incredible. I felt seen and supported throughout the entire experience. There was no judgment or harmful competition - just positive vibes and a focus on building both our products and each other up. I'm so glad I took the time to attend this event."</p>
+              <p>"I feel more excited to going back to prototyping and building. I feel a lot more clear on what to focus on at my early stage. This event helped me reprioritise build above the 15 million other things expected of founders before raising pre-seed and ahead of each stage of funding."</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 4.9/5</p>
+            <a href="https://www.linkedin.com/posts/thetechbros_i-love-the-pace-of-this-event-i-love-activity-7338182063633690624-hb8R/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="card" data-event-id="event-10" data-event-type="conference" data-event-country="UK" data-event-city="London">
+            <img src="/about/events/2025-4-4.jpeg" alt="Event on April 4, 2025" class="event-image" />
+            <p class="event-date">4th April, 2025</p>
+            <h3>wmn &lt; &gt; robotics</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("conference")}</span>
+              <span class="event-location">London, UK</span>
+            </div>
+            <div class="card-content">
+              <p>What better way to spend a Friday afternoon than with a group of ambitious women in the world of robotics?</p>
+              <p>🦾 Mie Haraldsted shared her experience founding Aim Robotics in our founder fireside chat - her journey has been truly inspirational, and her honesty & candid insights were especially engaging</p>
+              <p>🔥 Radhika Gudipati, Ifeyinwa Kanu, Claire Cramm & Ellasaid Woodhouse joined us on a panel giving insights into investing, founding & starting up within the robotics space - we loved the tidbits shared & the insights on focus areas within robotics going forward</p>
+              <p>🌱 We (Sedinam + Milette) ran our crowd-favourite 0 to 1 workshop, complete with live mom testing bad ideas (+ using hardware prompts for the first time!)</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 5/5</p>
+            <a href="https://www.linkedin.com/posts/thetechbros_what-better-way-to-spend-a-friday-afternoon-activity-7315028815779381251-IDEr/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="card" data-event-id="event-11" data-event-type="workshop" data-event-country="UK" data-event-city="Liverpool">
+            <img src="/about/events/2025-4-2.jpeg" alt="Event on April 2, 2025" class="event-image" />
+            <p class="event-date">2nd April, 2025</p>
+            <h3>bad ideas build</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("workshop")}</span>
+              <span class="event-location">Liverpool, UK</span>
+            </div>
+            <div class="card-content">
+              <p>"The event was awesome. I gained some confidence in myself after contributing to it. I am definitely will think of starting a startup after graduation. Thank you for organising events like this✨"</p>
+              <p>"…Everything was amazing! You're such great hosts, it was an absolute pleasure to be at your event!"</p>
+              <p>"Today's build was really fun and I am glad I came. I met new likeminded people which I loved, went outside my comfort zone and learned developed my group work skills."</p>
+              <p>"I learnt that to build a startup/idea, it doesn't have to be all perfect from start."</p>
+              <p>"It was a great experience, I liked it. Maybe yes, I would consider founding a company. After the event I got a little bit more confident that I can"</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 4.7/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7313882472033746946/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="card" data-event-id="event-12" data-event-type="workshop" data-event-country="UK" data-event-city="London">
+            <img src="/about/events/2025-3-20.jpeg" alt="Event on March 20, 2025" class="event-image" />
+            <p class="event-date">20th March, 2025</p>
+            <h3>How to build a startup</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("workshop")}</span>
+              <span class="event-location">London, UK</span>
+            </div>
+            <div class="card-content">
+              <p>🛠️ Maria Luque - Intro to MVP building (for absolute beginners)</p>
+              <p>💸 Alexandra Reinert - Writing your pitch deck: what VCs look for</p>
+              <p>🔥 Fiadhnaid & Gabby - Getting your foot in the door: how to build out your network</p>
+              <p>🦄 Milette & Sedinam - ​​Going from 0 to 1: how to create a startup from scratch</p>
+              <p>"This has been one of the best events I've been to! The speakers were so insightful and helpful with questions, breaking things down and ensuring you understand the topic/example at hand."</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 5/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7308868951285878784/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="card" data-event-id="event-13" data-event-type="workshop" data-event-country="UK" data-event-city="Manchester">
+            <img src="/about/events/2025-3-14.jpeg" alt="Event on March 14, 2025" class="event-image" />
+            <p class="event-date">14th March, 2025</p>
+            <h3>How to build a startup</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("workshop")}</span>
+              <span class="event-location">Manchester, UK</span>
+            </div>
+            <div class="card-content">
+              <p>🦄 The Tech Bros team - ideation & going from 0 to 1</p>
+              <p>🌱 Diana Slepikaite - Intro to MVP coding</p>
+              <p>🌀 Ardita Shkurti - NVIDIA deep learning workshop</p>
+              <p>🔥 Sonia Dembowska - fireside chat (founding a tech startup)</p>
+              <p>"Flawlessly designed and executed. I have decided to build a startup and now have the connections and information required to do so. Phenomenal outcome. Thank you!"</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 4.7/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7307797548415537154/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="card" data-event-id="event-14" data-event-type="conference" data-event-country="UK" data-event-city="London">
+            <img src="/about/events/2025-3-7.jpeg" alt="Event on March 7, 2025" class="event-image" />
+            <p class="event-date">7th March, 2025</p>
+            <h3>wmn &lt; &gt; ai</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("conference")}</span>
+              <span class="event-location">London, UK</span>
+            </div>
+            <div class="card-content">
+              <p>Technical talks:</p>
+              <p>🔒 Cryptography with Milette Gillow</p>
+              <p>🎤 GenAI music with Eleanor Row</p>
+              <p>🐣 AI applied to animal communication with Antonella Torrisi</p>
+              <p>Founders' panel with Siddhi Mittal (yhangry), Mariam Ahmed (Menza) & Anna Hlédiková (SurgeryAI), moderated by Sedinam Simpson</p>
+              <p>"It was a brilliant event! So motivating for every and each girl in the room. You are making a real difference!"</p>
+              <p>"I thoroughly enjoyed the event, its format, the quality of presentations and especially the panel where the founders were extremely transparent."</p>
+              <p>"It was so fantastic to be around such high calibre women who are ambitious and doing amazing things. I would love to continue to be part of the community."</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 4.6/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7304244167654756352/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="card" data-event-id="event-15" data-event-type="workshop" data-event-country="UK" data-event-city="Cambridge">
+            <img src="/about/events/2025-3-4.jpeg" alt="Event on March 4, 2025" class="event-image" />
+            <p class="event-date">4th March, 2025</p>
+            <h3>How to build a startup</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("workshop")}</span>
+              <span class="event-location">Cambridge, UK</span>
+            </div>
+            <div class="card-content">
+              <p>🦄 Ahana Banerjee - 0 to 1: how to build a startup from scratch</p>
+              <p>🔥 Shelley Brown - Pitch perfect: what VCs look for (+ how to pitch it)</p>
+              <p>💬 The Tech Bros team - Customer chats: how to tell if you're building the right thing</p>
+              <p>"This was such an informative session - I found myself inspired by all I learned."</p>
+              <p>"Really great intro to creating a successful startup and getting investors."</p>
+              <p>"I feel more confident, it helped me define the next steps to take"</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 4.6/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7303112498885361664/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="card" data-event-id="event-16" data-event-type="hackathon" data-event-country="UK" data-event-city="York">
+            <img src="/about/events/2025-2-28.jpeg" alt="Event on February 28, 2025" class="event-image" />
+            <p class="event-date">28th February, 2025</p>
+            <h3>bad ideas build</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("hackathon")}</span>
+              <span class="event-location">York, UK</span>
+            </div>
+            <div class="card-content">
+              <p>"I really enjoyed the activity. My main barrier currently isn't motivation or capacity but rather perfectionism and waiting for the right idea. So having a bad idea day for focus on building confidence literally is something I would do again! Absolutely feel more informed and more likely to look into start up possibilities. Thank you so happy we were able to make this happen!"</p>
+              <p>"Truly a one-of-a-kind experience for me. I really enjoyed the challenge of going from zero to an MVP in just one day - it pushed us beyond our limits and forced us to deliver a pitch by the end. The event required a wide range of skills, from creativity and innovation to collaboration and public speaking. I think it all came together really well, and I'm incredibly grateful to have been a part of it."</p>
+              <p>"The atmosphere was great and loved how non-serious it was, made it all feel very comfortable. It was a first time for me attending such an event and it definitely has opened my mind up to possibilities!"</p>
+              <p>"It has been a lovely day and I met lots of wonderful people at the event. I'm definitely more interested in founding my own startup after the event, and feel more confident about doing so:)"</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 4.9/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7302323566593671168/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="card" data-event-id="event-17" data-event-type="hackathon" data-event-country="UK" data-event-city="London">
+            <img src="/about/events/2025-2-25.jpeg" alt="Event on February 25, 2025" class="event-image" />
+            <p class="event-date">25th February, 2025</p>
+            <h3>bad ideas build</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("hackathon")}</span>
+              <span class="event-location">London, UK</span>
+            </div>
+            <div class="card-content">
+              <p>"I have wanted to found a startup and I really enjoyed seeing how much we could build in such a short time"</p>
+              <p>"I loved how open the event was. No coding experience required! I also love a women's space. Feels less daunting and much more comfortable!"</p>
+              <p>"At the beginning of this event I had no idea [how to code] but in less than one hour I built a website by myself. I am so glad about it because it helped to understand that I am able to work and do whatever I want with the right support"</p>
+              <p>"Such a fun way to spend the evening and I would love to do more interactive, hands on, and personal events like this in the future"</p>
+              <p>"Enjoyed how creative it is, and how working with the right people really makes things work out much better. With the right person I'm more likely to build a startup."</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 4.8/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7300478911165984769/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="card" data-event-id="event-18" data-event-type="hackathon" data-event-country="UK" data-event-city="Cambridge">
+            <img src="/about/events/2025-2-6.jpeg" alt="Event on February 6, 2025" class="event-image" />
+            <p class="event-date">6th February, 2025</p>
+            <h3>bad ideas build</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("hackathon")}</span>
+              <span class="event-location">Cambridge, UK</span>
+            </div>
+            <div class="card-content">
+              <p>"10/10 Exactly what the startup and STEM climate needed! It goes a long way towards influencing sociological biases and helping like-minded people connect, especially when these like-minded people are very rare! The more extraordinary the gathering, the higher chances for unicorns ;) And community is a BIG part of the equation. Thank you! &lt;3"</p>
+              <p>"Awesome evening, loved the low stakes fun environment of making a "bad" idea. I think that was really helpful."</p>
+              <p>"I loved that we worked on different ideas from the ones we proposed. It made it so that we weren't too set on one idea and it was fun to see the demo at the end for our concept."</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 4.9/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7294701429229846528/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="card" data-event-id="event-19" data-event-type="hackathon" data-event-country="UK" data-event-city="Manchester">
+            <img src="/about/events/2025-2-5.jpeg" alt="Event on February 5, 2025" class="event-image" />
+            <p class="event-date">5th February, 2025</p>
+            <h3>bad ideas build</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("hackathon")}</span>
+              <span class="event-location">Manchester, UK</span>
+            </div>
+            <div class="card-content">
+              <p>"I love it! It was fun! I especially love the food and drinks served :))) And I love the photos too 🥹 Thank you for such a wonderful event!"</p>
+              <p>"Amazing event. It was really nice to get back to hands-on coding. I actually came in thinking that the time planned for hacking would not be even close to enough for an MVP. However, all groups were able to execute their projects, which was great to see. The food was great too ;) Overall, a day spent productively well."</p>
+              <p>"The atmosphere was harmonious yet professional beyond my expectations. Loved it!"</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 5/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7293243997261553665" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="card" data-event-id="event-20" data-event-type="workshop" data-event-country="UK" data-event-city="London">
+            <img src="/about/events/2024-11-20.jpeg" alt="Event on November 20, 2024" class="event-image" />
+            <p class="event-date">20th November, 2024</p>
+            <h3>How to build a startup</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("workshop")}</span>
+              <span class="event-location">London, UK</span>
+            </div>
+            <div class="card-content">
+              <p>In partnership with Imperial College London and Google Cloud.</p>
+              <p>0 to 1: How to Build a Startup from Scratch (Sophie Defauw)</p>
+              <p>Creating Your Pitch Deck: What VCs Look For (June Angelides, MBE and Jo Slota-Newson)</p>
+              <p>Coding your MVP - Intro to Front End (Diana Slepikaite)</p>
+              <p>Coding your MVP - Intro to Back End (Maria Stennett)</p>
+              <p>How (Not) To Approach Customer Conversations (Maria Luque)</p>
+              <p>"Wonderful. So much fun. Please do more. Empowering to get feedback and advice from boss women. Love the all female space. So needed. Brilliant. You're brilliant."</p>
+              <p>"I loved it! It felt incredible to collaborate and talk to so many inspiring women!"</p>
+              <p>"The event was awesome!! I attended the 0 to 1 and pitch deck sessions, and Sophie and June were FANTASTIC!!! I am definitely motivated to attempt a start up. Thank you so much for the highly informative evening!"</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 4.9/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7266770841193877504/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="card" data-event-id="event-21" data-event-type="other" data-event-country="UK" data-event-city="Oxford">
+            <img src="/about/events/2024-11-6.jpeg" alt="Event on November 6, 2024" class="event-image" />
+            <p class="event-date">6th November, 2024</p>
+            <h3>founders' panel</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("other")}</span>
+              <span class="event-location">Oxford, UK</span>
+            </div>
+            <div class="card-content">
+              <p>Zhanet Zaharieva (Quantum Dice) & Kirsty Lloyd-Jukes (Latent Logic, exited to Waymo) shared Insights on the different approaches to starting a company, on how to network, and on following your passions, followed by champagne + pizza</p>
+              <p>"It was fantastic to be surrounded by so many great minds."</p>
+              <p>"I was blown away by some of the founders I met"</p>
+              <p>"I wanted to reach out to tell you how much enjoyed the event. It was lovely to connect with other women in STEM and hear about from the founders. I'll definitely continue to follow the work The Tech Bros are doing!"</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 5/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7260284056666279939/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="card" data-event-id="event-22" data-event-type="conference" data-event-country="UK" data-event-city="London">
+            <img src="/about/events/2024-10-16.jpeg" alt="Event on October 16, 2024" class="event-image" />
+            <p class="event-date">16th October, 2024</p>
+            <h3>wmn &lt; &gt; deep tech</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("conference")}</span>
+              <span class="event-location">London, UK</span>
+            </div>
+            <div class="card-content">
+              <p>All-PhD VC Panel with Katherine Collett (Deep Science Ventures), Katie King (BioOrbit), Zhanet Zaharieva (Quantum Dice), and Isabel Zhang (HCVC), followed by Rapid Pitches from attending founders</p>
+              <p>"This was hands-down one of my favourite events I've ever attended. The energy in the room, from the incredible founders to the inspiring conversations, was unforgettable."</p>
+              <p>"The event was absolutely amazing, thank you so much for the incredible organization, looking forward to future events!"</p>
+              <p>"Fantastic event and group of women! I hope we can do more of these events on a quarterly basis"</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 4.7/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7254053279972700160/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="card" data-event-id="event-23" data-event-type="hackathon" data-event-country="UK" data-event-city="London">
+            <img src="/about/events/2024-5-24.jpeg" alt="Event on May 24, 2024" class="event-image" />
+            <p class="event-date">24th-26th May, 2024</p>
+            <h3>3-day hachaton with imperial and google cloud (launch)</h3>
+            <div class="event-meta">
+              <span class="event-type">{capitalize("hackathon")}</span>
+              <span class="event-location">London, UK</span>
+            </div>
+            <div class="card-content">
+              <p>VC panel (Lisa Shu, Nelli Morgulchik, Shelley Brown) + Founders' panel (Tatiana Botskina, Anna Vybornova, Amélie Quilichini), followed by 2-day hack open to all levels with SWE mentors supporting teams</p>
+              <p>"I've been to plenty of hackathons as a participant, speaker, judge and I am not trying to flatter you but at yours there was so much excitement in the atmosphere, more than I have encountered at any other."</p>
+              <p>"Best hackathon I have attended! A weekend I will never forget, thank you for your efforts and congratulations on pulling it off so beautifully! &lt;3"</p>
+              <p>"I learnt that I might be interested in becoming a founder"</p>
+              <p>"It was fun, it was inspiring, I learnt coding, I learnt to just go for it"</p>
+              <p>"I have new role models 🥰"</p>
+            </div>
+            <button class="see-more-btn">See more...</button>
+            <p class="star-rating">⭐⭐⭐⭐⭐ 4.6/5</p>
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7201225134286794752/" class="linkedin-link" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
           </div>
         </div>
         <div class="text-center" style="margin-top: 3rem;">
@@ -73,6 +636,28 @@ import Footer from '../components/Footer.astro';
     </section>
   </main>
   <Footer />
+
+  <!-- Event Modal -->
+  <div id="event-modal" class="event-modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close modal">&times;</button>
+      <img id="modal-image" src="" alt="" class="modal-image" />
+      <p id="modal-date" class="modal-date"></p>
+      <h2 id="modal-title" class="modal-title"></h2>
+      <div id="modal-meta" class="modal-meta">
+        <span class="event-type" id="modal-event-type"></span>
+        <span class="event-location" id="modal-event-location"></span>
+      </div>
+      <div id="modal-body" class="modal-body"></div>
+      <p id="modal-rating" class="modal-rating"></p>
+      <a id="modal-linkedin" href="#" class="modal-linkedin" aria-label="LinkedIn post about this event" target="_blank" rel="noopener noreferrer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
 </BaseLayout>
 
 <style>
@@ -82,7 +667,7 @@ import Footer from '../components/Footer.astro';
 
   .mission-content {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 0;
   }
 
   .lead {
@@ -110,7 +695,7 @@ import Footer from '../components/Footer.astro';
   }
 
   .origin-list li {
-    padding: 1rem 0;
+    padding: 0.3rem;
     padding-left: 2rem;
     position: relative;
     color: var(--color-text-muted);
@@ -136,14 +721,885 @@ import Footer from '../components/Footer.astro';
   .section-intro {
     text-align: center;
     font-size: 1.2rem;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     color: var(--color-text);
+  }
+
+  /* Filter Styles */
+  .event-filters {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-end;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .filter-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-primary);
+    white-space: nowrap;
+  }
+
+  .filter-dropdown {
+    position: relative;
+  }
+
+  .filter-button {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--color-primary);
+    color: var(--color-text);
+    padding: 0.75rem 1.25rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-primary);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    gap: 0.5rem;
+    min-width: 150px;
+    transition: all 0.2s ease;
+  }
+
+  .filter-button:hover {
+    background: rgba(239, 31, 159, 0.1);
+    border-color: var(--color-accent);
+  }
+
+  .filter-button[aria-expanded="true"] {
+    background: rgba(239, 31, 159, 0.2);
+    border-color: var(--color-accent);
+  }
+
+  .filter-label {
+    flex: 1;
+    text-align: left;
+  }
+
+  .filter-arrow {
+    font-size: 0.7rem;
+    transition: transform 0.2s ease;
+  }
+
+  .filter-button[aria-expanded="true"] .filter-arrow {
+    transform: rotate(180deg);
+  }
+
+  .filter-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 0.5rem;
+    background: linear-gradient(180deg, var(--color-bg-start) 0%, var(--color-bg-end) 100%);
+    border: 1px solid var(--color-primary);
+    border-radius: 4px;
+    min-width: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 100;
+    display: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .filter-menu-nested {
+    overflow: visible !important;
+    max-height: none;
+  }
+
+  .filter-menu-nested .filter-submenu {
+    overflow: visible;
+  }
+
+  .filter-menu.active {
+    display: block;
+  }
+
+  .filter-menu li {
+    list-style: none;
+    position: relative;
+  }
+
+  .filter-submenu-list li {
+    list-style: none;
+  }
+
+  .filter-option {
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--color-text);
+    padding: 0.75rem 1rem;
+    text-align: left;
+    cursor: pointer;
+    font-family: var(--font-primary);
+    font-size: 0.9rem;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .filter-option:hover {
+    background: rgba(239, 31, 159, 0.2);
+    color: var(--color-primary);
+  }
+
+  .filter-option[data-active="true"] {
+    background: rgba(239, 31, 159, 0.3);
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+
+  .filter-submenu {
+    position: relative;
+  }
+
+  .filter-menu-nested .filter-submenu {
+    overflow: visible;
+  }
+
+  .filter-submenu-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .submenu-arrow {
+    font-size: 0.7rem;
+    transition: transform 0.2s ease;
+  }
+
+  .filter-submenu:hover .submenu-arrow {
+    transform: rotate(90deg);
+  }
+
+  .filter-submenu-list {
+    position: static;
+    left: 0;
+    top: auto;
+    margin-top: 0;
+    background: linear-gradient(180deg, #002d2f 0%, #000000 100%);
+    border-top: 1px solid var(--color-accent);
+    border-bottom: 1px solid var(--color-accent);
+    border-left: none;
+    border-right: none;
+    border-radius: 4px;
+    min-width: 100%;
+    width: 100%;
+    display: none;
+    box-shadow: none;
+    z-index: 101;
+    padding: 0;
+    list-style: none;
+  }
+
+  .filter-submenu-list .filter-option:hover {
+    background: rgba(92, 225, 230, 0.2);
+    color: var(--color-accent);
+  }
+
+  .filter-submenu-list .filter-option[data-active="true"] {
+    background: rgba(92, 225, 230, 0.3);
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+
+  /* Submenu display is controlled by JavaScript, not CSS hover */
+
+  .clear-filters {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--color-accent);
+    color: var(--color-accent);
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-primary);
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    margin-left: auto;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .clear-filters:hover {
+    background: rgba(92, 225, 230, 0.2);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
   }
 
   .event-date {
     color: var(--color-accent);
     font-size: 0.9rem;
-    margin-top: 1rem;
+    margin-bottom: 1rem;
     font-weight: 500;
   }
+
+  .event-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 1.5rem;
+    height: 100%;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+
+  .card:hover {
+    background: rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .card h3 {
+    margin-bottom: 0.75rem;
+    font-size: 1.3rem;
+  }
+
+  .event-meta {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .event-meta .event-type,
+  .event-meta .event-location {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .event-meta .event-type {
+    background: rgba(239, 31, 159, 0.2) !important;
+    border: 1px solid var(--color-primary) !important;
+    color: var(--color-primary) !important;
+    text-transform: capitalize;
+  }
+
+  .event-meta .event-location {
+    background: rgba(92, 225, 230, 0.2) !important;
+    border: 1px solid var(--color-accent) !important;
+    color: var(--color-accent) !important;
+  }
+
+  .card p {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+  }
+
+  .card p:last-of-type {
+    margin-bottom: 1rem;
+  }
+
+  .star-rating {
+    color: var(--color-accent);
+    font-size: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .see-more-btn {
+    flex-shrink: 0;
+    text-align: left;
+  }
+
+  .linkedin-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: var(--color-accent);
+    opacity: 0.8;
+    transition: opacity 0.1s ease;
+    margin-top: 0.5rem;
+    z-index: 10;
+  }
+
+  .linkedin-link:hover {
+    opacity: 1;
+  }
+
+  .linkedin-link svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .card-content {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    line-height: 1.6;
+    max-height: calc(1.6em * 5);
+    min-height: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-content p {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+  }
+
+  .see-more-btn {
+    background: none;
+    border: none;
+    color: var(--color-accent);
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    padding: 0;
+    text-decoration: underline;
+    font-family: var(--font-primary);
+  }
+
+  .see-more-btn:hover {
+    opacity: 0.8;
+  }
+
+  .card {
+    cursor: pointer;
+  }
+
+  /* Modal Styles */
+  .event-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+  }
+
+  .event-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(5px);
+  }
+
+  .modal-content {
+    position: relative;
+    background: linear-gradient(180deg, var(--color-bg-start) 0%, var(--color-bg-end) 100%);
+    border: 1px solid var(--color-primary);
+    border-radius: 8px;
+    padding: 2rem;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    width: 90%;
+    z-index: 1001;
+    box-shadow: 0 0 30px rgba(239, 31, 159, 0.3);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--color-text);
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .modal-close:hover {
+    opacity: 1;
+  }
+
+  .modal-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-date {
+    color: var(--color-accent);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  .modal-title {
+    margin-bottom: 0.75rem;
+    font-size: 1.8rem;
+  }
+
+  .modal-meta {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .modal-content .modal-meta .event-type,
+  .modal-content .modal-meta .event-location {
+    display: inline-block !important;
+    padding: 0.25rem 0.75rem !important;
+    border-radius: 4px !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+  }
+
+  .modal-content .modal-meta .event-type {
+    background: rgba(239, 31, 159, 0.2) !important;
+    border: 1px solid #ef1f9f !important;
+    color: #ef1f9f !important;
+  }
+
+  .modal-content .modal-meta .event-location {
+    background: rgba(92, 225, 230, 0.2) !important;
+    border: 1px solid #5ce1e6 !important;
+    color: #5ce1e6 !important;
+  }
+
+  .modal-body {
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-body p {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--color-text-muted);
+  }
+
+  .modal-rating {
+    color: var(--color-accent);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  .modal-linkedin {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-accent);
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+  }
+
+  .modal-linkedin:hover {
+    opacity: 1;
+  }
+
+  .modal-linkedin svg {
+    width: 24px;
+    height: 24px;
+  }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Filter functionality
+    const cards = document.querySelectorAll('.card');
+    const filterTypeBtn = document.getElementById('filter-type-btn');
+    const filterLocationBtn = document.getElementById('filter-location-btn');
+    const filterTypeMenu = document.getElementById('filter-type-menu');
+    const filterLocationMenu = document.getElementById('filter-location-menu');
+    const clearFiltersBtn = document.getElementById('clear-filters-btn');
+    
+    let activeFilters = {
+      type: '',
+      location: ''
+    };
+
+    // Toggle filter menus
+    if (filterTypeBtn && filterTypeMenu) {
+      filterTypeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isExpanded = filterTypeBtn.getAttribute('aria-expanded') === 'true';
+        filterTypeBtn.setAttribute('aria-expanded', (!isExpanded).toString());
+        filterTypeMenu.classList.toggle('active');
+        if (!isExpanded) {
+          filterLocationMenu?.classList.remove('active');
+          filterLocationBtn?.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    if (filterLocationBtn && filterLocationMenu) {
+      filterLocationBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isExpanded = filterLocationBtn.getAttribute('aria-expanded') === 'true';
+        filterLocationBtn.setAttribute('aria-expanded', (!isExpanded).toString());
+        filterLocationMenu.classList.toggle('active');
+        if (!isExpanded) {
+          filterTypeMenu?.classList.remove('active');
+          filterTypeBtn?.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    // Close menus when clicking outside
+    document.addEventListener('click', (e) => {
+      const target = e.target;
+      if (!target || !(target instanceof HTMLElement)) return;
+      if (!target.closest('.filter-dropdown')) {
+        filterTypeMenu?.classList.remove('active');
+        filterLocationMenu?.classList.remove('active');
+        filterTypeBtn?.setAttribute('aria-expanded', 'false');
+        filterLocationBtn?.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Keep submenus open when hovering over the location menu area
+    let submenuCloseTimeout: ReturnType<typeof setTimeout> | null = null;
+    const locationMenu = document.getElementById('filter-location-menu');
+    
+    if (locationMenu) {
+      // Close all submenus
+      const closeAllSubmenus = () => {
+        locationMenu.querySelectorAll('.filter-submenu-list').forEach((submenuList) => {
+          (submenuList as HTMLElement).style.display = '';
+        });
+      };
+
+      // Handle each submenu individually
+      locationMenu.querySelectorAll('.filter-submenu').forEach((submenu) => {
+        const submenuList = submenu.querySelector('.filter-submenu-list') as HTMLElement;
+        
+        if (!submenuList) return;
+
+        // When entering a parent item, show its submenu (but keep others open if still in menu)
+        submenu.addEventListener('mouseenter', () => {
+          if (submenuCloseTimeout) {
+            clearTimeout(submenuCloseTimeout);
+            submenuCloseTimeout = null;
+          }
+          // Open this submenu
+          submenuList.style.display = 'block';
+        });
+
+        // When entering the submenu list itself, keep it open
+        submenuList.addEventListener('mouseenter', () => {
+          if (submenuCloseTimeout) {
+            clearTimeout(submenuCloseTimeout);
+            submenuCloseTimeout = null;
+          }
+          submenuList.style.display = 'block';
+        });
+
+        // When leaving the submenu list, check if we're still in the menu
+        submenuList.addEventListener('mouseleave', (e) => {
+          const mouseEvent = e as MouseEvent;
+          submenuCloseTimeout = setTimeout(() => {
+            // Check if mouse is still within the location menu
+            const relatedTarget = mouseEvent.relatedTarget as HTMLElement | null;
+            if (!relatedTarget || !locationMenu.contains(relatedTarget)) {
+              closeAllSubmenus();
+            }
+          }, 100);
+        });
+
+        // When leaving the parent item, check if we're moving to another parent
+        submenu.addEventListener('mouseleave', (e) => {
+          const mouseEvent = e as MouseEvent;
+          const relatedTarget = mouseEvent.relatedTarget as HTMLElement | null;
+          // If moving to another submenu or its parent, keep current one open
+          if (relatedTarget && locationMenu.contains(relatedTarget)) {
+            // Check if we're moving to another submenu's parent or list
+            const isMovingToAnotherSubmenu = Array.from(locationMenu.querySelectorAll('.filter-submenu')).some(
+              (sm) => sm !== submenu && (sm.contains(relatedTarget) || sm.querySelector('.filter-submenu-list')?.contains(relatedTarget))
+            );
+            if (!isMovingToAnotherSubmenu && !submenuList.contains(relatedTarget)) {
+              submenuCloseTimeout = setTimeout(() => {
+                if (!locationMenu.matches(':hover') && !submenu.matches(':hover') && !submenuList.matches(':hover')) {
+                  submenuList.style.display = '';
+                }
+              }, 100);
+            }
+          } else {
+            // Moving outside the menu entirely
+            submenuCloseTimeout = setTimeout(() => {
+              if (!locationMenu.contains(document.elementFromPoint(mouseEvent.clientX, mouseEvent.clientY))) {
+                closeAllSubmenus();
+              }
+            }, 100);
+          }
+        });
+      });
+
+      // When leaving the entire menu, close all submenus
+      locationMenu.addEventListener('mouseleave', () => {
+        submenuCloseTimeout = setTimeout(() => {
+          closeAllSubmenus();
+        }, 150);
+      });
+    }
+
+    // Handle filter option clicks
+    document.querySelectorAll('.filter-option').forEach(option => {
+      option.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const filterType = option.getAttribute('data-filter');
+        const filterValue = option.getAttribute('data-value') || '';
+        
+        if (filterType === 'type') {
+          activeFilters.type = filterValue;
+          // Capitalize first letter of filter value
+          const capitalizedLabel = filterValue 
+            ? filterValue.charAt(0).toUpperCase() + filterValue.slice(1)
+            : 'Type';
+          updateFilterButtonLabel(filterTypeBtn, capitalizedLabel);
+          // Update active state
+          filterTypeMenu?.querySelectorAll('.filter-option').forEach(opt => {
+            opt.setAttribute('data-active', opt === option ? 'true' : 'false');
+          });
+        } else if (filterType === 'location') {
+          activeFilters.location = filterValue;
+          // Determine label based on value
+          let label = 'Location';
+          if (filterValue) {
+            if (filterValue.endsWith(', UK')) {
+              label = filterValue.split(',')[0];
+            } else if (filterValue.endsWith(', USA') || filterValue.endsWith(', California')) {
+              label = filterValue.split(',')[0];
+            } else if (filterValue.endsWith(', Denmark')) {
+              label = filterValue.split(',')[0];
+            } else if (filterValue === 'UK' || filterValue === 'USA' || filterValue === 'Denmark') {
+              label = filterValue;
+            }
+          }
+          updateFilterButtonLabel(filterLocationBtn, label);
+          // Update active state
+          filterLocationMenu?.querySelectorAll('.filter-option').forEach(opt => {
+            opt.setAttribute('data-active', opt === option ? 'true' : 'false');
+          });
+        }
+        
+        applyFilters();
+        filterTypeMenu?.classList.remove('active');
+        filterLocationMenu?.classList.remove('active');
+        filterTypeBtn?.setAttribute('aria-expanded', 'false');
+        filterLocationBtn?.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    function updateFilterButtonLabel(button: HTMLElement | null, label: string) {
+      if (button) {
+        const labelSpan = button.querySelector('.filter-label');
+        if (labelSpan) {
+          labelSpan.textContent = label;
+        }
+      }
+    }
+
+    function applyFilters() {
+      cards.forEach((card: Element) => {
+        const cardType = card.getAttribute('data-event-type')?.toLowerCase() || '';
+        const cardCountry = card.getAttribute('data-event-country') || '';
+        const cardCity = card.getAttribute('data-event-city') || '';
+        
+        let showCard = true;
+        
+        // Filter by type
+        if (activeFilters.type) {
+          const normalizedCardType = cardType.toLowerCase();
+          const normalizedFilterType = activeFilters.type.toLowerCase();
+          if (normalizedCardType !== normalizedFilterType) {
+            showCard = false;
+          }
+        }
+        
+        // Filter by location
+        if (activeFilters.location && showCard) {
+          if (activeFilters.location === 'UK' || activeFilters.location === 'USA') {
+            // Filter by country
+            if (cardCountry !== activeFilters.location) {
+              showCard = false;
+            }
+          } else if (activeFilters.location === 'Europe') {
+            // Filter by Europe (which includes Denmark)
+            if (cardCountry !== 'Denmark') {
+              showCard = false;
+            }
+          } else {
+            // Filter by exact location (format: "City, Country")
+            const expectedLocation = `${cardCity}, ${cardCountry}`;
+            if (expectedLocation !== activeFilters.location) {
+              showCard = false;
+            }
+          }
+        }
+        
+        if (showCard) {
+          (card as HTMLElement).style.display = '';
+        } else {
+          (card as HTMLElement).style.display = 'none';
+        }
+      });
+    }
+
+    // Clear filters
+    if (clearFiltersBtn) {
+      clearFiltersBtn.addEventListener('click', () => {
+        activeFilters = { type: '', location: '' };
+        updateFilterButtonLabel(filterTypeBtn, 'Type');
+        updateFilterButtonLabel(filterLocationBtn, 'Location');
+        filterTypeMenu?.querySelectorAll('.filter-option').forEach(opt => {
+          opt.setAttribute('data-active', 'false');
+        });
+        filterLocationMenu?.querySelectorAll('.filter-option').forEach(opt => {
+          opt.setAttribute('data-active', 'false');
+        });
+        applyFilters();
+      });
+    }
+
+    // Modal functionality
+    const modal = document.getElementById('event-modal');
+    if (!modal) return;
+    
+    const modalOverlay = modal.querySelector('.modal-overlay');
+    const modalClose = modal.querySelector('.modal-close');
+    const modalImage = document.getElementById('modal-image') as HTMLImageElement | null;
+    const modalDate = document.getElementById('modal-date');
+    const modalTitle = document.getElementById('modal-title');
+    const modalMeta = document.getElementById('modal-meta');
+    const modalBody = document.getElementById('modal-body');
+    const modalRating = document.getElementById('modal-rating');
+    const modalLinkedin = document.getElementById('modal-linkedin') as HTMLAnchorElement | null;
+
+    if (!modalOverlay || !modalClose || !modalImage || !modalDate || !modalTitle || !modalMeta || !modalBody || !modalRating || !modalLinkedin) return;
+
+    function openModal(card: Element) {
+      const image = card.querySelector('.event-image') as HTMLImageElement | null;
+      const date = card.querySelector('.event-date');
+      const title = card.querySelector('h3');
+      const content = card.querySelector('.card-content');
+      const rating = card.querySelector('.star-rating');
+      const linkedin = card.querySelector('.linkedin-link') as HTMLAnchorElement | null;
+
+      if (!image || !date || !title || !content || !rating || !linkedin || !modalImage || !modalDate || !modalTitle || !modalMeta || !modalBody || !modalRating || !modalLinkedin || !modal) return;
+
+      modalImage.src = image.src;
+      modalImage.alt = image.alt;
+      modalDate.textContent = date.textContent;
+      modalTitle.textContent = title.textContent;
+      
+      // Populate modal meta tags from data attributes using textContent
+      const eventType = card.getAttribute('data-event-type') || '';
+      const eventCity = card.getAttribute('data-event-city') || '';
+      const eventCountry = card.getAttribute('data-event-country') || '';
+      const capitalizedType = eventType.charAt(0).toUpperCase() + eventType.slice(1);
+      const location = eventCity && eventCountry ? `${eventCity}, ${eventCountry}` : '';
+      
+      const modalEventType = document.getElementById('modal-event-type');
+      const modalEventLocation = document.getElementById('modal-event-location');
+      if (modalEventType) {
+        modalEventType.textContent = capitalizedType;
+      }
+      if (modalEventLocation) {
+        modalEventLocation.textContent = location;
+      }
+      
+      modalBody.innerHTML = content.innerHTML;
+      modalRating.textContent = rating.textContent;
+      modalLinkedin.href = linkedin.href;
+
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      if (!modal) return;
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    cards.forEach((card: Element) => {
+      // Handle LinkedIn link clicks with capture phase - ensure immediate navigation
+      const linkedinLink = card.querySelector('.linkedin-link') as HTMLAnchorElement | null;
+      if (linkedinLink) {
+        linkedinLink.addEventListener('click', (e: Event) => {
+          e.stopImmediatePropagation(); // Stop ALL event handlers from firing
+          // Allow default link behavior to proceed immediately - don't prevent default
+        }, true); // Use capture phase to fire before card click handler
+      }
+      
+      card.addEventListener('click', (e: Event) => {
+        const target = e.target;
+        if (!target || !(target instanceof HTMLElement)) return;
+        // Don't open modal if clicking on LinkedIn link or its children
+        if (target.closest('.linkedin-link')) {
+          e.stopImmediatePropagation();
+          return;
+        }
+        openModal(card);
+      });
+      
+      // Also handle "See more" button clicks
+      const seeMoreBtn = card.querySelector('.see-more-btn');
+      if (seeMoreBtn) {
+        seeMoreBtn.addEventListener('click', (e: Event) => {
+          e.stopPropagation(); // Prevent card click from also firing
+          openModal(card);
+        });
+      }
+    });
+
+    modalClose.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', closeModal);
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+  });
+</script>

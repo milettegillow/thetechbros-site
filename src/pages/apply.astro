@@ -11,7 +11,7 @@ import Footer from '../components/Footer.astro';
     <section class="apply-hero">
       <div class="container">
         <h1>Apply to The Tech Bros</h1>
-        <p class="hero-subtitle">Technical founders. Serious builders. No fluff.</p>
+        <p class="hero-subtitle">The world's first all-female, all-technical accelerator.</p>
       </div>
     </section>
 
@@ -21,11 +21,7 @@ import Footer from '../components/Footer.astro';
         <div class="links-grid">
           <a href="/apply/manifesto" class="link-card">
             <h2>Manifesto</h2>
-            <p>Who we are. Who this is for. What we believe.</p>
-          </a>
-          <a href="/apply/faq" class="link-card">
-            <h2>FAQ</h2>
-            <p>Everything you need to know about our program.</p>
+            <p>Who we are, who this is for, & what we believe.</p>
           </a>
           <a href="/apply/join-community" class="link-card">
             <h2>Join the Community</h2>
@@ -33,8 +29,41 @@ import Footer from '../components/Footer.astro';
           </a>
           <a href="/apply/apply-accelerator" class="link-card">
             <h2>Apply for the Accelerator</h2>
-            <p>Ready to apply? Start your application here.</p>
+            <p>Ready to build? Start your application here.</p>
           </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+      <div class="container">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <h3>Why are you called "The Tech Bros"?</h3>
+            <p>It's a tongue-in-cheek name 😜 Our community of technical women love it, and that's who we're here for!</p>
+          </div>
+          <div class="faq-item">
+            <h3>Am I eligible for the accelerator programme?</h3>
+            <p>All-female founding teams where everyone has a STEM background are invited to apply to our accelerator.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Do I need a co-founder to apply?</h3>
+            <p>We don't do any co-founder matching on the programme. You can, however, apply as a solo founder.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Do I need to be working on my startup full-time?</h3>
+            <p>Yes, everyone accepted onto the accelerator must be working on their startup full-time.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Do I need to be based in a specific location to apply?</h3>
+            <p>No, we accept applications globally.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Do you take any equity?</h3>
+            <p>Not at this time.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -100,6 +129,49 @@ import Footer from '../components/Footer.astro';
   @media (max-width: 768px) {
     .links-grid {
       grid-template-columns: 1fr;
+    }
+  }
+
+  .faq-section {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 4rem 0;
+  }
+
+  .faq-section h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .faq-item:last-child {
+    border-bottom: none;
+  }
+
+  .faq-item h3 {
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+  }
+
+  .faq-item p {
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    font-size: 1.05rem;
+  }
+
+  @media (max-width: 768px) {
+    .faq-item h3 {
+      font-size: 1.2rem;
     }
   }
 </style>
