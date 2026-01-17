@@ -30,22 +30,39 @@ import Footer from '../components/Footer.astro';
             <div class="waitlist-section">
               <h3>join the waitlist</h3>
               <p>Be the first to know when our merch launches. Early access, exclusive designs, and special pricing for community members.</p>
-              <form class="waitlist-form">
-            <input type="text" placeholder="Your Name" required />
-            <input type="email" placeholder="Your Email" required />
-            <select required>
-              <option value="">Select Size Preference</option>
-              <option value="xs">XS</option>
-              <option value="s">S</option>
-              <option value="m">M</option>
-              <option value="l">L</option>
-              <option value="xl">XL</option>
-              <option value="xxl">XXL</option>
-            </select>
-            <textarea placeholder="What merch items are you most interested in? (optional)" rows="4"></textarea>
-            <button type="submit" class="btn">Join Waitlist (Placeholder)</button>
+              <form class="waitlist-form" id="waitlist-form">
+                <label for="waitlist-name" class="visually-hidden">Your Name</label>
+                <input type="text" id="waitlist-name" name="name" placeholder="Your Name" required />
+                <label for="waitlist-email" class="visually-hidden">Your Email</label>
+                <input type="email" id="waitlist-email" name="email" placeholder="Your Email" required />
+                <label for="waitlist-size" class="visually-hidden">Size Preference</label>
+                <select id="waitlist-size" name="sizePreference" required>
+                  <option value="">Select Size Preference</option>
+                  <option value="xs">XS</option>
+                  <option value="s">S</option>
+                  <option value="m">M</option>
+                  <option value="l">L</option>
+                  <option value="xl">XL</option>
+                  <option value="xxl">XXL</option>
+                </select>
+                <label for="waitlist-interested" class="visually-hidden">What merch items are you most interested in?</label>
+                <textarea id="waitlist-interested" name="interestedIn" placeholder="What merch items are you most interested in? (optional)" rows="4"></textarea>
+                <!-- Honeypot field: invisible, not in tab order, not announced by screen readers -->
+                <input
+                  type="text"
+                  name="company"
+                  class="honeypot"
+                  tabindex="-1"
+                  autocomplete="off"
+                  aria-hidden="true"
+                />
+                <button type="submit" class="btn" id="waitlist-submit">Join Waitlist</button>
                 <p class="form-note">We'll only use your email to notify you about merch launches. No spam, ever.</p>
+                <div id="waitlist-message" role="status" aria-live="polite" class="waitlist-message"></div>
               </form>
+              <div id="waitlist-success" style="display: none;" role="status" aria-live="polite">
+                <p>You're on the waitlist — we'll be in touch when merch drops.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -54,6 +71,75 @@ import Footer from '../components/Footer.astro';
   </main>
   <Footer />
 </BaseLayout>
+
+<script>
+  const waitlistForm = document.getElementById('waitlist-form') as HTMLFormElement;
+  const waitlistSubmit = document.getElementById('waitlist-submit') as HTMLButtonElement;
+  const waitlistMessage = document.getElementById('waitlist-message') as HTMLDivElement;
+  const waitlistSuccess = document.getElementById('waitlist-success') as HTMLDivElement;
+
+  if (waitlistForm && waitlistSubmit && waitlistMessage && waitlistSuccess) {
+    waitlistForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Clear previous messages
+      waitlistMessage.textContent = '';
+      waitlistMessage.className = 'waitlist-message';
+      waitlistSuccess.style.display = 'none';
+      waitlistForm.style.display = 'flex';
+
+      // Disable button and show loading state
+      waitlistSubmit.disabled = true;
+      const originalButtonText = waitlistSubmit.textContent;
+      waitlistSubmit.textContent = 'Submitting…';
+
+      // Collect form data
+      const formData = new FormData(waitlistForm);
+      const name = formData.get('name')?.toString().trim() || '';
+      const email = formData.get('email')?.toString().trim() || '';
+      const sizePreference = formData.get('sizePreference')?.toString().trim() || '';
+      const interestedIn = formData.get('interestedIn')?.toString().trim() || '';
+      const company = formData.get('company')?.toString().trim() || '';
+
+      try {
+        const response = await fetch('/api/merch/waitlist', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            sizePreference,
+            interestedIn: interestedIn || undefined,
+            company: company || undefined,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          // Success: hide form and show success message
+          waitlistForm.style.display = 'none';
+          waitlistSuccess.style.display = 'block';
+        } else {
+          // Error: show inline error message
+          const errorMessage = data.error || 'Something went wrong. Please try again later.';
+          waitlistMessage.textContent = errorMessage;
+          waitlistMessage.className = 'waitlist-message waitlist-message-error';
+        }
+      } catch (error) {
+        // Network error
+        waitlistMessage.textContent = 'Network error. Please check your connection and try again.';
+        waitlistMessage.className = 'waitlist-message waitlist-message-error';
+      } finally {
+        // Re-enable button
+        waitlistSubmit.disabled = false;
+        waitlistSubmit.textContent = originalButtonText || 'Join Waitlist';
+      }
+    });
+  }
+</script>
 
 <style>
   .merch-hero {
@@ -149,6 +235,55 @@ import Footer from '../components/Footer.astro';
     color: var(--color-text-muted);
     font-style: italic;
     text-align: center;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .waitlist-message {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+  }
+
+  .waitlist-message-error {
+    color: var(--color-primary);
+    background: rgba(239, 31, 159, 0.1);
+    border: 1px solid rgba(239, 31, 159, 0.3);
+  }
+
+  #waitlist-success {
+    font-size: 1.1rem;
+    color: var(--color-accent);
+    padding: 1rem;
+    background: rgba(92, 225, 230, 0.1);
+    border: 1px solid rgba(92, 225, 230, 0.3);
+    border-radius: 4px;
+    text-align: center;
+  }
+
+  .waitlist-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 
   @media (max-width: 768px) {
