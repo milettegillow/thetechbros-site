@@ -29,11 +29,19 @@ export const POST: APIRoute = async ({ request, url }) => {
     }
   }
 
-  // Check environment variables
-  const airtablePat = import.meta.env.AIRTABLE_PAT;
-  const airtableBaseId = import.meta.env.AIRTABLE_BASE_ID;
-  const airtableTableId = import.meta.env.AIRTABLE_TABLE_ID;
-  const airtableTableName = import.meta.env.AIRTABLE_TABLE_NAME;
+  // Check environment variables (using process.env for Vercel runtime)
+  const airtablePat = process.env.AIRTABLE_PAT;
+  const airtableBaseId = process.env.AIRTABLE_BASE_ID;
+  const airtableTableId = process.env.AIRTABLE_TABLE_ID;
+  const airtableTableName = process.env.AIRTABLE_TABLE_NAME;
+
+  // Log env var presence (safe, no secrets)
+  console.log('Environment variables present:', {
+    AIRTABLE_PAT: !!airtablePat,
+    AIRTABLE_BASE_ID: !!airtableBaseId,
+    AIRTABLE_TABLE_ID: !!airtableTableId,
+    AIRTABLE_TABLE_NAME: !!airtableTableName,
+  });
 
   // Validate required env vars
   const missingVars: string[] = [];
@@ -151,9 +159,12 @@ export const POST: APIRoute = async ({ request, url }) => {
 
     if (!airtableResponse.ok) {
       const errorText = await airtableResponse.text();
+      // Redact baseId from URL path for logging (show table identifier only)
+      const urlPath = `https://api.airtable.com/v0/[REDACTED]/${tableIdentifier}`;
       console.error('Airtable API error:', {
         status: airtableResponse.status,
         statusText: airtableResponse.statusText,
+        urlPath: urlPath,
         body: errorText,
       });
       return new Response(
