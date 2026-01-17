@@ -84,8 +84,30 @@ export const POST: APIRoute = async ({ request }) => {
 
   // Trim and sanitize inputs
   const name = body.name.trim();
-  const sizePreference = body.sizePreference.trim();
+  const sizePreferenceRaw = body.sizePreference.trim().toLowerCase();
   const interestedIn = body.interestedIn ? body.interestedIn.trim() : undefined;
+
+  // Normalize size preference to Airtable format
+  const sizeMap: Record<string, string> = {
+    'xs': 'XS',
+    's': 'S',
+    'm': 'M',
+    'l': 'L',
+    'xl': 'XL',
+    'xxl': 'XXL',
+  };
+
+  const sizePreference = sizeMap[sizePreferenceRaw];
+
+  if (!sizePreference) {
+    return new Response(
+      JSON.stringify({ success: false, error: 'Invalid size preference. Valid options: XS, S, M, L, XL, XXL' }),
+      {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  }
 
   // Check environment variables
   const airtablePat = process.env.AIRTABLE_PAT;
