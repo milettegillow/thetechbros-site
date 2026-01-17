@@ -8,6 +8,8 @@ const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 
 interface NewsletterRequest {
   email: string;
+  firstName?: string;
+  lastName?: string;
   company?: string;
 }
 
@@ -85,6 +87,30 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
+  // Require both first and last name
+  if (!body.firstName || typeof body.firstName !== 'string' || body.firstName.trim().length === 0) {
+    return new Response(
+      JSON.stringify({ success: false, error: 'First name is required' }),
+      {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  }
+
+  if (!body.lastName || typeof body.lastName !== 'string' || body.lastName.trim().length === 0) {
+    return new Response(
+      JSON.stringify({ success: false, error: 'Last name is required' }),
+      {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  }
+
+  const firstName = body.firstName.trim();
+  const lastName = body.lastName.trim();
+
   // Rate limiting
   const clientIp = request.headers.get('x-forwarded-for')?.split(',')[0] ||
                    request.headers.get('x-real-ip') ||
@@ -127,12 +153,16 @@ export const POST: APIRoute = async ({ request }) => {
       body: JSON.stringify({
         api_key: apiKey,
         email_address: email,
+        status: 'SUBSCRIBED',
         fields: {
+          FirstName: firstName,
+          LastName: lastName,
           SignupSource: 'website_newsletter',
         },
       }),
     });
 
+    // Parse response body as JSON on both success and failure
     const responseData = await response.json();
 
     // Treat "already subscribed" and "already pending" as success
@@ -163,36 +193,17 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Other errors
-    const isProduction = import.meta.env.PROD;
-    const errorResponse: any = {
-      success: false,
-      error: isProduction
-        ? 'Failed to subscribe. Please try again later.'
-        : 'EmailOctopus API request failed. Check upstreamStatus and upstreamBody for details.',
-    };
-
-    // Add debug info only in development (non-production)
-    if (!isProduction) {
-      errorResponse.upstreamStatus = response.status;
-      errorResponse.upstreamBody = responseData;
-    }
-
-    console.error('EmailOctopus API error:', {
-      status: response.status,
-      statusText: response.statusText,
-    });
-
     return new Response(
-      JSON.stringify(errorResponse),
+      JSON.stringify({ success: false, error: 'Server configuration error' }),
       {
         status: 500,
         headers: { 'Content-Type': 'application/json' },
       }
     );
   } catch (error) {
-    console.error('Error calling EmailOctopus API:', error);
+    // Network error (not EmailOctopus API error)
     return new Response(
-      JSON.stringify({ success: false, error: 'Internal server error' }),
+      JSON.stringify({ success: false, error: 'Server configuration error' }),
       {
         status: 500,
         headers: { 'Content-Type': 'application/json' },

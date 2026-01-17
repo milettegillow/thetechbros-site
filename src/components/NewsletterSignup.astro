@@ -14,6 +14,32 @@ const { buttonText = 'Subscribe' } = Astro.props;
 ---
 
 <form class="newsletter-signup" id="newsletter-signup-form">
+  <div class="newsletter-name-fields">
+    <div class="newsletter-field">
+      <label for="newsletter-first-name" class="visually-hidden">First name</label>
+      <input
+        type="text"
+        id="newsletter-first-name"
+        name="firstName"
+        placeholder="First name"
+        required
+        autocomplete="given-name"
+        aria-describedby="newsletter-message"
+      />
+    </div>
+    <div class="newsletter-field">
+      <label for="newsletter-last-name" class="visually-hidden">Last name</label>
+      <input
+        type="text"
+        id="newsletter-last-name"
+        name="lastName"
+        placeholder="Last name"
+        required
+        autocomplete="family-name"
+        aria-describedby="newsletter-message"
+      />
+    </div>
+  </div>
   <div class="newsletter-field">
     <label for="newsletter-email" class="visually-hidden">Email address</label>
     <input
@@ -44,11 +70,13 @@ const { buttonText = 'Subscribe' } = Astro.props;
 
 <script>
   const form = document.getElementById('newsletter-signup-form') as HTMLFormElement;
+  const firstNameInput = document.getElementById('newsletter-first-name') as HTMLInputElement;
+  const lastNameInput = document.getElementById('newsletter-last-name') as HTMLInputElement;
   const emailInput = document.getElementById('newsletter-email') as HTMLInputElement;
   const submitBtn = document.getElementById('newsletter-submit') as HTMLButtonElement;
   const messageDiv = document.getElementById('newsletter-message') as HTMLDivElement;
 
-  if (form && emailInput && submitBtn && messageDiv) {
+  if (form && firstNameInput && lastNameInput && emailInput && submitBtn && messageDiv) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -63,6 +91,8 @@ const { buttonText = 'Subscribe' } = Astro.props;
 
       // Collect form data
       const formData = new FormData(form);
+      const firstName = formData.get('firstName')?.toString().trim() || '';
+      const lastName = formData.get('lastName')?.toString().trim() || '';
       const email = formData.get('email')?.toString().trim() || '';
       const company = formData.get('company')?.toString().trim() || '';
 
@@ -73,6 +103,8 @@ const { buttonText = 'Subscribe' } = Astro.props;
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
+            firstName,
+            lastName,
             email,
             company,
           }),
@@ -84,8 +116,10 @@ const { buttonText = 'Subscribe' } = Astro.props;
           // Success
           messageDiv.textContent = 'Thanks! Check your email to confirm your subscription.';
           messageDiv.className = 'newsletter-message newsletter-message-success';
+          firstNameInput.value = '';
+          lastNameInput.value = '';
           emailInput.value = '';
-          emailInput.focus();
+          firstNameInput.focus();
         } else {
           // Error
           const errorMessage = data.error || 'Something went wrong. Please try again later.';
@@ -111,6 +145,12 @@ const { buttonText = 'Subscribe' } = Astro.props;
   .newsletter-signup {
     display: flex;
     flex-direction: column;
+    gap: 1rem;
+  }
+
+  .newsletter-name-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 1rem;
   }
 
@@ -165,5 +205,11 @@ const { buttonText = 'Subscribe' } = Astro.props;
   .newsletter-signup button:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+  }
+
+  @media (max-width: 768px) {
+    .newsletter-name-fields {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
