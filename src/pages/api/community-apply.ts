@@ -102,41 +102,41 @@ export const POST: APIRoute = async ({ request, url }) => {
 
   // Sanitize inputs: trim strings
   const sanitizedFields: Record<string, any> = {
-    'full name': (body.fullName || '').trim(),
-    'email': (body.email || '').trim(),
+    'Full Name': (body.fullName || '').trim(),
+    'Email': (body.email || '').trim(),
   };
 
   // Optional fields - only include if provided
   if (body.linkedinUrl) {
-    sanitizedFields['linkedin url'] = String(body.linkedinUrl).trim();
+    sanitizedFields['LinkedIn URL'] = String(body.linkedinUrl).trim();
   }
   if (body.personalWebsite) {
-    sanitizedFields['personal website'] = String(body.personalWebsite).trim();
+    sanitizedFields['Personal Website'] = String(body.personalWebsite).trim();
   }
   if (body.phoneNumber) {
-    sanitizedFields['phone number'] = String(body.phoneNumber).trim();
+    sanitizedFields['Phone Number'] = String(body.phoneNumber).trim();
   }
   if (body.location) {
-    sanitizedFields['location'] = String(body.location).trim();
+    sanitizedFields['Location'] = String(body.location).trim();
   }
   if (body.mostAdvancedDegree) {
-    sanitizedFields['most advanced degree'] = String(body.mostAdvancedDegree).trim();
+    sanitizedFields['Most Advanced Degree'] = String(body.mostAdvancedDegree).trim();
   }
 
-  // Handle "why TTB?" - cap to 5000 characters
+  // Handle "Why TTB" - cap to 5000 characters
   if (body.whyTTB) {
     const whyTTB = String(body.whyTTB).trim();
-    sanitizedFields['why TTB?'] = whyTTB.substring(0, 5000);
+    sanitizedFields['Why TTB'] = whyTTB.substring(0, 5000);
   }
 
   // Handle fields - ensure it's an array
   if (body.fields !== undefined) {
     const fieldsArray = Array.isArray(body.fields) ? body.fields : [body.fields];
-    sanitizedFields['field(s)'] = fieldsArray.map((f) => String(f).trim()).filter((f) => f.length > 0);
+    sanitizedFields['Field(s)'] = fieldsArray.map((f) => String(f).trim()).filter((f) => f.length > 0);
   }
 
   // Handle addToMailingList - default to false if not provided
-  sanitizedFields['add to mailing list'] = body.addToMailingList === true;
+  sanitizedFields['Add to Mailing List'] = body.addToMailingList === true;
 
   // Prepare Airtable request
   const airtableUrl = `https://api.airtable.com/v0/${airtableBaseId}/${tableIdentifier}`;
