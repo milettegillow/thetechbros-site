@@ -32,17 +32,38 @@ export const POST: APIRoute = async ({ request, url }) => {
   // Check environment variables
   const airtablePat = import.meta.env.AIRTABLE_PAT;
   const airtableBaseId = import.meta.env.AIRTABLE_BASE_ID;
+  const airtableTableId = import.meta.env.AIRTABLE_TABLE_ID;
   const airtableTableName = import.meta.env.AIRTABLE_TABLE_NAME;
 
-  if (!airtablePat || !airtableBaseId || !airtableTableName) {
-    console.error('Missing required environment variables');
+  // Validate required env vars
+  const missingVars: string[] = [];
+  if (!airtablePat) missingVars.push('AIRTABLE_PAT');
+  if (!airtableBaseId) missingVars.push('AIRTABLE_BASE_ID');
+  if (!airtableTableId && !airtableTableName) {
+    missingVars.push('AIRTABLE_TABLE_ID or AIRTABLE_TABLE_NAME');
+  }
+
+  if (missingVars.length > 0) {
+    console.error('Missing required environment variables:', missingVars.join(', '));
     return new Response(
-      JSON.stringify({ error: 'Server configuration error' }),
+      JSON.stringify({ 
+        error: 'Server configuration error',
+        missing: missingVars 
+      }),
       {
         status: 500,
         headers: { 'Content-Type': 'application/json' },
       }
     );
+  }
+
+  // Determine table identifier (prefer ID, fallback to NAME)
+  let tableIdentifier: string;
+  if (airtableTableId) {
+    tableIdentifier = airtableTableId;
+  } else {
+    console.warn('AIRTABLE_TABLE_ID is preferred over AIRTABLE_TABLE_NAME. Please update your environment variables.');
+    tableIdentifier = encodeURIComponent(airtableTableName);
   }
 
   // Parse and validate request body
@@ -110,7 +131,7 @@ export const POST: APIRoute = async ({ request, url }) => {
   sanitizedFields['add to mailing list'] = body.addToMailingList === true;
 
   // Prepare Airtable request
-  const airtableUrl = `https://api.airtable.com/v0/${airtableBaseId}/${encodeURIComponent(airtableTableName)}`;
+  const airtableUrl = `https://api.airtable.com/v0/${airtableBaseId}/${tableIdentifier}`;
   
   try {
     const airtableResponse = await fetch(airtableUrl, {
