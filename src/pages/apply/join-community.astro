@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navigation from '../../components/Navigation.astro';
 import Footer from '../../components/Footer.astro';
 import ApplyModal from '../../components/ApplyModal.astro';
+import NewsletterSignup from '../../components/NewsletterSignup.astro';
 ---
 
 <BaseLayout title="Join the Community">
@@ -32,11 +33,7 @@ import ApplyModal from '../../components/ApplyModal.astro';
             <h2>ttb newsletter</h2>
             <p>Monthly updates on our companies, events, and opportunities.</p>
             <p class="community-details">Company spotlights, funding announcements, event invitations, partnership opportunities, and technical insights.</p>
-            <form class="newsletter-form">
-              <input type="email" placeholder="Your email" required />
-              <button type="submit" class="btn btn-secondary">Subscribe (Placeholder)</button>
-            </form>
-            <p class="form-note">We'll only use your email for the newsletter. Unsubscribe anytime.</p>
+            <NewsletterSignup buttonText="Subscribe" />
           </div>
           <div class="community-card">
             <h2>upcoming events</h2>
