@@ -114,7 +114,7 @@ const { buttonText = 'Subscribe' } = Astro.props;
 
         if (response.ok && data.success) {
           // Success
-          messageDiv.textContent = 'Thanks! Check your email to confirm your subscription.';
+          messageDiv.textContent = 'Thank you! You\'ve been subscribed.';
           messageDiv.className = 'newsletter-message newsletter-message-success';
           firstNameInput.value = '';
           lastNameInput.value = '';
