@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navigation from '../../components/Navigation.astro';
 import Footer from '../../components/Footer.astro';
+import ApplyModal from '../../components/ApplyModal.astro';
 ---
 
 <BaseLayout title="Join the Community">
@@ -25,7 +26,7 @@ import Footer from '../../components/Footer.astro';
             <h2>whatsapp community</h2>
             <p>Join our community of technical founders. Share wins, ask questions, get feedback.</p>
             <p class="community-details">Daily conversations, technical discussions, investor intros, and more.</p>
-            <a href="#" class="btn">Apply to Join (Placeholder)</a>
+            <button type="button" class="btn" onclick="window.openApplyModal && window.openApplyModal()">Apply to Join</button>
           </div>
           <div class="community-card">
             <h2>ttb newsletter</h2>
@@ -58,6 +59,7 @@ import Footer from '../../components/Footer.astro';
     </section>
   </main>
   <Footer />
+  <ApplyModal />
 </BaseLayout>
 
 <style>

@@ -1,0 +1,500 @@
+---
+// ApplyModal component for community application form
+---
+
+<div id="apply-modal" class="apply-modal" role="dialog" aria-labelledby="modal-title" aria-modal="true" style="display: none;">
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="modal-content">
+    <button class="modal-close" id="modal-close" aria-label="Close modal">&times;</button>
+    
+    <div id="modal-form-container">
+      <h2 id="modal-title">Apply to Join the Community</h2>
+      
+      <form id="apply-form" class="apply-form">
+        <div class="form-group">
+          <label for="fullName">Full Name <span class="required">*</span></label>
+          <input type="text" id="fullName" name="fullName" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email <span class="required">*</span></label>
+          <input type="email" id="email" name="email" required />
+        </div>
+
+        <div class="form-group">
+          <label for="linkedinUrl">LinkedIn URL</label>
+          <input type="url" id="linkedinUrl" name="linkedinUrl" placeholder="https://linkedin.com/in/yourname" />
+        </div>
+
+        <div class="form-group">
+          <label for="personalWebsite">Personal Website</label>
+          <input type="url" id="personalWebsite" name="personalWebsite" placeholder="https://yourwebsite.com" />
+        </div>
+
+        <div class="form-group">
+          <label for="phoneNumber">Phone Number</label>
+          <input type="tel" id="phoneNumber" name="phoneNumber" />
+        </div>
+
+        <div class="form-group">
+          <label for="location">Location</label>
+          <input type="text" id="location" name="location" placeholder="City, Country" />
+        </div>
+
+        <div class="form-group">
+          <label for="fields">Field(s) <span class="field-hint">(Select all that apply)</span></label>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="fields" value="CS" />
+              CS
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="fields" value="AI / ML" />
+              AI / ML
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="fields" value="Mathematics" />
+              Mathematics
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="fields" value="Engineering" />
+              Engineering
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="fields" value="Physics" />
+              Physics
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="fields" value="Chemistry" />
+              Chemistry
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="fields" value="Biology" />
+              Biology
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="fields" value="Robotics / hardware" />
+              Robotics / hardware
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="fields" value="Software" />
+              Software
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="fields" value="Medicine" />
+              Medicine
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="mostAdvancedDegree">Most Advanced Degree</label>
+          <select id="mostAdvancedDegree" name="mostAdvancedDegree">
+            <option value="">Select...</option>
+            <option value="BSc">BSc</option>
+            <option value="MSc">MSc</option>
+            <option value="PhD">PhD</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="whyTTB">Why TTB? <span class="char-count">(max 5000 characters)</span></label>
+          <textarea id="whyTTB" name="whyTTB" rows="5" maxlength="5000"></textarea>
+          <span class="char-counter" id="char-counter">0 / 5000</span>
+        </div>
+
+        <div class="form-group checkbox-field">
+          <label class="checkbox-label">
+            <input type="checkbox" id="addToMailingList" name="addToMailingList" value="true" />
+            Add me to the mailing list
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn" id="submit-btn">Submit Application</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="modal-success" style="display: none;">
+      <h2>Application Submitted!</h2>
+      <p>Thank you for applying to join our community. We'll be in touch soon.</p>
+      <button class="btn" id="close-success-btn">Close</button>
+    </div>
+
+    <div id="modal-error" style="display: none;">
+      <h2>Error</h2>
+      <p id="error-message">Something went wrong. Please try again later.</p>
+      <button class="btn" id="close-error-btn">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById('apply-modal');
+  const backdrop = document.getElementById('modal-backdrop');
+  const closeBtn = document.getElementById('modal-close');
+  const form = document.getElementById('apply-form');
+  const formContainer = document.getElementById('modal-form-container');
+  const successContainer = document.getElementById('modal-success');
+  const errorContainer = document.getElementById('modal-error');
+  const errorMessage = document.getElementById('error-message');
+  const submitBtn = document.getElementById('submit-btn');
+  const closeSuccessBtn = document.getElementById('close-success-btn');
+  const closeErrorBtn = document.getElementById('close-error-btn');
+  const whyTTBTextarea = document.getElementById('whyTTB');
+  const charCounter = document.getElementById('char-counter');
+
+  // Character counter for whyTTB
+  if (whyTTBTextarea && charCounter) {
+    const textarea = whyTTBTextarea as HTMLTextAreaElement;
+    textarea.addEventListener('input', () => {
+      const length = textarea.value.length;
+      charCounter.textContent = `${length} / 5000`;
+    });
+  }
+
+  // Open modal function (called from button)
+  function openModal() {
+    if (modal) {
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      // Focus first input for accessibility
+      const firstInput = (form as HTMLFormElement)?.querySelector('input') as HTMLInputElement;
+      firstInput?.focus();
+    }
+  }
+
+  // Close modal function
+  function closeModal() {
+    if (modal && formContainer && successContainer && errorContainer && charCounter) {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+      // Reset form and containers
+      const formEl = form as HTMLFormElement;
+      formEl?.reset();
+      formContainer.style.display = 'block';
+      successContainer.style.display = 'none';
+      errorContainer.style.display = 'none';
+      charCounter.textContent = '0 / 5000';
+    }
+  }
+
+  // Close on backdrop click
+  if (backdrop) {
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) {
+        closeModal();
+      }
+    });
+  }
+
+  // Close on close button
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeModal);
+  }
+
+  // Close on ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && modal.style.display === 'flex') {
+      closeModal();
+    }
+  });
+
+  // Close success/error buttons
+  if (closeSuccessBtn) {
+    closeSuccessBtn.addEventListener('click', closeModal);
+  }
+  if (closeErrorBtn && errorContainer && formContainer) {
+    closeErrorBtn.addEventListener('click', () => {
+      errorContainer.style.display = 'none';
+      formContainer.style.display = 'block';
+    });
+  }
+
+  // Form submission
+  if (form && formContainer && successContainer && errorContainer && errorMessage && submitBtn) {
+    const formEl = form as HTMLFormElement;
+    const submitBtnEl = submitBtn as HTMLButtonElement;
+    
+    formEl.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Disable submit button
+      submitBtnEl.disabled = true;
+      submitBtnEl.textContent = 'Submitting...';
+
+      // Collect form data
+      const formData = new FormData(formEl);
+      
+      // Get checked fields
+      const fields = Array.from(formEl.querySelectorAll('input[name="fields"]:checked'))
+        .map((checkbox) => (checkbox as HTMLInputElement).value);
+
+      // Build request body
+      const body: Record<string, any> = {
+        fullName: formData.get('fullName')?.toString().trim() || '',
+        email: formData.get('email')?.toString().trim() || '',
+        addToMailingList: formData.get('addToMailingList') === 'true',
+      };
+
+      // Add optional fields
+      const linkedinUrl = formData.get('linkedinUrl')?.toString().trim();
+      if (linkedinUrl) body.linkedinUrl = linkedinUrl;
+
+      const personalWebsite = formData.get('personalWebsite')?.toString().trim();
+      if (personalWebsite) body.personalWebsite = personalWebsite;
+
+      const phoneNumber = formData.get('phoneNumber')?.toString().trim();
+      if (phoneNumber) body.phoneNumber = phoneNumber;
+
+      const location = formData.get('location')?.toString().trim();
+      if (location) body.location = location;
+
+      const whyTTB = formData.get('whyTTB')?.toString().trim();
+      if (whyTTB) body.whyTTB = whyTTB;
+
+      const mostAdvancedDegree = formData.get('mostAdvancedDegree')?.toString().trim();
+      if (mostAdvancedDegree) body.mostAdvancedDegree = mostAdvancedDegree;
+
+      if (fields.length > 0) {
+        body.fields = fields;
+      }
+
+      try {
+        const response = await fetch('/api/community-apply', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        });
+
+        if (response.ok) {
+          // Success
+          formContainer.style.display = 'none';
+          successContainer.style.display = 'block';
+        } else {
+          // Error
+          const errorData = await response.json().catch(() => ({}));
+          errorMessage.textContent = errorData.error || 'Something went wrong. Please try again later.';
+          formContainer.style.display = 'none';
+          errorContainer.style.display = 'block';
+        }
+      } catch (error) {
+        // Network or other error
+        errorMessage.textContent = 'Network error. Please check your connection and try again.';
+        formContainer.style.display = 'none';
+        errorContainer.style.display = 'block';
+      } finally {
+        // Re-enable submit button
+        submitBtnEl.disabled = false;
+        submitBtnEl.textContent = 'Submit Application';
+      }
+    });
+  }
+
+  // Expose openModal globally so the button can call it
+  (window as any).openApplyModal = openModal;
+</script>
+
+<style>
+  .apply-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-content {
+    position: relative;
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 2.5rem;
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    z-index: 1001;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+  }
+
+  .modal-close:hover {
+    color: var(--color-text);
+  }
+
+  .modal-content h2 {
+    color: var(--color-accent);
+    margin-bottom: 2rem;
+    font-size: 1.75rem;
+  }
+
+  .apply-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-group label {
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  .required {
+    color: var(--color-primary);
+  }
+
+  .field-hint,
+  .char-count {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-weight: normal;
+    margin-left: 0.5rem;
+  }
+
+  .apply-form input,
+  .apply-form textarea,
+  .apply-form select {
+    width: 100%;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 1rem;
+    border-radius: 4px;
+  }
+
+  .apply-form input:focus,
+  .apply-form textarea:focus,
+  .apply-form select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 10px rgba(239, 31, 159, 0.3);
+  }
+
+  .apply-form input::placeholder,
+  .apply-form textarea::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .apply-form select {
+    cursor: pointer;
+  }
+
+  .checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-bottom: 0;
+  }
+
+  .checkbox-label input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .checkbox-field {
+    margin-top: 0.5rem;
+  }
+
+  .char-counter {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    text-align: right;
+    margin-top: 0.25rem;
+  }
+
+  .form-actions {
+    margin-top: 1rem;
+  }
+
+  #modal-success,
+  #modal-error {
+    text-align: center;
+  }
+
+  #modal-success h2,
+  #modal-error h2 {
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+  }
+
+  #modal-success p,
+  #modal-error p {
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+    line-height: 1.7;
+  }
+
+  #modal-error h2 {
+    color: var(--color-primary);
+  }
+
+  @media (max-width: 768px) {
+    .modal-content {
+      width: 95%;
+      padding: 1.5rem;
+      max-height: 95vh;
+    }
+
+    .checkbox-group {
+      grid-template-columns: 1fr;
+    }
+
+    .modal-content h2 {
+      font-size: 1.5rem;
+    }
+  }
+</style>
