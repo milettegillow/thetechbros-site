@@ -34,6 +34,10 @@ export const POST: APIRoute = async ({ request, url }) => {
   const airtableBaseId = process.env.AIRTABLE_BASE_ID;
   const airtableTableId = process.env.AIRTABLE_TABLE_ID;
   const airtableTableName = process.env.AIRTABLE_TABLE_NAME;
+  const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL;
+  const resendApiKey = process.env.RESEND_API_KEY;
+  const fromEmail = process.env.FROM_EMAIL;
+  const replyToEmail = process.env.REPLY_TO_EMAIL;
 
   // Log env var presence (safe, no secrets)
   console.log('Environment variables present:', {
@@ -41,6 +45,10 @@ export const POST: APIRoute = async ({ request, url }) => {
     AIRTABLE_BASE_ID: !!airtableBaseId,
     AIRTABLE_TABLE_ID: !!airtableTableId,
     AIRTABLE_TABLE_NAME: !!airtableTableName,
+    SLACK_WEBHOOK_URL: !!slackWebhookUrl,
+    RESEND_API_KEY: !!resendApiKey,
+    FROM_EMAIL: !!fromEmail,
+    REPLY_TO_EMAIL: !!replyToEmail,
   });
 
   // Validate required env vars
@@ -174,6 +182,100 @@ export const POST: APIRoute = async ({ request, url }) => {
           headers: { 'Content-Type': 'application/json' },
         }
       );
+    }
+
+    // Airtable succeeded - send Slack notification and confirmation email
+    // These are non-blocking; failures won't affect the 200 response
+    const timestamp = new Date().toISOString();
+    const location = body.location || 'Not provided';
+    const linkedinUrl = body.linkedinUrl || 'Not provided';
+    const fields = Array.isArray(body.fields) ? body.fields : (body.fields ? [body.fields] : []);
+    const fieldsDisplay = fields.length > 0 ? fields.join(', ') : 'Not provided';
+    const mostAdvancedDegree = body.mostAdvancedDegree || 'Not provided';
+    const addToMailingList = body.addToMailingList ? 'Yes' : 'No';
+
+    // Send Slack notification (non-blocking)
+    if (slackWebhookUrl) {
+      try {
+        const slackMessage = `New community application received:
+*Full Name:* ${body.fullName}
+*Email:* ${body.email}
+*Location:* ${location}
+*LinkedIn URL:* ${linkedinUrl}
+*Field(s):* ${fieldsDisplay}
+*Most Advanced Degree:* ${mostAdvancedDegree}
+*Add to Mailing List:* ${addToMailingList}
+*Submitted:* ${timestamp}`;
+
+        const slackResponse = await fetch(slackWebhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: slackMessage }),
+        });
+
+        if (!slackResponse.ok) {
+          const slackErrorText = await slackResponse.text();
+          console.error('Slack webhook error:', {
+            status: slackResponse.status,
+            statusText: slackResponse.statusText,
+            body: slackErrorText,
+          });
+        } else {
+          console.log('Slack notification sent successfully');
+        }
+      } catch (error) {
+        console.error('Error sending Slack notification:', error);
+        // Continue - don't fail the request
+      }
+    }
+
+    // Send confirmation email via Resend (non-blocking)
+    if (resendApiKey && fromEmail && body.email) {
+      try {
+        const emailHtml = `
+          <p>Hi ${body.fullName},</p>
+          <p>Thank you for applying to join The Tech Bros community! We've received your application.</p>
+          <p>We'll be in touch soon. In the meantime, you can learn more about what we do at <a href="https://thetechbros.io">thetechbros.io</a>.</p>
+          <p>Best,<br />The Tech Bros</p>
+        `;
+
+        const emailText = `Hi ${body.fullName},\n\nThank you for applying to join The Tech Bros community! We've received your application.\n\nWe'll be in touch soon. In the meantime, you can learn more about what we do at https://thetechbros.io.\n\nBest,\nThe Tech Bros`;
+
+        const emailPayload: Record<string, any> = {
+          from: fromEmail,
+          to: body.email,
+          subject: 'We got your application — The Tech Bros',
+          html: emailHtml,
+          text: emailText,
+        };
+
+        if (replyToEmail) {
+          emailPayload.reply_to = replyToEmail;
+        }
+
+        const resendResponse = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${resendApiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(emailPayload),
+        });
+
+        if (!resendResponse.ok) {
+          const resendErrorText = await resendResponse.text();
+          console.error('Resend API error:', {
+            status: resendResponse.status,
+            statusText: resendResponse.statusText,
+            body: resendErrorText,
+          });
+        } else {
+          console.log('Confirmation email sent successfully');
+        }
+      } catch (error) {
+        console.error('Error sending confirmation email:', error);
+        // Continue - don't fail the request
+      }
     }
 
     return new Response(JSON.stringify({ ok: true }), {
