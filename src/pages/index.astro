@@ -31,21 +31,21 @@ import Footer from '../components/Footer.astro';
       <div class="container">
         <h2>what we do</h2>
         <div class="card-grid">
-          <div class="card">
+          <a href="/apply/accelerator" class="card">
             <h3>accelerator</h3>
             <p>A fully-funded accelerator for all-female, all-technical founding teams.
               Two weeks living and building together in Norway, followed by a six-week hybrid programme designed to take teams from zero to one, fast.</p>
-          </div>
-          <div class="card">
+          </a>
+          <a href="/about#past-events" class="card">
             <h3>events</h3>
             <p>Hackathons, workshops, and build days for technical women who want to start companies.
               These are hands-on by design: learn how to ship, meet potential co-founders, and figure out whether founding is for you.</p>
-          </div>
-          <div class="card">
+          </a>
+          <a href="/apply/join-community" class="card">
             <h3>community</h3>
             <p>A growing, high-signal network of technical women at different stages of the founder journey.
               We design environments where co-founder relationships form naturally, not through forced matching.</p>
-          </div>
+          </a>
         </div>
       </div>
     </section>
@@ -312,7 +312,7 @@ import Footer from '../components/Footer.astro';
         <h2>ready to build?</h2>
         <p>Applications for our next cohort open in March 2026.</p>
         <div class="btn-group" style="justify-content: center;">
-          <!-- <a href="/apply/apply-accelerator" class="btn">Apply for Accelerator</a> -->
+          <!-- <a href="/apply/accelerator" class="btn">Apply for Accelerator</a> -->
           <a href="/apply/join-community" class="btn btn-secondary">Join Our Community</a>
         </div>
       </div>
@@ -367,6 +367,16 @@ import Footer from '../components/Footer.astro';
 
   .what-we-do {
     background: rgba(0, 0, 0, 0.2);
+  }
+
+  .what-we-do .card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .what-we-do .card:hover {
+    cursor: pointer;
   }
 
   .why-different {

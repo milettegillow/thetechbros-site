@@ -17,12 +17,11 @@ import Footer from '../components/Footer.astro';
             <h3>Dr Milette Gillow</h3>
             <p class="team-role">Co-Founder & Vision Lead</p>
             <ul class="team-bio">
-              <li>Former VC and university lecturer in pure mathematics</li>
+              <li>Ph.D. in Pure Mathematics from the University of Leeds</li>
+              <li>Ex-VC in Hong Kong, Berlin, & London, Most recently as a Talent Investor and later a founder-in-residence with EF</li>
               <li>Professional opera singer trained at the Royal Academy of Music</li>
-              <li>Work with startups has taken her to Hong Kong, Berlin, Paris, Dublin, and Amsterdam</li>
-              <li>Most recently as a Talent Investor and later a founder-in-residence with Entrepreneur First</li>
-              <li>Worked extensively on projects centering women throughout her career, from hackathons to panels to concerts</li>
-              <li>Recently joined the Governing Board of Oxford High School GDST</li>
+              <li>Governor at Oxford High School GDST</li>
+              <li>EWOR Venture Scout</li>
             </ul>
             <a href="https://www.linkedin.com/in/milettegillow/" class="team-linkedin" aria-label="Dr Milette Gillow on LinkedIn" target="_blank" rel="noopener noreferrer">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -38,8 +37,7 @@ import Footer from '../components/Footer.astro';
               <li>Recent Machine Learning graduate from the University of Cambridge where she was a Google DeepMind Scholar</li>
               <li>Awarded the Allan Gray Orbis Foundation Fellowship during her undergraduate degree</li>
               <li>Founded a sustainable fashion brand called Chara</li>
-              <li>Previously worked as a Data Scientist</li>
-              <li>In her free time enjoys attending music events & deep-diving into the fashion world</li>
+              <li>Former  Data Scientist at Investec</li>
             </ul>
             <a href="https://www.linkedin.com/in/sedinam-simpson/" class="team-linkedin" aria-label="Sedinam Simpson on LinkedIn" target="_blank" rel="noopener noreferrer">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -51,7 +49,7 @@ import Footer from '../components/Footer.astro';
       </div>
     </section>
 
-    <!-- Core Team -->
+    <!-- Core Team 
     <section class="core-team">
       <div class="container">
         <h2>advisory board</h2>
@@ -89,12 +87,12 @@ import Footer from '../components/Footer.astro';
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- Work With Us -->
     <section class="work-with-us">
       <div class="container">
-        <h2>Work With Us</h2>
+        <h2>work with us</h2>
         <p class="section-intro">We're always looking for exceptional people who share our mission. Open positions will appear below.</p>
         <div class="open-roles">
           <!-- <div class="role-card">
@@ -151,6 +149,15 @@ import Footer from '../components/Footer.astro';
     display: block;
   }
 
+  .team-card h3 {
+    font-family: var(--font-secondary);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.5rem;
+    text-transform: none;
+  }
+
   .team-role {
     color: var(--color-accent);
     font-size: 0.95rem;
@@ -158,6 +165,7 @@ import Footer from '../components/Footer.astro';
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    font-family: var(--font-secondary);
   }
 
   .team-bio {
