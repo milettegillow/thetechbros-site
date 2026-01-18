@@ -42,7 +42,15 @@ import Footer from '../../components/Footer.astro';
     </section>
 
     <div class="spotlight-hero-image">
-      <img src="/partner/bang-olufsen-hackathon-hero.jpg" alt="Bang & Olufsen Hackathon" />
+      <img 
+        src="/partner/bang-olufsen-hackathon-hero.jpg" 
+        alt="Bang & Olufsen Hackathon"
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+        width="1920"
+        height="1080"
+      />
     </div>
 
     <section class="spotlight-section">
@@ -106,6 +114,7 @@ import Footer from '../../components/Footer.astro';
     font-size: 1.5rem;
     color: var(--color-accent);
     margin-top: 1rem;
+    font-weight: 300;
   }
 
   .companies-partner {

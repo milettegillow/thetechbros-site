@@ -107,6 +107,9 @@ import Footer from '../components/Footer.astro';
             <p class="role-details"><strong>Requirements:</strong> Experience building technical communities, strong communication skills, deep understanding of the technical founder journey.</p>
             <a href="#" class="btn btn-secondary" style="margin-top: 1rem;">Apply (Coming Soon)</a>
           </div>-->
+          <div class="no-roles-message">
+            <p>There are currently no open roles. <a href="/apply/join-community">Register for our newsletter</a> to stay up-to-date on future opportunities.</p>
+          </div>
         </div>
         <div class="text-center" style="margin-top: 3rem;">
           <p>Don't see a role that fits? We're always interested in exceptional people.</p>
@@ -241,6 +244,23 @@ import Footer from '../components/Footer.astro';
   .role-details {
     font-size: 0.9rem;
     color: var(--color-text-muted);
+  }
+
+  .no-roles-message {
+    text-align: center;
+    padding: 2rem;
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+
+  .no-roles-message a {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  .no-roles-message a:hover {
+    color: var(--color-primary);
   }
 
   @media (max-width: 768px) {

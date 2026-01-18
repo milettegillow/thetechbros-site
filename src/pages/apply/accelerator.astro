@@ -14,13 +14,35 @@ import Footer from '../../components/Footer.astro';
       </div>
     </section>
 
+    <div class="apply-intro-text">
+      <p>The Tech Bros Accelerator is the world's first all-female, all-technical accelerator programme, built to support founding teams at an early stage & to propel them into investor-ready startups. It's an 8 week programme with a strong emphasis on customer discovery and product development, with an intense focus on building.</p>
+      <p>The programme is open to applicants worldwide and takes place during the summer every year. It kicks off with a two-week hacker house in a cabin in the Norwegian mountains & is followed by a six-week hybrid programme, anchored in London, combining in-person collaboration with remote flexibility.</p>
+      <p>The selection process is highly competitive, with an acceptance rate of 8.7%. We select the boldest, most ambitious candidates with a proven ability to build technical products and iterate quickly. You can find out more about our interview style <a href="https://www.linkedin.com/posts/milettegillow_how-we-picked-the-tech-bros-cohort-1-from-activity-7350135114208534529-Tf47/" target="_blank" rel="noopener noreferrer">here</a>.</p>
+    </div>
+
     <section class="apply-section" id="apply">
       <div class="container">
-        <div class="apply-intro-text">
-          <p>The Tech Bros Accelerator is the world's first all-female, all-technical accelerator programme, built to support founding teams at an early stage & to propel them into investor-ready startups. It's an 8 week programme with a strong emphasis on customer discovery and product development, with an intense focus on building.</p>
-          <p>The programme is open to applicants worldwide and takes place during the summer every year. It kicks off with a two-week hacker house in a cabin in the Norwegian mountains & is followed by a six-week hybrid programme, anchored in London, combining in-person collaboration with remote flexibility.</p>
-          <p>The selection process is highly competitive, with an acceptance rate of 8.7%. We select the boldest, most ambitious candidates with a proven ability to build technical products and iterate quickly. You can find out more about our interview style <a href="https://www.linkedin.com/posts/milettegillow_how-we-picked-the-tech-bros-cohort-1-from-activity-7350135114208534529-Tf47/" target="_blank" rel="noopener noreferrer">here</a>.</p>
+        <div class="manifesto-content">
+          <h2>who you are</h2>
+          <p>This programme is for women with STEM backgrounds who want to build something big.</p>
+          <p>You're ambitious. You think deeply. You care about how things actually work. You want to learn from people who respect your intelligence and challenge you properly.</p>
+          <p>You don't need hand-holding.<br />You need the right room.</p>
+
+          <h2>what you get</h2>
+          <ul>
+            <li>Two weeks in a hacker house in Norway, shoulder-to-shoulder with other exceptional builders.</li>
+            <li>Six weeks of hybrid support, with weekly sessions and check-ins.</li>
+            <li>Access to a venture partner network made up of founders and investors who back serious technical ambition.</li>
+            <li>A demo day designed to lead to real investment.</li>
+            <li>A cohort that becomes part of your professional life long after the programme ends.</li>
+          </ul>
+
+          <h2>what we're here for</h2>
+          <p>We're not here to inspire you.<br />We're here to back you.</p>
+          <p>If you're ready to build something real, this programme is for you.</p>
         </div>
+
+
         <div class="apply-content">
           <div class="cohort-stats">
             <h2>cohort 1 by numbers</h2>
@@ -63,7 +85,16 @@ import Footer from '../../components/Footer.astro';
       </div>
 
       <div class="hero-image-section">
-        <img src="/apply/cohort-hero.jpg" alt="Cohort 1" class="hero-image" />
+        <img 
+          src="/apply/cohort-hero.jpg" 
+          alt="Cohort 1" 
+          class="hero-image"
+          fetchpriority="high"
+          loading="eager"
+          decoding="async"
+          width="1920"
+          height="1080"
+        />
       </div>
 
       <div class="container">
@@ -73,7 +104,7 @@ import Footer from '../../components/Footer.astro';
           </div>
           <div class="spotlight-content">
             <h2>spotlight: neurotype.uk</h2>
-            <p>Building AI-powered tools to eliminate waiting lists for neurodiversity assessment professionals. Founded by a clinician with a Neuroscience Ph.D. and an ML engineer who has developed medical-grade AI systems across healthcare. Technical depth + real impact.</p>
+            <p>Building AI-powered tools to eliminate waiting lists for neurodiversity assessment professionals. Founded by a senior clinical psychologist with a Ph.D. in neuroscience from Oxford and ML engineer with deep domain expertise in AI for medical applications. They entered the programme with an early-stage concept and left with an MVP, and have since launched 4 pilots, secured 8 Letters of Intent, received Innovate UK funding (which has a less than 2% success rate); they now have a pipeline worth over £20 million.</p>
             <a href="https://neurotype.uk" target="_blank" class="btn btn-secondary">Learn More</a>
           </div>
         </div>
@@ -82,7 +113,7 @@ import Footer from '../../components/Footer.astro';
           <p class="section-intro">Applications for cohort 2 open in March 2026.</p>
           <div class="btn-group" style="justify-content: center; margin-top: 2rem;">
             <a href="/apply/join-community" class="btn btn-secondary">Join Community</a>
-            <a href="/apply#faq" class="btn btn-secondary">Read FAQ</a>
+            <a href="/apply/faq" class="btn btn-secondary">Read FAQ</a>
           </div>
         </div>
       </div>
@@ -101,11 +132,56 @@ import Footer from '../../components/Footer.astro';
     font-size: 1.5rem;
     color: var(--color-accent);
     margin-top: 1rem;
+    font-weight: 300;
   }
 
   .apply-section {
     padding: 4rem 0;
     background: rgba(0, 0, 0, 0.2);
+  }
+
+  .manifesto-content {
+    max-width: 900px;
+    margin: 0 auto 4rem;
+  }
+
+  .manifesto-content h2 {
+    color: var(--color-accent);
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .manifesto-content h2:first-child {
+    margin-top: 0;
+  }
+
+  .manifesto-content p {
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .manifesto-content ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 3rem;
+  }
+
+  .manifesto-content ul li {
+    padding: 0.75rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+
+  .manifesto-content ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
   }
 
   .apply-intro-text {

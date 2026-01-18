@@ -19,9 +19,9 @@ import Footer from '../components/Footer.astro';
     <section class="quick-links">
       <div class="container">
         <div class="links-grid">
-          <a href="/apply/manifesto" class="link-card">
-            <h2>Manifesto</h2>
-            <p>Who we are, who this is for, & what we believe.</p>
+          <a href="/apply/faq" class="link-card">
+            <h2>FAQ</h2>
+            <p>Frequently Asked Questions about the programme.</p>
           </a>
           <a href="/apply/join-community" class="link-card">
             <h2>Join the Community</h2>
@@ -35,38 +35,6 @@ import Footer from '../components/Footer.astro';
       </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section class="faq-section" id="faq">
-      <div class="container">
-        <h2>Frequently Asked Questions</h2>
-        <div class="faq-list">
-          <div class="faq-item">
-            <h3>Why are you called "The Tech Bros"?</h3>
-            <p>It's a tongue-in-cheek name 😜 Our community of technical women love it, and that's who we're here for!</p>
-          </div>
-          <div class="faq-item">
-            <h3>Am I eligible for the accelerator programme?</h3>
-            <p>All-female founding teams where everyone has a STEM background are invited to apply to our accelerator.</p>
-          </div>
-          <div class="faq-item">
-            <h3>Do I need a co-founder to apply?</h3>
-            <p>We don't do any co-founder matching on the programme. You can, however, apply as a solo founder.</p>
-          </div>
-          <div class="faq-item">
-            <h3>Do I need to be working on my startup full-time?</h3>
-            <p>Yes, everyone accepted onto the accelerator must be working on their startup full-time.</p>
-          </div>
-          <div class="faq-item">
-            <h3>Do I need to be based in a specific location to apply?</h3>
-            <p>No, we accept applications globally.</p>
-          </div>
-          <div class="faq-item">
-            <h3>Do you take any equity?</h3>
-            <p>Not at this time.</p>
-          </div>
-        </div>
-      </div>
-    </section>
 
   </main>
   <Footer />
@@ -82,6 +50,7 @@ import Footer from '../components/Footer.astro';
     font-size: 1.5rem;
     color: var(--color-accent);
     margin-top: 1rem;
+    font-weight: 300;
   }
 
   .quick-links {
@@ -91,7 +60,7 @@ import Footer from '../components/Footer.astro';
 
   .links-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
     max-width: 1000px;
     margin: 0 auto;
@@ -129,49 +98,6 @@ import Footer from '../components/Footer.astro';
   @media (max-width: 768px) {
     .links-grid {
       grid-template-columns: 1fr;
-    }
-  }
-
-  .faq-section {
-    background: rgba(0, 0, 0, 0.2);
-    padding: 4rem 0;
-  }
-
-  .faq-section h2 {
-    text-align: center;
-    margin-bottom: 3rem;
-  }
-
-  .faq-list {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .faq-item {
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .faq-item:last-child {
-    border-bottom: none;
-  }
-
-  .faq-item h3 {
-    color: var(--color-accent);
-    margin-bottom: 1rem;
-    font-size: 1.3rem;
-  }
-
-  .faq-item p {
-    color: var(--color-text-muted);
-    line-height: 1.8;
-    font-size: 1.05rem;
-  }
-
-  @media (max-width: 768px) {
-    .faq-item h3 {
-      font-size: 1.2rem;
     }
   }
 </style>

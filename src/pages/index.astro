@@ -15,7 +15,16 @@ import Footer from '../components/Footer.astro';
         <p class="hero-subtitle">If you can build it, you should own it.</p>
       </div>
       <div class="hero-image">
-        <img src="/index/hero.jpg" alt="The Tech Bros" class="hero-img" />
+        <img 
+          src="/index/hero.jpg" 
+          alt="The Tech Bros" 
+          class="hero-img" 
+          fetchpriority="high"
+          loading="eager"
+          decoding="async"
+          width="1920"
+          height="1080"
+        />
       </div>
       <div class="container">
         <div class="btn-group">
@@ -53,7 +62,7 @@ import Footer from '../components/Footer.astro';
         <!-- Quick Stats -->
         <section class="stats">
           <div class="container">
-            <h2>the network we're building</h2>
+            <h2>the tech bros network</h2>
             <div class="stats-grid">
               <div class="stat-item">
                 <div class="stat-number">1000+</div>
@@ -73,125 +82,125 @@ import Footer from '../components/Footer.astro';
               <div class="logo-carousel">
                 <div class="logo-carousel-track">
                   <div class="logo-item">
-                    <img src="/index/partner-logos/nfx.png" alt="NFX" />
+                    <img src="/index/partner-logos/nfx.png" alt="NFX" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/amplitude.png" alt="Amplitude" />
+                    <img src="/index/partner-logos/amplitude.png" alt="Amplitude" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/notion.png" alt="Notion" />
+                    <img src="/index/partner-logos/notion.png" alt="Notion" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/nvidia.png" alt="NVIDIA" />
+                    <img src="/index/partner-logos/nvidia.png" alt="NVIDIA" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/google_cloud.png" alt="Google Cloud" />
+                    <img src="/index/partner-logos/google_cloud.png" alt="Google Cloud" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/aws.png" alt="AWS" />
+                    <img src="/index/partner-logos/aws.png" alt="AWS" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/innovate-uk.png" alt="Innovate UK" />
+                    <img src="/index/partner-logos/innovate-uk.png" alt="Innovate UK" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/aria.png" alt="ARIA" />
+                    <img src="/index/partner-logos/aria.png" alt="ARIA" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/angellist.png" alt="AngelList" />
+                    <img src="/index/partner-logos/angellist.png" alt="AngelList" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/vercel.png" alt="Vercel" />
+                    <img src="/index/partner-logos/vercel.png" alt="Vercel" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/ada.png" alt="Ada" />
+                    <img src="/index/partner-logos/ada.png" alt="Ada" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/cursor.png" alt="Cursor" />
+                    <img src="/index/partner-logos/cursor.png" alt="Cursor" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/elevenlabs.png" alt="ElevenLabs" />
+                    <img src="/index/partner-logos/elevenlabs.png" alt="ElevenLabs" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/codecademy.png" alt="Codecademy" />
+                    <img src="/index/partner-logos/codecademy.png" alt="Codecademy" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/beringea.png" alt="Beringea" />
+                    <img src="/index/partner-logos/beringea.png" alt="Beringea" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/pillar.png" alt="Pillar" />
+                    <img src="/index/partner-logos/pillar.png" alt="Pillar" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/samos.png" alt="Samos Investments" />
+                    <img src="/index/partner-logos/samos.png" alt="Samos Investments" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/goodwin.png" alt="Goodwin" />
+                    <img src="/index/partner-logos/goodwin.png" alt="Goodwin" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/incident.png" alt="Incident.io" />
+                    <img src="/index/partner-logos/incident.png" alt="Incident.io" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/bang-olufsen.png" alt="Bang & Olufsen" />
+                    <img src="/index/partner-logos/bang-olufsen.png" alt="Bang & Olufsen" loading="lazy" decoding="async" />
                   </div>
                   <!-- Duplicate for seamless loop -->
                   <div class="logo-item">
-                    <img src="/index/partner-logos/nfx.png" alt="NFX" />
+                    <img src="/index/partner-logos/nfx.png" alt="NFX" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/amplitude.png" alt="Amplitude" />
+                    <img src="/index/partner-logos/amplitude.png" alt="Amplitude" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/notion.png" alt="Notion" />
+                    <img src="/index/partner-logos/notion.png" alt="Notion" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/nvidia.png" alt="NVIDIA" />
+                    <img src="/index/partner-logos/nvidia.png" alt="NVIDIA" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/google_cloud.png" alt="Google Cloud" />
+                    <img src="/index/partner-logos/google_cloud.png" alt="Google Cloud" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/aws.png" alt="AWS" />
+                    <img src="/index/partner-logos/aws.png" alt="AWS" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/innovate-uk.png" alt="Innovate UK" />
+                    <img src="/index/partner-logos/innovate-uk.png" alt="Innovate UK" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/aria.png" alt="ARIA" />
+                    <img src="/index/partner-logos/aria.png" alt="ARIA" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/angellist.png" alt="AngelList" />
+                    <img src="/index/partner-logos/angellist.png" alt="AngelList" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/vercel.png" alt="Vercel" />
+                    <img src="/index/partner-logos/vercel.png" alt="Vercel" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/ada.png" alt="Ada" />
+                    <img src="/index/partner-logos/ada.png" alt="Ada" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/cursor.png" alt="Cursor" />
+                    <img src="/index/partner-logos/cursor.png" alt="Cursor" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/elevenlabs.png" alt="ElevenLabs" />
+                    <img src="/index/partner-logos/elevenlabs.png" alt="ElevenLabs" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/codecademy.png" alt="Codecademy" />
+                    <img src="/index/partner-logos/codecademy.png" alt="Codecademy" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/beringea.png" alt="Beringea" />
+                    <img src="/index/partner-logos/beringea.png" alt="Beringea" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/pillar.png" alt="Pillar" />
+                    <img src="/index/partner-logos/pillar.png" alt="Pillar" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/samos.png" alt="Samos Investments" />
+                    <img src="/index/partner-logos/samos.png" alt="Samos Investments" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/goodwin.png" alt="Goodwin" />
+                    <img src="/index/partner-logos/goodwin.png" alt="Goodwin" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/incident.png" alt="Incident.io" />
+                    <img src="/index/partner-logos/incident.png" alt="Incident.io" loading="lazy" decoding="async" />
                   </div>
                   <div class="logo-item">
-                    <img src="/index/partner-logos/bang-olufsen.png" alt="Bang & Olufsen" />
+                    <img src="/index/partner-logos/bang-olufsen.png" alt="Bang & Olufsen" loading="lazy" decoding="async" />
                   </div>
                 </div>
               </div>
@@ -199,104 +208,103 @@ import Footer from '../components/Footer.astro';
           </div>
         </section>
 
-    <!-- Why Different -->
-    <section class="why-different">
+    <!-- About the Programme -->
+    <section class="about-programme">
       <div class="container">
-        <h2>why our programme is different</h2>
-        <p class="intro-text">Two weeks in the mountains changes what six months of Zoom never will.</p>
-        <div class="features">
-          <div class="feature-item">
-            <h3>20 exceptional founders</h3>
-            <p>Cohort 1 featured ex-Tesla, Discord, Google, Apple, and Microsoft engineers, with degrees from Stanford, MIT, Oxford, Cambridge, and ETH Zurich. 10% have been on Y Combinator, 30% have a PhD, 85% have an engineering, CS, or AI background, and 100% are in STEM.</p>
+        <h2>about the programme</h2>
+        <div class="programme-grid">
+          <div class="programme-text">
+            <div class="programme-content">
+              <p>Technical women should be building and owning the most valuable technology companies in the world.</p>
+              <p>Right now, many don't get the chance. Not because they lack ability, ambition, or ideas, but because the structures designed to support founders weren't created with them in mind. </p>
+              <p>So we built one that was.</p>
+              <p>We put founders into a calm, focused, in-person environment.</p>
+              <p>Think summer camp for ambitious women in STEM: space to build, think, and form friendships that last far beyond the programme.</p>
+            </div>
+            <div class="programme-cta">
+              <a href="/apply/accelerator" class="btn">Read more</a>
+            </div>
           </div>
-          <div class="feature-item">
-            <h3>a different kind of intensity</h3>
-            <p>Instead of high-pressure performativity, we put founders into a calm, focused, in-person environment. Think summer camp for ambitious technical women: space to build, think, and form friendships that last far beyond the programme.</p>
-          </div>
-          <div class="feature-item">
-            <h3>unusually well-connected</h3>
-            <p>The programme is backed by a strong venture partner network, including founders and operators backed by top-tier VCs. We’re connected to leading universities globally and work closely with companies building at the frontier of technology.</p>
-          </div>
-        </div>
-        <div class="cta-section">
-          <img src="/index/cohort.jpg" alt="The Tech Bros Cohort" class="cohort-img" />
-        </div>
-        <div class="cohort-background-section">
-          <p class="cohort-background-text">Our cohort members are alumni and engineers from:</p>
-          <div class="logo-carousel cohort-carousel">
-            <div class="logo-carousel-track cohort-track">
-              <div class="logo-item">
-                <img src="/index/cohort-logos/google.png" alt="Google" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/apple.png" alt="Apple" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/microsoft.png" alt="Microsoft" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/tesla.png" alt="Tesla" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/discord.png" alt="Discord" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/stanford.png" alt="Stanford" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/mit.png" alt="MIT" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/oxford.png" alt="Oxford" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/cambridge.png" alt="Cambridge" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/ethzurich.png" alt="ETH Zurich" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/ycombinator.png" alt="Y Combinator" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/meta.png" alt="Meta" />
-              </div>
-              <!-- Duplicate for seamless loop -->
-              <div class="logo-item">
-                <img src="/index/cohort-logos/google.png" alt="Google" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/apple.png" alt="Apple" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/microsoft.png" alt="Microsoft" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/tesla.png" alt="Tesla" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/discord.png" alt="Discord" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/stanford.png" alt="Stanford" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/mit.png" alt="MIT" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/oxford.png" alt="Oxford" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/cambridge.png" alt="Cambridge" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/ethzurich.png" alt="ETH Zurich" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/ycombinator.png" alt="Y Combinator" />
-              </div>
-              <div class="logo-item">
-                <img src="/index/cohort-logos/meta.png" alt="Meta" />
+          <div class="cohort-image-section">
+            <img src="/index/cohort.jpg" alt="The Tech Bros Cohort" class="cohort-img" loading="lazy" decoding="async" />
+            <div class="cohort-carousel-section">
+              <p class="cohort-carousel-text">Our cohort members are alumni and engineers from:</p>
+              <div class="logo-carousel cohort-carousel">
+                <div class="logo-carousel-track cohort-track">
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/google.png" alt="Google" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/apple.png" alt="Apple" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/microsoft.png" alt="Microsoft" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/tesla.png" alt="Tesla" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/discord.png" alt="Discord" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/stanford.png" alt="Stanford" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/mit.png" alt="MIT" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/oxford.png" alt="Oxford" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/cambridge.png" alt="Cambridge" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/ethzurich.png" alt="ETH Zurich" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/ycombinator.png" alt="Y Combinator" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/meta.png" alt="Meta" loading="lazy" decoding="async" />
+                  </div>
+                  <!-- Duplicate for seamless loop -->
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/google.png" alt="Google" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/apple.png" alt="Apple" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/microsoft.png" alt="Microsoft" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/tesla.png" alt="Tesla" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/discord.png" alt="Discord" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/stanford.png" alt="Stanford" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/mit.png" alt="MIT" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/oxford.png" alt="Oxford" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/cambridge.png" alt="Cambridge" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/ethzurich.png" alt="ETH Zurich" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/ycombinator.png" alt="Y Combinator" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="logo-item">
+                    <img src="/index/cohort-logos/meta.png" alt="Meta" loading="lazy" decoding="async" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -313,6 +321,7 @@ import Footer from '../components/Footer.astro';
         <p>Applications for our next cohort open in March 2026.</p>
         <div class="btn-group" style="justify-content: center;">
           <!-- <a href="/apply/accelerator" class="btn">Apply for Accelerator</a> -->
+          <a href="/apply/faq" class="btn btn-secondary">FAQ</a>
           <a href="/apply/join-community" class="btn btn-secondary">Join Our Community</a>
         </div>
       </div>
@@ -356,14 +365,6 @@ import Footer from '../components/Footer.astro';
     object-fit: cover;
   }
 
-  .cohort-img {
-    max-width: 600px;
-    width: 100%;
-    height: auto;
-    display: block;
-    margin: 2rem auto;
-    border-radius: 4px;
-  }
 
   .what-we-do {
     background: rgba(0, 0, 0, 0.2);
@@ -379,27 +380,122 @@ import Footer from '../components/Footer.astro';
     cursor: pointer;
   }
 
-  .why-different {
+  .about-programme {
     padding: 6rem 0;
   }
 
-  .intro-text {
-    font-size: 1.25rem;
-    text-align: left;
-    margin-bottom: 3rem;
-    color: var(--color-text);
-  }
-
-  .features {
+  .programme-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 3rem;
+    align-items: start;
+    margin-top: 3rem;
   }
 
-  .feature-item h3 {
-    color: var(--color-accent);
-    margin-bottom: 0.5rem;
+  .programme-text {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .programme-subheading {
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-align: left;
+    margin: 2rem 0 2.5rem;
+    color: var(--color-text);
+    line-height: 1.6;
+  }
+
+  .programme-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    text-align: left;
+    color: var(--color-text);
+    margin-bottom: 2.5rem;
+  }
+
+  .programme-content p {
+    margin-bottom: 1.5rem;
+  }
+
+  .programme-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .programme-cta {
+    margin-top: auto;
+    text-align: left;
+  }
+
+  .cohort-image-section {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cohort-img {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+    object-fit: contain;
+  }
+
+  .cohort-carousel-section {
+    margin-top: 2rem;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .cohort-carousel-text {
+    font-family: var(--font-primary);
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    text-align: left;
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+
+  .cohort-carousel {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 10%,
+      black 90%,
+      transparent
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 10%,
+      black 90%,
+      transparent
+    );
+  }
+
+  .cohort-carousel .cohort-track,
+  .cohort-track.logo-carousel-track {
+    animation: scroll-reverse 60s linear infinite !important;
+    gap: 0.1rem !important;
+  }
+
+  @keyframes scroll-reverse {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
   }
 
   .stats {
@@ -506,40 +602,6 @@ import Footer from '../components/Footer.astro';
     }
   }
 
-  .cohort-background-section {
-    margin-top: 4rem;
-    padding-top: 3rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .cohort-background-text {
-    font-family: var(--font-primary);
-    font-size: 0.95rem;
-    font-weight: 400;
-    color: var(--color-text-muted);
-    text-align: center;
-    margin-bottom: 2rem;
-    font-style: italic;
-  }
-
-  .cohort-carousel {
-    margin-top: 1rem;
-  }
-
-  .cohort-track {
-    animation: scroll-reverse 60s linear infinite;
-    gap: 0.5rem;
-  }
-
-  @keyframes scroll-reverse {
-    0% {
-      transform: translateX(-50%);
-    }
-    100% {
-      transform: translateX(0);
-    }
-  }
-
   @media (max-width: 768px) {
     .logo-item {
       width: 120px;
@@ -550,9 +612,66 @@ import Footer from '../components/Footer.astro';
     .logo-carousel-track {
       gap: 2rem;
     }
+  }
 
-    .cohort-background-text {
-      font-size: 0.85rem;
+  /* Tablet and Mobile: Single column layout for programme-grid */
+  @media (max-width: 1024px) {
+    .about-programme {
+      padding: 4rem 0;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    .about-programme .container {
+      padding: 0 1rem;
+      max-width: 100%;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .programme-grid {
+      grid-template-columns: 1fr !important;
+      gap: 2rem;
+      margin-top: 2rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .programme-text {
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .programme-content {
+      font-size: 1rem;
+      max-width: 100%;
+      width: 100%;
+      box-sizing: border-box;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .programme-content p {
+      max-width: 100%;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .programme-cta {
+      margin-top: 2rem;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .programme-subheading {
+      font-size: 1.25rem;
+    }
+
+    .cohort-image-section {
+      max-width: 100%;
+      width: 100%;
+      box-sizing: border-box;
     }
   }
 

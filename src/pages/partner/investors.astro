@@ -42,7 +42,15 @@ import Footer from '../../components/Footer.astro';
     </section>
 
     <div class="spotlight-hero-image">
-      <img src="/partner/mercuri-canva-event-hero.jpg" alt="Mercuri Ventures x Canva Event" />
+      <img 
+        src="/partner/mercuri-canva-event-hero.jpg" 
+        alt="Mercuri Ventures x Canva Event"
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+        width="1920"
+        height="1080"
+      />
     </div>
 
     <section class="spotlight-section">
@@ -55,7 +63,7 @@ import Footer from '../../components/Footer.astro';
           </div>
           <div class="spotlight-text-column">
             <h2>spotlight: mercuri ventures x canva</h2>
-            <p>We partnered with Mercuri Ventures and Canva on a hackathon connecting technical women with experienced operators and investors.</p>
+            <p>We partnered with Mercuri Ventures, Canva, and ElevenLabs on a hackathon connecting technical women with experienced operators and investors.</p>
             <div class="spotlight-stats">
               <div class="spotlight-stat">
                 <div class="spotlight-number">35</div>
@@ -69,10 +77,7 @@ import Footer from '../../components/Footer.astro';
                 <div class="spotlight-number">4.5</div>
                 <div class="spotlight-label">stars</div>
               </div>
-            </div>
-            <p>Multiple YC founders on the panel</p>
-            <p>Founders cited the quality of discussion and transparency as standout, and many continued conversations well beyond the event.</p>
-            
+            </div>            
             <div class="spotlight-quotes">
               <blockquote>Today has been great! I loved the collaborative effort of everyone and getting us to actual problem solve!</blockquote>
               <blockquote>It's been a lovely event to brainstorm and network! I definitely feel even more inspired to become a founder in future, knowing I have a solid foundation for that. Thank you once again for the event 💞</blockquote>
@@ -107,6 +112,7 @@ import Footer from '../../components/Footer.astro';
     font-size: 1.5rem;
     color: var(--color-accent);
     margin-top: 1rem;
+    font-weight: 300;
   }
 
   .investors-partner {
