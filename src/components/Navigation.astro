@@ -7,7 +7,7 @@ const navLinks = [
     href: '/apply', 
     label: 'Apply',
     submenu: [
-      { href: '/apply/manifesto', label: 'Manifesto' },
+      { href: '/apply/faq', label: 'FAQ' },
       { href: '/apply/join-community', label: 'Join the Community' },
       { href: '/apply/accelerator', label: 'Accelerator' },
     ]
@@ -29,10 +29,15 @@ const navLinks = [
 <nav class="nav">
   <div class="nav-container">
     <a href="/" class="nav-logo">the tech bros</a>
-    <ul class="nav-links">
+    <button type="button" class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+      <span class="nav-toggle-icon"></span>
+      <span class="nav-toggle-icon"></span>
+      <span class="nav-toggle-icon"></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
       {navLinks.map((link) => (
         <li class={link.submenu ? 'nav-item-has-submenu' : ''}>
-          <a href={link.href} class="nav-link">{link.label}</a>
+          <a href={link.href} class="nav-link" data-has-submenu={link.submenu ? 'true' : 'false'}>{link.label}</a>
           {link.submenu && (
             <ul class="nav-submenu">
               {link.submenu.map((subItem) => (
@@ -78,6 +83,26 @@ const navLinks = [
     text-decoration: none;
     text-transform: lowercase;
     letter-spacing: -0.06em;
+  }
+
+  .nav-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0.5rem;
+    z-index: 101;
+  }
+
+  .nav-toggle-icon {
+    width: 24px;
+    height: 2px;
+    background: var(--color-primary);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 4px rgba(239, 31, 159, 0.4);
+    transform-origin: center;
   }
 
   .nav-links {
@@ -151,9 +176,9 @@ const navLinks = [
     padding: 0.75rem 1.5rem;
     color: var(--color-text-muted);
     font-weight: 400;
-    text-transform: none;
+    text-transform: uppercase;
     font-size: 0.9rem;
-    letter-spacing: 0;
+    letter-spacing: 0.05em;
     transition: all 0.2s ease;
     text-decoration: none;
   }
@@ -164,22 +189,106 @@ const navLinks = [
     text-shadow: 0 0 8px rgba(239, 31, 159, 0.4);
   }
 
+  /* Tablet: Disable hover, enable click behavior */
+  @media (max-width: 1024px) {
+    .nav-item-has-submenu:hover .nav-submenu {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(-50%) translateY(-10px);
+    }
+
+    .nav-item-has-submenu:hover .nav-link::after {
+      transform: rotate(0deg);
+    }
+
+    .nav-item-has-submenu.submenu-open .nav-submenu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .nav-item-has-submenu.submenu-open .nav-link::after {
+      transform: rotate(180deg);
+    }
+  }
+
   @media (max-width: 768px) {
     .nav-container {
-      flex-direction: column;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
       gap: 1rem;
       padding: 1rem;
+      position: relative;
+    }
+
+    .nav-toggle {
+      display: flex;
     }
 
     .nav-links {
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 2px solid var(--color-accent);
       flex-direction: column;
+      align-items: center;
+      gap: 0;
+      padding: 1rem;
+      margin-top: 1rem;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+      max-height: 0;
+      overflow: hidden;
+      list-style: none;
+    }
+
+    .nav-links.nav-open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      max-height: 1000px;
+    }
+
+    .nav-toggle[aria-expanded="true"] .nav-toggle-icon:nth-child(1) {
+      transform: rotate(45deg);
+      position: relative;
+      top: 6px;
+    }
+
+    .nav-toggle[aria-expanded="true"] .nav-toggle-icon:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav-toggle[aria-expanded="true"] .nav-toggle-icon:nth-child(3) {
+      transform: rotate(-45deg);
+      position: relative;
+      top: -6px;
     }
 
     .nav-link {
       font-size: 0.85rem;
+      padding: 0.75rem 0;
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
     }
 
     .nav-item-has-submenu {
@@ -189,16 +298,117 @@ const navLinks = [
     .nav-submenu {
       position: static;
       transform: none;
-      margin-top: 0.5rem;
+      margin-top: 0;
+      margin-left: 0;
       width: 100%;
-      opacity: 1;
-      visibility: visible;
+      opacity: 0;
+      visibility: hidden;
+      max-height: 0;
+      overflow: hidden;
       border-radius: 0;
       border-left: 2px solid var(--color-primary);
+      border-top: none;
+      padding: 0;
+      transition: opacity 0.3s ease, visibility 0.3s ease, max-height 0.3s ease, padding 0.3s ease;
     }
 
-    .nav-item-has-submenu:hover .nav-submenu {
+    .nav-item-has-submenu:hover .nav-submenu,
+    .nav-item-has-submenu:focus-within .nav-submenu,
+    .nav-item-has-submenu.submenu-open .nav-submenu {
+      opacity: 1;
+      visibility: visible;
+      max-height: 500px;
+      padding: 0.5rem 0;
       transform: none;
+    }
+
+    .nav-sublink {
+      text-align: center;
     }
   }
 </style>
+
+<script>
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.getElementById('nav-links');
+
+  if (navToggle && navLinks) {
+    navToggle.addEventListener('click', () => {
+      const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute('aria-expanded', String(!isExpanded));
+      navLinks.classList.toggle('nav-open');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navToggle.contains(e.target as Node) && !navLinks.contains(e.target as Node)) {
+        navToggle.setAttribute('aria-expanded', 'false');
+        navLinks.classList.remove('nav-open');
+      }
+    });
+
+    // Close menu when pressing Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navLinks.classList.contains('nav-open')) {
+        navToggle.setAttribute('aria-expanded', 'false');
+        navLinks.classList.remove('nav-open');
+      }
+    });
+
+    // Handle mobile and tablet submenu toggle for items with submenus
+    const checkTabletOrMobile = () => window.matchMedia('(max-width: 1024px)').matches;
+    
+    const submenuLinks = document.querySelectorAll('.nav-link[data-has-submenu="true"]');
+    
+    // Close other submenus when opening a new one
+    const closeOtherSubmenus = (targetItem: HTMLElement) => {
+      document.querySelectorAll('.nav-item-has-submenu').forEach((item) => {
+        if (item !== targetItem) {
+          item.classList.remove('submenu-open');
+        }
+      });
+    };
+    
+    submenuLinks.forEach((link) => {
+      const parentItem = link.closest('.nav-item-has-submenu') as HTMLElement;
+      if (!parentItem) return;
+
+      link.addEventListener('click', (e) => {
+        // Apply click behavior on tablets and mobile (up to 1024px)
+        if (!checkTabletOrMobile()) {
+          return; // Allow normal desktop hover behavior
+        }
+
+        const isOpen = parentItem.classList.contains('submenu-open');
+        
+        if (!isOpen) {
+          // First tap: open submenu, prevent navigation
+          e.preventDefault();
+          closeOtherSubmenus(parentItem);
+          parentItem.classList.add('submenu-open');
+        } else {
+          // Second tap: allow navigation (no preventDefault)
+          // The link will navigate normally
+          parentItem.classList.remove('submenu-open');
+        }
+      });
+    });
+
+    // Close submenus when clicking outside (tablet and mobile only)
+    document.addEventListener('click', (e) => {
+      if (!checkTabletOrMobile()) return;
+      
+      const target = e.target as Node;
+      const clickedSubmenu = (target as HTMLElement).closest('.nav-item-has-submenu');
+      const clickedSubmenuLink = (target as HTMLElement).closest('.nav-link[data-has-submenu="true"]');
+      const clickedSublink = (target as HTMLElement).closest('.nav-sublink');
+      
+      // Don't close if clicking on a submenu item or link
+      if (!clickedSubmenu && !clickedSubmenuLink && !clickedSublink) {
+        document.querySelectorAll('.nav-item-has-submenu').forEach((item) => {
+          item.classList.remove('submenu-open');
+        });
+      }
+    });
+  }
+</script>
