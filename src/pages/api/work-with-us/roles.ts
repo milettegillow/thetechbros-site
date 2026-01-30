@@ -54,8 +54,9 @@ export const GET: APIRoute = async () => {
     );
   }
 
-  // Build Airtable URL
-  let airtableUrl = `https://api.airtable.com/v0/${airtableBaseId}/${airtableRolesTable}`;
+  // Build Airtable URL with URL-encoded table name
+  const encodedTableName = encodeURIComponent(airtableRolesTable);
+  let airtableUrl = `https://api.airtable.com/v0/${airtableBaseId}/${encodedTableName}`;
   if (airtableRolesView) {
     airtableUrl += `?view=${encodeURIComponent(airtableRolesView)}`;
   }
@@ -71,12 +72,35 @@ export const GET: APIRoute = async () => {
 
     if (!airtableResponse.ok) {
       const errorText = await airtableResponse.text();
+      const bodySnippet = errorText.substring(0, 500);
+      
       console.error('Airtable API error:', {
         status: airtableResponse.status,
         statusText: airtableResponse.statusText,
+        bodySnippet,
       });
+      
+      // Check if we're in production
+      const isProduction = import.meta.env.VERCEL_ENV === 'production' || 
+                          process.env.VERCEL_ENV === 'production' ||
+                          import.meta.env.PROD ||
+                          (!import.meta.env.DEV && !import.meta.env.VERCEL_ENV);
+      
+      const errorResponse: any = {
+        error: 'Failed to fetch roles',
+      };
+      
+      // Add debug info only in non-production
+      if (!isProduction) {
+        errorResponse.debug = {
+          status: airtableResponse.status,
+          statusText: airtableResponse.statusText,
+          bodySnippet,
+        };
+      }
+      
       return new Response(
-        JSON.stringify({ error: 'Failed to fetch roles' }),
+        JSON.stringify(errorResponse),
         {
           status: 500,
           headers: { 'Content-Type': 'application/json' },
