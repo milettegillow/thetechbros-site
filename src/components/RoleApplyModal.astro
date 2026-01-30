@@ -2,8 +2,7 @@
 // RoleApplyModal component for job role application form
 ---
 
-<div id="role-apply-modal" class="role-apply-modal" role="dialog" aria-labelledby="role-modal-title" aria-modal="true" style="display: none;">
-  <div class="modal-backdrop" id="role-modal-backdrop"></div>
+<dialog class="role-apply-dialog" id="role-apply-dialog" aria-labelledby="role-modal-title">
   <div class="modal-content">
     <button class="modal-close" id="role-modal-close" aria-label="Close modal">&times;</button>
     
@@ -86,7 +85,7 @@
       <button class="btn" id="role-close-error-btn">Close</button>
     </div>
   </div>
-</div>
+</dialog>
 
 <script>
   interface Role {
@@ -149,8 +148,7 @@
     },
   };
 
-  const modal = document.getElementById('role-apply-modal');
-  const backdrop = document.getElementById('role-modal-backdrop');
+  const dialog = document.getElementById('role-apply-dialog') as HTMLDialogElement;
   const closeBtn = document.getElementById('role-modal-close');
   const form = document.getElementById('role-apply-form');
   const roleForm = document.getElementById('role-apply-form');
@@ -181,6 +179,16 @@
   // Simple markdown-like parser
   function parseMarkdownLike(text: string): string {
     if (!text) return '';
+    
+    // Section heading patterns (case-insensitive)
+    const sectionHeadings = [
+      'role overview',
+      'responsibilities',
+      'requirements',
+      'about the role',
+      'time commitment',
+      'how to apply',
+    ];
     
     // Split by lines first (before any processing)
     const lines = text.split('\n');
@@ -240,6 +248,27 @@
       if (inList) {
         result.push('</ul>');
         inList = false;
+      }
+
+      // Check if line is a section heading
+      const lineLower = line.toLowerCase();
+      let isHeading = false;
+      let headingText = line;
+      
+      // Check for exact matches (case-insensitive)
+      if (sectionHeadings.includes(lineLower)) {
+        isHeading = true;
+        headingText = line;
+      }
+      // Check if line ends with ":"
+      else if (line.endsWith(':')) {
+        isHeading = true;
+        headingText = line.slice(0, -1).trim(); // Remove trailing ":"
+      }
+      
+      if (isHeading) {
+        result.push(`<h3 class="role-section-heading">${escapeHtml(headingText)}</h3>`);
+        continue;
       }
 
       // Process bold in regular text
@@ -348,7 +377,7 @@
 
   // Open modal function
   function openRoleApplyModal(role: Role) {
-    if (!modal || !formContainer || !roleTitle || !roleDescription || !roleForm || !roleQuestionsContainer || !applicantLocationInput || !applicantLocationLabel || !roleMeta) return;
+    if (!dialog || !formContainer || !roleTitle || !roleDescription || !roleForm || !roleQuestionsContainer || !applicantLocationInput || !applicantLocationLabel || !roleMeta) return;
 
     currentRole = role;
     
@@ -395,21 +424,56 @@
       roleDescription.style.display = 'none';
     }
 
-    // Show modal
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+    // Prevent horizontal scrolling while modal is open
+    const originalHtmlOverflowX = document.documentElement.style.overflowX;
+    const originalBodyOverflowX = document.body.style.overflowX;
+    document.documentElement.style.overflowX = 'hidden';
+    document.body.style.overflowX = 'hidden';
 
-    // Focus first input
+    // Show modal using native dialog API
+    dialog.showModal();
+
+    // Reset scroll position of the scrollable panel
+    const modalContent = document.querySelector('.modal-content') as HTMLElement;
+    if (modalContent) {
+      modalContent.scrollTop = 0;
+    }
+
+    // Store original overflow values for restoration on close
+    (dialog as any)._originalHtmlOverflowX = originalHtmlOverflowX;
+    (dialog as any)._originalBodyOverflowX = originalBodyOverflowX;
+
+    // Focus first input without scrolling
     const firstInput = roleForm.querySelector('input') as HTMLInputElement;
-    firstInput?.focus();
+    if (firstInput) {
+      try {
+        firstInput.focus({ preventScroll: true });
+      } catch (e) {
+        // Fallback for browsers that don't support preventScroll
+        firstInput.focus();
+      }
+    }
   }
 
   // Close modal function
   function closeRoleModal() {
-    if (!modal || !formContainer || !successContainer || !errorContainer || !roleForm || !roleQuestionsContainer || !roleMeta) return;
+    if (!dialog || !formContainer || !successContainer || !errorContainer || !roleForm || !roleQuestionsContainer || !roleMeta) return;
 
-    modal.style.display = 'none';
-    document.body.style.overflow = '';
+    // Restore horizontal scrolling
+    const originalHtmlOverflowX = (dialog as any)._originalHtmlOverflowX;
+    const originalBodyOverflowX = (dialog as any)._originalBodyOverflowX;
+    if (originalHtmlOverflowX !== undefined) {
+      document.documentElement.style.overflowX = originalHtmlOverflowX;
+    } else {
+      document.documentElement.style.overflowX = '';
+    }
+    if (originalBodyOverflowX !== undefined) {
+      document.body.style.overflowX = originalBodyOverflowX;
+    } else {
+      document.body.style.overflowX = '';
+    }
+
+    dialog.close();
 
     // Reset form
     const formEl = form as HTMLFormElement;
@@ -437,10 +501,10 @@
     currentConfig = null;
   }
 
-  // Close on backdrop click
-  if (backdrop) {
-    backdrop.addEventListener('click', (e) => {
-      if (e.target === backdrop) {
+  // Close on backdrop click (clicking the dialog element itself, not its children)
+  if (dialog) {
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) {
         closeRoleModal();
       }
     });
@@ -451,12 +515,7 @@
     closeBtn.addEventListener('click', closeRoleModal);
   }
 
-  // Close on ESC key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal && modal.style.display === 'flex') {
-      closeRoleModal();
-    }
-  });
+  // ESC key handling is native to dialog element, no need for custom handler
 
   // Close success/error buttons
   if (closeSuccessBtn) {
@@ -600,24 +659,23 @@
 </script>
 
 <style>
-  .role-apply-modal {
+  .role-apply-dialog {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    top: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    max-width: min(920px, calc(100vw - 32px));
+    width: min(920px, calc(100vw - 32px));
+    max-height: calc(100vh - 80px);
+    box-sizing: border-box;
+    overflow-x: hidden;
   }
 
-  .modal-backdrop {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  .role-apply-dialog::backdrop {
     background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(4px);
   }
@@ -628,12 +686,13 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     padding: 2.5rem;
-    max-width: 700px;
-    width: 90%;
-    max-height: 90vh;
+    max-width: 100%;
+    width: 100%;
+    max-height: calc(100vh - 80px);
     overflow-y: auto;
-    z-index: 1001;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    overflow-x: hidden;
+    box-sizing: border-box;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05);
   }
 
   .modal-close {
@@ -676,24 +735,48 @@
     margin-bottom: 1rem;
   }
 
-  :global(#role-apply-modal .role-description ul) {
+  /* Ensure all headings inside role description are white (using :global for dynamically injected content) */
+  :global(#role-apply-dialog #role-description h1),
+  :global(#role-apply-dialog #role-description h2),
+  :global(#role-apply-dialog #role-description h3),
+  :global(#role-apply-dialog #role-description h4),
+  :global(#role-apply-dialog #role-description h5),
+  :global(#role-apply-dialog #role-description h6) {
+    color: #fff !important;
+  }
+
+  :global(#role-apply-dialog #role-description .role-section-heading) {
+    color: #fff !important;
+    margin: 1.25rem 0 0.5rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
+  }
+
+  :global(#role-apply-dialog #role-description .role-section-heading:first-child) {
+    margin-top: 0;
+  }
+
+  :global(#role-apply-dialog .role-description ul) {
     margin: 0.75rem 0 1rem;
     padding-left: 1.6rem;
     list-style: disc;
     list-style-position: outside;
   }
 
-  :global(#role-apply-modal .role-description li) {
+  :global(#role-apply-dialog .role-description li) {
     margin: 0.4rem 0;
     line-height: 1.55;
   }
 
-  :global(#role-apply-modal .role-description li::marker) {
+  :global(#role-apply-dialog .role-description li::marker) {
     color: rgba(255, 255, 255, 0.55);
   }
 
-  .role-description strong {
-    color: var(--color-primary);
+  /* Strong tags inside role description (dynamically injected) */
+  :global(#role-apply-dialog #role-description strong) {
+    color: #fff !important;
     font-weight: 600;
     text-transform: lowercase;
     letter-spacing: 0.02em;
@@ -703,16 +786,21 @@
     margin: -0.75rem 0 1.25rem;
   }
 
-  .role-modal-meta .meta-row {
+  /* Meta row (dynamically injected via innerHTML) */
+  :global(#role-apply-dialog #role-modal-meta .meta-row) {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    font-family: var(--font-secondary);
+    font-family: var(--font-primary);
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.78);
+    color: #fff;
+    font-weight: 700;
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   }
 
-  :global(#role-apply-modal .role-modal-meta .meta-separator) {
+  :global(#role-apply-dialog .role-modal-meta .meta-separator) {
     color: var(--color-accent) !important;
     opacity: 0.9;
   }
@@ -723,42 +811,42 @@
     gap: 1.5rem;
   }
 
-  :global(#role-apply-modal .form-group) {
+  :global(#role-apply-dialog .form-group) {
     display: flex;
     flex-direction: column;
     margin-bottom: 1.6rem;
   }
 
-  :global(#role-apply-modal .role-apply-form .form-group:last-child) {
+  :global(#role-apply-dialog .role-apply-form .form-group:last-child) {
     margin-bottom: 0;
   }
 
-  :global(#role-apply-modal .form-group label) {
+  :global(#role-apply-dialog .form-group label) {
     color: var(--color-text);
     margin-bottom: 0.5rem;
     font-size: 0.95rem;
   }
 
-  :global(#role-apply-modal .required) {
+  :global(#role-apply-dialog .required) {
     color: var(--color-primary) !important;
   }
 
-  :global(#role-apply-modal .word-count) {
+  :global(#role-apply-dialog .word-count) {
     font-size: 0.85rem;
     color: var(--color-text-muted);
     font-weight: normal;
     margin-left: 0.5rem;
   }
 
-  :global(#role-apply-modal .word-counter) {
+  :global(#role-apply-dialog .word-counter) {
     font-size: 0.85rem;
     color: var(--color-text-muted);
     text-align: right;
     margin-top: 0;
   }
 
-  :global(#role-apply-modal .role-apply-form input:not([type="checkbox"]):not([type="radio"])),
-  :global(#role-apply-modal .role-apply-form textarea) {
+  :global(#role-apply-dialog .role-apply-form input:not([type="checkbox"]):not([type="radio"])),
+  :global(#role-apply-dialog .role-apply-form textarea) {
     width: 100%;
     padding: 0.75rem;
     background: rgba(255, 255, 255, 0.1);
@@ -769,27 +857,27 @@
     border-radius: 4px;
   }
 
-  :global(#role-apply-modal .role-apply-form textarea) {
+  :global(#role-apply-dialog .role-apply-form textarea) {
     margin-bottom: 0.35rem;
   }
 
-  :global(#role-apply-modal .role-apply-form input:not([type="checkbox"]):not([type="radio"]):focus),
-  :global(#role-apply-modal .role-apply-form textarea:focus) {
+  :global(#role-apply-dialog .role-apply-form input:not([type="checkbox"]):not([type="radio"]):focus),
+  :global(#role-apply-dialog .role-apply-form textarea:focus) {
     outline: none;
     border-color: var(--color-primary);
     box-shadow: 0 0 10px rgba(239, 31, 159, 0.3);
   }
 
-  :global(#role-apply-modal .role-apply-form input:not([type="checkbox"]):not([type="radio"])::placeholder),
-  :global(#role-apply-modal .role-apply-form textarea::placeholder) {
+  :global(#role-apply-dialog .role-apply-form input:not([type="checkbox"]):not([type="radio"])::placeholder),
+  :global(#role-apply-dialog .role-apply-form textarea::placeholder) {
     color: var(--color-text-muted);
   }
 
-  :global(#role-apply-modal .checkbox-field) {
+  :global(#role-apply-dialog .checkbox-field) {
     margin-top: 0.5rem;
   }
 
-  :global(#role-apply-modal .checkbox-label) {
+  :global(#role-apply-dialog .checkbox-label) {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -801,7 +889,7 @@
     margin-bottom: 0;
   }
 
-  :global(#role-apply-modal .checkbox-label input[type="checkbox"]) {
+  :global(#role-apply-dialog .checkbox-label input[type="checkbox"]) {
     width: 18px;
     height: 18px;
     padding: 0;
