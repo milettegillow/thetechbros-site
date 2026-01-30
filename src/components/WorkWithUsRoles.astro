@@ -114,8 +114,19 @@
     color: var(--color-text-muted);
   }
 
-  .role-card-footer {
+  .role-card-deadline {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.88);
+    font-family: var(--font-primary);
+    line-height: 1.35;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
     margin-top: auto;
+    margin-bottom: 1rem;
+  }
+
+  .role-card-footer {
+    margin-top: 0;
     display: flex;
     justify-content: center;
     padding-top: 1.25rem;
@@ -215,6 +226,7 @@
               <h3>${escapeHtml(role.title)}</h3>
               ${metaRowHtml}
               ${role.shortBlurb ? `<p class="role-blurb">${escapeHtml(role.shortBlurb)}</p>` : '<p class="role-blurb"></p>'}
+              <div class="role-card-deadline">Application deadline: 15th February 2026</div>
               <div class="role-card-footer">
                 <span class="read-more-btn" aria-hidden="true">read more</span>
               </div>

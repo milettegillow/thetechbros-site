@@ -9,6 +9,7 @@
     <div id="role-modal-form-container">
       <h2 id="role-modal-title">Apply for Role</h2>
       <div id="role-modal-meta" class="role-modal-meta" aria-hidden="true"></div>
+      <div id="role-modal-deadline" class="role-modal-deadline"></div>
       <div id="role-description" class="role-description"></div>
       <form id="role-apply-form" class="role-apply-form" action="" method="post">
         <!-- Honeypot field -->
@@ -162,6 +163,7 @@
   const roleDescription = document.getElementById('role-description');
   const roleTitle = document.getElementById('role-modal-title');
   const roleMeta = document.getElementById('role-modal-meta');
+  const roleDeadline = document.getElementById('role-modal-deadline');
   const roleQuestionsContainer = document.getElementById('role-questions-container');
   const applicantLocationInput = document.getElementById('applicantLocation') as HTMLInputElement;
   const applicantLocationLabel = document.getElementById('applicantLocationLabel');
@@ -436,7 +438,7 @@
 
   // Open modal function
   function openRoleApplyModal(role: Role) {
-    if (!dialog || !formContainer || !roleTitle || !roleDescription || !roleForm || !roleQuestionsContainer || !applicantLocationInput || !applicantLocationLabel || !roleMeta) return;
+    if (!dialog || !formContainer || !roleTitle || !roleDescription || !roleForm || !roleQuestionsContainer || !applicantLocationInput || !applicantLocationLabel || !roleMeta || !roleDeadline) return;
 
     currentRole = role;
     
@@ -462,6 +464,14 @@
       roleMeta.innerHTML = metaItems.length
         ? `<div class="meta-row">${metaItems.join('<span class="meta-separator"> • </span>')}</div>`
         : '';
+    }
+    
+    // Set deadline and interview dates
+    if (roleDeadline) {
+      roleDeadline.innerHTML = `
+        <div class="deadline-line">Application deadline: 15th February 2026</div>
+        <div class="interview-line">Interviews will take place on the 23-27th February 2026</div>
+      `;
     }
     
     // Always show the form
@@ -563,6 +573,7 @@
     formContainer.style.display = 'block';
     roleForm.style.display = 'block';
     if (roleMeta) roleMeta.innerHTML = '';
+    if (roleDeadline) roleDeadline.innerHTML = '';
     successContainer.style.display = 'none';
     errorContainer.style.display = 'none';
     currentRole = null;
@@ -888,6 +899,29 @@
   :global(#role-apply-dialog .role-modal-meta .meta-separator) {
     color: var(--color-accent) !important;
     opacity: 0.9;
+  }
+
+  .role-modal-deadline {
+    margin-bottom: 1.5rem;
+    font-family: var(--font-primary);
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.88);
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  :global(#role-apply-dialog .role-modal-deadline .deadline-line),
+  :global(#role-apply-dialog .role-modal-deadline .interview-line) {
+    font-family: var(--font-primary);
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.88);
+    font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 0.4rem;
+  }
+
+  :global(#role-apply-dialog .role-modal-deadline .interview-line) {
+    margin-bottom: 0;
   }
 
   .role-apply-form {
