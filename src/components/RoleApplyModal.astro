@@ -375,11 +375,76 @@
     });
   }
 
+  // URL parameter helpers
+  function getRoleIdFromUrl(): string | null {
+    // Check query params first
+    const urlParams = new URLSearchParams(window.location.search);
+    const roleFromQuery = urlParams.get('role');
+    if (roleFromQuery) return roleFromQuery;
+    
+    // Check hash params (supports both #role=abc and #?role=abc)
+    const hash = window.location.hash.substring(1);
+    if (hash.startsWith('role=')) {
+      return hash.substring(5); // Extract value after "role="
+    }
+    const hashParams = new URLSearchParams(hash);
+    const roleFromHash = hashParams.get('role');
+    if (roleFromHash) return roleFromHash;
+    
+    return null;
+  }
+
+  function updateUrlWithRole(roleId: string) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('role', roleId);
+    // Preserve hash if it exists and isn't the role param
+    const currentHash = window.location.hash;
+    if (currentHash && !currentHash.startsWith('#role=')) {
+      url.hash = currentHash;
+    } else {
+      // If no meaningful hash, preserve work-with-us if we're on the team page
+      if (window.location.pathname === '/team') {
+        url.hash = '#work-with-us';
+      } else {
+        url.hash = '';
+      }
+    }
+    window.history.pushState({}, '', url.toString());
+  }
+
+  function removeRoleFromUrl() {
+    const url = new URL(window.location.href);
+    url.searchParams.delete('role');
+    // Remove role from hash if present
+    const currentHash = window.location.hash;
+    if (currentHash.startsWith('#role=')) {
+      // If we're on the team page, restore work-with-us hash
+      if (window.location.pathname === '/team') {
+        url.hash = '#work-with-us';
+      } else {
+        url.hash = '';
+      }
+    } else if (currentHash && currentHash !== '#work-with-us') {
+      // Preserve existing hash if it's not a role param
+      url.hash = currentHash;
+    } else if (window.location.pathname === '/team' && !currentHash) {
+      // If on team page with no hash, add work-with-us
+      url.hash = '#work-with-us';
+    }
+    window.history.pushState({}, '', url.toString());
+  }
+
   // Open modal function
   function openRoleApplyModal(role: Role) {
     if (!dialog || !formContainer || !roleTitle || !roleDescription || !roleForm || !roleQuestionsContainer || !applicantLocationInput || !applicantLocationLabel || !roleMeta) return;
 
     currentRole = role;
+    
+    // Update URL with role identifier (use id if available, otherwise slug)
+    const roleIdentifier = role.id || role.slug;
+    if (roleIdentifier) {
+      updateUrlWithRole(roleIdentifier);
+    }
     
     // Get role config (fallback to university-ambassador if not found)
     currentConfig = roleFormConfigs[role.slug] || roleFormConfigs['university-ambassador'];
@@ -458,6 +523,9 @@
   // Close modal function
   function closeRoleModal() {
     if (!dialog || !formContainer || !successContainer || !errorContainer || !roleForm || !roleQuestionsContainer || !roleMeta) return;
+
+    // Remove role from URL
+    removeRoleFromUrl();
 
     // Restore horizontal scrolling
     const originalHtmlOverflowX = (dialog as any)._originalHtmlOverflowX;
@@ -654,8 +722,25 @@
     });
   }
 
-  // Expose openRoleApplyModal globally
+  // Function to check URL and open modal if role param exists
+  // This should be called after roles are loaded
+  function checkUrlAndOpenModal(roles: Role[]) {
+    const roleId = getRoleIdFromUrl();
+    if (!roleId || roles.length === 0) return;
+
+    // Find role by id (Airtable record id) or slug
+    const role = roles.find(r => r.id === roleId || r.slug === roleId);
+    if (role && (window as any).openRoleApplyModal) {
+      // Small delay to ensure DOM is ready
+      setTimeout(() => {
+        (window as any).openRoleApplyModal(role);
+      }, 100);
+    }
+  }
+
+  // Expose functions globally
   (window as any).openRoleApplyModal = openRoleApplyModal;
+  (window as any).checkUrlAndOpenRoleModal = checkUrlAndOpenModal;
 </script>
 
 <style>

@@ -239,6 +239,11 @@
 
             gridEl.appendChild(card);
           });
+          
+          // Check URL for role parameter and open modal if needed
+          if ((window as any).checkUrlAndOpenRoleModal) {
+            (window as any).checkUrlAndOpenRoleModal(data.roles);
+          }
         } else {
           // No roles found
           gridEl.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: var(--color-text-muted);">No roles available at this time.</p>';
