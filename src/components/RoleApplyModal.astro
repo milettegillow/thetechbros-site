@@ -1,0 +1,854 @@
+---
+// RoleApplyModal component for job role application form
+---
+
+<div id="role-apply-modal" class="role-apply-modal" role="dialog" aria-labelledby="role-modal-title" aria-modal="true" style="display: none;">
+  <div class="modal-backdrop" id="role-modal-backdrop"></div>
+  <div class="modal-content">
+    <button class="modal-close" id="role-modal-close" aria-label="Close modal">&times;</button>
+    
+    <div id="role-modal-form-container">
+      <h2 id="role-modal-title">Apply for Role</h2>
+      <div id="role-modal-meta" class="role-modal-meta" aria-hidden="true"></div>
+      <div id="role-description" class="role-description"></div>
+      <form id="role-apply-form" class="role-apply-form" action="" method="post">
+        <!-- Honeypot field -->
+        <input 
+          type="text" 
+          name="hp_field" 
+          id="hp_field" 
+          autocomplete="new-password" 
+          autocapitalize="off" 
+          spellcheck="false" 
+          inputmode="none" 
+          data-1p-ignore="true" 
+          data-lpignore="true" 
+          data-bwignore="true"
+          tabindex="-1" 
+          aria-hidden="true" 
+          style="position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; left: -9999px;" 
+        />
+        
+        <div class="form-group">
+          <label for="fullName">Full Name <span class="required">*</span></label>
+          <input type="text" id="fullName" name="fullName" required />
+        </div>
+
+        <div class="form-group">
+          <label for="emailAddress">Email Address <span class="required">*</span></label>
+          <input type="email" id="emailAddress" name="emailAddress" required />
+        </div>
+
+        <div class="form-group">
+          <label for="linkedinProfile">LinkedIn Profile <span class="required">*</span></label>
+          <input type="url" id="linkedinProfile" name="linkedinProfile" placeholder="https://linkedin.com/in/yourname" required />
+        </div>
+
+        <div class="form-group">
+          <label for="personalWebsite">Personal Website</label>
+          <input type="url" id="personalWebsite" name="personalWebsite" placeholder="https://yourwebsite.com" />
+        </div>
+
+        <div class="form-group">
+          <label id="applicantLocationLabel" for="applicantLocation">Location <span class="required">*</span></label>
+          <input type="text" id="applicantLocation" name="applicantLocation" />
+        </div>
+
+        <div id="role-questions-container"></div>
+
+        <div class="form-group">
+          <label for="heardAbout">Where did you hear about this role? <span class="required">*</span></label>
+          <input type="text" id="heardAbout" name="heardAbout" required />
+        </div>
+
+        <div class="form-group checkbox-field">
+          <label class="checkbox-label">
+            <input type="checkbox" id="addToNewsletter" name="addToNewsletter" value="true" />
+            Add me to TTB newsletter
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn" id="role-submit-btn">Submit Application</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="role-modal-success" style="display: none;">
+      <h2>Application Submitted!</h2>
+      <p>Thank you for your application. We'll be in touch soon.</p>
+      <button class="btn" id="role-close-success-btn">Close</button>
+    </div>
+
+    <div id="role-modal-error" style="display: none;">
+      <h2>Error</h2>
+      <p id="role-error-message">Something went wrong. Please try again later.</p>
+      <button class="btn" id="role-close-error-btn">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  interface Role {
+    id: string;
+    title: string;
+    slug: string;
+    commitment: string;
+    type: string;
+    location: string;
+    shortBlurb: string;
+    description: string;
+  }
+
+  interface Question {
+    key: string;
+    label: string;
+    maxWords: number;
+  }
+
+  interface RoleFormConfig {
+    locationLabel: string;
+    locationRequired: boolean;
+    questions: Question[];
+  }
+
+  // Role form configuration
+  const roleFormConfigs: { [key: string]: RoleFormConfig } = {
+    'university-ambassador': {
+      locationLabel: 'University',
+      locationRequired: true,
+      questions: [
+        { key: 'tookChargeSocially', label: 'Tell us about a time you took charge socially', maxWords: 100 },
+        { key: 'stemCommunityConnection', label: "How are you connected within your university's STEM community?", maxWords: 100 },
+        { key: 'whyRepresent', label: 'Why do you want to represent The Tech Bros as a university ambassador?', maxWords: 150 },
+        { key: 'relevantExperience', label: "What experience do you have that's relevant to this role?", maxWords: 150 },
+        { key: 'campusInitiative', label: 'If you were to run an event or initiative for The Tech Bros on your campus, what would it be?', maxWords: 150 },
+      ],
+    },
+    'community': {
+      locationLabel: 'City',
+      locationRequired: true,
+      questions: [
+        { key: 'tookChargeSocially', label: 'Tell us about a time you took charge socially or brought people together in your community.', maxWords: 100 },
+        { key: 'stemCommunityConnection', label: 'How are you connected within your local tech/STEM/startup ecosystem?', maxWords: 100 },
+        { key: 'whyRepresent', label: 'Why do you want to represent The Tech Bros as a Community Lead in your city?', maxWords: 150 },
+        { key: 'relevantExperience', label: 'What experience do you have that\'s relevant to running community initiatives/events?', maxWords: 150 },
+        { key: 'campusInitiative', label: 'If you were to run your first Tech Bros event or initiative in your city, what would it be?', maxWords: 150 },
+      ],
+    },
+    'partnerships': {
+      locationLabel: 'Applicant location',
+      locationRequired: true,
+      questions: [
+        { key: 'closedPartnership', label: 'Tell us about a time you successfully initiated and closed a partnership or sponsorship (or equivalent outcome).', maxWords: 150 },
+        { key: 'bestFitPartners', label: 'What kinds of partners do you think are the best fit for The Tech Bros right now, and why?', maxWords: 150 },
+        { key: 'whyPartnerships', label: 'Why do you want to work on partnerships for The Tech Bros?', maxWords: 150 },
+        { key: 'relevantExperience', label: 'What relevant experience do you have (BD, sales, community partnerships, fundraising, sponsorship)?', maxWords: 150 },
+        { key: 'firstTwoWeeks', label: 'If you started tomorrow, what would your first 2 weeks of outreach look like? Do you have an existing network you can reach out to immediately? If so, which sectors?', maxWords: 150 },
+      ],
+    },
+  };
+
+  const modal = document.getElementById('role-apply-modal');
+  const backdrop = document.getElementById('role-modal-backdrop');
+  const closeBtn = document.getElementById('role-modal-close');
+  const form = document.getElementById('role-apply-form');
+  const roleForm = document.getElementById('role-apply-form');
+  const formContainer = document.getElementById('role-modal-form-container');
+  const successContainer = document.getElementById('role-modal-success');
+  const errorContainer = document.getElementById('role-modal-error');
+  const errorMessage = document.getElementById('role-error-message');
+  const submitBtn = document.getElementById('role-submit-btn');
+  const closeSuccessBtn = document.getElementById('role-close-success-btn');
+  const closeErrorBtn = document.getElementById('role-close-error-btn');
+  const roleDescription = document.getElementById('role-description');
+  const roleTitle = document.getElementById('role-modal-title');
+  const roleMeta = document.getElementById('role-modal-meta');
+  const roleQuestionsContainer = document.getElementById('role-questions-container');
+  const applicantLocationInput = document.getElementById('applicantLocation') as HTMLInputElement;
+  const applicantLocationLabel = document.getElementById('applicantLocationLabel');
+
+  let currentRole: Role | null = null;
+  let currentConfig: RoleFormConfig | null = null;
+  let wordCounters: { [key: string]: { textarea: HTMLTextAreaElement; counter: HTMLElement; maxWords: number } } = {};
+
+  // Word count helper
+  function countWords(text: string): number {
+    if (!text || typeof text !== 'string') return 0;
+    return text.trim().split(/\s+/).filter(word => word.length > 0).length;
+  }
+
+  // Simple markdown-like parser
+  function parseMarkdownLike(text: string): string {
+    if (!text) return '';
+    
+    // Split by lines first (before any processing)
+    const lines = text.split('\n');
+    const result: string[] = [];
+    let inList = false;
+
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i].trim();
+      
+      // Skip empty lines or lines that are just "-"
+      if (line === '' || line === '-') {
+        if (inList) {
+          result.push('</ul>');
+          inList = false;
+        }
+        // Add paragraph break if next line has content
+        if (i < lines.length - 1) {
+          const nextLine = lines[i + 1].trim();
+          if (nextLine !== '' && nextLine !== '-') {
+            result.push('<p></p>');
+          }
+        }
+        continue;
+      }
+
+      // Bullet point (must start with "- " and have content after)
+      if (line.startsWith('- ') && line.length > 2) {
+        if (!inList) {
+          result.push('<ul>');
+          inList = true;
+        }
+        const content = line.substring(2).trim();
+        if (content) {
+          // Process bold: find **text** patterns
+          // We'll build the HTML manually to ensure safety
+          let processedContent = '';
+          let lastIndex = 0;
+          const boldRegex = /\*\*(.+?)\*\*/g;
+          let match;
+          
+          while ((match = boldRegex.exec(content)) !== null) {
+            // Add text before the match (escaped)
+            processedContent += escapeHtml(content.substring(lastIndex, match.index));
+            // Add the bold tag with escaped inner content
+            processedContent += '<strong>' + escapeHtml(match[1]) + '</strong>';
+            lastIndex = match.index + match[0].length;
+          }
+          // Add remaining text (escaped)
+          processedContent += escapeHtml(content.substring(lastIndex));
+          
+          result.push(`<li>${processedContent}</li>`);
+        }
+        continue;
+      }
+
+      // Close list if we hit a non-list item
+      if (inList) {
+        result.push('</ul>');
+        inList = false;
+      }
+
+      // Process bold in regular text
+      let processedLine = '';
+      let lastIndex = 0;
+      const boldRegex = /\*\*(.+?)\*\*/g;
+      let match;
+      
+      while ((match = boldRegex.exec(line)) !== null) {
+        // Add text before the match (escaped)
+        processedLine += escapeHtml(line.substring(lastIndex, match.index));
+        // Add the bold tag with escaped inner content
+        processedLine += '<strong>' + escapeHtml(match[1]) + '</strong>';
+        lastIndex = match.index + match[0].length;
+      }
+      // Add remaining text (escaped)
+      processedLine += escapeHtml(line.substring(lastIndex));
+      
+      result.push(`<p>${processedLine}</p>`);
+    }
+
+    // Close list if still open
+    if (inList) {
+      result.push('</ul>');
+    }
+
+    return result.join('');
+  }
+
+  // HTML escape
+  function escapeHtml(text: string): string {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  // Escape HTML but preserve specific safe tags
+  function escapeHtmlPreserveTags(text: string, safeTags: string[]): string {
+    // Create placeholders for safe tags
+    const placeholders: { [key: string]: string } = {};
+    let placeholderIndex = 0;
+    
+    // Find and replace safe tags with placeholders
+    let processed = text;
+    for (const tag of safeTags) {
+      const regex = new RegExp(`<${tag}(\\s[^>]*)?>.*?</${tag}>`, 'gi');
+      processed = processed.replace(regex, (match) => {
+        const placeholder = `__SAFE_TAG_${placeholderIndex}__`;
+        placeholders[placeholder] = match;
+        placeholderIndex++;
+        return placeholder;
+      });
+    }
+    
+    // Escape everything
+    const escaped = escapeHtml(processed);
+    
+    // Restore safe tags (they're already HTML, so no need to escape them)
+    let result = escaped;
+    for (const [placeholder, tag] of Object.entries(placeholders)) {
+      const escapedPlaceholder = escapeHtml(placeholder);
+      result = result.replace(escapedPlaceholder, tag);
+    }
+    
+    return result;
+  }
+
+  // Render role-specific questions
+  function renderRoleQuestions(config: RoleFormConfig) {
+    if (!roleQuestionsContainer) return;
+
+    // Clear existing questions
+    roleQuestionsContainer.innerHTML = '';
+
+    // Reset word counters
+    wordCounters = {};
+
+    // Render each question
+    config.questions.forEach((question) => {
+      const questionDiv = document.createElement('div');
+      questionDiv.className = 'form-group';
+      questionDiv.innerHTML = `
+        <label for="${question.key}">${escapeHtml(question.label)} <span class="required">*</span></label>
+        <textarea id="${question.key}" name="${question.key}" rows="4" required></textarea>
+        <span class="word-counter" id="word-counter-${question.key}">0 / ${question.maxWords} words</span>
+      `;
+      roleQuestionsContainer.appendChild(questionDiv);
+
+      // Setup word counter
+      const textarea = document.getElementById(question.key) as HTMLTextAreaElement;
+      const counter = document.getElementById(`word-counter-${question.key}`) as HTMLElement;
+      if (textarea && counter) {
+        wordCounters[question.key] = { textarea, counter, maxWords: question.maxWords };
+        textarea.addEventListener('input', () => {
+          const wordCount = countWords(textarea.value);
+          counter.textContent = `${wordCount} / ${question.maxWords} words`;
+          if (wordCount > question.maxWords) {
+            counter.style.color = 'var(--color-primary)';
+          } else {
+            counter.style.color = 'var(--color-text-muted)';
+          }
+        });
+      }
+    });
+  }
+
+  // Open modal function
+  function openRoleApplyModal(role: Role) {
+    if (!modal || !formContainer || !roleTitle || !roleDescription || !roleForm || !roleQuestionsContainer || !applicantLocationInput || !applicantLocationLabel || !roleMeta) return;
+
+    currentRole = role;
+    
+    // Get role config (fallback to university-ambassador if not found)
+    currentConfig = roleFormConfigs[role.slug] || roleFormConfigs['university-ambassador'];
+    
+    // Set title
+    roleTitle.textContent = `Apply for ${role.title}`;
+    
+    // Set meta row (Voluntary • Global • min 5h / week)
+    if (roleMeta) {
+      const metaItems: string[] = [];
+      if (role.type) metaItems.push(`<span class="meta-item">${escapeHtml(role.type)}</span>`);
+      if (role.location) metaItems.push(`<span class="meta-item">${escapeHtml(role.location)}</span>`);
+      if (role.commitment) metaItems.push(`<span class="meta-item">${escapeHtml(role.commitment)}</span>`);
+
+      roleMeta.innerHTML = metaItems.length
+        ? `<div class="meta-row">${metaItems.join('<span class="meta-separator"> • </span>')}</div>`
+        : '';
+    }
+    
+    // Always show the form
+    roleForm.style.display = 'block';
+
+    // Clear honeypot field to prevent autofill
+    const honeypotField = document.getElementById('hp_field') as HTMLInputElement;
+    if (honeypotField) {
+      honeypotField.value = '';
+    }
+
+    // Update location field
+    applicantLocationLabel.innerHTML = `${escapeHtml(currentConfig.locationLabel)}${currentConfig.locationRequired ? ' <span class="required">*</span>' : ''}`;
+    applicantLocationInput.required = currentConfig.locationRequired;
+    applicantLocationInput.value = '';
+
+    // Render role-specific questions
+    renderRoleQuestions(currentConfig);
+
+    // Render description
+    if (role.description) {
+      roleDescription.innerHTML = parseMarkdownLike(role.description);
+      roleDescription.style.display = 'block';
+    } else {
+      roleDescription.style.display = 'none';
+    }
+
+    // Show modal
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+
+    // Focus first input
+    const firstInput = roleForm.querySelector('input') as HTMLInputElement;
+    firstInput?.focus();
+  }
+
+  // Close modal function
+  function closeRoleModal() {
+    if (!modal || !formContainer || !successContainer || !errorContainer || !roleForm || !roleQuestionsContainer || !roleMeta) return;
+
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+
+    // Reset form
+    const formEl = form as HTMLFormElement;
+    formEl?.reset();
+
+    // Reset word counters
+    Object.values(wordCounters).forEach(({ counter }) => {
+      if (counter) {
+        counter.textContent = counter.textContent?.split(' / ')[0] + ' / ' + (counter.textContent?.split(' / ')[1] || '');
+        counter.style.color = 'var(--color-text-muted)';
+      }
+    });
+
+    // Clear questions container
+    roleQuestionsContainer.innerHTML = '';
+    wordCounters = {};
+
+    // Reset containers
+    formContainer.style.display = 'block';
+    roleForm.style.display = 'block';
+    if (roleMeta) roleMeta.innerHTML = '';
+    successContainer.style.display = 'none';
+    errorContainer.style.display = 'none';
+    currentRole = null;
+    currentConfig = null;
+  }
+
+  // Close on backdrop click
+  if (backdrop) {
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) {
+        closeRoleModal();
+      }
+    });
+  }
+
+  // Close on close button
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeRoleModal);
+  }
+
+  // Close on ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && modal.style.display === 'flex') {
+      closeRoleModal();
+    }
+  });
+
+  // Close success/error buttons
+  if (closeSuccessBtn) {
+    closeSuccessBtn.addEventListener('click', closeRoleModal);
+  }
+  if (closeErrorBtn && errorContainer && formContainer) {
+    closeErrorBtn.addEventListener('click', () => {
+      errorContainer.style.display = 'none';
+      formContainer.style.display = 'block';
+    });
+  }
+
+  // Form submission
+  if (form && formContainer && successContainer && errorContainer && errorMessage && submitBtn) {
+    const formEl = form as HTMLFormElement;
+    const submitBtnEl = submitBtn as HTMLButtonElement;
+
+    formEl.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!currentRole) return;
+
+      if (!currentRole || !currentConfig) return;
+
+      // Client-side validation
+      const fullName = (formEl.querySelector('#fullName') as HTMLInputElement)?.value.trim();
+      const emailAddress = (formEl.querySelector('#emailAddress') as HTMLInputElement)?.value.trim();
+      const linkedinProfile = (formEl.querySelector('#linkedinProfile') as HTMLInputElement)?.value.trim();
+      const personalWebsite = (formEl.querySelector('#personalWebsite') as HTMLInputElement)?.value.trim();
+      const applicantLocation = (formEl.querySelector('#applicantLocation') as HTMLInputElement)?.value.trim();
+      const heardAbout = (formEl.querySelector('#heardAbout') as HTMLInputElement)?.value.trim();
+      const addToNewsletter = (formEl.querySelector('#addToNewsletter') as HTMLInputElement)?.checked;
+      
+      // Read and immediately clear honeypot field to prevent autofill from sneaking in
+      const honeypotField = formEl.querySelector('#hp_field') as HTMLInputElement;
+      const hp_field = honeypotField?.value.trim() || '';
+      if (honeypotField) {
+        honeypotField.value = '';
+      }
+
+      // Validate required fields
+      if (!fullName || !emailAddress || !linkedinProfile || !heardAbout) {
+        errorMessage.textContent = 'Please fill in all required fields.';
+        formContainer.style.display = 'none';
+        errorContainer.style.display = 'block';
+        return;
+      }
+
+      // Validate location if required
+      if (currentConfig.locationRequired && !applicantLocation) {
+        errorMessage.textContent = 'Please fill in all required fields.';
+        formContainer.style.display = 'none';
+        errorContainer.style.display = 'block';
+        return;
+      }
+
+      // Validate email
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailAddress)) {
+        errorMessage.textContent = 'Please enter a valid email address.';
+        formContainer.style.display = 'none';
+        errorContainer.style.display = 'block';
+        return;
+      }
+
+      // Get answers and validate word counts
+      const answers: { [key: string]: string } = {};
+
+      for (const question of currentConfig.questions) {
+        const textarea = document.getElementById(question.key) as HTMLTextAreaElement;
+        const value = textarea?.value.trim() || '';
+        if (!value) {
+          errorMessage.textContent = 'Please fill in all required fields.';
+          formContainer.style.display = 'none';
+          errorContainer.style.display = 'block';
+          return;
+        }
+        const wordCount = countWords(value);
+        if (wordCount > question.maxWords) {
+          errorMessage.textContent = `"${question.label}" exceeds the maximum word limit of ${question.maxWords} words.`;
+          formContainer.style.display = 'none';
+          errorContainer.style.display = 'block';
+          return;
+        }
+        answers[question.key] = value;
+      }
+
+      // Disable submit button
+      submitBtnEl.disabled = true;
+      submitBtnEl.textContent = 'Submitting...';
+
+      // Build request body
+      const body = {
+        hp_field,
+        roleSlug: currentRole.slug,
+        roleTitle: currentRole.title,
+        fullName,
+        emailAddress,
+        linkedinProfile,
+        personalWebsite: personalWebsite || undefined,
+        applicantLocation: applicantLocation || undefined,
+        heardAbout,
+        addToNewsletter: addToNewsletter || false,
+        answers,
+      };
+
+      try {
+        const response = await fetch('/api/work-with-us/apply', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        });
+
+        if (response.ok) {
+          // Success
+          formContainer.style.display = 'none';
+          successContainer.style.display = 'block';
+        } else {
+          // Error
+          const errorData = await response.json().catch(() => ({}));
+          errorMessage.textContent = errorData.error || 'Something went wrong. Please try again later.';
+          formContainer.style.display = 'none';
+          errorContainer.style.display = 'block';
+        }
+      } catch (error) {
+        // Network or other error
+        errorMessage.textContent = 'Network error. Please check your connection and try again.';
+        formContainer.style.display = 'none';
+        errorContainer.style.display = 'block';
+      } finally {
+        // Re-enable submit button
+        submitBtnEl.disabled = false;
+        submitBtnEl.textContent = 'Submit Application';
+      }
+    });
+  }
+
+  // Expose openRoleApplyModal globally
+  (window as any).openRoleApplyModal = openRoleApplyModal;
+</script>
+
+<style>
+  .role-apply-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-content {
+    position: relative;
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 2.5rem;
+    max-width: 700px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    z-index: 1001;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+  }
+
+  .modal-close:hover {
+    color: var(--color-text);
+  }
+
+  .modal-content h2 {
+    color: var(--color-accent);
+    margin-bottom: 1.5rem;
+    font-size: 1.75rem;
+    text-transform: lowercase;
+  }
+
+  .role-description {
+    margin-bottom: 2rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .role-description p {
+    margin-bottom: 1rem;
+  }
+
+  :global(#role-apply-modal .role-description ul) {
+    margin: 0.75rem 0 1rem;
+    padding-left: 1.6rem;
+    list-style: disc;
+    list-style-position: outside;
+  }
+
+  :global(#role-apply-modal .role-description li) {
+    margin: 0.4rem 0;
+    line-height: 1.55;
+  }
+
+  :global(#role-apply-modal .role-description li::marker) {
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .role-description strong {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
+  }
+
+  .role-modal-meta {
+    margin: -0.75rem 0 1.25rem;
+  }
+
+  .role-modal-meta .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-family: var(--font-secondary);
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  :global(#role-apply-modal .role-modal-meta .meta-separator) {
+    color: var(--color-accent) !important;
+    opacity: 0.9;
+  }
+
+  .role-apply-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  :global(#role-apply-modal .form-group) {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.6rem;
+  }
+
+  :global(#role-apply-modal .role-apply-form .form-group:last-child) {
+    margin-bottom: 0;
+  }
+
+  :global(#role-apply-modal .form-group label) {
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  :global(#role-apply-modal .required) {
+    color: var(--color-primary) !important;
+  }
+
+  :global(#role-apply-modal .word-count) {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-weight: normal;
+    margin-left: 0.5rem;
+  }
+
+  :global(#role-apply-modal .word-counter) {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    text-align: right;
+    margin-top: 0;
+  }
+
+  :global(#role-apply-modal .role-apply-form input:not([type="checkbox"]):not([type="radio"])),
+  :global(#role-apply-modal .role-apply-form textarea) {
+    width: 100%;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 1rem;
+    border-radius: 4px;
+  }
+
+  :global(#role-apply-modal .role-apply-form textarea) {
+    margin-bottom: 0.35rem;
+  }
+
+  :global(#role-apply-modal .role-apply-form input:not([type="checkbox"]):not([type="radio"]):focus),
+  :global(#role-apply-modal .role-apply-form textarea:focus) {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 10px rgba(239, 31, 159, 0.3);
+  }
+
+  :global(#role-apply-modal .role-apply-form input:not([type="checkbox"]):not([type="radio"])::placeholder),
+  :global(#role-apply-modal .role-apply-form textarea::placeholder) {
+    color: var(--color-text-muted);
+  }
+
+  :global(#role-apply-modal .checkbox-field) {
+    margin-top: 0.5rem;
+  }
+
+  :global(#role-apply-modal .checkbox-label) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    margin-bottom: 0;
+  }
+
+  :global(#role-apply-modal .checkbox-label input[type="checkbox"]) {
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 3px;
+    flex: 0 0 auto;
+    cursor: pointer;
+  }
+
+
+  .form-actions {
+    margin-top: 1rem;
+  }
+
+  #role-modal-success,
+  #role-modal-error {
+    text-align: center;
+  }
+
+  #role-modal-success h2,
+  #role-modal-error h2 {
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+  }
+
+  #role-modal-success p,
+  #role-modal-error p {
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+    line-height: 1.7;
+  }
+
+  #role-modal-error h2 {
+    color: var(--color-primary);
+  }
+
+  @media (max-width: 768px) {
+    .modal-content {
+      width: 95%;
+      padding: 1.5rem;
+      max-height: 95vh;
+    }
+
+    .modal-content h2 {
+      font-size: 1.5rem;
+    }
+  }
+</style>

@@ -1,0 +1,265 @@
+---
+// Component for displaying job roles in a card grid
+---
+
+<div class="work-with-us-roles" id="work-with-us-roles">
+  <div class="roles-loading" id="roles-loading">
+    <p>Loading roles...</p>
+  </div>
+  <div class="roles-error" id="roles-error" style="display: none;">
+    <p>Failed to load roles. Please try again later.</p>
+  </div>
+  <div class="roles-grid" id="roles-grid" style="display: none;"></div>
+</div>
+
+<style is:global>
+  .work-with-us-roles {
+    width: 100%;
+  }
+
+  .roles-loading,
+  .roles-error {
+    text-align: center;
+    padding: 3rem 0;
+    color: var(--color-text-muted);
+  }
+
+  .roles-error p {
+    color: var(--color-primary);
+  }
+
+  .roles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .ttb-role-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.28);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    border-left: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 8px;
+    padding: 1.35rem;
+    height: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 20px rgba(239, 31, 159, 0.08);
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .ttb-role-card:hover {
+    background: rgba(0, 0, 0, 0.35);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 0 0 25px rgba(239, 31, 159, 0.12);
+  }
+
+  .ttb-role-card:hover .read-more-btn,
+  .ttb-role-card:focus .read-more-btn {
+    background: rgba(239, 31, 159, 0.18);
+  }
+
+  .ttb-role-card:focus {
+    background: rgba(0, 0, 0, 0.35);
+    transform: translateY(-3px);
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 0 0 25px rgba(239, 31, 159, 0.12);
+  }
+
+  .ttb-role-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .ttb-role-card h3 {
+    font-size: 1.3rem;
+    text-transform: lowercase;
+    margin-bottom: 0.75rem;
+    color: var(--color-primary);
+  }
+
+  .role-meta-row {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.88);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    font-family: var(--font-primary);
+    line-height: 1.35;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
+  }
+
+  .role-meta-row .meta-item {
+    display: inline;
+  }
+
+  .role-meta-row .meta-separator {
+    margin: 0 0.5rem;
+    color: var(--color-primary);
+    opacity: 0.9;
+  }
+
+  .ttb-role-card .role-blurb {
+    flex: 1;
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+  }
+
+  .role-card-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    padding-top: 1.25rem;
+  }
+
+  .read-more-btn {
+    display: inline-block;
+    padding: 0.6rem 1.1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(239, 31, 159, 0.85);
+    background: rgba(239, 31, 159, 0.12);
+    color: var(--color-primary);
+    font-family: var(--font-secondary);
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+  }
+
+  @media (max-width: 768px) {
+    .roles-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  interface Role {
+    id: string;
+    title: string;
+    slug: string;
+    commitment: string;
+    type: string;
+    location: string;
+    shortBlurb: string;
+    description: string;
+  }
+
+  interface RolesResponse {
+    roles: Role[];
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('work-with-us-roles');
+    const loadingEl = document.getElementById('roles-loading');
+    const errorEl = document.getElementById('roles-error');
+    const gridEl = document.getElementById('roles-grid');
+
+    if (!container || !loadingEl || !errorEl || !gridEl) return;
+
+    async function fetchRoles() {
+      try {
+        const response = await fetch('/api/work-with-us/roles');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data: RolesResponse = await response.json();
+        
+        // Hide loading, show grid
+        loadingEl.style.display = 'none';
+        errorEl.style.display = 'none';
+        gridEl.style.display = 'grid';
+
+        // Clear any existing content
+        gridEl.innerHTML = '';
+
+        // Render roles
+        if (data.roles && data.roles.length > 0) {
+          data.roles.forEach((role) => {
+            const card = document.createElement('button');
+            card.className = 'ttb-role-card';
+            card.setAttribute('aria-label', `View details for ${role.title} role`);
+            card.setAttribute('type', 'button');
+            card.setAttribute('data-role-slug', role.slug);
+
+            // Build meta row with separators
+            const metaItems: string[] = [];
+            if (role.type) {
+              metaItems.push(`<span class="meta-item">${escapeHtml(role.type)}</span>`);
+            }
+            if (role.location) {
+              metaItems.push(`<span class="meta-item">${escapeHtml(role.location)}</span>`);
+            }
+            if (role.commitment) {
+              metaItems.push(`<span class="meta-item">${escapeHtml(role.commitment)}</span>`);
+            }
+
+            // Build meta row HTML with separators
+            let metaRowHtml = '';
+            if (metaItems.length > 0) {
+              metaRowHtml = `<div class="role-meta-row">${metaItems.join('<span class="meta-separator">•</span>')}</div>`;
+            }
+
+            // Build card content
+            card.innerHTML = `
+              <h3>${escapeHtml(role.title)}</h3>
+              ${metaRowHtml}
+              ${role.shortBlurb ? `<p class="role-blurb">${escapeHtml(role.shortBlurb)}</p>` : '<p class="role-blurb"></p>'}
+              <div class="role-card-footer">
+                <span class="read-more-btn" aria-hidden="true">read more</span>
+              </div>
+            `;
+
+            // Add click handler
+            card.addEventListener('click', () => {
+              if ((window as any).openRoleApplyModal) {
+                (window as any).openRoleApplyModal(role);
+              }
+            });
+
+            // Add keyboard support
+            card.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                if ((window as any).openRoleApplyModal) {
+                  (window as any).openRoleApplyModal(role);
+                }
+              }
+            });
+
+            gridEl.appendChild(card);
+          });
+        } else {
+          // No roles found
+          gridEl.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: var(--color-text-muted);">No roles available at this time.</p>';
+        }
+      } catch (error) {
+        console.error('Error fetching roles:', error);
+        // Hide loading, show error
+        loadingEl.style.display = 'none';
+        gridEl.style.display = 'none';
+        errorEl.style.display = 'block';
+      }
+    }
+
+    // Simple HTML escaping function
+    function escapeHtml(text: string): string {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Fetch roles on load
+    fetchRoles();
+  });
+</script>
