@@ -108,6 +108,27 @@ export const POST: APIRoute = async ({ request, url }) => {
     });
   }
 
+  if (!body.phoneNumber || typeof body.phoneNumber !== 'string' || body.phoneNumber.trim().length === 0) {
+    return new Response(JSON.stringify({ error: 'Phone number is required' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  if (!body.linkedinUrl || typeof body.linkedinUrl !== 'string' || body.linkedinUrl.trim().length === 0) {
+    return new Response(JSON.stringify({ error: 'LinkedIn URL is required' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  if (!body.linkedinUrl.trim().startsWith('https://www.linkedin.com/in/')) {
+    return new Response(JSON.stringify({ error: 'LinkedIn URL must begin with https://www.linkedin.com/in/' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
   // Sanitize inputs: trim strings
   const sanitizedFields: Record<string, any> = {
     'Full Name': (body.fullName || '').trim(),

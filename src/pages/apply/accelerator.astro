@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navigation from '../../components/Navigation.astro';
 import Footer from '../../components/Footer.astro';
+import AcceleratorApplyModal from '../../components/AcceleratorApplyModal.astro';
 ---
 
 <BaseLayout title="Apply for the Accelerator">
@@ -109,18 +110,58 @@ import Footer from '../../components/Footer.astro';
           </div>
         </div>
 
-        <div class="apply-intro">
-          <p class="section-intro">Applications for cohort 2 open in March 2026.</p>
-          <div class="btn-group" style="justify-content: center; margin-top: 2rem;">
-            <a href="/apply/join-community" class="btn btn-secondary">Join Community</a>
-            <a href="/apply/faq" class="btn btn-secondary">Read FAQ</a>
+        <!-- <p class="section-intro">Applications for cohort 2 open in March 2026.</p> -->
+      </div>
+    </section>
+
+    <section class="cta-zone-1">
+      <div class="container">
+        <div class="cta-zone-inner">
+          <h2>ready to build?</h2>
+          <p class="cta-subline">Applications for Cohort 2 are now open.</p>
+          <p class="cta-details">July&ndash;August 2026 &middot; Deadline: Sunday 19th April</p>
+
+          <div class="cta-button-wrap">
+            <button type="button" class="btn btn-apply-cohort" id="open-accelerator-apply" onclick="window.openAcceleratorModal && window.openAcceleratorModal()">Apply now</button>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-zone-2">
+      <div class="container">
+        <div class="cta-zone-inner">
+          <h3 class="cta-secondary-heading">not ready yet?</h3>
+          <p class="cta-secondary-text">Join the TTB community to stay in the loop for future cohorts, events, and everything in between.</p>
+
+          <div class="cta-secondary-btn-wrap">
+            <a href="/apply/join-community" class="btn-community">Join the Community</a>
+          </div>
+
+          <a href="/apply/faq" class="cta-faq-link">Read the FAQ</a>
         </div>
       </div>
     </section>
   </main>
   <Footer />
+  <AcceleratorApplyModal />
 </BaseLayout>
+
+<script>
+  // Deep-link: open modal if #apply-now is in the URL
+  function checkApplyHash() {
+    if (window.location.hash === '#apply-now' && (window as any).openAcceleratorModal) {
+      (window as any).openAcceleratorModal();
+    }
+  }
+  // Check on load and on hash change
+  document.addEventListener('DOMContentLoaded', checkApplyHash);
+  window.addEventListener('hashchange', checkApplyHash);
+  // Also check immediately in case DOMContentLoaded already fired
+  if (document.readyState !== 'loading') {
+    checkApplyHash();
+  }
+</script>
 
 <style>
   .apply-hero {
@@ -205,29 +246,96 @@ import Footer from '../../components/Footer.astro';
     color: var(--color-primary);
   }
 
-  .apply-intro {
-    max-width: 800px;
-    margin: 4rem auto 0;
+  /* ── Zone 1: ready to build? ── */
+  .cta-zone-1 {
+    background: #1a0a12;
+    padding: 100px 0;
   }
 
-  .apply-intro .btn-secondary {
+  .cta-zone-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .cta-zone-1 h2 {
+    color: var(--color-primary);
+    margin-bottom: 40px;
+  }
+
+  .cta-subline {
+    color: var(--color-text);
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+
+  .cta-details {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 40px;
+  }
+
+  .cta-button-wrap {
+    margin-bottom: 0;
+  }
+
+  /* ── Zone 2: not ready yet? ── */
+  .cta-zone-2 {
+    background: #0d0d0d;
+    padding: 4rem 0 5rem;
+  }
+
+  .cta-secondary-heading {
+    color: var(--color-text-muted);
+    font-size: 1.15rem;
+    font-weight: 600;
+    text-transform: lowercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .cta-secondary-text {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-secondary-btn-wrap {
+    margin-bottom: 1.25rem;
+  }
+
+  .btn-community {
+    display: inline-block;
+    padding: 0.6rem 1.75rem;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: var(--color-text-muted);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-community:hover {
     border-color: var(--color-primary);
     color: var(--color-primary);
-    text-shadow: 0 0 10px rgba(239, 31, 159, 0.3);
   }
 
-  .apply-intro .btn-secondary:hover {
-    background: var(--color-primary);
-    color: var(--color-bg-end);
-    box-shadow: 0 0 20px rgba(239, 31, 159, 0.5);
+  .cta-faq-link {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: all 0.2s;
   }
 
-  .section-intro {
-    text-align: center;
-    font-size: 1.3rem;
-    margin-bottom: 3rem;
-    color: var(--color-text);
-    line-height: 1.8;
+  .cta-faq-link:hover {
+    color: var(--color-primary);
+    opacity: 1;
+    text-decoration: underline;
   }
 
   .apply-content {
@@ -307,6 +415,28 @@ import Footer from '../../components/Footer.astro';
     color: var(--color-text-muted);
   }
 
+
+  .btn-apply-cohort {
+    display: inline-block;
+    padding: 1.1rem 3rem;
+    background: #ef1f9f;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+    box-shadow: 0 0 15px rgba(239, 31, 159, 0.3);
+  }
+
+  .btn-apply-cohort:hover {
+    background: #d1198a;
+    box-shadow: 0 0 30px rgba(239, 31, 159, 0.5);
+    transform: translateY(-1px);
+  }
 
   @media (max-width: 768px) {
     .stats-mini {
