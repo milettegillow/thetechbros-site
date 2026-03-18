@@ -1,0 +1,1157 @@
+---
+// AcceleratorApplyModal - full-screen overlay for Cohort 2 application
+---
+
+<div class="accel-overlay" id="accel-overlay" role="dialog" aria-modal="true" aria-labelledby="accel-title" style="display:none;">
+  <div class="accel-overlay-inner">
+    <button class="accel-close" id="accel-close" aria-label="Close application form">&times;</button>
+
+    <!-- Section navigation -->
+    <nav class="accel-nav" id="accel-nav">
+      <a href="#section-team" class="accel-nav-link active" data-section="section-team">Your Team</a>
+      <a href="#section-company" class="accel-nav-link" data-section="section-company">The Company</a>
+      <a href="#section-about" class="accel-nav-link" data-section="section-about">About You</a>
+      <a href="#section-final" class="accel-nav-link" data-section="section-final">Final Bits</a>
+    </nav>
+
+    <div class="accel-form-scroll" id="accel-form-scroll">
+      <!-- Page heading -->
+      <div class="accel-page-heading">
+        <h1 class="accel-page-title">Apply for Cohort 2</h1>
+        <p class="accel-page-dates">July - August 2026</p>
+        <p class="accel-page-deadline">Application deadline: Sunday 19th April</p>
+      </div>
+
+      <!-- Intro -->
+      <div class="accel-intro">
+        <p>The Tech Bros accelerator is for all-female, all-technical founding teams. You can apply solo or as a team of up to three. Read through all the questions before you start, or download them as a PDF to plan your answers in advance.</p>
+        <button type="button" class="accel-pdf-btn" id="accel-download-pdf">Download questions as PDF</button>
+      </div>
+
+      <form id="accel-form" novalidate>
+        <!-- Honeypot -->
+        <input type="text" name="hp_field" id="accel_hp" autocomplete="new-password" tabindex="-1" aria-hidden="true" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;left:-9999px;" />
+
+        <!-- SECTION 1: Your Team -->
+        <section id="section-team" class="accel-section">
+          <h2 class="accel-section-heading">Your Team</h2>
+
+          <div class="team-selector" id="team-selector">
+            <button type="button" class="team-card" data-size="1">
+              <svg viewBox="0 0 64 64" class="team-icon"><circle cx="32" cy="20" r="10" fill="currentColor"/><path d="M16 54c0-10 7-18 16-18s16 8 16 18" fill="currentColor"/></svg>
+              <span>Solo founder</span>
+            </button>
+            <button type="button" class="team-card" data-size="2">
+              <svg viewBox="0 0 80 64" class="team-icon"><circle cx="28" cy="20" r="9" fill="currentColor"/><path d="M14 54c0-9 6-16 14-16s14 7 14 16" fill="currentColor"/><circle cx="52" cy="20" r="9" fill="currentColor"/><path d="M38 54c0-9 6-16 14-16s14 7 14 16" fill="currentColor"/></svg>
+              <span>2 founders</span>
+            </button>
+            <button type="button" class="team-card" data-size="3">
+              <svg viewBox="0 0 96 64" class="team-icon"><circle cx="20" cy="20" r="8" fill="currentColor"/><path d="M8 54c0-8 5-15 12-15s12 7 12 15" fill="currentColor"/><circle cx="48" cy="20" r="8" fill="currentColor"/><path d="M36 54c0-8 5-15 12-15s12 7 12 15" fill="currentColor"/><circle cx="76" cy="20" r="8" fill="currentColor"/><path d="M64 54c0-8 5-15 12-15s12 7 12 15" fill="currentColor"/></svg>
+              <span>3 founders</span>
+            </button>
+          </div>
+
+          <div id="team-fields" style="display:none;">
+            <div class="form-group">
+              <label for="companyName">Company name / working title <span class="req">*</span></label>
+              <input type="text" id="companyName" name="companyName" required />
+            </div>
+            <div id="founder-blocks"></div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: The Company -->
+        <section id="section-company" class="accel-section">
+          <h2 class="accel-section-heading">The Company</h2>
+          <p class="section-intro-text">Answer these together as a team. Each answer has a 100-word limit, be sharp, not exhaustive.</p>
+
+          <div class="form-group">
+            <label for="cq-teamRoles">Who's on the team? Walk us through your roles and relevant technical background. <span class="req">*</span></label>
+            <textarea id="cq-teamRoles" name="cq-teamRoles" rows="4" data-max-words="100" required></textarea>
+            <span class="word-counter" data-for="cq-teamRoles">0 / 100 words</span>
+          </div>
+          <div class="form-group">
+            <label for="cq-problemSolving">What problem are you solving? What makes you well-placed to tackle it? <span class="req">*</span></label>
+            <textarea id="cq-problemSolving" name="cq-problemSolving" rows="4" data-max-words="100" required></textarea>
+            <span class="word-counter" data-for="cq-problemSolving">0 / 100 words</span>
+          </div>
+          <div class="form-group">
+            <label for="cq-marketValidation">How do you know people need what you're building? Give us specifics: conversations, surveys, data. <span class="req">*</span></label>
+            <textarea id="cq-marketValidation" name="cq-marketValidation" rows="4" data-max-words="100" required></textarea>
+            <span class="word-counter" data-for="cq-marketValidation">0 / 100 words</span>
+          </div>
+          <div class="form-group">
+            <label for="cq-originStory">How long have you been working on this, individually or together? Tell us the origin story. <span class="req">*</span></label>
+            <textarea id="cq-originStory" name="cq-originStory" rows="4" data-max-words="100" required></textarea>
+            <span class="word-counter" data-for="cq-originStory">0 / 100 words</span>
+          </div>
+          <div class="form-group">
+            <label for="cq-unfairAdvantage">What's your unfair advantage? Think: proprietary data, domain expertise, network access, technical insight. <span class="req">*</span></label>
+            <textarea id="cq-unfairAdvantage" name="cq-unfairAdvantage" rows="4" data-max-words="100" required></textarea>
+            <span class="word-counter" data-for="cq-unfairAdvantage">0 / 100 words</span>
+          </div>
+          <div class="form-group">
+            <label for="cq-demoLink">Do you have a demo or prototype? If yes, drop a link below.</label>
+            <input type="text" id="cq-demoLink" name="cq-demoLink" placeholder="https://..." />
+          </div>
+          <div class="form-group">
+            <label for="cq-users">Do you have any users yet? Tell us about them.</label>
+            <textarea id="cq-users" name="cq-users" rows="4" data-max-words="100"></textarea>
+            <span class="word-counter" data-for="cq-users">0 / 100 words</span>
+          </div>
+          <div class="form-group">
+            <label for="cq-otherIdeas">What other ideas did you seriously consider before landing on this one? What made you choose this? <span class="req">*</span></label>
+            <textarea id="cq-otherIdeas" name="cq-otherIdeas" rows="4" data-max-words="100" required></textarea>
+            <span class="word-counter" data-for="cq-otherIdeas">0 / 100 words</span>
+          </div>
+        </section>
+
+        <!-- SECTION 3: About You -->
+        <section id="section-about" class="accel-section">
+          <h2 class="accel-section-heading">About You</h2>
+          <p class="section-intro-text">A few quick questions for each founder individually. We want a real picture of you as a human, keep each answer under 140 characters. Quick and honest beats polished.</p>
+          <div id="about-you-blocks"></div>
+        </section>
+
+        <!-- SECTION 4: Final Bits -->
+        <section id="section-final" class="accel-section">
+          <h2 class="accel-section-heading">Final Bits</h2>
+
+          <div class="form-group">
+            <label for="heardAbout">How did you hear about us? <span class="req">*</span></label>
+            <select id="heardAbout" name="heardAbout" required>
+              <option value="">Select one...</option>
+              <option value="Google search">Google search</option>
+              <option value="LLM prompt (e.g. ChatGPT / Claude)">LLM prompt (e.g. ChatGPT / Claude)</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="Instagram">Instagram</option>
+              <option value="Friend or referral">Friend or referral</option>
+              <option value="TTB event">TTB event</option>
+              <option value="University society">University society</option>
+              <option value="Mailing list">Mailing list</option>
+              <option value="Other">Other</option>
+            </select>
+            <input type="text" id="heardAboutOther" name="heardAboutOther" placeholder="Tell us more" style="display:none; margin-top:0.5rem;" />
+          </div>
+
+          <div class="form-group checkbox-field">
+            <label class="checkbox-label">
+              <input type="checkbox" id="addToMailingList" name="addToMailingList" />
+              Add me to the TTB mailing list
+            </label>
+          </div>
+
+          <div class="form-group checkbox-field">
+            <label class="checkbox-label">
+              <input type="checkbox" id="confirmAllFemale" name="confirmAllFemale" required />
+              I confirm this is an all-female, all-technical founding team. <span class="req">*</span>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="accel-submit-btn" id="accel-submit-btn">Submit application</button>
+          </div>
+        </section>
+      </form>
+
+      <!-- Success state -->
+      <div id="accel-success" style="display:none;" class="accel-result">
+        <h2>Application submitted!</h2>
+        <p>Thank you for applying. We've sent a confirmation email to each founder. The deadline is Sunday 19th April, we'll be in touch after that.</p>
+        <button type="button" class="btn" id="accel-close-success">Close</button>
+      </div>
+
+      <!-- Error state -->
+      <div id="accel-error" style="display:none;" class="accel-result">
+        <h2>Something went wrong</h2>
+        <p id="accel-error-msg">Please try again later.</p>
+        <button type="button" class="btn" id="accel-back-to-form">Back to form</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── State ──
+  let teamSize = 0;
+  let formDirty = false;
+
+  // ── DOM refs ──
+  const overlay = document.getElementById('accel-overlay')!;
+  const closeBtn = document.getElementById('accel-close')!;
+  const form = document.getElementById('accel-form') as HTMLFormElement;
+  const formScroll = document.getElementById('accel-form-scroll')!;
+  const teamSelector = document.getElementById('team-selector')!;
+  const teamFields = document.getElementById('team-fields')!;
+  const founderBlocks = document.getElementById('founder-blocks')!;
+  const aboutYouBlocks = document.getElementById('about-you-blocks')!;
+  const submitBtn = document.getElementById('accel-submit-btn') as HTMLButtonElement;
+  const successEl = document.getElementById('accel-success')!;
+  const errorEl = document.getElementById('accel-error')!;
+  const errorMsg = document.getElementById('accel-error-msg')!;
+
+  // ── Helpers ──
+  function countWords(text: string): number {
+    if (!text) return 0;
+    return text.trim().split(/\s+/).filter(w => w.length > 0).length;
+  }
+
+  function escapeHtml(text: string): string {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  // ── Track dirty state ──
+  form.addEventListener('input', () => { formDirty = true; });
+
+  // ── Open / Close ──
+  function openAcceleratorModal() {
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    formScroll.scrollTop = 0;
+    formDirty = false;
+  }
+
+  function closeAcceleratorModal() {
+    if (formDirty) {
+      if (!confirm('Are you sure? Your progress will be lost.')) return;
+    }
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+    resetForm();
+  }
+
+  function resetForm() {
+    form.reset();
+    teamSize = 0;
+    formDirty = false;
+    teamFields.style.display = 'none';
+    founderBlocks.innerHTML = '';
+    aboutYouBlocks.innerHTML = '';
+    form.style.display = 'block';
+    successEl.style.display = 'none';
+    errorEl.style.display = 'none';
+    // Reset team cards
+    teamSelector.querySelectorAll('.team-card').forEach(c => c.classList.remove('selected'));
+    // Clear inline errors
+    form.querySelectorAll('.field-error').forEach(e => e.remove());
+    form.querySelectorAll('.error-border').forEach(e => e.classList.remove('error-border'));
+    // Reset word counters
+    form.querySelectorAll('.word-counter').forEach(el => {
+      const maxWords = (el as HTMLElement).dataset.maxWords || '100';
+      el.textContent = `0 / ${maxWords} words`;
+      (el as HTMLElement).style.color = '';
+    });
+  }
+
+  closeBtn.addEventListener('click', closeAcceleratorModal);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeAcceleratorModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.style.display === 'flex') {
+      closeAcceleratorModal();
+    }
+  });
+
+  document.getElementById('accel-close-success')?.addEventListener('click', () => {
+    formDirty = false;
+    closeAcceleratorModal();
+  });
+  document.getElementById('accel-back-to-form')?.addEventListener('click', () => {
+    errorEl.style.display = 'none';
+    form.style.display = 'block';
+  });
+
+  // ── Team size selector ──
+  teamSelector.querySelectorAll('.team-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const size = parseInt((card as HTMLElement).dataset.size || '1');
+      teamSize = size;
+      teamSelector.querySelectorAll('.team-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      teamFields.style.display = 'block';
+      renderFounderBlocks(size);
+      renderAboutYouBlocks(size);
+      formDirty = true;
+    });
+  });
+
+  function renderFounderBlocks(count: number) {
+    founderBlocks.innerHTML = '';
+    for (let i = 0; i < count; i++) {
+      const block = document.createElement('fieldset');
+      block.className = 'founder-block';
+      block.innerHTML = `
+        <legend>Founder ${i + 1}</legend>
+        <div class="form-group">
+          <label for="f${i}-name">Full name <span class="req">*</span></label>
+          <input type="text" id="f${i}-name" name="f${i}-name" required />
+        </div>
+        <div class="form-group">
+          <label for="f${i}-email">Email address <span class="req">*</span></label>
+          <input type="email" id="f${i}-email" name="f${i}-email" required />
+        </div>
+        <div class="form-group">
+          <label for="f${i}-phone">Phone number <span class="req">*</span></label>
+          <input type="tel" id="f${i}-phone" name="f${i}-phone" required />
+        </div>
+        <div class="form-group">
+          <label for="f${i}-linkedin">LinkedIn URL <span class="req">*</span></label>
+          <input type="url" id="f${i}-linkedin" name="f${i}-linkedin" placeholder="https://www.linkedin.com/in/..." required />
+        </div>
+        <div class="form-group">
+          <label for="f${i}-website">Personal website and/or GitHub URL</label>
+          <input type="url" id="f${i}-website" name="f${i}-website" placeholder="https://..." />
+        </div>
+      `;
+      founderBlocks.appendChild(block);
+
+      // Listen for name changes to update About You headings
+      const nameInput = document.getElementById(`f${i}-name`) as HTMLInputElement;
+      nameInput.addEventListener('input', () => {
+        const heading = document.getElementById(`about-heading-${i}`);
+        if (heading) {
+          heading.textContent = nameInput.value.trim() || `Founder ${i + 1}`;
+        }
+      });
+    }
+  }
+
+  const aboutYouQuestions = [
+    { key: 'unusualChild', label: 'Something you did as a child that was a bit unusual:' },
+    { key: 'recentObsession', label: 'Your most recent obsession:' },
+    { key: 'wildestDream', label: 'Your wildest dream for your life (nothing to do with the company):' },
+    { key: 'keptGoing', label: "A time you kept going when most people would've stopped:" },
+    { key: 'madeItHappen', label: 'Something you decided to make happen & how you did it:' },
+  ];
+
+  function renderAboutYouBlocks(count: number) {
+    aboutYouBlocks.innerHTML = '';
+    for (let i = 0; i < count; i++) {
+      const block = document.createElement('div');
+      block.className = 'about-you-block';
+
+      let fieldsHtml = `<h3 id="about-heading-${i}" class="about-you-name">Founder ${i + 1}</h3>`;
+      aboutYouQuestions.forEach(q => {
+        fieldsHtml += `
+          <div class="form-group">
+            <label for="ay-${i}-${q.key}">${escapeHtml(q.label)} <span class="req">*</span></label>
+            <input type="text" id="ay-${i}-${q.key}" name="ay-${i}-${q.key}" maxlength="140" required />
+            <span class="char-counter" data-for="ay-${i}-${q.key}">0 / 140</span>
+          </div>
+        `;
+      });
+
+      block.innerHTML = fieldsHtml;
+      aboutYouBlocks.appendChild(block);
+
+      // Attach character counters
+      aboutYouQuestions.forEach(q => {
+        const input = document.getElementById(`ay-${i}-${q.key}`) as HTMLInputElement;
+        const counter = block.querySelector(`[data-for="ay-${i}-${q.key}"]`) as HTMLElement;
+        if (input && counter) {
+          input.addEventListener('input', () => {
+            const len = input.value.length;
+            counter.textContent = `${len} / 140`;
+            counter.style.color = len >= 140 ? '#ef1f9f' : '';
+          });
+        }
+      });
+    }
+  }
+
+  // ── "Other" dropdown toggle ──
+  const heardAboutSelect = document.getElementById('heardAbout') as HTMLSelectElement;
+  const heardAboutOtherInput = document.getElementById('heardAboutOther') as HTMLInputElement;
+  if (heardAboutSelect && heardAboutOtherInput) {
+    heardAboutSelect.addEventListener('change', () => {
+      heardAboutOtherInput.style.display = heardAboutSelect.value === 'Other' ? 'block' : 'none';
+      if (heardAboutSelect.value !== 'Other') heardAboutOtherInput.value = '';
+    });
+  }
+
+  // ── Word counters for textareas ──
+  form.querySelectorAll('textarea[data-max-words]').forEach(ta => {
+    const textarea = ta as HTMLTextAreaElement;
+    const maxWords = parseInt(textarea.dataset.maxWords || '100');
+    const counter = form.querySelector(`[data-for="${textarea.id}"]`) as HTMLElement;
+    if (!counter) return;
+    counter.dataset.maxWords = String(maxWords);
+    textarea.addEventListener('input', () => {
+      const wc = countWords(textarea.value);
+      counter.textContent = `${wc} / ${maxWords} words`;
+      if (wc > maxWords) {
+        counter.style.color = '#ef1f9f';
+        // Block further input by trimming to word limit
+        const words = textarea.value.trim().split(/\s+/);
+        if (words.length > maxWords) {
+          textarea.value = words.slice(0, maxWords).join(' ');
+          counter.textContent = `${maxWords} / ${maxWords} words`;
+        }
+      } else {
+        counter.style.color = '';
+      }
+    });
+  });
+
+  // ── Section nav highlighting ──
+  const navLinks = document.querySelectorAll('.accel-nav-link');
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const sectionId = (link as HTMLElement).dataset.section!;
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      navLinks.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+    });
+  });
+
+  // Update active nav on scroll
+  const sections = document.querySelectorAll('.accel-section');
+  formScroll?.addEventListener('scroll', () => {
+    // If scrolled to the bottom, highlight the last section
+    const isAtBottom = formScroll.scrollHeight - formScroll.scrollTop - formScroll.clientHeight < 40;
+    if (isAtBottom) {
+      navLinks.forEach(l => {
+        l.classList.toggle('active', (l as HTMLElement).dataset.section === 'section-final');
+      });
+      return;
+    }
+
+    let current = '';
+    sections.forEach(section => {
+      const el = section as HTMLElement;
+      const rect = el.getBoundingClientRect();
+      const overlayRect = formScroll.getBoundingClientRect();
+      if (rect.top - overlayRect.top < 120) {
+        current = el.id;
+      }
+    });
+    if (current) {
+      navLinks.forEach(l => {
+        l.classList.toggle('active', (l as HTMLElement).dataset.section === current);
+      });
+    }
+  });
+
+  // ── PDF download ──
+  document.getElementById('accel-download-pdf')?.addEventListener('click', async () => {
+    const { jsPDF } = await import('jspdf');
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 20;
+    const usableWidth = pageWidth - margin * 2;
+    let y = margin;
+
+    function addText(text: string, opts: { size?: number; bold?: boolean; italic?: boolean; color?: [number, number, number]; spacing?: number } = {}) {
+      const size = opts.size || 10;
+      const style = opts.bold ? 'bold' : opts.italic ? 'italic' : 'normal';
+      doc.setFontSize(size);
+      doc.setFont('helvetica', style);
+      if (opts.color) doc.setTextColor(...opts.color);
+      else doc.setTextColor(30, 30, 30);
+
+      const lines = doc.splitTextToSize(text, usableWidth);
+      const lineHeight = size * 0.45;
+      for (const line of lines) {
+        if (y + lineHeight > 280) { doc.addPage(); y = margin; }
+        doc.text(line, margin, y);
+        y += lineHeight;
+      }
+      y += (opts.spacing ?? 3);
+    }
+
+    // Header
+    addText('The Tech Bros, Cohort 2 Application', { size: 16, bold: true, color: [0, 0, 0] });
+    addText('Application deadline: Sunday 19th April 2026', { size: 10, italic: true, color: [100, 100, 100], spacing: 8 });
+
+    // Section 1
+    addText('SECTION 1: YOUR TEAM', { size: 12, bold: true, spacing: 4 });
+    addText('Select your team size: Solo founder / 2 founders / 3 founders', { italic: true, spacing: 2 });
+    addText('Company name / working title:', { spacing: 2 });
+    const founderFields = ['Full name:', 'Email address:', 'Phone number:', 'LinkedIn URL:', 'Personal website and/or GitHub URL (optional):'];
+    for (let i = 1; i <= 3; i++) {
+      addText(`Founder ${i}:`, { bold: true, spacing: 1 });
+      founderFields.forEach(f => addText(`  ${f}`, { spacing: 1 }));
+      y += 2;
+    }
+
+    // Section 2
+    y += 4;
+    addText('SECTION 2: THE COMPANY', { size: 12, bold: true, spacing: 2 });
+    addText('Each answer has a 100-word limit.', { italic: true, spacing: 4 });
+    const companyQs = [
+      "Who's on the team? Walk us through your roles and relevant technical background.",
+      "What problem are you solving? What makes you well-placed to tackle it?",
+      "How do you know people need what you're building? Give us specifics: conversations, surveys, data.",
+      "How long have you been working on this, individually or together? Tell us the origin story.",
+      "What's your unfair advantage? Think: proprietary data, domain expertise, network access, technical insight.",
+      "Do you have a demo or prototype? If yes, drop a link below. (optional, no word limit)",
+      "Do you have any users yet? Tell us about them.",
+      "What other ideas did you seriously consider before landing on this one? What made you choose this?",
+    ];
+    companyQs.forEach((q, i) => { addText(`${i + 1}. ${q}`, { spacing: 5 }); });
+
+    // Section 3
+    y += 4;
+    addText('SECTION 3: ABOUT YOU', { size: 12, bold: true, spacing: 2 });
+    addText('Answer these individually. Max 140 characters each.', { italic: true, spacing: 4 });
+    const aboutQs = [
+      'Something you did as a child that was a bit unusual:',
+      'Your most recent obsession:',
+      'Your wildest dream for your life (nothing to do with the company):',
+      "A time you kept going when most people would've stopped:",
+      'Something you decided to make happen & how you did it:',
+    ];
+    aboutQs.forEach((q, i) => { addText(`${i + 1}. ${q}`, { spacing: 5 }); });
+
+    // Section 4
+    y += 4;
+    addText('SECTION 4: FINAL BITS', { size: 12, bold: true, spacing: 4 });
+    addText('How did you hear about us?', { spacing: 5 });
+    addText('Options: Google search / LLM prompt / LinkedIn / Instagram / Friend or referral / TTB event / University society / Mailing list / Other', { italic: true, size: 9, spacing: 5 });
+
+    doc.save('TTB-Cohort-2-Application-Questions.pdf');
+  });
+
+  // ── Validation helpers ──
+  function clearErrors() {
+    form.querySelectorAll('.field-error').forEach(e => e.remove());
+    form.querySelectorAll('.error-border').forEach(e => e.classList.remove('error-border'));
+  }
+
+  function showFieldError(field: HTMLElement, message: string) {
+    field.classList.add('error-border');
+    const err = document.createElement('div');
+    err.className = 'field-error';
+    err.textContent = message;
+    field.parentElement?.appendChild(err);
+  }
+
+  // ── Form submission ──
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearErrors();
+
+    let hasErrors = false;
+    let firstErrorField: HTMLElement | null = null;
+
+    function markError(fieldId: string, msg: string) {
+      const field = document.getElementById(fieldId);
+      if (field) {
+        showFieldError(field, msg);
+        if (!firstErrorField) firstErrorField = field;
+      }
+      hasErrors = true;
+    }
+
+    // Team size
+    if (teamSize === 0) {
+      const sel = document.getElementById('team-selector')!;
+      const err = document.createElement('div');
+      err.className = 'field-error';
+      err.textContent = 'Please select your team size.';
+      sel.appendChild(err);
+      if (!firstErrorField) firstErrorField = sel;
+      hasErrors = true;
+    }
+
+    // Company name
+    const companyName = (document.getElementById('companyName') as HTMLInputElement)?.value.trim();
+    if (teamSize > 0 && !companyName) {
+      markError('companyName', 'Company name is required.');
+    }
+
+    // Founder fields
+    const founders: any[] = [];
+    for (let i = 0; i < teamSize; i++) {
+      const name = (document.getElementById(`f${i}-name`) as HTMLInputElement)?.value.trim();
+      const email = (document.getElementById(`f${i}-email`) as HTMLInputElement)?.value.trim();
+      const phone = (document.getElementById(`f${i}-phone`) as HTMLInputElement)?.value.trim();
+      const linkedin = (document.getElementById(`f${i}-linkedin`) as HTMLInputElement)?.value.trim();
+      const website = (document.getElementById(`f${i}-website`) as HTMLInputElement)?.value.trim();
+
+      if (!name) markError(`f${i}-name`, 'Full name is required.');
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) markError(`f${i}-email`, 'Valid email is required.');
+      if (!phone) markError(`f${i}-phone`, 'Phone number is required.');
+      if (!linkedin || !linkedin.startsWith('https://www.linkedin.com/in/')) {
+        markError(`f${i}-linkedin`, 'Must begin with https://www.linkedin.com/in/');
+      }
+
+      founders.push({ fullName: name, email, phone, linkedin, website: website || undefined });
+    }
+
+    // Company questions
+    const cqFieldsRequired = ['teamRoles', 'problemSolving', 'marketValidation', 'originStory', 'unfairAdvantage', 'otherIdeas'];
+    const cqFieldsOptional = ['users'];
+    const companyQuestions: any = {};
+    cqFieldsRequired.forEach(key => {
+      const ta = document.getElementById(`cq-${key}`) as HTMLTextAreaElement;
+      const val = ta?.value.trim() || '';
+      companyQuestions[key] = val;
+      if (!val) markError(`cq-${key}`, 'This field is required.');
+      else if (countWords(val) > 100) markError(`cq-${key}`, 'Exceeds 100-word limit.');
+    });
+    cqFieldsOptional.forEach(key => {
+      const ta = document.getElementById(`cq-${key}`) as HTMLTextAreaElement;
+      const val = ta?.value.trim() || '';
+      companyQuestions[key] = val;
+      if (val && countWords(val) > 100) markError(`cq-${key}`, 'Exceeds 100-word limit.');
+    });
+    companyQuestions.demoLink = (document.getElementById('cq-demoLink') as HTMLInputElement)?.value.trim() || '';
+
+    // About You
+    const aboutYou: any = {};
+    for (let i = 0; i < teamSize; i++) {
+      aboutYou[String(i)] = {};
+      aboutYouQuestions.forEach(q => {
+        const input = document.getElementById(`ay-${i}-${q.key}`) as HTMLInputElement;
+        const val = input?.value.trim() || '';
+        aboutYou[String(i)][q.key] = val;
+        if (!val) markError(`ay-${i}-${q.key}`, 'This field is required.');
+        else if (val.length > 140) markError(`ay-${i}-${q.key}`, 'Must be under 140 characters.');
+      });
+    }
+
+    // Final bits
+    let heardAbout = (document.getElementById('heardAbout') as HTMLSelectElement)?.value;
+    if (!heardAbout) markError('heardAbout', 'Please select an option.');
+    const heardAboutOther = (document.getElementById('heardAboutOther') as HTMLInputElement)?.value.trim();
+    if (heardAbout === 'Other' && heardAboutOther) {
+      heardAbout = `Other: ${heardAboutOther}`;
+    }
+
+    const confirmAllFemale = (document.getElementById('confirmAllFemale') as HTMLInputElement)?.checked;
+    if (!confirmAllFemale) markError('confirmAllFemale', 'This confirmation is required.');
+
+    const addToMailingList = (document.getElementById('addToMailingList') as HTMLInputElement)?.checked;
+
+    if (hasErrors && firstErrorField) {
+      firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    // Build payload
+    const hp_field = (document.getElementById('accel_hp') as HTMLInputElement)?.value.trim() || '';
+
+    const payload = {
+      hp_field,
+      teamSize,
+      companyName,
+      founders,
+      companyQuestions,
+      aboutYou,
+      heardAbout,
+      addToMailingList: addToMailingList || false,
+      confirmAllFemale: confirmAllFemale || false,
+    };
+
+    // Submit
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    try {
+      const response = await fetch('/api/accelerator/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        // Hide everything — nav, intro, form — and show success full-screen
+        document.getElementById('accel-nav')!.style.display = 'none';
+        formScroll.innerHTML = '';
+        formScroll.appendChild(successEl);
+        successEl.style.display = 'block';
+        formDirty = false;
+        formScroll.scrollTop = 0;
+      } else {
+        const data = await response.json().catch(() => ({}));
+        errorMsg.textContent = data.error || 'Something went wrong. Please try again.';
+        form.style.display = 'none';
+        errorEl.style.display = 'block';
+      }
+    } catch {
+      errorMsg.textContent = 'Network error. Please check your connection and try again.';
+      form.style.display = 'none';
+      errorEl.style.display = 'block';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit application';
+    }
+  });
+
+  // Expose global open function
+  (window as any).openAcceleratorModal = openAcceleratorModal;
+</script>
+
+<style>
+  /* ── Overlay ── */
+  .accel-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(6px);
+    overflow: hidden;
+  }
+
+  .accel-overlay-inner {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .accel-close {
+    position: fixed;
+    top: 1rem;
+    right: 1.5rem;
+    z-index: 2010;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 2.5rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.2s;
+  }
+  .accel-close:hover { color: #fff; }
+
+  /* ── Section nav ── */
+  .accel-nav {
+    position: sticky;
+    top: 0;
+    width: 220px;
+    min-width: 220px;
+    padding: 3rem 1.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-self: flex-start;
+    height: fit-content;
+  }
+
+  .accel-nav-link {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+    border-left: 3px solid transparent;
+    transition: all 0.2s;
+  }
+  .accel-nav-link:hover { color: rgba(255, 255, 255, 0.8); }
+  .accel-nav-link.active {
+    color: #ef1f9f;
+    border-left-color: #ef1f9f;
+    font-weight: 600;
+  }
+
+  /* ── Form scroll area ── */
+  .accel-form-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2.5rem 2.5rem 4rem;
+    scroll-behavior: smooth;
+  }
+
+  /* ── Page heading ── */
+  .accel-page-heading {
+    text-align: center;
+    margin-bottom: 2rem;
+    max-width: 720px;
+  }
+  .accel-page-title {
+    color: #ef1f9f;
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: lowercase;
+    margin-bottom: 0.5rem;
+  }
+  .accel-page-dates {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+  .accel-page-deadline {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+  }
+
+  /* ── Intro ── */
+  .accel-intro {
+    margin-bottom: 2.5rem;
+    max-width: 720px;
+  }
+  .accel-intro p {
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.7;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+  .accel-pdf-btn {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .accel-pdf-btn:hover {
+    border-color: #ef1f9f;
+    color: #ef1f9f;
+  }
+
+  /* ── Sections ── */
+  .accel-section {
+    margin-bottom: 3rem;
+    max-width: 720px;
+    scroll-margin-top: 1rem;
+  }
+
+  .accel-section-heading {
+    color: var(--color-accent, #5ce1e6);
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    text-transform: lowercase;
+  }
+
+  .section-intro-text {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  /* ── Team selector cards ── */
+  .team-selector {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .team-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  .team-card:hover {
+    border-color: rgba(239, 31, 159, 0.5);
+    background: rgba(239, 31, 159, 0.05);
+  }
+  .team-card.selected {
+    border-color: #ef1f9f;
+    background: rgba(239, 31, 159, 0.1);
+    color: #ef1f9f;
+  }
+
+  .team-icon {
+    width: 56px;
+    height: 44px;
+  }
+
+  /* ── Founder blocks (dynamically injected) ── */
+  :global(.founder-block) {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  :global(.founder-block legend) {
+    color: #ef1f9f;
+    font-weight: 600;
+    padding: 0 0.5rem;
+    font-size: 0.9rem;
+  }
+  :global(.founder-block .form-group) {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.25rem;
+    position: relative;
+  }
+  :global(.founder-block .form-group label) {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  :global(.founder-block .form-group input) {
+    width: 100%;
+    padding: 0.7rem 0.75rem;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    border-radius: 4px;
+    transition: border-color 0.2s;
+  }
+  :global(.founder-block .form-group input:focus) {
+    outline: none;
+    border-color: #ef1f9f;
+    box-shadow: 0 0 10px rgba(239, 31, 159, 0.25);
+  }
+
+  /* ── About You blocks (dynamically injected) ── */
+  :global(.about-you-block) {
+    margin-bottom: 2rem;
+  }
+  :global(.about-you-name) {
+    color: #ef1f9f;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  :global(.about-you-block .form-group) {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.25rem;
+    position: relative;
+  }
+  :global(.about-you-block .form-group label) {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  :global(.about-you-block .form-group input) {
+    width: 100%;
+    padding: 0.7rem 0.75rem;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    border-radius: 4px;
+    transition: border-color 0.2s;
+  }
+  :global(.about-you-block .form-group input:focus) {
+    outline: none;
+    border-color: #ef1f9f;
+    box-shadow: 0 0 10px rgba(239, 31, 159, 0.25);
+  }
+  :global(.about-you-block .char-counter) {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-align: right;
+    margin-top: 0.25rem;
+  }
+
+  /* ── Form groups ── */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.25rem;
+    position: relative;
+  }
+
+  .form-group label {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .req { color: #ef1f9f; }
+  :global(.founder-block .req) { color: #ef1f9f; }
+  :global(.about-you-block .req) { color: #ef1f9f; }
+
+  .form-group input:not([type="checkbox"]),
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 0.7rem 0.75rem;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    border-radius: 4px;
+    transition: border-color 0.2s;
+  }
+  .form-group input:not([type="checkbox"]):focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: #ef1f9f;
+    box-shadow: 0 0 10px rgba(239, 31, 159, 0.25);
+  }
+  .form-group select {
+    appearance: auto;
+  }
+  .form-group select option {
+    background: #1a1a1a;
+    color: #fff;
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  /* ── Counters ── */
+  .word-counter, .char-counter {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-align: right;
+    margin-top: 0.25rem;
+  }
+
+  /* ── Checkbox ── */
+  .checkbox-field { margin-top: 0.25rem; }
+  .checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.4;
+  }
+  .checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+    cursor: pointer;
+    margin-top: 0.15rem;
+  }
+
+  /* ── Errors ── */
+  .field-error,
+  :global(.field-error) {
+    color: #ef1f9f;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+  }
+  .error-border,
+  :global(.error-border) {
+    border-color: #ef1f9f !important;
+  }
+
+  /* ── Submit ── */
+  .form-actions { margin-top: 2rem; }
+
+  .accel-submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: #ef1f9f;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+  }
+  .accel-submit-btn:hover {
+    background: #d1198a;
+    box-shadow: 0 0 20px rgba(239, 31, 159, 0.4);
+  }
+  .accel-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* ── Result states ── */
+  .accel-result {
+    text-align: center;
+    padding: 4rem 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .accel-result h2 {
+    color: var(--color-accent, #5ce1e6);
+    margin-bottom: 1rem;
+  }
+  .accel-result p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
+    .accel-overlay-inner {
+      flex-direction: column;
+    }
+
+    .accel-nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      min-width: auto;
+      flex-direction: row;
+      padding: 0.75rem 1rem;
+      gap: 0;
+      background: rgba(0, 0, 0, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 10;
+      overflow-x: auto;
+    }
+
+    .accel-nav-link {
+      border-left: none;
+      border-bottom: 2px solid transparent;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+    .accel-nav-link.active {
+      border-bottom-color: #ef1f9f;
+      border-left-color: transparent;
+    }
+
+    .accel-form-scroll {
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    .team-selector {
+      flex-direction: column;
+    }
+
+    .team-card {
+      flex-direction: row;
+      padding: 1rem 1.25rem;
+    }
+
+    .team-icon {
+      width: 40px;
+      height: 32px;
+    }
+
+    .founder-block {
+      padding: 1rem;
+    }
+
+    .accel-close {
+      right: 0.75rem;
+      top: 0.5rem;
+    }
+  }
+</style>
