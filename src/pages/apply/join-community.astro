@@ -60,9 +60,11 @@ import NewsletterSignup from '../../components/NewsletterSignup.astro';
 </BaseLayout>
 
 <script>
-  if (window.location.hash === '#apply') {
-    (window as any).openApplyModal && (window as any).openApplyModal();
-  }
+  window.addEventListener('load', () => {
+    if (window.location.hash === '#apply') {
+      (window as any).openApplyModal && (window as any).openApplyModal();
+    }
+  });
 </script>
 
 <style>
