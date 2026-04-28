@@ -59,6 +59,14 @@ import NewsletterSignup from '../../components/NewsletterSignup.astro';
   <ApplyModal />
 </BaseLayout>
 
+<script>
+  window.addEventListener('load', () => {
+    if (window.location.hash === '#apply') {
+      (window as any).openApplyModal && (window as any).openApplyModal();
+    }
+  });
+</script>
+
 <style>
   .community-hero {
     padding: 6rem 0 3rem;
