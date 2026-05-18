@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navigation from '../../components/Navigation.astro';
 import Footer from '../../components/Footer.astro';
-import AcceleratorApplyModal from '../../components/AcceleratorApplyModal.astro';
+// import AcceleratorApplyModal from '../../components/AcceleratorApplyModal.astro';
 ---
 
 <BaseLayout title="Apply for the Accelerator">
@@ -114,6 +114,7 @@ import AcceleratorApplyModal from '../../components/AcceleratorApplyModal.astro'
       </div>
     </section>
 
+    {/*
     <section class="cta-zone-1">
       <div class="container">
         <div class="cta-zone-inner">
@@ -123,6 +124,20 @@ import AcceleratorApplyModal from '../../components/AcceleratorApplyModal.astro'
 
           <div class="cta-button-wrap">
             <button type="button" class="btn btn-apply-cohort" id="open-accelerator-apply" onclick="window.openAcceleratorModal && window.openAcceleratorModal()">Apply now</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    */}
+
+    <section class="cta-zone-1">
+      <div class="container">
+        <div class="cta-zone-inner">
+          <h2>see you next year.</h2>
+          <p class="cta-meantime">Applications for Cohort 3 will open in 2027.</p>
+
+          <div class="cta-button-wrap">
+            <a href="/apply/join-community" class="btn btn-community-cta">Join our community</a>
           </div>
         </div>
       </div>
@@ -144,9 +159,10 @@ import AcceleratorApplyModal from '../../components/AcceleratorApplyModal.astro'
     </section>
   </main>
   <Footer />
-  <AcceleratorApplyModal />
+  {/* <AcceleratorApplyModal /> */}
 </BaseLayout>
 
+{/*
 <script>
   // Deep-link: open modal if #apply-now is in the URL
   function checkApplyHash() {
@@ -162,6 +178,7 @@ import AcceleratorApplyModal from '../../components/AcceleratorApplyModal.astro'
     checkApplyHash();
   }
 </script>
+*/}
 
 <style>
   .apply-hero {
@@ -273,6 +290,14 @@ import AcceleratorApplyModal from '../../components/AcceleratorApplyModal.astro'
   .cta-details {
     font-size: 0.95rem;
     color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 40px;
+  }
+
+  .cta-meantime {
+    color: var(--color-text);
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-top: 32px;
     margin-bottom: 40px;
   }
 
@@ -438,6 +463,29 @@ import AcceleratorApplyModal from '../../components/AcceleratorApplyModal.astro'
     transform: translateY(-1px);
   }
 
+  .btn-community-cta {
+    display: inline-block;
+    padding: 1.1rem 3rem;
+    background: var(--color-accent);
+    color: var(--color-bg-end);
+    border: none;
+    border-radius: 6px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+    box-shadow: 0 0 15px rgba(92, 225, 230, 0.3);
+    text-decoration: none;
+  }
+
+  .btn-community-cta:hover {
+    background: #3dcdd3;
+    box-shadow: 0 0 30px rgba(92, 225, 230, 0.5);
+    transform: translateY(-1px);
+  }
+
   @media (max-width: 768px) {
     .stats-mini {
       grid-template-columns: 1fr;
@@ -449,6 +497,26 @@ import AcceleratorApplyModal from '../../components/AcceleratorApplyModal.astro'
 
     .spotlight-image {
       order: -1;
+    }
+
+    .cta-zone-1 {
+      padding: 64px 0;
+    }
+
+    .cta-subline,
+    .cta-meantime {
+      font-size: 1.05rem;
+    }
+
+    .cta-meantime {
+      margin-top: 24px;
+      margin-bottom: 28px;
+    }
+
+    .btn-apply-cohort,
+    .btn-community-cta {
+      padding: 0.9rem 2rem;
+      font-size: 1.05rem;
     }
   }
 </style>
