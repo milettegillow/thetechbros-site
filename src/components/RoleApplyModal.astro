@@ -780,7 +780,7 @@
     position: relative;
     background: rgba(0, 0, 0, 0.95);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
+    border-radius: 0;
     padding: 2.5rem;
     max-width: 100%;
     width: 100%;
@@ -788,7 +788,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     box-sizing: border-box;
-    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.7);
   }
 
   .modal-close {
@@ -815,7 +815,7 @@
   }
 
   .modal-content h2 {
-    color: var(--color-accent);
+    color: var(--color-text);
     margin-bottom: 1.5rem;
     font-size: 1.75rem;
     text-transform: lowercase;
@@ -838,11 +838,11 @@
   :global(#role-apply-dialog #role-description h4),
   :global(#role-apply-dialog #role-description h5),
   :global(#role-apply-dialog #role-description h6) {
-    color: #fff !important;
+    color: var(--color-white) !important;
   }
 
   :global(#role-apply-dialog #role-description .role-section-heading) {
-    color: #fff !important;
+    color: var(--color-white) !important;
     margin: 1.25rem 0 0.5rem;
     font-size: 1.05rem;
     font-weight: 600;
@@ -872,7 +872,7 @@
 
   /* Strong tags inside role description (dynamically injected) */
   :global(#role-apply-dialog #role-description strong) {
-    color: #fff !important;
+    color: var(--color-white) !important;
     font-weight: 600;
     text-transform: lowercase;
     letter-spacing: 0.02em;
@@ -889,7 +889,7 @@
     gap: 0.5rem;
     font-family: var(--font-primary);
     font-size: 0.9rem;
-    color: #fff;
+    color: var(--color-white);
     font-weight: 700;
     padding-bottom: 0.6rem;
     margin-bottom: 0.75rem;
@@ -897,7 +897,7 @@
   }
 
   :global(#role-apply-dialog .role-modal-meta .meta-separator) {
-    color: var(--color-accent) !important;
+    color: var(--color-primary) !important;
     opacity: 0.9;
   }
 
@@ -973,7 +973,7 @@
     color: var(--color-text);
     font-family: inherit;
     font-size: 1rem;
-    border-radius: 4px;
+    border-radius: 0;
   }
 
   :global(#role-apply-dialog .role-apply-form textarea) {
@@ -984,7 +984,6 @@
   :global(#role-apply-dialog .role-apply-form textarea:focus) {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 10px rgba(239, 31, 159, 0.3);
   }
 
   :global(#role-apply-dialog .role-apply-form input:not([type="checkbox"]):not([type="radio"])::placeholder),
@@ -1015,7 +1014,7 @@
     margin: 0;
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.35);
-    border-radius: 3px;
+    border-radius: 0;
     flex: 0 0 auto;
     cursor: pointer;
   }
@@ -1032,7 +1031,7 @@
 
   #role-modal-success h2,
   #role-modal-error h2 {
-    color: var(--color-accent);
+    color: var(--color-text);
     margin-bottom: 1rem;
   }
 
@@ -1044,7 +1043,7 @@
   }
 
   #role-modal-error h2 {
-    color: var(--color-primary);
+    color: var(--color-text);
   }
 
   @media (max-width: 768px) {

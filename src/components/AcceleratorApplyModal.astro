@@ -725,7 +725,7 @@
     padding: 0.5rem;
     transition: color 0.2s;
   }
-  .accel-close:hover { color: #fff; }
+  .accel-close:hover { color: var(--color-white); }
 
   /* ── Section nav ── */
   .accel-nav {
@@ -773,7 +773,7 @@
   .accel-page-title {
     color: #ef1f9f;
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: var(--weight-heading);
     text-transform: lowercase;
     margin-bottom: 0.5rem;
   }
@@ -805,7 +805,7 @@
     color: rgba(255, 255, 255, 0.7);
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
-    border-radius: 4px;
+    border-radius: 0;
     cursor: pointer;
     transition: all 0.2s;
   }
@@ -822,7 +822,7 @@
   }
 
   .accel-section-heading {
-    color: var(--color-accent, #5ce1e6);
+    color: var(--color-text);
     font-size: 1.75rem;
     margin-bottom: 1.5rem;
     text-transform: lowercase;
@@ -852,7 +852,7 @@
     padding: 1.5rem 1rem;
     background: rgba(255, 255, 255, 0.05);
     border: 2px solid rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
+    border-radius: 0;
     color: rgba(255, 255, 255, 0.7);
     cursor: pointer;
     transition: all 0.2s;
@@ -877,7 +877,7 @@
   /* ── Founder blocks (dynamically injected) ── */
   :global(.founder-block) {
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    border-radius: 0;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
   }
@@ -904,16 +904,15 @@
     padding: 0.7rem 0.75rem;
     background: rgba(255, 255, 255, 0.07);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
+    color: var(--color-white);
     font-family: inherit;
     font-size: 0.95rem;
-    border-radius: 4px;
+    border-radius: 0;
     transition: border-color 0.2s;
   }
   :global(.founder-block .form-group input:focus) {
     outline: none;
     border-color: #ef1f9f;
-    box-shadow: 0 0 10px rgba(239, 31, 159, 0.25);
   }
 
   /* ── About You blocks (dynamically injected) ── */
@@ -943,16 +942,15 @@
     padding: 0.7rem 0.75rem;
     background: rgba(255, 255, 255, 0.07);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
+    color: var(--color-white);
     font-family: inherit;
     font-size: 0.95rem;
-    border-radius: 4px;
+    border-radius: 0;
     transition: border-color 0.2s;
   }
   :global(.about-you-block .form-group input:focus) {
     outline: none;
     border-color: #ef1f9f;
-    box-shadow: 0 0 10px rgba(239, 31, 159, 0.25);
   }
   :global(.about-you-block .char-counter) {
     font-size: 0.8rem;
@@ -987,10 +985,10 @@
     padding: 0.7rem 0.75rem;
     background: rgba(255, 255, 255, 0.07);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
+    color: var(--color-white);
     font-family: inherit;
     font-size: 0.95rem;
-    border-radius: 4px;
+    border-radius: 0;
     transition: border-color 0.2s;
   }
   .form-group input:not([type="checkbox"]):focus,
@@ -998,14 +996,13 @@
   .form-group select:focus {
     outline: none;
     border-color: #ef1f9f;
-    box-shadow: 0 0 10px rgba(239, 31, 159, 0.25);
   }
   .form-group select {
     appearance: auto;
   }
   .form-group select option {
-    background: #1a1a1a;
-    color: #fff;
+    background: var(--color-surface-raised);
+    color: var(--color-white);
   }
 
   .form-group textarea {
@@ -1059,9 +1056,9 @@
     width: 100%;
     padding: 1rem;
     background: #ef1f9f;
-    color: #fff;
+    color: var(--color-white);
     border: none;
-    border-radius: 6px;
+    border-radius: 0;
     font-size: 1.1rem;
     font-weight: 700;
     cursor: pointer;
@@ -1070,8 +1067,7 @@
     transition: all 0.2s;
   }
   .accel-submit-btn:hover {
-    background: #d1198a;
-    box-shadow: 0 0 20px rgba(239, 31, 159, 0.4);
+    background: var(--color-primary-hover);
   }
   .accel-submit-btn:disabled {
     opacity: 0.6;
@@ -1086,7 +1082,7 @@
     margin: 0 auto;
   }
   .accel-result h2 {
-    color: var(--color-accent, #5ce1e6);
+    color: var(--color-text);
     margin-bottom: 1rem;
   }
   .accel-result p {

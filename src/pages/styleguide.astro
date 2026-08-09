@@ -1,0 +1,423 @@
+---
+// TEMPORARY — design system review page. Delete once the rebrand is signed off.
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const coreColours = [
+  { name: 'Hot pink', token: '--color-pink', value: '#ef1f9f', role: 'Primary accent' },
+  { name: 'Black', token: '--color-black', value: '#000000', role: 'Page background, everywhere' },
+  { name: 'White', token: '--color-white', value: '#ffffff', role: 'Primary text, tertiary colour' },
+];
+
+const roleColours = [
+  { token: '--color-primary', value: 'var(--color-primary)', note: 'Accents, links, markers, buttons' },
+  { token: '--color-primary-hover', value: 'var(--color-primary-hover)', note: '#d1198a — hover state only' },
+  { token: '--color-bg', value: 'var(--color-bg)', note: 'Solid black page background' },
+  { token: '--color-surface', value: 'var(--color-surface)', note: '#0a0a0a — section separation' },
+  { token: '--color-surface-raised', value: 'var(--color-surface-raised)', note: '#141414 — raised blocks' },
+  { token: '--color-surface-input', value: 'var(--color-surface-input)', note: 'Form field fill' },
+];
+
+const greys = [
+  { token: '--grey-950', value: 'var(--grey-950)', note: '#0a0a0a' },
+  { token: '--grey-900', value: 'var(--grey-900)', note: '#141414' },
+  { token: '--grey-800', value: 'var(--grey-800)', note: '#1f1f1f' },
+];
+
+const textColours = [
+  { token: '--color-text', value: 'var(--color-text)', note: 'Headlines, emphasis' },
+  { token: '--color-text-body', value: 'var(--color-text-body)', note: 'Long-form body copy (78% white)' },
+  { token: '--color-text-muted', value: 'var(--color-text-muted)', note: 'Secondary text (55% white)' },
+  { token: '--color-text-faint', value: 'var(--color-text-faint)', note: 'Captions, meta (38% white)' },
+];
+
+const borders = [
+  { token: '--color-border', value: 'var(--color-border)', note: 'Default hairline' },
+  { token: '--color-border-strong', value: 'var(--color-border-strong)', note: 'Emphasised edge' },
+  { token: '--color-border-accent', value: 'var(--color-border-accent)', note: 'Pink hairline' },
+];
+
+const holoStops = [
+  { token: '--holo-base', value: 'var(--holo-base)' },
+  { token: '--holo-centre', value: 'var(--holo-centre)' },
+  { token: '--holo-pink', value: 'var(--holo-pink)' },
+  { token: '--holo-lilac', value: 'var(--holo-lilac)' },
+  { token: '--holo-mint', value: 'var(--holo-mint)' },
+  { token: '--holo-blue', value: 'var(--holo-blue)' },
+];
+
+const displayScale = [
+  { token: '--text-display', note: 'clamp(3rem, 8vw, 6rem) · tracking -0.055em' },
+  { token: '--text-h1', note: 'clamp(2.5rem, 5.5vw, 4.25rem) · tracking -0.055em' },
+  { token: '--text-h2', note: 'clamp(1.875rem, 4vw, 2.875rem) · tracking -0.04em' },
+  { token: '--text-h3', note: 'clamp(1.375rem, 2.6vw, 1.875rem) · tracking -0.025em' },
+  { token: '--text-h4', note: 'clamp(1.125rem, 2vw, 1.375rem) · tracking -0.025em' },
+];
+
+const bodyScale = [
+  { token: '--text-lead', note: 'clamp(1.125rem, 1.6vw, 1.3125rem) · white' },
+  { token: '--text-body', note: '1.0625rem · line-height 1.65 · 78% white' },
+  { token: '--text-small', note: '0.9375rem · 55% white' },
+  { token: '--text-xs', note: '0.8125rem · 38% white' },
+];
+---
+
+<BaseLayout title="Styleguide" description="Design system reference">
+  <main class="sg">
+    <div class="container">
+      <header class="sg-header">
+        <p class="sg-eyebrow">Design foundation</p>
+        <h1>Styleguide</h1>
+        <p class="lead">
+          One typeface, one accent, one surface treatment. Every value on this page is a CSS
+          custom property defined in <code>src/styles/global.css</code>.
+        </p>
+        <p class="sg-wordmark-demo wordmark">the tech bros</p>
+        <p class="sg-caption">Wordmark — Helvetica Neue, weight 400, letter-spacing -0.06em, lowercase, no glow.</p>
+      </header>
+
+      <!-- ── Colour ─────────────────────────────────────────────────────── -->
+      <section class="sg-section">
+        <h2>Colour</h2>
+
+        <h3>Core palette</h3>
+        <div class="sg-swatch-grid">
+          {coreColours.map((c) => (
+            <div class="sg-swatch">
+              <div class="sg-chip" style={`background: ${c.value};`}></div>
+              <p class="sg-swatch-name">{c.name}</p>
+              <p class="sg-token">{c.token}</p>
+              <p class="sg-token">{c.value}</p>
+              <p class="sg-caption">{c.role}</p>
+            </div>
+          ))}
+        </div>
+
+        <h3>Surfaces &amp; roles</h3>
+        <div class="sg-swatch-grid">
+          {roleColours.map((c) => (
+            <div class="sg-swatch">
+              <div class="sg-chip" style={`background: ${c.value};`}></div>
+              <p class="sg-token">{c.token}</p>
+              <p class="sg-caption">{c.note}</p>
+            </div>
+          ))}
+        </div>
+
+        <h3>Neutral greys</h3>
+        <p class="sg-note">Used only where a surface genuinely needs to separate from the page. No tints.</p>
+        <div class="sg-swatch-grid">
+          {greys.map((c) => (
+            <div class="sg-swatch">
+              <div class="sg-chip" style={`background: ${c.value};`}></div>
+              <p class="sg-token">{c.token}</p>
+              <p class="sg-caption">{c.note}</p>
+            </div>
+          ))}
+        </div>
+
+        <h3>Text</h3>
+        <div class="sg-swatch-grid">
+          {textColours.map((c) => (
+            <div class="sg-swatch">
+              <p class="sg-text-sample" style={`color: ${c.value};`}>Aa</p>
+              <p class="sg-token">{c.token}</p>
+              <p class="sg-caption">{c.note}</p>
+            </div>
+          ))}
+        </div>
+
+        <h3>Borders</h3>
+        <div class="sg-swatch-grid">
+          {borders.map((c) => (
+            <div class="sg-swatch">
+              <div class="sg-chip sg-chip-border" style={`border-color: ${c.value};`}></div>
+              <p class="sg-token">{c.token}</p>
+              <p class="sg-caption">{c.note}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- ── Type scale ─────────────────────────────────────────────────── -->
+      <section class="sg-section">
+        <h2>Type — display scale</h2>
+        <p class="sg-note">Helvetica Neue, weight 400, tight negative tracking, white on black.</p>
+        <div class="sg-type-list">
+          {displayScale.map((t) => (
+            <div class="sg-type-row">
+              <p class="sg-sample" style={`font-size: var(${t.token});`}>the tech bros</p>
+              <p class="sg-token">{t.token} — {t.note}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="sg-section">
+        <h2>Type — body scale</h2>
+        <p class="sg-note">Long-form copy sits at 78% white so it does not vibrate against pure black.</p>
+        <div class="sg-type-list">
+          {bodyScale.map((t) => (
+            <div class="sg-type-row">
+              <p class={`sg-body-sample sg-body-${t.token.replace('--text-', '')}`}>
+                The world's first all-female, all-technical accelerator. We back technical founders
+                from first commit to first cheque, and we do it in public.
+              </p>
+              <p class="sg-token">{t.token} — {t.note}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- ── Buttons ────────────────────────────────────────────────────── -->
+      <section class="sg-section">
+        <h2>Buttons</h2>
+        <p class="sg-note">Square corners, no glow, no lift.</p>
+        <div class="btn-group sg-btn-row">
+          <a href="#" class="btn">Primary</a>
+          <a href="#" class="btn btn-secondary">Secondary</a>
+          <button type="button" class="btn sg-btn-reset">Button element</button>
+        </div>
+
+        <h3>Form controls</h3>
+        <div class="sg-form">
+          <input type="text" placeholder="Text input" />
+          <textarea rows="3" placeholder="Textarea"></textarea>
+        </div>
+      </section>
+
+      <!-- ── Holographic surface ────────────────────────────────────────── -->
+      <section class="sg-section">
+        <h2>Holographic surface</h2>
+        <p class="sg-note">
+          A background fill for discrete blocks only — never a glow, never a text effect, never a
+          full-page background. Text on it is black, weight 700, tightly tracked.
+        </p>
+
+        <div class="holo sg-holo-block">
+          <h3>applications open</h3>
+          <p>Cohort 03 closes 14 November. Twelve teams. Twelve weeks. No equity.</p>
+        </div>
+
+        <div class="sg-holo-row">
+          <div class="holo sg-holo-card">
+            <p>holo card</p>
+          </div>
+          <div class="holo sg-holo-card">
+            <p>holo card</p>
+          </div>
+          <a href="#" class="holo sg-holo-button">apply now</a>
+        </div>
+
+        <h3>Gradient stops</h3>
+        <div class="sg-swatch-grid">
+          {holoStops.map((c) => (
+            <div class="sg-swatch">
+              <div class="sg-chip" style={`background: ${c.value};`}></div>
+              <p class="sg-token">{c.token}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .sg {
+    padding: 4rem 0 8rem;
+  }
+
+  .sg-header {
+    padding-bottom: 4rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .sg-eyebrow {
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    font-size: var(--text-xs);
+    margin-bottom: 1rem;
+  }
+
+  .sg-wordmark-demo {
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    margin: 2.5rem 0 0.5rem;
+  }
+
+  .sg-section {
+    padding: 4rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .sg-section h2 {
+    margin-bottom: 2rem;
+  }
+
+  .sg-section h3 {
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    color: var(--color-text);
+  }
+
+  .sg-note {
+    color: var(--color-text-muted);
+    max-width: 60ch;
+    margin-bottom: 2rem;
+  }
+
+  .sg-caption {
+    color: var(--color-text-faint);
+    font-size: var(--text-xs);
+    margin-bottom: 0;
+  }
+
+  .sg-token {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    letter-spacing: 0;
+    margin-bottom: 0.25rem;
+  }
+
+  /* ── swatches ── */
+  .sg-swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .sg-chip {
+    width: 100%;
+    height: 88px;
+    border: 1px solid var(--color-border);
+    margin-bottom: 0.75rem;
+  }
+
+  .sg-chip-border {
+    border-width: 3px;
+    background: var(--color-surface);
+  }
+
+  .sg-swatch-name {
+    color: var(--color-text);
+    margin-bottom: 0.25rem;
+  }
+
+  .sg-text-sample {
+    font-size: 3.5rem;
+    line-height: 1;
+    letter-spacing: var(--tracking-heading);
+    margin-bottom: 0.75rem;
+  }
+
+  /* ── type ── */
+  .sg-type-list {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .sg-type-row {
+    border-left: 1px solid var(--color-border);
+    padding-left: 1.5rem;
+  }
+
+  .sg-sample {
+    font-weight: var(--weight-heading);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
+    color: var(--color-text);
+    margin-bottom: 0.75rem;
+  }
+
+  .sg-body-sample {
+    max-width: 62ch;
+    margin-bottom: 0.75rem;
+  }
+
+  .sg-body-lead {
+    font-size: var(--text-lead);
+    color: var(--color-text);
+  }
+
+  .sg-body-body {
+    font-size: var(--text-body);
+    color: var(--color-text-body);
+  }
+
+  .sg-body-small {
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+  }
+
+  .sg-body-xs {
+    font-size: var(--text-xs);
+    color: var(--color-text-faint);
+  }
+
+  /* ── buttons + forms ── */
+  .sg-btn-row {
+    align-items: center;
+  }
+
+  .sg-btn-reset {
+    width: auto;
+  }
+
+  .sg-form {
+    max-width: 480px;
+  }
+
+  /* ── holo ── */
+  .sg-holo-block {
+    padding: 3rem;
+    margin-bottom: 2rem;
+  }
+
+  .sg-holo-block h3 {
+    margin-top: 0;
+    font-size: var(--text-h2);
+  }
+
+  .sg-holo-block p {
+    margin-bottom: 0;
+    max-width: 48ch;
+  }
+
+  .sg-holo-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .sg-holo-card {
+    flex: 1 1 200px;
+    min-height: 160px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .sg-holo-card p {
+    margin-bottom: 0;
+  }
+
+  .sg-holo-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    text-transform: uppercase;
+    font-size: var(--text-small);
+    letter-spacing: var(--tracking-label);
+  }
+
+  code {
+    color: var(--color-text);
+    font-size: 0.95em;
+  }
+
+  @media (max-width: 768px) {
+    .sg-holo-block {
+      padding: 2rem 1.5rem;
+    }
+  }
+</style>

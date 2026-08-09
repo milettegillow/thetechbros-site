@@ -116,7 +116,7 @@ import Footer from '../components/Footer.astro';
 
   .hero-subtitle {
     font-size: 1.5rem;
-    color: var(--color-accent);
+    color: var(--color-primary);
     margin-top: 1rem;
     font-weight: 300;
   }
@@ -169,7 +169,7 @@ import Footer from '../components/Footer.astro';
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 0;
     display: block;
   }
 
@@ -178,18 +178,16 @@ import Footer from '../components/Footer.astro';
   }
 
   .press-item h3 a {
-    color: var(--color-primary);
-    text-shadow: 0 0 10px rgba(239, 31, 159, 0.3);
+    color: var(--color-text);
     transition: all 0.2s ease;
   }
 
   .press-item h3 a:hover {
-    color: var(--color-accent);
-    text-shadow: 0 0 10px rgba(92, 225, 230, 0.3);
+    color: var(--color-primary);
   }
 
   .press-source {
-    color: var(--color-accent);
+    color: var(--color-primary);
     font-size: 0.95rem;
     font-weight: 500;
     margin-bottom: 1rem;

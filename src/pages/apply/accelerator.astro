@@ -188,7 +188,7 @@ import Footer from '../../components/Footer.astro';
 
   .hero-subtitle {
     font-size: 1.5rem;
-    color: var(--color-accent);
+    color: var(--color-primary);
     margin-top: 1rem;
     font-weight: 300;
   }
@@ -204,7 +204,7 @@ import Footer from '../../components/Footer.astro';
   }
 
   .manifesto-content h2 {
-    color: var(--color-accent);
+    color: var(--color-text);
     margin-top: 3rem;
     margin-bottom: 1.5rem;
   }
@@ -255,7 +255,7 @@ import Footer from '../../components/Footer.astro';
   }
 
   .apply-intro-text a {
-    color: var(--color-accent);
+    color: var(--color-primary);
     text-decoration: underline;
   }
 
@@ -265,7 +265,7 @@ import Footer from '../../components/Footer.astro';
 
   /* ── Zone 1: ready to build? ── */
   .cta-zone-1 {
-    background: #1a0a12;
+    background: var(--color-surface);
     padding: 100px 0;
   }
 
@@ -276,7 +276,7 @@ import Footer from '../../components/Footer.astro';
   }
 
   .cta-zone-1 h2 {
-    color: var(--color-primary);
+    color: var(--color-text);
     margin-bottom: 40px;
   }
 
@@ -307,14 +307,14 @@ import Footer from '../../components/Footer.astro';
 
   /* ── Zone 2: not ready yet? ── */
   .cta-zone-2 {
-    background: #0d0d0d;
+    background: var(--color-surface);
     padding: 4rem 0 5rem;
   }
 
   .cta-secondary-heading {
     color: var(--color-text-muted);
     font-size: 1.15rem;
-    font-weight: 600;
+    font-weight: var(--weight-heading);
     text-transform: lowercase;
     margin-bottom: 0.75rem;
   }
@@ -336,7 +336,7 @@ import Footer from '../../components/Footer.astro';
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.25);
     color: var(--color-text-muted);
-    border-radius: 6px;
+    border-radius: 0;
     font-size: 0.9rem;
     font-weight: 500;
     text-decoration: none;
@@ -368,7 +368,7 @@ import Footer from '../../components/Footer.astro';
   }
 
   .cohort-stats h2 {
-    color: var(--color-accent);
+    color: var(--color-text);
     margin-bottom: 2rem;
   }
 
@@ -398,7 +398,6 @@ import Footer from '../../components/Footer.astro';
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--color-primary);
-    text-shadow: 0 0 20px rgba(239, 31, 159, 0.5);
     margin-bottom: 0.5rem;
   }
 
@@ -426,11 +425,11 @@ import Footer from '../../components/Footer.astro';
     height: auto;
     display: block;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 0;
   }
 
   .spotlight-content h2 {
-    color: var(--color-accent);
+    color: var(--color-text);
     margin-bottom: 2rem;
   }
 
@@ -444,46 +443,42 @@ import Footer from '../../components/Footer.astro';
   .btn-apply-cohort {
     display: inline-block;
     padding: 1.1rem 3rem;
-    background: #ef1f9f;
-    color: #fff;
+    background: var(--color-primary);
+    color: var(--color-black);
     border: none;
-    border-radius: 6px;
+    border-radius: 0;
     font-size: 1.3rem;
     font-weight: 700;
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     transition: all 0.2s;
-    box-shadow: 0 0 15px rgba(239, 31, 159, 0.3);
   }
 
   .btn-apply-cohort:hover {
-    background: #d1198a;
-    box-shadow: 0 0 30px rgba(239, 31, 159, 0.5);
+    background: var(--color-primary-hover);
     transform: translateY(-1px);
   }
 
   .btn-community-cta {
     display: inline-block;
     padding: 1.1rem 3rem;
-    background: var(--color-accent);
-    color: var(--color-bg-end);
-    border: none;
-    border-radius: 6px;
+    background: transparent;
+    border: 1px solid var(--color-white);
+    color: var(--color-white);
+    border-radius: 0;
     font-size: 1.3rem;
     font-weight: 700;
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     transition: all 0.2s;
-    box-shadow: 0 0 15px rgba(92, 225, 230, 0.3);
     text-decoration: none;
   }
 
   .btn-community-cta:hover {
-    background: #3dcdd3;
-    box-shadow: 0 0 30px rgba(92, 225, 230, 0.5);
-    transform: translateY(-1px);
+    background: var(--color-white);
+    color: var(--color-black);
   }
 
   @media (max-width: 768px) {

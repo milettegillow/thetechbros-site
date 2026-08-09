@@ -48,7 +48,7 @@ import Footer from '../components/Footer.astro';
 
   .hero-subtitle {
     font-size: 1.5rem;
-    color: var(--color-accent);
+    color: var(--color-primary);
     margin-top: 1rem;
     font-weight: 300;
   }
@@ -70,7 +70,7 @@ import Footer from '../components/Footer.astro';
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 2.5rem;
-    border-radius: 8px;
+    border-radius: 0;
     text-decoration: none;
     transition: all 0.3s ease;
     display: block;
@@ -80,11 +80,10 @@ import Footer from '../components/Footer.astro';
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--color-primary);
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(239, 31, 159, 0.2);
   }
 
   .link-card h2 {
-    color: var(--color-accent);
+    color: var(--color-text);
     margin-bottom: 1rem;
     font-size: 1.5rem;
   }

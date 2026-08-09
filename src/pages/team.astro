@@ -156,20 +156,20 @@ import RoleApplyModal from '../components/RoleApplyModal.astro';
   .team-card h3 {
     font-family: var(--font-primary);
     font-size: 1.4rem;
-    font-weight: 700;
+    font-weight: var(--weight-heading);
     color: white;
     margin-bottom: 0;
     text-transform: none;
   }
 
   .team-role {
-    color: rgba(92, 225, 230, 0.85);
+    color: rgba(239, 31, 159, 0.85);
     font-size: 1.1rem;
     margin-bottom: 1rem;
     font-weight: 700;
     text-transform: lowercase;
     letter-spacing: 0.06em;
-    font-family: var(--font-secondary);
+    font-family: var(--font-primary);
   }
 
   .team-bio {
@@ -193,7 +193,7 @@ import RoleApplyModal from '../components/RoleApplyModal.astro';
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-accent);
+    color: var(--color-primary);
     transition: all 0.3s ease;
     text-decoration: none;
     flex-shrink: 0;
@@ -229,11 +229,11 @@ import RoleApplyModal from '../components/RoleApplyModal.astro';
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 2rem;
-    border-radius: 8px;
+    border-radius: 0;
   }
 
   .role-card h3 {
-    color: var(--color-accent);
+    color: var(--color-text);
     margin-bottom: 1rem;
   }
 
@@ -256,7 +256,7 @@ import RoleApplyModal from '../components/RoleApplyModal.astro';
   }
 
   .no-roles-message a {
-    color: var(--color-accent);
+    color: var(--color-primary);
     text-decoration: underline;
   }
 
