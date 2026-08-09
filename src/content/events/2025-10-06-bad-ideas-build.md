@@ -14,5 +14,6 @@ communityPartners:
   - "TECH WEEK by a16z"
 rating: 4.8
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7381449854444675072/"
+lumaUrl: "https://partiful.com/e/zPVgsKpOeB9xQ8b39VPw"
 photo: "2025-10-6.jpeg"
 ---

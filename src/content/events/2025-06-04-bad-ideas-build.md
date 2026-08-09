@@ -14,5 +14,6 @@ communityPartners:
   - "TECH WEEK by a16z"
 rating: 4.9
 linkedinUrl: "https://www.linkedin.com/posts/thetechbros_i-love-the-pace-of-this-event-i-love-activity-7338182063633690624-hb8R/"
+lumaUrl: "https://partiful.com/e/guIazXLMGIzZ0sNjeRe1"
 photo: "2025-6-4.jpeg"
 ---
