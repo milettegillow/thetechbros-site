@@ -1,7 +1,7 @@
 ---
 date: 2026-03-07
 endDate: 2026-03-08
-title: "The Tech Bros x IC FemHack"
+title: "imperial college femhack"
 type: "hackathon"
 city: "London"
 country: "UK"

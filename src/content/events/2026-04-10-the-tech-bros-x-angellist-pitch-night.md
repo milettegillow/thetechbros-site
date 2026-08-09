@@ -1,6 +1,6 @@
 ---
 date: 2026-04-10
-title: "The Tech Bros x AngelList: pitch night"
+title: "pitch night"
 type: "conference"
 city: "San Francisco"
 country: "USA"

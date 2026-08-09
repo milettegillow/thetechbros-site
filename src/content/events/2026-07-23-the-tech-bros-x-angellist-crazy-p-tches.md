@@ -1,6 +1,6 @@
 ---
 date: 2026-07-23
-title: "The Tech Bros x AngelList: crazy p*tches"
+title: "crazy p*tches"
 type: "conference"
 city: "San Francisco"
 country: "USA"
