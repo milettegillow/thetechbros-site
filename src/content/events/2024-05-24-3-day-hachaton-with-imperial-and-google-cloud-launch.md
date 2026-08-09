@@ -12,7 +12,15 @@ quotes:
   - "I learnt that I might be interested in becoming a founder"
   - "It was fun, it was inspiring, I learnt coding, I learnt to just go for it"
   - "I have new role models 🥰"
+sponsors:
+  - "Google Cloud"
+communityPartners:
+  - "Women In STEM @ IC"
+  - "Imperial College Women & Non-Binary Individuals in Computing"
+  - "Imperial Women in SET Society"
+  - "Imperial College London"
 rating: 4.6
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7201225134286794752/"
+eventUrl: "https://www.imperial.ac.uk/events/177393/the-tech-bros-x-imperial-hackathon-empowering-women-to-build/"
 photo: "2024-5-24.jpeg"
 ---

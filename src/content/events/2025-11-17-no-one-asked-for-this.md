@@ -9,7 +9,14 @@ quotes:
   - "I loved it!!!!! I loved meeting so many women in STEM, and it was organized really well!!"
   - "AMAZING i never met so many women and have felt so comfortable in a hackathon."
   - "Was great! Great idea for women to get together and network:) Loved the open format"
+sponsors:
+  - "AngelList"
+  - "GLO (Global Entrepreneurs Hub)"
+inKind:
+  - "Cursor"
+  - "Vercel"
 rating: 4.75
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7396486491318820864/"
+lumaUrl: "https://luma.com/qe3bfkhn"
 photo: "2025-11-17.jpeg"
 ---

@@ -10,7 +10,10 @@ quotes:
   - "At the beginning of this event I had no idea [how to code] but in less than one hour I built a website by myself. I am so glad about it because it helped to understand that I am able to work and do whatever I want with the right support"
   - "Such a fun way to spend the evening and I would love to do more interactive, hands on, and personal events like this in the future"
   - "Enjoyed how creative it is, and how working with the right people really makes things work out much better. With the right person I'm more likely to build a startup."
+sponsors:
+  - "Women In STEM @ IC"
 rating: 4.8
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7300478911165984769/"
+lumaUrl: "https://luma.com/mvfdw7tb"
 photo: "2025-2-25.jpeg"
 ---

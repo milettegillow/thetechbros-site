@@ -14,7 +14,15 @@ description: |-
   🔥 Sonia Dembowska - fireside chat (founding a tech startup)
 quotes:
   - "Flawlessly designed and executed. I have decided to build a startup and now have the connections and information required to do so. Phenomenal outcome. Thank you!"
+sponsors:
+  - "Innovate UK"
+  - "NVIDIA"
+inKind:
+  - "x+why"
+communityPartners:
+  - "Women in High Performance Computing (WHPC)"
 rating: 4.7
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7307797548415537154/"
+lumaUrl: "https://luma.com/b4v5ncny"
 photo: "2025-3-14.jpeg"
 ---

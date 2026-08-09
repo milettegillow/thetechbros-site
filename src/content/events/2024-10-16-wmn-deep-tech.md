@@ -9,7 +9,12 @@ quotes:
   - "This was hands-down one of my favourite events I've ever attended. The energy in the room, from the incredible founders to the inspiring conversations, was unforgettable."
   - "The event was absolutely amazing, thank you so much for the incredible organization, looking forward to future events!"
   - "Fantastic event and group of women! I hope we can do more of these events on a quarterly basis"
+sponsors:
+  - "Google Cloud"
+inKind:
+  - "HCVC"
 rating: 4.7
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7254053279972700160/"
+lumaUrl: "https://luma.com/ua5k1g14"
 photo: "2024-10-16.jpeg"
 ---

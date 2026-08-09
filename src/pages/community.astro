@@ -221,6 +221,9 @@ const locationGroups = countries.map((country) => ({
                 {event.data.lumaUrl && (
                   <a href={event.data.lumaUrl} class="luma-link" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">View on Luma</a>
                 )}
+                {event.data.eventUrl && (
+                  <a href={event.data.eventUrl} class="luma-link" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">View event page</a>
+                )}
                 {event.data.linkedinUrl && (
                   <a
                     href={event.data.linkedinUrl}

@@ -10,7 +10,11 @@ quotes:
   - "Today's build was really fun and I am glad I came. I met new likeminded people which I loved, went outside my comfort zone and learned developed my group work skills."
   - "I learnt that to build a startup/idea, it doesn't have to be all perfect from start."
   - "It was a great experience, I liked it. Maybe yes, I would consider founding a company. After the event I got a little bit more confident that I can"
+sponsors:
+  - "Baltic Ventures"
+  - "Advanced Research + Invention Agency (ARIA)"
 rating: 4.7
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7313882472033746946/"
+lumaUrl: "https://luma.com/oesm7se8"
 photo: "2025-4-2.jpeg"
 ---
