@@ -1,0 +1,648 @@
+---
+/**
+ * FormModal — one modal, driven by configuration.
+ *
+ * Renders the field set it is given, validates it client-side (every field
+ * mandatory unless `required: false`), and POSTs a JSON body keyed by field
+ * name to `endpoint`. Several instances can live on the same page; the script
+ * below is hoisted once by Astro and wires up each one it finds.
+ */
+
+export type FieldKind = 'text' | 'email' | 'tel' | 'url' | 'linkedin' | 'textarea' | 'select' | 'checkbox-group' | 'checkbox';
+
+export interface FormField {
+  name: string;
+  label: string;
+  kind: FieldKind;
+  placeholder?: string;
+  /** Every field is mandatory by default. Opt-ins must set this to false. */
+  required?: boolean;
+  options?: string[];
+  maxlength?: number;
+  rows?: number;
+  hint?: string;
+}
+
+interface Props {
+  id: string;
+  /** Name of the global function that opens this modal, e.g. "openApplyModal". */
+  openFunction: string;
+  title: string;
+  endpoint: string;
+  fields: FormField[];
+  submitLabel?: string;
+  successTitle?: string;
+  successMessage?: string;
+  /** Constant values merged into the POST body, e.g. { role: "city-lead" }. */
+  extra?: Record<string, string>;
+}
+
+const {
+  id,
+  openFunction,
+  title,
+  endpoint,
+  fields,
+  submitLabel = 'Submit Application',
+  successTitle = 'Application Submitted!',
+  successMessage = "Thank you for applying. We'll be in touch soon.",
+  extra = {},
+} = Astro.props;
+
+const config = {
+  id,
+  openFunction,
+  endpoint,
+  submitLabel,
+  extra,
+  fields: fields.map((f) => ({ ...f, required: f.required !== false })),
+};
+---
+
+<div
+  id={id}
+  class="apply-modal"
+  data-form-modal
+  role="dialog"
+  aria-labelledby={`${id}-title`}
+  aria-modal="true"
+  style="display: none;"
+>
+  <script type="application/json" data-form-config set:html={JSON.stringify(config)} />
+
+  <div class="modal-backdrop" data-modal-backdrop></div>
+  <div class="modal-content">
+    <button class="modal-close" data-modal-close aria-label="Close modal">&times;</button>
+
+    <div data-form-container>
+      <h2 id={`${id}-title`}>{title}</h2>
+
+      <p class="form-legend">Fields marked <span class="required">*</span> are required.</p>
+
+      <form class="apply-form" data-form action="" method="post" novalidate>
+        {fields.map((field) => {
+          const required = field.required !== false;
+          const fieldId = `${id}-${field.name}`;
+          const errId = `${id}-err-${field.name}`;
+          return (
+            <div class={`form-group${field.kind === 'checkbox' ? ' checkbox-field' : ''}`}>
+              {field.kind === 'checkbox' ? (
+                <label class="checkbox-label">
+                  <input type="checkbox" id={fieldId} name={field.name} value="true" />
+                  {field.label}
+                </label>
+              ) : (
+                <>
+                  <label for={fieldId}>
+                    {field.label}
+                    {required && <> <span class="required">*</span></>}
+                    {field.hint && <> <span class="field-hint">{field.hint}</span></>}
+                    {field.maxlength && <> <span class="char-count">(max {field.maxlength} characters)</span></>}
+                  </label>
+
+                  {field.kind === 'textarea' && (
+                    <textarea
+                      id={fieldId}
+                      name={field.name}
+                      rows={field.rows ?? 5}
+                      maxlength={field.maxlength}
+                      placeholder={field.placeholder}
+                      required={required}
+                      aria-describedby={errId}
+                    />
+                  )}
+
+                  {field.kind === 'select' && (
+                    <select id={fieldId} name={field.name} required={required} aria-describedby={errId}>
+                      <option value="">Select...</option>
+                      {(field.options ?? []).map((opt) => <option value={opt}>{opt}</option>)}
+                    </select>
+                  )}
+
+                  {field.kind === 'checkbox-group' && (
+                    <div class="checkbox-group" role="group" data-checkbox-group={field.name} aria-describedby={errId}>
+                      {(field.options ?? []).map((opt) => (
+                        <label class="checkbox-label">
+                          <input type="checkbox" name={field.name} value={opt} />
+                          {opt}
+                        </label>
+                      ))}
+                    </div>
+                  )}
+
+                  {!['textarea', 'select', 'checkbox-group'].includes(field.kind) && (
+                    <input
+                      type={field.kind === 'linkedin' ? 'url' : field.kind}
+                      id={fieldId}
+                      name={field.name}
+                      placeholder={field.placeholder}
+                      required={required}
+                      aria-describedby={errId}
+                    />
+                  )}
+
+                  {field.maxlength && (
+                    <span class="char-counter" data-char-counter={field.name}>0 / {field.maxlength}</span>
+                  )}
+                </>
+              )}
+              <span class="field-error" id={errId} data-error-for={field.name} role="alert" aria-live="polite" />
+            </div>
+          );
+        })}
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary form-modal__submit" data-submit disabled>{submitLabel}</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="form-modal__success" data-success-container style="display: none;">
+      <h2>{successTitle}</h2>
+      <p>{successMessage}</p>
+      <button class="btn btn-tertiary" data-close-success>Close</button>
+    </div>
+
+    <div class="form-modal__error" data-error-container style="display: none;">
+      <h2>Error</h2>
+      <p data-error-message>Something went wrong. Please try again later.</p>
+      <button class="btn btn-tertiary" data-close-error>Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Hoisted once by Astro no matter how many FormModals are on the page, so
+  // everything below is per-instance and driven by each modal's own config.
+  type FieldConfig = {
+    name: string;
+    label: string;
+    kind: string;
+    required: boolean;
+    maxlength?: number;
+  };
+
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const LINKEDIN_RE = /^https:\/\/(www\.)?linkedin\.com\/in\/[^\/\s?#]+\/?$/i;
+  const URL_RE = /^https?:\/\/[^\s.]+\.[^\s]{2,}$/i;
+
+  function setupModal(modal: HTMLElement) {
+    const configEl = modal.querySelector('[data-form-config]');
+    if (!configEl?.textContent) return;
+    const config = JSON.parse(configEl.textContent) as {
+      id: string;
+      openFunction: string;
+      endpoint: string;
+      submitLabel: string;
+      extra: Record<string, string>;
+      fields: FieldConfig[];
+    };
+
+    const form = modal.querySelector('[data-form]') as HTMLFormElement | null;
+    const formContainer = modal.querySelector('[data-form-container]') as HTMLElement | null;
+    const successContainer = modal.querySelector('[data-success-container]') as HTMLElement | null;
+    const errorContainer = modal.querySelector('[data-error-container]') as HTMLElement | null;
+    const errorMessage = modal.querySelector('[data-error-message]') as HTMLElement | null;
+    const submitBtn = modal.querySelector('[data-submit]') as HTMLButtonElement | null;
+    if (!form || !formContainer || !successContainer || !errorContainer || !errorMessage || !submitBtn) return;
+
+    const el = (name: string) =>
+      modal.querySelector(`#${CSS.escape(`${config.id}-${name}`)}`) as
+        | HTMLInputElement
+        | HTMLTextAreaElement
+        | HTMLSelectElement
+        | null;
+
+    const valueOf = (name: string) => (el(name)?.value ?? '').trim();
+    const checkedCount = (name: string) =>
+      form.querySelectorAll(`input[name="${name}"]:checked`).length;
+
+    function validateField(field: FieldConfig): string | null {
+      if (field.kind === 'checkbox') return null; // opt-ins are never mandatory
+      if (field.kind === 'checkbox-group') {
+        if (!field.required) return null;
+        return checkedCount(field.name) > 0 ? null : `Please select at least one ${field.label.toLowerCase()}.`;
+      }
+      const value = valueOf(field.name);
+      if (!value) {
+        if (!field.required) return null;
+        const verb = field.kind === 'select' ? 'select' : 'enter';
+        return `Please ${verb} your ${field.label.toLowerCase().replace(/\?$/, '')}.`;
+      }
+      if (field.kind === 'email' && !EMAIL_RE.test(value)) {
+        return 'Please enter a valid email address.';
+      }
+      if (field.kind === 'linkedin' && !LINKEDIN_RE.test(value)) {
+        return 'Enter a LinkedIn profile URL, e.g. https://www.linkedin.com/in/yourname';
+      }
+      if (field.kind === 'url' && !URL_RE.test(value)) {
+        return 'Please enter a valid URL, starting with https://';
+      }
+      return null;
+    }
+
+    function showError(field: FieldConfig, message: string | null) {
+      const slot = modal.querySelector(`[data-error-for="${field.name}"]`) as HTMLElement | null;
+      if (slot) {
+        slot.textContent = message ?? '';
+        slot.style.display = message ? 'block' : 'none';
+      }
+      const target = el(field.name);
+      if (target) {
+        target.classList.toggle('has-error', Boolean(message));
+        target.setAttribute('aria-invalid', message ? 'true' : 'false');
+      }
+      const group = modal.querySelector(`[data-checkbox-group="${field.name}"]`);
+      group?.classList.toggle('has-error', Boolean(message));
+    }
+
+    const isValid = () => config.fields.every((f) => validateField(f) === null);
+
+    function refreshSubmitState() {
+      submitBtn!.disabled = !isValid();
+    }
+
+    function validateAll() {
+      let first: FieldConfig | null = null;
+      for (const field of config.fields) {
+        const message = validateField(field);
+        showError(field, message);
+        if (message && !first) first = field;
+      }
+      refreshSubmitState();
+      return first;
+    }
+
+    const clearErrors = () => config.fields.forEach((f) => showError(f, null));
+
+    // Live validation
+    config.fields.forEach((field) => {
+      const targets: Element[] =
+        field.kind === 'checkbox-group'
+          ? Array.from(form.querySelectorAll(`input[name="${field.name}"]`))
+          : ([el(field.name)].filter(Boolean) as Element[]);
+      targets.forEach((target) => {
+        const revalidate = () => showError(field, validateField(field));
+        target.addEventListener('blur', revalidate);
+        target.addEventListener('change', revalidate);
+        target.addEventListener('input', () => {
+          if (validateField(field) === null) showError(field, null);
+          refreshSubmitState();
+        });
+      });
+      // Character counter
+      if (field.maxlength) {
+        const counter = modal.querySelector(`[data-char-counter="${field.name}"]`);
+        const input = el(field.name);
+        if (counter && input) {
+          input.addEventListener('input', () => {
+            counter.textContent = `${input.value.length} / ${field.maxlength}`;
+          });
+        }
+      }
+    });
+    form.addEventListener('change', refreshSubmitState);
+    refreshSubmitState();
+
+    function resetCounters() {
+      config.fields.forEach((field) => {
+        if (!field.maxlength) return;
+        const counter = modal.querySelector(`[data-char-counter="${field.name}"]`);
+        if (counter) counter.textContent = `0 / ${field.maxlength}`;
+      });
+    }
+
+    function openModal() {
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      clearErrors();
+      refreshSubmitState();
+      (form!.querySelector('input, textarea, select') as HTMLElement | null)?.focus();
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+      form!.reset();
+      formContainer!.style.display = 'block';
+      successContainer!.style.display = 'none';
+      errorContainer!.style.display = 'none';
+      resetCounters();
+      clearErrors();
+      refreshSubmitState();
+    }
+
+    modal.querySelector('[data-modal-backdrop]')?.addEventListener('click', closeModal);
+    modal.querySelector('[data-modal-close]')?.addEventListener('click', closeModal);
+    modal.querySelector('[data-close-success]')?.addEventListener('click', closeModal);
+    modal.querySelector('[data-close-error]')?.addEventListener('click', () => {
+      errorContainer!.style.display = 'none';
+      formContainer!.style.display = 'block';
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.style.display === 'flex') closeModal();
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const firstInvalid = validateAll();
+      if (firstInvalid) {
+        const target =
+          el(firstInvalid.name) ??
+          (form.querySelector(`input[name="${firstInvalid.name}"]`) as HTMLElement | null);
+        target?.focus();
+        return;
+      }
+
+      submitBtn!.disabled = true;
+      submitBtn!.textContent = 'Submitting...';
+
+      const body: Record<string, unknown> = { ...config.extra };
+      for (const field of config.fields) {
+        if (field.kind === 'checkbox') {
+          body[field.name] = (el(field.name) as HTMLInputElement | null)?.checked === true;
+        } else if (field.kind === 'checkbox-group') {
+          body[field.name] = Array.from(
+            form.querySelectorAll(`input[name="${field.name}"]:checked`)
+          ).map((c) => (c as HTMLInputElement).value);
+        } else if (field.kind === 'linkedin') {
+          // The API insists on the www. form; normalise rather than bounce a
+          // URL the user reasonably typed without it.
+          body[field.name] = valueOf(field.name).replace(
+            /^https:\/\/linkedin\.com\//i,
+            'https://www.linkedin.com/'
+          );
+        } else {
+          body[field.name] = valueOf(field.name);
+        }
+      }
+
+      try {
+        const response = await fetch(config.endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        if (response.ok) {
+          formContainer!.style.display = 'none';
+          successContainer!.style.display = 'block';
+        } else {
+          const data = await response.json().catch(() => ({}));
+          errorMessage!.textContent = data.error || 'Something went wrong. Please try again later.';
+          formContainer!.style.display = 'none';
+          errorContainer!.style.display = 'block';
+        }
+      } catch {
+        errorMessage!.textContent = 'Network error. Please check your connection and try again.';
+        formContainer!.style.display = 'none';
+        errorContainer!.style.display = 'block';
+      } finally {
+        submitBtn!.textContent = config.submitLabel;
+        refreshSubmitState();
+      }
+    });
+
+    (window as any)[config.openFunction] = openModal;
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-form-modal]').forEach(setupModal);
+</script>
+
+<style is:global>
+
+  .apply-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-content {
+    position: relative;
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0;
+    padding: 2.5rem;
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    z-index: 1001;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+  }
+
+  .modal-close:hover {
+    color: var(--color-text);
+  }
+
+  .modal-content h2 {
+    color: var(--color-text);
+    margin-bottom: 2rem;
+    font-size: 1.75rem;
+  }
+
+  .apply-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-group label {
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  .required {
+    color: var(--color-primary);
+  }
+
+  .field-hint,
+  .char-count {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-weight: normal;
+    margin-left: 0.5rem;
+  }
+
+  .apply-form input,
+  .apply-form textarea,
+  .apply-form select {
+    width: 100%;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 1rem;
+    border-radius: 0;
+  }
+
+  .apply-form input:focus,
+  .apply-form textarea:focus,
+  .apply-form select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+
+  .apply-form input::placeholder,
+  .apply-form textarea::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .apply-form select {
+    cursor: pointer;
+  }
+
+  .checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-bottom: 0;
+  }
+
+  .checkbox-label input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .checkbox-field {
+    margin-top: 0.5rem;
+  }
+
+  .char-counter {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    text-align: right;
+    margin-top: 0.25rem;
+  }
+
+  /* Inline validation message, pink, sits directly under its field. */
+  .field-error {
+    display: none;
+    color: var(--color-primary);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-top: 0.35rem;
+  }
+
+  .apply-form input.has-error,
+  .apply-form textarea.has-error,
+  .apply-form select.has-error {
+    border-color: var(--color-primary);
+  }
+
+  .checkbox-group.has-error {
+    outline: 1px solid var(--color-primary);
+    outline-offset: 0.5rem;
+  }
+
+  .form-legend {
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .form-modal__submit:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .form-modal__submit:disabled:hover {
+    background: transparent;
+    border-color: var(--color-white);
+    color: var(--color-white);
+  }
+
+  .form-actions {
+    margin-top: 1rem;
+  }
+
+  .form-modal__success,
+  .form-modal__error {
+    text-align: center;
+  }
+
+  .form-modal__success h2,
+  .form-modal__error h2 {
+    color: var(--color-text);
+    margin-bottom: 1rem;
+  }
+
+  .form-modal__success p,
+  .form-modal__error p {
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+    line-height: 1.7;
+  }
+
+  .form-modal__error h2 {
+    color: var(--color-text);
+  }
+
+  @media (max-width: 768px) {
+    .modal-content {
+      width: 95%;
+      padding: 1.5rem;
+      max-height: 95vh;
+    }
+
+    .checkbox-group {
+      grid-template-columns: 1fr;
+    }
+
+    .modal-content h2 {
+      font-size: 1.5rem;
+    }
+  }
+</style>
