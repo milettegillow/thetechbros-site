@@ -288,7 +288,10 @@ a:hover {
    ========================================================================== */
 
 .holo,
-.btn.btn-primary {
+.btn.btn-primary,
+.btn.btn-tertiary:hover,
+.btn.btn-tertiary:focus-visible,
+.btn.btn-tertiary.is-hover {
   background-color: var(--holo-base);
   /* Paint order, top layer first:
        1. rays      — broad soft spokes, felt more than seen
@@ -343,7 +346,10 @@ a:hover {
    and put white or pink text on a pale surface. */
 .holo,
 .holo *,
-.btn.btn-primary {
+.btn.btn-primary,
+.btn.btn-tertiary:hover,
+.btn.btn-tertiary:focus-visible,
+.btn.btn-tertiary.is-hover {
   color: var(--color-on-holo) !important;
 }
 
@@ -467,12 +473,18 @@ section {
   color: var(--color-white);
 }
 
+/* Hover fills with the holographic surface, black bold text. The white
+   hairline goes transparent rather than away, so the geometry doesn't shift:
+   over a pale foil it read as a leftover edge, and the foil separates from
+   black on its own. The centre point differs from primary's so a hovered
+   tertiary still reads as its own thing next to one. */
 .btn.btn-tertiary:hover,
 .btn.btn-tertiary:focus-visible,
 .btn.btn-tertiary.is-hover {
-  background: var(--color-white);
-  border-color: var(--color-white);
-  color: var(--color-black);
+  --holo-centre-x: 72%;
+  --holo-centre-y: 38%;
+  border-color: transparent;
+  font-weight: var(--weight-holo);
 }
 
 .btn-group {
