@@ -14,4 +14,5 @@ communityPartners:
   - "AIX Ventures"
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7448268346090827776"
 lumaUrl: "https://luma.com/50as1rhh"
+photo: "2026-4-9.jpeg"
 ---

@@ -26,4 +26,5 @@ communityPartners:
   - "DoCSoc"
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7436561558127665152"
 lumaUrl: "https://luma.com/q108auy0"
+photo: "2026-3-7.jpeg"
 ---

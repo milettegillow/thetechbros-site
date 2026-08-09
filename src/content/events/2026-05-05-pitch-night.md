@@ -14,4 +14,5 @@ inKind:
   - "Frontline Ventures"
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7457745248035831809"
 lumaUrl: "https://luma.com/7vmhb3qx"
+photo: "2026-5-5.jpeg"
 ---

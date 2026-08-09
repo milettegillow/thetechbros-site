@@ -16,4 +16,5 @@ inKind:
   - "Spacemade"
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7434246531702030336"
 lumaUrl: "https://luma.com/4o8hwuqo"
+photo: "2026-2-26.jpeg"
 ---

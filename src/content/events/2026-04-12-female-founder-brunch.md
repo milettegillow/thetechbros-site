@@ -12,4 +12,5 @@ communityPartners:
   - "AI Valley"
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7449238120539181056"
 lumaUrl: "https://luma.com/jd1s3152"
+photo: "2026-4-12.jpeg"
 ---

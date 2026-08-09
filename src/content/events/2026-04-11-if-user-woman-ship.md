@@ -16,4 +16,5 @@ communityPartners:
   - "Girls Into VC at Berkeley"
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7448986411694768129"
 lumaUrl: "https://luma.com/qaqtqymt"
+photo: "2026-4-11.jpeg"
 ---

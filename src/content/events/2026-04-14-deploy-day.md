@@ -12,4 +12,5 @@ communityPartners:
   - "Echoes In AI"
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7450187434585214976"
 lumaUrl: "https://luma.com/n3xokczu"
+photo: "2026-4-14.jpeg"
 ---

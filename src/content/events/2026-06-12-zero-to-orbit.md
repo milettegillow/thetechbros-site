@@ -13,4 +13,5 @@ communityPartners:
   - "Oxford Edge"
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7475322899814412288"
 lumaUrl: "https://luma.com/sfau6cto"
+photo: "2026-6-12.jpeg"
 ---

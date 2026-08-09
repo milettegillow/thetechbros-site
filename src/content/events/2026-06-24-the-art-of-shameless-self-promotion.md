@@ -11,4 +11,5 @@ sponsors:
   - "Goodwin"
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7476300415093960704"
 lumaUrl: "https://luma.com/fz4m2in4"
+photo: "2026-6-24.jpeg"
 ---

@@ -20,4 +20,5 @@ communityPartners:
   - "National University of Singapore"
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7445850171051012096"
 lumaUrl: "https://luma.com/dwzo4csv"
+photo: "2026-4-1.jpeg"
 ---

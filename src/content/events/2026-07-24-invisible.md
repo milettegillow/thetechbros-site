@@ -15,4 +15,5 @@ inKind:
   - "Halkin Offices"
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7487562566617989121"
 lumaUrl: "https://luma.com/7l2ijxpw"
+photo: "2026-7-24.jpeg"
 ---
