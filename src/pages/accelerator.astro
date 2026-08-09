@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Navigation from '../../components/Navigation.astro';
-import Footer from '../../components/Footer.astro';
-// import AcceleratorApplyModal from '../../components/AcceleratorApplyModal.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+// import AcceleratorApplyModal from '../components/AcceleratorApplyModal.astro';
 ---
 
 <BaseLayout title="Apply for the Accelerator">
@@ -115,7 +115,7 @@ import Footer from '../../components/Footer.astro';
     </section>
 
     {/*
-    <section class="cta-zone-1">
+    <section class="cta-zone-1" id="apply-now">
       <div class="container">
         <div class="cta-zone-inner">
           <h2>ready to build?</h2>
@@ -130,14 +130,14 @@ import Footer from '../../components/Footer.astro';
     </section>
     */}
 
-    <section class="cta-zone-1">
+    <section class="cta-zone-1" id="apply-now">
       <div class="container">
         <div class="cta-zone-inner">
           <h2>see you next year.</h2>
           <p class="cta-meantime">Applications for Cohort 3 will open in 2027.</p>
 
           <div class="cta-button-wrap">
-            <a href="/apply/join-community" class="btn btn-tertiary btn-community-cta">Join our community</a>
+            <a href="/community" class="btn btn-tertiary btn-community-cta">Join our community</a>
           </div>
         </div>
       </div>
@@ -150,10 +150,41 @@ import Footer from '../../components/Footer.astro';
           <p class="cta-secondary-text">Join the TTB community to stay in the loop for future cohorts, events, and everything in between.</p>
 
           <div class="cta-secondary-btn-wrap">
-            <a href="/apply/join-community" class="btn-community">Join the Community</a>
+            <a href="/community" class="btn-community">Join the Community</a>
           </div>
 
-          <a href="/apply/faq" class="cta-faq-link">Read the FAQ</a>
+          <a href="/accelerator#faq" class="cta-faq-link">Read the FAQ</a>
+        </div>
+      </div>
+    </section>
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+      <div class="container">
+        <div class="faq-list">
+          <div class="faq-item">
+            <h3>Why are you called "The Tech Bros"?</h3>
+            <p>It's a tongue-in-cheek name 😜 Our community of technical women love it, and that's who we're here for!</p>
+          </div>
+          <div class="faq-item">
+            <h3>Am I eligible for the accelerator programme?</h3>
+            <p>All-female founding teams where everyone has a STEM background are invited to apply to our accelerator.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Do I need a co-founder to apply?</h3>
+            <p>We don't do any co-founder matching on the programme. You can, however, apply as a solo founder - but we recommend applying in a team of two if possible.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Do I need to be working on my startup full-time?</h3>
+            <p>Yes, everyone accepted onto the accelerator must be working on their startup full-time.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Do I need to be based in a specific location to apply?</h3>
+            <p>No, we accept applications globally.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Do you take any equity?</h3>
+            <p>Not at this time.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -479,6 +510,50 @@ import Footer from '../../components/Footer.astro';
     .btn-community-cta {
       padding: 0.9rem 2rem;
       font-size: 1.05rem;
+    }
+  }
+
+  /* ── FAQ, moved from /apply/faq ── */
+  .faq-section {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 4rem 0;
+  }
+
+  .faq-section h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .faq-item:last-child {
+    border-bottom: none;
+  }
+
+  .faq-item h3 {
+    color: var(--color-text);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+  }
+
+  .faq-item p {
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    font-size: 1.05rem;
+  }
+
+  @media (max-width: 768px) {
+    .faq-item h3 {
+      font-size: 1.2rem;
     }
   }
 </style>

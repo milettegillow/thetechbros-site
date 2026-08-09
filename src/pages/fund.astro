@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Fund">
+  <Navigation />
+  <main>
+    <section class="fund-hero">
+      <div class="container">
+        <h1>fund</h1>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .fund-hero {
+    padding: 6rem 0 3rem;
+  }
+</style>

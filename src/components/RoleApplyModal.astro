@@ -405,7 +405,7 @@
       url.hash = currentHash;
     } else {
       // If no meaningful hash, preserve work-with-us if we're on the team page
-      if (window.location.pathname === '/team') {
+      if (window.location.pathname === '/about') {
         url.hash = '#work-with-us';
       } else {
         url.hash = '';
@@ -421,7 +421,7 @@
     const currentHash = window.location.hash;
     if (currentHash.startsWith('#role=')) {
       // If we're on the team page, restore work-with-us hash
-      if (window.location.pathname === '/team') {
+      if (window.location.pathname === '/about') {
         url.hash = '#work-with-us';
       } else {
         url.hash = '';
@@ -429,7 +429,7 @@
     } else if (currentHash && currentHash !== '#work-with-us') {
       // Preserve existing hash if it's not a role param
       url.hash = currentHash;
-    } else if (window.location.pathname === '/team' && !currentHash) {
+    } else if (window.location.pathname === '/about' && !currentHash) {
       // If on team page with no hash, add work-with-us
       url.hash = '#work-with-us';
     }
