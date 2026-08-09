@@ -10,41 +10,48 @@
     <div id="modal-form-container">
       <h2 id="modal-title">apply to join the community</h2>
       
-      <form id="apply-form" class="apply-form" action="" method="post">
+      <p class="form-legend">Fields marked <span class="required">*</span> are required.</p>
+
+      <form id="apply-form" class="apply-form" action="" method="post" novalidate>
         <div class="form-group">
           <label for="fullName">Full Name <span class="required">*</span></label>
-          <input type="text" id="fullName" name="fullName" required />
+          <input type="text" id="fullName" name="fullName" required aria-describedby="err-fullName" />
+          <span class="field-error" id="err-fullName" role="alert" aria-live="polite"></span>
         </div>
 
         <div class="form-group">
           <label for="email">Email <span class="required">*</span></label>
-          <input type="email" id="email" name="email" required />
+          <input type="email" id="email" name="email" required aria-describedby="err-email" />
+          <span class="field-error" id="err-email" role="alert" aria-live="polite"></span>
         </div>
 
         <div class="form-group">
           <label for="linkedinUrl">LinkedIn URL <span class="required">*</span></label>
-          <input type="url" id="linkedinUrl" name="linkedinUrl" placeholder="https://www.linkedin.com/in/yourname" required />
-          <span class="linkedin-error" id="linkedin-error" style="display:none;">Must begin with https://www.linkedin.com/in/</span>
+          <input type="url" id="linkedinUrl" name="linkedinUrl" placeholder="https://www.linkedin.com/in/yourname" required aria-describedby="err-linkedinUrl" />
+          <span class="field-error" id="err-linkedinUrl" role="alert" aria-live="polite"></span>
         </div>
 
         <div class="form-group">
-          <label for="personalWebsite">Personal Website</label>
-          <input type="url" id="personalWebsite" name="personalWebsite" placeholder="https://yourwebsite.com" />
+          <label for="personalWebsite">Personal Website <span class="required">*</span></label>
+          <input type="url" id="personalWebsite" name="personalWebsite" placeholder="https://yourwebsite.com" required aria-describedby="err-personalWebsite" />
+          <span class="field-error" id="err-personalWebsite" role="alert" aria-live="polite"></span>
         </div>
 
         <div class="form-group">
           <label for="phoneNumber">Phone Number <span class="required">*</span></label>
-          <input type="tel" id="phoneNumber" name="phoneNumber" required />
+          <input type="tel" id="phoneNumber" name="phoneNumber" required aria-describedby="err-phoneNumber" />
+          <span class="field-error" id="err-phoneNumber" role="alert" aria-live="polite"></span>
         </div>
 
         <div class="form-group">
-          <label for="location">Location</label>
-          <input type="text" id="location" name="location" placeholder="City, Country" />
+          <label for="location">Location <span class="required">*</span></label>
+          <input type="text" id="location" name="location" placeholder="City, Country" required aria-describedby="err-location" />
+          <span class="field-error" id="err-location" role="alert" aria-live="polite"></span>
         </div>
 
         <div class="form-group">
-          <label for="fields">Field(s) <span class="field-hint">(Select all that apply)</span></label>
-          <div class="checkbox-group">
+          <label for="fields">Field(s) <span class="required">*</span> <span class="field-hint">(Select all that apply)</span></label>
+          <div class="checkbox-group" role="group" aria-describedby="err-fields">
             <label class="checkbox-label">
               <input type="checkbox" name="fields" value="CS" />
               CS
@@ -86,22 +93,25 @@
               Medicine
             </label>
           </div>
+          <span class="field-error" id="err-fields" role="alert" aria-live="polite"></span>
         </div>
 
         <div class="form-group">
-          <label for="mostAdvancedDegree">Most Advanced Degree</label>
-          <select id="mostAdvancedDegree" name="mostAdvancedDegree">
+          <label for="mostAdvancedDegree">Most Advanced Degree <span class="required">*</span></label>
+          <select id="mostAdvancedDegree" name="mostAdvancedDegree" required aria-describedby="err-mostAdvancedDegree">
             <option value="">Select...</option>
             <option value="BSc">BSc</option>
             <option value="MSc">MSc</option>
             <option value="PhD">PhD</option>
           </select>
+          <span class="field-error" id="err-mostAdvancedDegree" role="alert" aria-live="polite"></span>
         </div>
 
         <div class="form-group">
-          <label for="whyTTB">Why TTB? <span class="char-count">(max 5000 characters)</span></label>
-          <textarea id="whyTTB" name="whyTTB" rows="5" maxlength="5000"></textarea>
+          <label for="whyTTB">Why TTB? <span class="required">*</span> <span class="char-count">(max 5000 characters)</span></label>
+          <textarea id="whyTTB" name="whyTTB" rows="5" maxlength="5000" required aria-describedby="err-whyTTB"></textarea>
           <span class="char-counter" id="char-counter">0 / 5000</span>
+          <span class="field-error" id="err-whyTTB" role="alert" aria-live="polite"></span>
         </div>
 
         <div class="form-group checkbox-field">
@@ -112,7 +122,7 @@
         </div>
 
         <div class="form-actions">
-          <button type="submit" class="btn btn-secondary" id="submit-btn">Submit Application</button>
+          <button type="submit" class="btn btn-secondary" id="submit-btn" disabled>Submit Application</button>
         </div>
       </form>
     </div>
@@ -146,21 +156,142 @@
   const whyTTBTextarea = document.getElementById('whyTTB');
   const charCounter = document.getElementById('char-counter');
 
-  const linkedinInput = document.getElementById('linkedinUrl') as HTMLInputElement;
-  const linkedinError = document.getElementById('linkedin-error');
+  const formEl0 = form as HTMLFormElement | null;
 
-  // LinkedIn URL inline validation
-  if (linkedinInput && linkedinError) {
-    linkedinInput.addEventListener('input', () => {
-      const val = linkedinInput.value.trim();
-      if (val && !val.startsWith('https://www.linkedin.com/in/')) {
-        linkedinError.style.display = 'block';
-        linkedinInput.style.borderColor = 'var(--color-primary)';
-      } else {
-        linkedinError.style.display = 'none';
-        linkedinInput.style.borderColor = '';
-      }
+  // ── Validation ────────────────────────────────────────────────────────────
+  // Every field is mandatory. The mailing-list opt-in is deliberately not:
+  // marketing consent has to be freely given, so it must stay a real choice.
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const LINKEDIN_RE = /^https:\/\/(www\.)?linkedin\.com\/in\/[^\/\s?#]+\/?$/i;
+  const URL_RE = /^https?:\/\/[^\s.]+\.[^\s]{2,}$/i;
+
+  type Rule = { label: string; validate: () => string | null };
+
+  function valueOf(id: string) {
+    const el = document.getElementById(id) as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null;
+    return (el?.value ?? '').trim();
+  }
+
+  function checkedFields() {
+    return formEl0 ? formEl0.querySelectorAll('input[name="fields"]:checked').length : 0;
+  }
+
+  const RULES: Record<string, Rule> = {
+    fullName: {
+      label: 'Full Name',
+      validate: () => (valueOf('fullName') ? null : 'Please enter your full name.'),
+    },
+    email: {
+      label: 'Email',
+      validate: () => {
+        const v = valueOf('email');
+        if (!v) return 'Please enter your email address.';
+        return EMAIL_RE.test(v) ? null : 'Please enter a valid email address.';
+      },
+    },
+    linkedinUrl: {
+      label: 'LinkedIn URL',
+      validate: () => {
+        const v = valueOf('linkedinUrl');
+        if (!v) return 'Please enter your LinkedIn URL.';
+        return LINKEDIN_RE.test(v)
+          ? null
+          : 'Enter a LinkedIn profile URL, e.g. https://www.linkedin.com/in/yourname';
+      },
+    },
+    personalWebsite: {
+      label: 'Personal Website',
+      validate: () => {
+        const v = valueOf('personalWebsite');
+        if (!v) return 'Please enter your personal website.';
+        return URL_RE.test(v) ? null : 'Please enter a valid URL, starting with https://';
+      },
+    },
+    phoneNumber: {
+      label: 'Phone Number',
+      validate: () => (valueOf('phoneNumber') ? null : 'Please enter your phone number.'),
+    },
+    location: {
+      label: 'Location',
+      validate: () => (valueOf('location') ? null : 'Please enter your location.'),
+    },
+    fields: {
+      label: 'Field(s)',
+      validate: () => (checkedFields() > 0 ? null : 'Please select at least one field.'),
+    },
+    mostAdvancedDegree: {
+      label: 'Most Advanced Degree',
+      validate: () => (valueOf('mostAdvancedDegree') ? null : 'Please select your most advanced degree.'),
+    },
+    whyTTB: {
+      label: 'Why TTB?',
+      validate: () => (valueOf('whyTTB') ? null : 'Please tell us why you want to join.'),
+    },
+  };
+
+  function showError(name: string, message: string | null) {
+    const slot = document.getElementById(`err-${name}`);
+    const field = document.getElementById(name);
+    if (slot) {
+      slot.textContent = message ?? '';
+      slot.style.display = message ? 'block' : 'none';
+    }
+    if (field) {
+      field.classList.toggle('has-error', Boolean(message));
+      field.setAttribute('aria-invalid', message ? 'true' : 'false');
+    }
+    if (name === 'fields') {
+      formEl0?.querySelector('.checkbox-group')?.classList.toggle('has-error', Boolean(message));
+    }
+  }
+
+  // Silent pass used to drive the submit button: no messages, just valid/invalid.
+  function isFormValid() {
+    return Object.values(RULES).every((rule) => rule.validate() === null);
+  }
+
+  function refreshSubmitState() {
+    const btn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+    if (btn) btn.disabled = !isFormValid();
+  }
+
+  // Full pass that paints every message — used on submit.
+  function validateAll() {
+    let firstInvalid: string | null = null;
+    for (const [name, rule] of Object.entries(RULES)) {
+      const message = rule.validate();
+      showError(name, message);
+      if (message && !firstInvalid) firstInvalid = name;
+    }
+    refreshSubmitState();
+    return firstInvalid;
+  }
+
+  function clearAllErrors() {
+    Object.keys(RULES).forEach((name) => showError(name, null));
+  }
+
+  // Validate a single field once the user has engaged with it, so messages
+  // appear as they go rather than only at the end.
+  if (formEl0) {
+    Object.keys(RULES).forEach((name) => {
+      const el = document.getElementById(name);
+      const targets: Element[] = el
+        ? [el]
+        : Array.from(formEl0.querySelectorAll('input[name="fields"]'));
+      targets.forEach((target) => {
+        const revalidate = () => showError(name, RULES[name].validate());
+        target.addEventListener('blur', revalidate);
+        target.addEventListener('change', revalidate);
+        target.addEventListener('input', () => {
+          // Clear a message as soon as the field becomes valid; don't nag mid-typing.
+          if (RULES[name].validate() === null) showError(name, null);
+          refreshSubmitState();
+        });
+      });
     });
+    formEl0.addEventListener('change', refreshSubmitState);
+    refreshSubmitState();
   }
 
   // Character counter for whyTTB
@@ -177,6 +308,8 @@
     if (modal) {
       modal.style.display = 'flex';
       document.body.style.overflow = 'hidden';
+      clearAllErrors();
+      refreshSubmitState();
       // Focus first input for accessibility
       const firstInput = (form as HTMLFormElement)?.querySelector('input') as HTMLInputElement;
       firstInput?.focus();
@@ -195,6 +328,8 @@
       successContainer.style.display = 'none';
       errorContainer.style.display = 'none';
       charCounter.textContent = '0 / 5000';
+      clearAllErrors();
+      refreshSubmitState();
     }
   }
 
@@ -237,7 +372,16 @@
     
     formEl.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
+
+      // Inline validation gates submission; nothing leaves the form until it passes.
+      const firstInvalid = validateAll();
+      if (firstInvalid) {
+        const el = document.getElementById(firstInvalid)
+          || formEl.querySelector('input[name="fields"]');
+        (el as HTMLElement | null)?.focus();
+        return;
+      }
+
       // Disable submit button
       submitBtnEl.disabled = true;
       submitBtnEl.textContent = 'Submitting...';
@@ -256,52 +400,17 @@
         addToMailingList: formData.get('addToMailingList') === 'true',
       };
 
-      // Required fields
-      const linkedinUrl = formData.get('linkedinUrl')?.toString().trim() || '';
-      if (!linkedinUrl) {
-        errorMessage.textContent = 'LinkedIn URL is required.';
-        formContainer.style.display = 'none';
-        errorContainer.style.display = 'block';
-        submitBtnEl.disabled = false;
-        submitBtnEl.textContent = 'Submit Application';
-        return;
-      }
-      if (!linkedinUrl.startsWith('https://www.linkedin.com/in/')) {
-        errorMessage.textContent = 'LinkedIn URL must begin with https://www.linkedin.com/in/';
-        formContainer.style.display = 'none';
-        errorContainer.style.display = 'block';
-        submitBtnEl.disabled = false;
-        submitBtnEl.textContent = 'Submit Application';
-        return;
-      }
-      body.linkedinUrl = linkedinUrl;
-
-      const phoneNumber = formData.get('phoneNumber')?.toString().trim() || '';
-      if (!phoneNumber) {
-        errorMessage.textContent = 'Phone number is required.';
-        formContainer.style.display = 'none';
-        errorContainer.style.display = 'block';
-        submitBtnEl.disabled = false;
-        submitBtnEl.textContent = 'Submit Application';
-        return;
-      }
-      body.phoneNumber = phoneNumber;
-
-      const personalWebsite = formData.get('personalWebsite')?.toString().trim();
-      if (personalWebsite) body.personalWebsite = personalWebsite;
-
-      const location = formData.get('location')?.toString().trim();
-      if (location) body.location = location;
-
-      const whyTTB = formData.get('whyTTB')?.toString().trim();
-      if (whyTTB) body.whyTTB = whyTTB;
-
-      const mostAdvancedDegree = formData.get('mostAdvancedDegree')?.toString().trim();
-      if (mostAdvancedDegree) body.mostAdvancedDegree = mostAdvancedDegree;
-
-      if (fields.length > 0) {
-        body.fields = fields;
-      }
+      // All of these are mandatory and already validated above.
+      // The API insists on the www. form, so normalise rather than bounce a
+      // URL the user reasonably typed without it.
+      body.linkedinUrl = (formData.get('linkedinUrl')?.toString().trim() || '')
+        .replace(/^https:\/\/linkedin\.com\//i, 'https://www.linkedin.com/');
+      body.phoneNumber = formData.get('phoneNumber')?.toString().trim() || '';
+      body.personalWebsite = formData.get('personalWebsite')?.toString().trim() || '';
+      body.location = formData.get('location')?.toString().trim() || '';
+      body.whyTTB = formData.get('whyTTB')?.toString().trim() || '';
+      body.mostAdvancedDegree = formData.get('mostAdvancedDegree')?.toString().trim() || '';
+      body.fields = fields;
 
       try {
         const response = await fetch('/api/community-apply', {
@@ -329,9 +438,8 @@
         formContainer.style.display = 'none';
         errorContainer.style.display = 'block';
       } finally {
-        // Re-enable submit button
-        submitBtnEl.disabled = false;
         submitBtnEl.textContent = 'Submit Application';
+        refreshSubmitState();
       }
     });
   }
@@ -497,10 +605,41 @@
     margin-top: 0.25rem;
   }
 
-  .linkedin-error {
+  /* Inline validation message, pink, sits directly under its field. */
+  .field-error {
+    display: none;
     color: var(--color-primary);
-    font-size: 0.8rem;
-    margin-top: 0.25rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-top: 0.35rem;
+  }
+
+  .apply-form input.has-error,
+  .apply-form textarea.has-error,
+  .apply-form select.has-error {
+    border-color: var(--color-primary);
+  }
+
+  .checkbox-group.has-error {
+    outline: 1px solid var(--color-primary);
+    outline-offset: 0.5rem;
+  }
+
+  .form-legend {
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  #submit-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  #submit-btn:disabled:hover {
+    background: transparent;
+    border-color: var(--color-white);
+    color: var(--color-white);
   }
 
   .form-actions {

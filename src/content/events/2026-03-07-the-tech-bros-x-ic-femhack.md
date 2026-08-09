@@ -14,7 +14,6 @@ sponsors:
   - "RS"
   - "Fivium"
   - "Goodwin"
-inKind:
   - "Imperial Enterprise Lab"
   - "Imperial Department of Chemical Engineering"
 communityPartners:

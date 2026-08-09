@@ -10,13 +10,13 @@ quotes:
   - "FUN!"
 sponsors:
   - "Goodwin"
-  - "Lovable"
+  - "ACM-W Asia Pacific"
+  - "ACM-W Student Chapter"
 inKind:
+  - "Lovable"
   - "StartupX"
 communityPartners:
   - "The Collective"
-  - "ACM-W Asia Pacific"
-  - "ACM-W Student Chapter"
   - "National University of Singapore"
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7445850171051012096"
 lumaUrl: "https://luma.com/dwzo4csv"
