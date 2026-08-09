@@ -76,7 +76,7 @@ const navLinks = [
   .nav-logo {
     font-family: var(--font-primary);
     font-size: 2rem;
-    font-weight: 400;
+    font-weight: var(--weight-heading);
     color: var(--color-primary);
     text-decoration: none;
     text-transform: lowercase;
@@ -116,11 +116,11 @@ const navLinks = [
   .nav-link {
     font-family: var(--font-primary);
     color: var(--color-text-muted);
-    font-weight: 500;
+    font-weight: 400;
     transition: color 0.2s ease;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    letter-spacing: 0.05em;
+    text-transform: lowercase;
+    font-size: 0.95rem;
+    letter-spacing: var(--tracking-nav);
     display: flex;
     align-items: center;
     gap: 0.25rem;
@@ -172,9 +172,9 @@ const navLinks = [
     padding: 0.75rem 1.5rem;
     color: var(--color-text-muted);
     font-weight: 400;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    letter-spacing: 0.05em;
+    text-transform: lowercase;
+    font-size: 0.95rem;
+    letter-spacing: var(--tracking-nav);
     transition: all 0.2s ease;
     text-decoration: none;
   }

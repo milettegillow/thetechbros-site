@@ -38,11 +38,53 @@ const borders = [
 
 const holoStops = [
   { token: '--holo-base', value: 'var(--holo-base)' },
-  { token: '--holo-centre', value: 'var(--holo-centre)' },
-  { token: '--holo-pink', value: 'var(--holo-pink)' },
   { token: '--holo-lilac', value: 'var(--holo-lilac)' },
-  { token: '--holo-mint', value: 'var(--holo-mint)' },
   { token: '--holo-blue', value: 'var(--holo-blue)' },
+  { token: '--holo-mint', value: 'var(--holo-mint)' },
+  { token: '--holo-peach', value: 'var(--holo-peach)' },
+  { token: '--holo-pink', value: 'var(--holo-pink)' },
+];
+
+const holoBloom = [
+  { token: '--holo-bloom', value: 'var(--holo-bloom)' },
+  { token: '--holo-bloom-mid', value: 'var(--holo-bloom-mid)' },
+  { token: '--holo-ray', value: 'var(--holo-ray)' },
+  { token: '--holo-break-lilac', value: 'var(--holo-break-lilac)' },
+  { token: '--holo-break-mint', value: 'var(--holo-break-mint)' },
+  { token: '--holo-break-pink', value: 'var(--holo-break-pink)' },
+];
+
+const buttonVariants = [
+  {
+    cls: 'btn btn-primary',
+    name: 'Primary',
+    note: 'Holographic foil, black bold text → inverts to solid black with white text and a 1px foil border',
+  },
+  {
+    cls: 'btn btn-secondary',
+    name: 'Secondary',
+    note: 'Solid #ef1f9f, black text → inverts to white background with black text',
+  },
+  {
+    cls: 'btn btn-tertiary',
+    name: 'Tertiary',
+    note: 'Transparent with a 1px white border, white text → fills solid white with black text',
+  },
+];
+
+const pairings = [
+  {
+    name: 'Primary + tertiary',
+    where: 'Home, Accelerator, Community',
+    filled: 'btn btn-primary',
+    filledLabel: 'Apply now',
+  },
+  {
+    name: 'Secondary + tertiary',
+    where: 'Fund',
+    filled: 'btn btn-secondary',
+    filledLabel: 'Apply now',
+  },
 ];
 
 const displayScale = [
@@ -171,11 +213,61 @@ const bodyScale = [
       <!-- ── Buttons ────────────────────────────────────────────────────── -->
       <section class="sg-section">
         <h2>Buttons</h2>
-        <p class="sg-note">Square corners, no glow, no lift.</p>
+        <p class="sg-note">
+          1rem / 2.25rem padding, weight 700 at <code>--text-button</code> with -0.02em tracking,
+          square corners, 80ms linear hover — a switch, not a fade. Listed in order of weight. The
+          right-hand column has the hover state forced on so both can be compared at rest.
+        </p>
+
+        <div class="sg-btn-table">
+          <p class="sg-token sg-btn-head">Variant</p>
+          <p class="sg-token sg-btn-head">Default</p>
+          <p class="sg-token sg-btn-head">Hover</p>
+
+          {buttonVariants.map((b) => (
+            <>
+              <div class="sg-btn-cell sg-btn-label">
+                <p class="sg-swatch-name">{b.name}</p>
+                <p class="sg-caption">{b.note}</p>
+              </div>
+              <div class="sg-btn-cell">
+                <button type="button" class={b.cls}>apply now</button>
+              </div>
+              <div class="sg-btn-cell">
+                <button type="button" class={`${b.cls} is-hover`}>apply now</button>
+              </div>
+            </>
+          ))}
+        </div>
+
+        <h3>Pairing rule</h3>
+        <p class="sg-note">
+          <strong>Never place primary and secondary side by side.</strong> A button group is one
+          filled variant — primary <em>or</em> secondary — plus tertiary. Only these two
+          combinations are approved.
+        </p>
+        <div class="sg-pairings">
+          {pairings.map((pair) => (
+            <div class="sg-pairing">
+              <p class="sg-swatch-name">{pair.name}</p>
+              <p class="sg-caption">{pair.where}</p>
+              <div class="btn-group sg-pairing-row">
+                <a href="#" class={pair.filled}>{pair.filledLabel}</a>
+                <a href="#" class="btn btn-tertiary">Learn more</a>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p class="sg-note sg-pairing-warning">
+          The Fund page uses secondary + tertiary only — no holographic anywhere on it.
+        </p>
+
+        <h3>Live</h3>
+        <p class="sg-note">Hover these to check the transition timing.</p>
         <div class="btn-group sg-btn-row">
-          <a href="#" class="btn">Primary</a>
+          <a href="#" class="btn btn-primary">Primary</a>
           <a href="#" class="btn btn-secondary">Secondary</a>
-          <button type="button" class="btn sg-btn-reset">Button element</button>
+          <a href="#" class="btn btn-tertiary">Tertiary</a>
         </div>
 
         <h3>Form controls</h3>
@@ -185,12 +277,35 @@ const bodyScale = [
         </div>
       </section>
 
+      <!-- ── Shape ──────────────────────────────────────────────────────── -->
+      <section class="sg-section">
+        <h2>Shape</h2>
+        <p class="sg-note">
+          <code>border-radius: 0</code> everywhere. Read live from
+          <code>getComputedStyle</code> below, not asserted.
+        </p>
+        <div class="sg-shape-row">
+          <div class="card sg-shape-card" data-radius-probe=".card">Card</div>
+          <button type="button" class="btn btn-primary" data-radius-probe=".btn-primary">Primary</button>
+          <button type="button" class="btn btn-secondary" data-radius-probe=".btn-secondary">Secondary</button>
+          <button type="button" class="btn btn-tertiary" data-radius-probe=".btn-tertiary">Tertiary</button>
+          <input type="text" value="Input" data-radius-probe="input" />
+        </div>
+        <ul class="sg-radius-report" id="radius-report"></ul>
+      </section>
+
       <!-- ── Holographic surface ────────────────────────────────────────── -->
       <section class="sg-section">
         <h2>Holographic surface</h2>
         <p class="sg-note">
-          A background fill for discrete blocks only — never a glow, never a text effect, never a
-          full-page background. Text on it is black, weight 700, tightly tracked.
+          Four stacked layers, top down: broad soft-edged <strong>rays</strong> from a
+          <code>repeating-conic-gradient</code>, a soft round <strong>bloom</strong> of converging
+          light, a faint off-axis <strong>breakup</strong> conic, and the <strong>base</strong>
+          conic sweeping five pastels cycled three times so each hue holds its own identity. The
+          rays and bloom are deliberately barely perceptible — they suggest internal structure
+          rather than draw it. No hard boundaries, no images. A background fill for discrete blocks
+          only — never a glow, never a text effect, never a full-page background. Text on it is
+          black, weight 700, tightly tracked.
         </p>
 
         <div class="holo sg-holo-block">
@@ -205,12 +320,39 @@ const bodyScale = [
           <div class="holo sg-holo-card">
             <p>holo card</p>
           </div>
-          <a href="#" class="holo sg-holo-button">apply now</a>
+          <a href="#" class="btn btn-primary">apply now</a>
         </div>
 
-        <h3>Gradient stops</h3>
+        <h3>Centre point</h3>
+        <p class="sg-note">
+          Set <code>--holo-centre-x</code> and <code>--holo-centre-y</code> on any element to move
+          where the light converges. Same surface, three centres.
+        </p>
+        <div class="sg-holo-row">
+          <div class="holo sg-holo-card"><p>55% / 45%</p></div>
+          <div class="holo sg-holo-card" style="--holo-centre-x: 20%; --holo-centre-y: 25%"><p>20% / 25%</p></div>
+          <div class="holo sg-holo-card" style="--holo-centre-x: 80%; --holo-centre-y: 75%"><p>80% / 75%</p></div>
+        </div>
+
+        <h3>Base conic stops</h3>
         <div class="sg-swatch-grid">
           {holoStops.map((c) => (
+            <div class="sg-swatch">
+              <div class="sg-chip" style={`background: ${c.value};`}></div>
+              <p class="sg-token">{c.token}</p>
+            </div>
+          ))}
+        </div>
+
+        <h3>Bloom, ray &amp; breakup stops</h3>
+        <p class="sg-note">
+          Shown over black — the ray stop carries 0.09 alpha and the breakup stops 0.2 alpha by
+          design, so they read faint here. The rays are drawn from
+          <code>--holo-ray-x / -y</code>, offset from the bloom on purpose: when both converge on
+          the same point the surface reads as a starburst rather than foil.
+        </p>
+        <div class="sg-swatch-grid">
+          {holoBloom.map((c) => (
             <div class="sg-swatch">
               <div class="sg-chip" style={`background: ${c.value};`}></div>
               <p class="sg-token">{c.token}</p>
@@ -359,12 +501,104 @@ const bodyScale = [
     align-items: center;
   }
 
-  .sg-btn-reset {
+  .sg-btn-table {
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) auto auto;
+    gap: 1.25rem 2rem;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+
+  .sg-btn-head {
+    margin-bottom: 0;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .sg-btn-cell {
+    display: flex;
+  }
+
+  .sg-btn-label {
+    flex-direction: column;
+  }
+
+  .sg-btn-label .sg-swatch-name {
+    margin-bottom: 0.25rem;
+  }
+
+  .sg-btn-table .btn {
     width: auto;
+  }
+
+  @media (max-width: 768px) {
+    .sg-btn-table {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .sg-btn-head {
+      display: none;
+    }
+
+    .sg-btn-label {
+      margin-top: 1.5rem;
+    }
   }
 
   .sg-form {
     max-width: 480px;
+  }
+
+  .sg-pairings {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .sg-pairing {
+    border-left: 1px solid var(--color-border);
+    padding-left: 1.5rem;
+  }
+
+  .sg-pairing-row {
+    margin-top: 1rem;
+  }
+
+  .sg-pairing-warning {
+    color: var(--color-primary);
+    margin-bottom: 0;
+  }
+
+  .sg-shape-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .sg-shape-card {
+    padding: 1.25rem 2rem;
+  }
+
+  .sg-shape-row input {
+    width: auto;
+    margin-bottom: 0;
+  }
+
+  .sg-radius-report {
+    list-style: none;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .sg-radius-report li {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
   }
 
   /* ── holo ── */
@@ -402,14 +636,6 @@ const bodyScale = [
     margin-bottom: 0;
   }
 
-  .sg-holo-button {
-    display: inline-block;
-    padding: 1rem 2rem;
-    text-transform: uppercase;
-    font-size: var(--text-small);
-    letter-spacing: var(--tracking-label);
-  }
-
   code {
     color: var(--color-text);
     font-size: 0.95em;
@@ -421,3 +647,16 @@ const bodyScale = [
     }
   }
 </style>
+
+<script>
+  // Live confirmation that nothing anywhere is rounded.
+  const report = document.getElementById('radius-report');
+  if (report) {
+    document.querySelectorAll('[data-radius-probe]').forEach((el) => {
+      const radius = getComputedStyle(el).borderRadius;
+      const li = document.createElement('li');
+      li.textContent = `${el.getAttribute('data-radius-probe')} → border-radius: ${radius}`;
+      report.appendChild(li);
+    });
+  }
+</script>

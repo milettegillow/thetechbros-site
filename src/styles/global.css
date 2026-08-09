@@ -36,13 +36,70 @@
 
   --color-overlay: rgba(0, 0, 0, 0.9);
 
-  /* ── Holographic surface stops ────────────────────────────────────────── */
-  --holo-base: #f7f4fb;
-  --holo-centre: rgba(255, 255, 255, 0.98);
-  --holo-pink: rgba(255, 198, 233, 0.95);
-  --holo-lilac: rgba(208, 197, 255, 0.9);
-  --holo-mint: rgba(180, 241, 214, 0.88);
-  --holo-blue: rgba(186, 222, 255, 0.9);
+  /* ── Holographic foil ─────────────────────────────────────────────────── */
+  /* Pastel foil, not a rainbow — every stop stays light and desaturated.
+     The base conic cycles these three times so each hue holds its own
+     identity instead of dissolving into its neighbour. */
+  --holo-base: #f3f0f9;
+  --holo-lilac: #ded0ff;
+  --holo-blue: #cce4ff;
+  --holo-mint: #c6f2da;
+  --holo-peach: #ffe0c9;
+  --holo-pink: #ffd2ec;
+
+  /* The hot core — light converging through the material, not a shape sitting
+     on top of it. Drawn as a true circle so it stays round on any block. The
+     innermost stop stays near-opaque for only the first few percent: the conic
+     converges to a mathematical point, and without that the centre reads as a
+     hard pinwheel. Everything past it is a long, soft tail. */
+  --holo-bloom: rgba(255, 255, 255, 0.85);
+  --holo-bloom-mid: rgba(255, 255, 255, 0.22);
+  --holo-bloom-fade: rgba(255, 255, 255, 0);
+  --holo-bloom-core: 8%;
+  --holo-bloom-size: 32%;
+
+  /* Rays — broad, soft-edged spokes. Barely perceptible by design: they should
+     suggest internal structure, not draw lines. */
+  --holo-ray: rgba(255, 255, 255, 0.09);
+  --holo-ray-fade: rgba(255, 255, 255, 0);
+  --holo-ray-width: 10deg;
+  --holo-ray-gap: 20deg;
+  --holo-ray-from: 12deg;
+  /* Deliberately offset from the bloom — when the rays converge on the same
+     point as the conic and the highlight, the result reads as a starburst. */
+  --holo-ray-offset: 9%;
+  --holo-ray-x: calc(var(--holo-centre-x) - var(--holo-ray-offset));
+  --holo-ray-y: calc(var(--holo-centre-y) + var(--holo-ray-offset));
+
+  /* Breakup sweep — a second, larger conic at a different angle, faint enough
+     to break the regularity without veiling the layers beneath it. */
+  --holo-break-lilac: rgba(214, 199, 255, 0.2);
+  --holo-break-mint: rgba(198, 240, 220, 0.2);
+  --holo-break-pink: rgba(255, 214, 236, 0.2);
+  --holo-break-peach: rgba(255, 226, 200, 0.2);
+
+  /* Geometry — the centre point the foil sweeps around. */
+  --holo-centre-x: 55%;
+  --holo-centre-y: 45%;
+  --holo-sweep-from: 200deg;
+  --holo-break-x: 22%;
+  --holo-break-y: 82%;
+  --holo-break-from: 130deg;
+
+  /* Single-image version of the sweep, for 1px foil borders. */
+  --holo-border-image: conic-gradient(
+    from var(--holo-sweep-from),
+    var(--holo-lilac) 0deg,
+    var(--holo-blue) 45deg,
+    var(--holo-mint) 90deg,
+    var(--holo-peach) 135deg,
+    var(--holo-pink) 180deg,
+    var(--holo-lilac) 225deg,
+    var(--holo-blue) 270deg,
+    var(--holo-mint) 315deg,
+    var(--holo-lilac) 360deg
+  );
+
   /* Text on a holographic surface is always black. */
   --color-on-holo: var(--color-black);
 
@@ -57,6 +114,7 @@
   --tracking-heading: -0.04em;
   --tracking-subheading: -0.025em;
   --tracking-wordmark: -0.06em;
+  --tracking-nav: var(--tracking-wordmark);
   --tracking-holo: -0.03em;
   --tracking-body: 0;
   --tracking-label: 0.08em;
@@ -72,6 +130,13 @@
   --text-h3: clamp(1.375rem, 2.6vw, 1.875rem);
   --text-h4: clamp(1.125rem, 2vw, 1.375rem);
 
+  /* Buttons */
+  --text-button: 1.125rem;
+  --weight-button: 700;
+  --tracking-button: -0.02em;
+  --btn-padding-y: 1rem;
+  --btn-padding-x: 2.25rem;
+
   /* Body scale */
   --text-lead: clamp(1.125rem, 1.6vw, 1.3125rem);
   --text-body: 1.0625rem;
@@ -83,6 +148,8 @@
 
   /* ── Motion ───────────────────────────────────────────────────────────── */
   --transition: 0.2s ease;
+  /* Buttons resolve fast and decisively — no soft fades. */
+  --transition-btn: 80ms linear;
 }
 
 /* ==========================================================================
@@ -210,32 +277,74 @@ a:hover {
 /* ==========================================================================
    Holographic surface
 
+   Pastel foil built from three stacked layers, in paint order (top first):
+     1. a faint, larger conic at a different angle, to break up the regularity
+     2. a tight white bloom at the centre point — the hot core
+     3. the base conic, sweeping colour AROUND the centre point
+
    A background fill for discrete blocks only. Never a glow, never a text
    effect, never a full-page background — the page background stays solid
    black. Apply to any block-level element.
    ========================================================================== */
 
-.holo {
-  background-color: var(--holo-base);
-  /* First layer paints on top: the bright near-white centre point. */
-  background-image:
-    radial-gradient(42% 58% at 50% 44%, var(--holo-centre) 0%, rgba(255, 255, 255, 0.5) 45%, rgba(255, 255, 255, 0) 78%),
-    radial-gradient(78% 120% at 20% 16%, var(--holo-pink) 0%, rgba(255, 198, 233, 0) 62%),
-    radial-gradient(72% 112% at 84% 10%, var(--holo-lilac) 0%, rgba(208, 197, 255, 0) 60%),
-    radial-gradient(86% 124% at 90% 88%, var(--holo-mint) 0%, rgba(180, 241, 214, 0) 62%),
-    radial-gradient(82% 122% at 10% 94%, var(--holo-blue) 0%, rgba(186, 222, 255, 0) 60%);
-  color: var(--color-on-holo);
-}
-
-/* Text on a holographic surface: black, bold, tightly tracked. */
 .holo,
-.holo * {
+.btn.btn-primary {
+  background-color: var(--holo-base);
+  /* Paint order, top layer first:
+       1. rays      — broad soft spokes, felt more than seen
+       2. bloom     — a soft round core of converging light
+       3. breakup   — a faint larger conic, off-axis, to break the regularity
+       4. base      — the pastel sweep, cycled three times so hues stay distinct */
+  background-image:
+    repeating-conic-gradient(
+      from var(--holo-ray-from) at var(--holo-ray-x) var(--holo-ray-y),
+      var(--holo-ray-fade) 0deg,
+      var(--holo-ray) var(--holo-ray-width),
+      var(--holo-ray-fade) var(--holo-ray-gap)
+    ),
+    radial-gradient(
+      circle at var(--holo-centre-x) var(--holo-centre-y),
+      var(--holo-bloom) 0%,
+      var(--holo-bloom-mid) var(--holo-bloom-core),
+      var(--holo-bloom-fade) var(--holo-bloom-size)
+    ),
+    conic-gradient(
+      from var(--holo-break-from) at var(--holo-break-x) var(--holo-break-y),
+      var(--holo-break-lilac) 0deg,
+      var(--holo-break-mint) 95deg,
+      var(--holo-break-pink) 180deg,
+      var(--holo-break-peach) 275deg,
+      var(--holo-break-lilac) 360deg
+    ),
+    conic-gradient(
+      from var(--holo-sweep-from) at var(--holo-centre-x) var(--holo-centre-y),
+      var(--holo-lilac) 0deg,
+      var(--holo-blue) 24deg,
+      var(--holo-mint) 48deg,
+      var(--holo-peach) 72deg,
+      var(--holo-pink) 96deg,
+      var(--holo-lilac) 120deg,
+      var(--holo-blue) 144deg,
+      var(--holo-mint) 168deg,
+      var(--holo-peach) 192deg,
+      var(--holo-pink) 216deg,
+      var(--holo-lilac) 240deg,
+      var(--holo-blue) 264deg,
+      var(--holo-mint) 288deg,
+      var(--holo-peach) 312deg,
+      var(--holo-pink) 336deg,
+      var(--holo-lilac) 360deg
+    );
   color: var(--color-on-holo);
 }
 
-.holo a:hover,
-.holo a:focus {
-  color: var(--color-on-holo);
+/* Text on a holographic surface: black, bold, tightly tracked. Enforced,
+   because page-level heading and link rules would otherwise out-specify this
+   and put white or pink text on a pale surface. */
+.holo,
+.holo *,
+.btn.btn-primary {
+  color: var(--color-on-holo) !important;
 }
 
 .holo h1,
@@ -248,7 +357,8 @@ a:hover {
 .holo li,
 .holo a,
 .holo span,
-.holo strong {
+.holo strong,
+.btn.btn-primary {
   font-weight: var(--weight-holo);
   letter-spacing: var(--tracking-holo);
 }
@@ -273,36 +383,93 @@ section {
 
 /* ==========================================================================
    Buttons
+
+   Three variants, in order of weight:
+     .btn-primary    holographic foil, black bold text
+     .btn-secondary  solid pink, black text
+     .btn-tertiary   transparent, 1px white border, white text
+
+   PAIRING RULE: never put primary and secondary side by side. A button group
+   is ONE filled variant (primary OR secondary) plus tertiary.
+
+   `.btn` alone falls back to the tertiary appearance so a missing variant
+   class degrades to a visible button rather than an invisible one.
    ========================================================================== */
 
 .btn {
   display: inline-block;
-  padding: 1rem 2rem;
-  background: var(--color-primary);
-  border: 1px solid var(--color-primary);
-  color: var(--color-black);
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  background: transparent;
+  border: 1px solid var(--color-white);
+  color: var(--color-white);
   font-family: var(--font-primary);
-  font-size: var(--text-small);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
+  font-size: var(--text-button);
+  font-weight: var(--weight-button);
+  line-height: 1.2;
+  letter-spacing: var(--tracking-button);
+  text-align: center;
+  text-decoration: none;
   cursor: pointer;
-  transition: background var(--transition), border-color var(--transition), color var(--transition);
+  transition:
+    background-color var(--transition-btn),
+    border-color var(--transition-btn),
+    color var(--transition-btn);
 }
 
-.btn:hover {
-  background: var(--color-primary-hover);
-  border-color: var(--color-primary-hover);
+/* `.is-hover` forces the hover state so the styleguide can show both at rest. */
+.btn:hover,
+.btn:focus-visible,
+.btn.is-hover {
+  background: var(--color-white);
+  border-color: var(--color-white);
   color: var(--color-black);
 }
 
-.btn-secondary {
+/* ── Primary: holographic foil. Surface comes from the .holo rule above.
+      On hover it inverts to solid black with white text, keeping a 1px
+      foil border. ── */
+.btn.btn-primary {
+  --holo-centre-x: 28%;
+  --holo-centre-y: 58%;
+  border: 1px solid transparent;
+}
+
+.btn.btn-primary:hover,
+.btn.btn-primary:focus-visible,
+.btn.btn-primary.is-hover {
+  background-color: var(--color-black);
+  background-image: none;
+  color: var(--color-white) !important;
+  border-color: transparent;
+  border-image-source: var(--holo-border-image);
+  border-image-slice: 1;
+}
+
+/* ── Secondary: solid pink, inverts to white. ── */
+.btn.btn-secondary {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-black);
+}
+
+.btn.btn-secondary:hover,
+.btn.btn-secondary:focus-visible,
+.btn.btn-secondary.is-hover {
+  background: var(--color-white);
+  border-color: var(--color-white);
+  color: var(--color-black);
+}
+
+/* ── Tertiary: transparent hairline, fills solid white. Same as the base. ── */
+.btn.btn-tertiary {
   background: transparent;
   border-color: var(--color-white);
   color: var(--color-white);
 }
 
-.btn-secondary:hover {
+.btn.btn-tertiary:hover,
+.btn.btn-tertiary:focus-visible,
+.btn.btn-tertiary.is-hover {
   background: var(--color-white);
   border-color: var(--color-white);
   color: var(--color-black);

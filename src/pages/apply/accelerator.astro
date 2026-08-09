@@ -106,7 +106,7 @@ import Footer from '../../components/Footer.astro';
           <div class="spotlight-content">
             <h2>spotlight: neurotype.uk</h2>
             <p>Building AI-powered tools to eliminate waiting lists for neurodiversity assessment professionals. Founded by a senior clinical psychologist with a Ph.D. in neuroscience from Oxford and ML engineer with deep domain expertise in AI for medical applications. They entered the programme with an early-stage concept and left with an MVP, and have since launched 4 pilots, secured 8 Letters of Intent, received Innovate UK funding (which has a less than 2% success rate); they now have a pipeline worth over £20 million.</p>
-            <a href="https://neurotype.uk" target="_blank" class="btn btn-secondary">Learn More</a>
+            <a href="https://neurotype.uk" target="_blank" class="btn btn-tertiary">Learn More</a>
           </div>
         </div>
 
@@ -123,7 +123,7 @@ import Footer from '../../components/Footer.astro';
           <p class="cta-details">July&ndash;August 2026 &middot; Late application deadline: Sunday 17th May</p>
 
           <div class="cta-button-wrap">
-            <button type="button" class="btn btn-apply-cohort" id="open-accelerator-apply" onclick="window.openAcceleratorModal && window.openAcceleratorModal()">Apply now</button>
+            <button type="button" class="btn btn-primary btn-apply-cohort" id="open-accelerator-apply" onclick="window.openAcceleratorModal && window.openAcceleratorModal()">Apply now</button>
           </div>
         </div>
       </div>
@@ -137,7 +137,7 @@ import Footer from '../../components/Footer.astro';
           <p class="cta-meantime">Applications for Cohort 3 will open in 2027.</p>
 
           <div class="cta-button-wrap">
-            <a href="/apply/join-community" class="btn btn-community-cta">Join our community</a>
+            <a href="/apply/join-community" class="btn btn-tertiary btn-community-cta">Join our community</a>
           </div>
         </div>
       </div>
@@ -440,45 +440,12 @@ import Footer from '../../components/Footer.astro';
   }
 
 
-  .btn-apply-cohort {
-    display: inline-block;
-    padding: 1.1rem 3rem;
-    background: var(--color-primary);
-    color: var(--color-black);
-    border: none;
-    border-radius: 0;
-    font-size: 1.3rem;
-    font-weight: 700;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    transition: all 0.2s;
-  }
-
-  .btn-apply-cohort:hover {
-    background: var(--color-primary-hover);
-    transform: translateY(-1px);
-  }
-
+  /* Colour and hover come from .btn-primary / .btn-tertiary; these only
+     carry the larger CTA sizing. */
+  .btn-apply-cohort,
   .btn-community-cta {
-    display: inline-block;
     padding: 1.1rem 3rem;
-    background: transparent;
-    border: 1px solid var(--color-white);
-    color: var(--color-white);
-    border-radius: 0;
     font-size: 1.3rem;
-    font-weight: 700;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    transition: all 0.2s;
-    text-decoration: none;
-  }
-
-  .btn-community-cta:hover {
-    background: var(--color-white);
-    color: var(--color-black);
   }
 
   @media (max-width: 768px) {
