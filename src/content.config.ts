@@ -27,7 +27,7 @@ const events = defineCollection({
     lumaUrl: z.string().optional(),
     // For events listed somewhere other than Luma (a university or venue page).
     eventUrl: z.string().optional(),
-    // Filename only; resolved against /about/events/ at render time.
+    // Filename only; resolved against /community/events/ at render time.
     photo: z.string().optional(),
     sponsors: z.array(z.string()).optional(),
     inKind: z.array(z.string()).optional(),

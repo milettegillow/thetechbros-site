@@ -13,5 +13,5 @@ inKind:
 rating: 5.0
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7364693021755346946/"
 lumaUrl: "https://luma.com/a69trbm0"
-photo: "2025-8-18.jpeg"
+photo: "2025-8-17.jpeg"
 ---
