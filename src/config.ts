@@ -41,7 +41,7 @@ export interface Publication {
 export const AS_SEEN_IN: Publication[] = [
   { name: 'Sifted', logo: '/press/logos/sifted.png', height: 24 },
   { name: 'British Business Bank', logo: '/press/logos/british-business-bank.svg', height: 34 },
-  { name: 'The Times', logo: '/press/logos/the-times.jpg', height: 22 },
+  { name: 'The Times', logo: '/press/logos/the-times.png', height: 22 },
   { name: 'UKTN', logo: '/press/logos/uktn.svg', height: 44 },
   { name: 'Tech Funding News', logo: '/press/logos/tech-funding-news.png', height: 30 },
 ];
