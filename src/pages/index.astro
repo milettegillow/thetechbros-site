@@ -98,16 +98,13 @@ const marquee = [...partnerLogos, ...partnerLogos];
           fetchpriority="high"
           loading="eager"
           decoding="async"
-          width="1920"
-          height="1080"
+          width="6000"
+          height="3212"
         />
         <div class="hero-scrim"></div>
         <div class="container hero-content">
           <h1>backing the next generation of female tech <span class="accent">billionaires</span></h1>
-          <p class="hero-line">
-            the world's first all-female, all-technical accelerator,<br class="hero-line-break" />
-            and the only fund backing all-female, all-technical teams.
-          </p>
+          <p class="hero-line">the world's first all-female, all-technical accelerator</p>
           <div class="btn-group">
             <a href="/fund" class="btn btn-primary">the fund</a>
             <a href="/accelerator" class="btn btn-tertiary">the accelerator</a>
@@ -228,14 +225,16 @@ const marquee = [...partnerLogos, ...partnerLogos];
     padding: 0;
   }
 
-  /* Height follows the photograph's own 16:9 (56.25vw), capped so it can't eat
-     a short screen. Expressed as a height rather than `aspect-ratio`, because
-     aspect-ratio under a max-height makes Chrome shrink the *width* to keep the
-     ratio — which would letterbox the hero instead of running it full-bleed. */
+  /* hero.jpg is 6000x3212, so its own height is 53.533vw; 48.18vw is 90% of
+     that, giving a frame that shows the bottom nine tenths and loses only the
+     sky. Capped so it can't eat a short screen. Expressed as a height rather
+     than `aspect-ratio`, because aspect-ratio under a max-height makes Chrome
+     shrink the *width* to keep the ratio — which would letterbox the hero
+     instead of running it full-bleed. */
   .hero-media {
     position: relative;
     width: 100%;
-    height: min(56.25vw, 90vh);
+    height: min(48.18vw, 90vh);
     min-height: 34rem;
     display: flex;
     align-items: flex-end;
@@ -249,8 +248,9 @@ const marquee = [...partnerLogos, ...partnerLogos];
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* Any residual crop comes off the sky, not the table and laptops. */
-    object-position: center 62%;
+    /* Anchored to the bottom, so the crop is taken entirely off the sky and
+       treetops and the table, laptops and people sit higher in view. */
+    object-position: center bottom;
   }
 
   /* Three washes. The bottom and left ones stay light — they only set the
@@ -307,7 +307,6 @@ const marquee = [...partnerLogos, ...partnerLogos];
   .hero-line {
     font-size: var(--text-lead);
     color: var(--color-text);
-    /* Wide enough that neither hand-broken line wraps again at desktop. */
     max-width: 64ch;
     margin-bottom: 0;
   }
@@ -591,9 +590,6 @@ const marquee = [...partnerLogos, ...partnerLogos];
       padding-bottom: 2.5rem;
     }
 
-    .hero-line-break {
-      display: none;
-    }
 
     .home section.numbers {
       padding-top: 1.5rem;
