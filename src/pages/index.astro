@@ -4,8 +4,9 @@ import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import AsSeenIn from '../components/AsSeenIn.astro';
 import { getCollection } from 'astro:content';
+import { getEventStats } from '../lib/eventStats';
 
-const events = await getCollection('events');
+const eventStats = getEventStats(await getCollection('events'));
 
 const routes = [
   {
@@ -21,29 +22,31 @@ const routes = [
   {
     label: 'community',
     href: '/community',
-    body: '38 events, 10 cities, 1,500+ technical women.',
+    body: `${eventStats.eventCount} events, ${eventStats.cityCount} cities, 1,500+ technical women.`,
   },
 ];
 
 /**
- * Event and city counts come from the events collection so they can't drift.
- *
- * The city count is the exception: the collection currently yields 12 distinct
- * city/country pairs, but the agreed public figure is 10, so it stays fixed
- * until the two are reconciled.
+ * Every figure here that can come from the events collection does. Only the
+ * two that can't — people hosted and follower count — are written in.
  *
  * `indent` is an optical correction — a leading "1" carries ~0.087em of left
  * side bearing and a "3" ~0.029em, so the number's ink is nudged left to sit
  * where its label's first letter starts. In em so it tracks the clamped size.
  */
-const CITY_COUNT = 10;
+const LEADING_DIGIT_INDENT: Record<string, string> = {
+  '1': '0.087em',
+  '3': '0.029em',
+};
+
+const indentFor = (value: string) => LEADING_DIGIT_INDENT[value[0]] ?? '0em';
 
 const numbers = [
-  { value: String(events.length), label: 'events', indent: '0.029em' },
-  { value: String(CITY_COUNT), label: 'cities', indent: '0.087em' },
-  { value: '1,500+', label: 'technical women hosted in person', indent: '0.087em' },
-  { value: '10,500+', label: 'followers', indent: '0.087em' },
-];
+  { value: String(eventStats.eventCount), label: 'events' },
+  { value: String(eventStats.cityCount), label: 'cities' },
+  { value: '1,500+', label: 'technical women hosted in person' },
+  { value: '10,500+', label: 'followers' },
+].map((n) => ({ ...n, indent: indentFor(n.value) }));
 
 // Amplitude removed at the client's request.
 const partnerLogos = [

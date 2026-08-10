@@ -1,0 +1,39 @@
+import type { CollectionEntry } from 'astro:content';
+
+/**
+ * Single derivation of every figure that comes out of the events collection.
+ *
+ * Pages import this rather than counting for themselves, so the numbers — and
+ * the definition behind each number — stay identical everywhere. Anything a
+ * page shows that isn't in here (follower counts, cohort figures, community
+ * reach) is genuinely not derivable from events and stays where it is.
+ */
+export interface EventStats {
+  /** Total events in the collection. */
+  eventCount: number;
+  /** Distinct "City, Country" pairs — two cities of the same name in different countries count twice. */
+  cityCount: number;
+  /** Distinct countries. */
+  countryCount: number;
+  /** Distinct organisations across sponsors, in-kind and community partners, deduped across all three. */
+  organisationCount: number;
+}
+
+export function getEventStats(events: CollectionEntry<'events'>[]): EventStats {
+  const cities = new Set(events.map((e) => `${e.data.city}, ${e.data.country}`));
+  const countries = new Set(events.map((e) => e.data.country));
+  const organisations = new Set(
+    events.flatMap((e) => [
+      ...(e.data.sponsors ?? []),
+      ...(e.data.inKind ?? []),
+      ...(e.data.communityPartners ?? []),
+    ])
+  );
+
+  return {
+    eventCount: events.length,
+    cityCount: cities.size,
+    countryCount: countries.size,
+    organisationCount: organisations.size,
+  };
+}

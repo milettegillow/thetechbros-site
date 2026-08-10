@@ -6,6 +6,7 @@ import FormModal from '../components/FormModal.astro';
 import NewsletterSignup from '../components/NewsletterSignup.astro';
 import { getCollection } from 'astro:content';
 import { COMMUNITY_LEADS as leads } from '../config';
+import { getEventStats } from '../lib/eventStats';
 
 // Helper function to capitalize first letter
 function capitalize(str: string): string {
@@ -104,21 +105,13 @@ function orgTags(data: (typeof events)[number]['data']) {
 }
 
 // ── Counters: every value derived, nothing hardcoded ──
-const uniqueCities = new Set(events.map((e) => `${e.data.city}, ${e.data.country}`));
-const uniqueCountries = new Set(events.map((e) => e.data.country));
-const uniqueOrgs = new Set(
-  events.flatMap((e) => [
-    ...(e.data.sponsors ?? []),
-    ...(e.data.inKind ?? []),
-    ...(e.data.communityPartners ?? []),
-  ])
-);
+const eventStats = getEventStats(events);
 
 const counters = [
-  { value: events.length, label: events.length === 1 ? 'event' : 'events' },
-  { value: uniqueCities.size, label: uniqueCities.size === 1 ? 'city' : 'cities' },
-  { value: uniqueCountries.size, label: uniqueCountries.size === 1 ? 'country' : 'countries' },
-  { value: uniqueOrgs.size, label: 'partners & sponsors' },
+  { value: eventStats.eventCount, label: eventStats.eventCount === 1 ? 'event' : 'events' },
+  { value: eventStats.cityCount, label: eventStats.cityCount === 1 ? 'city' : 'cities' },
+  { value: eventStats.countryCount, label: eventStats.countryCount === 1 ? 'country' : 'countries' },
+  { value: eventStats.organisationCount, label: 'partners & sponsors' },
 ];
 
 // ── Filter options, also derived ──

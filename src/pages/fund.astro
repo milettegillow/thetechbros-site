@@ -2,7 +2,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import { getCollection } from 'astro:content';
 import { PRESS_LINKS } from '../config';
+import { getEventStats } from '../lib/eventStats';
+
+const eventStats = getEventStats(await getCollection('events'));
 
 const marketStats = [
   {
@@ -24,7 +28,10 @@ const marketStats = [
 ];
 
 const pipeline = [
-  { figure: '38', label: 'events across 10 cities and 4 countries' },
+  {
+    figure: String(eventStats.eventCount),
+    label: `events across ${eventStats.cityCount} cities and ${eventStats.countryCount} countries`,
+  },
   { figure: '1,500+', label: 'technical women hosted in person' },
   { figure: '500+', label: 'applications across two cohorts, all reached organically' },
   { figure: '40', label: 'founders selected' },
