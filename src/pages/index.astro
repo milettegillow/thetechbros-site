@@ -359,14 +359,21 @@ const marquee = [...partnerLogos, ...partnerLogos];
   }
 
   /* ── 4. The numbers ── */
+  /* Reads as one block with the banner above it: no rule at the top (the
+     holographic band is the divider) and only a short gap under it. The rule
+     and spacing below the row are unchanged. Selector out-specifies
+     `.home section` above, which would otherwise reimpose 5rem. */
+  .home section.numbers {
+    padding-top: 2rem;
+  }
+
   .number-row {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 2rem 3rem;
-    border-top: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
-    padding: 3rem 0;
+    padding: 0 0 3rem;
   }
 
   .number-block {
@@ -586,6 +593,10 @@ const marquee = [...partnerLogos, ...partnerLogos];
 
     .hero-line-break {
       display: none;
+    }
+
+    .home section.numbers {
+      padding-top: 1.5rem;
     }
 
     .number-row {
