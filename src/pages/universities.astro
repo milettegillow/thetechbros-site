@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Navigation from '../../components/Navigation.astro';
-import Footer from '../../components/Footer.astro';
-import ContactButton from '../../components/ContactButton.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import ContactButton from '../components/ContactButton.astro';
 ---
 
 <BaseLayout
@@ -11,7 +11,7 @@ import ContactButton from '../../components/ContactButton.astro';
 >
   <Navigation />
   <main>
-    <!-- universities, moved from /partner/universities -->
+    <!-- universities -->
     <section class="partner-group" id="universities">
       <div class="container">
         <h1 class="partner-group-title">partner with us: universities</h1>
@@ -163,7 +163,7 @@ import ContactButton from '../../components/ContactButton.astro';
     color: var(--color-primary-hover);
   }
 
-  /* ── from /partner/universities ── */
+  /* ── universities ── */
 .universities-partner {
     padding: 4rem 0;
     background: rgba(0, 0, 0, 0.2);
