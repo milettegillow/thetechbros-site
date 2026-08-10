@@ -2,23 +2,101 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import AsSeenIn from '../components/AsSeenIn.astro';
+import { getCollection } from 'astro:content';
+
+const events = await getCollection('events');
+
+const routes = [
+  {
+    label: 'fund',
+    href: '/fund',
+    body: 'First cheques into all-female, all-technical teams at pre-seed. Cornerstone-backed by the British Business Bank.',
+  },
+  {
+    label: 'accelerator',
+    href: '/accelerator',
+    body: 'Six weeks, twenty founders, 7.4% acceptance rate.',
+  },
+  {
+    label: 'community',
+    href: '/community',
+    body: '38 events, 10 cities, 1,500+ technical women.',
+  },
+];
+
+/**
+ * Event and city counts come from the events collection so they can't drift.
+ *
+ * The city count is the exception: the collection currently yields 12 distinct
+ * city/country pairs, but the agreed public figure is 10, so it stays fixed
+ * until the two are reconciled.
+ *
+ * `indent` is an optical correction — a leading "1" carries ~0.087em of left
+ * side bearing and a "3" ~0.029em, so the number's ink is nudged left to sit
+ * where its label's first letter starts. In em so it tracks the clamped size.
+ */
+const CITY_COUNT = 10;
+
+const numbers = [
+  { value: String(events.length), label: 'events', indent: '0.029em' },
+  { value: String(CITY_COUNT), label: 'cities', indent: '0.087em' },
+  { value: '1,500+', label: 'technical women hosted in person', indent: '0.087em' },
+  { value: '10,500+', label: 'followers', indent: '0.087em' },
+];
+
+// Amplitude removed at the client's request.
+const partnerLogos = [
+  { file: 'nfx.png', name: 'NFX' },
+  { file: 'notion.png', name: 'Notion' },
+  { file: 'nvidia.png', name: 'NVIDIA' },
+  { file: 'google_cloud.png', name: 'Google Cloud' },
+  { file: 'aws.png', name: 'AWS' },
+  { file: 'innovate-uk.png', name: 'Innovate UK' },
+  { file: 'aria.png', name: 'ARIA' },
+  { file: 'angellist.png', name: 'AngelList' },
+  { file: 'vercel.png', name: 'Vercel' },
+  { file: 'ada.png', name: 'Ada' },
+  { file: 'cursor.png', name: 'Cursor' },
+  { file: 'elevenlabs.png', name: 'ElevenLabs' },
+  { file: 'codecademy.png', name: 'Codecademy' },
+  { file: 'beringea.png', name: 'Beringea' },
+  { file: 'pillar.png', name: 'Pillar' },
+  { file: 'samos.png', name: 'Samos Investments' },
+  { file: 'incident.png', name: 'Incident.io' },
+  { file: 'bang-olufsen.png', name: 'Bang & Olufsen' },
+];
+
+// The track is rendered twice so the marquee can loop seamlessly.
+const marquee = [...partnerLogos, ...partnerLogos];
 ---
 
-<BaseLayout title="Home">
+<BaseLayout
+  title="Home"
+  description="Backing the next generation of female tech billionaires."
+>
   <Navigation />
-  <main>
-    <!-- Hero Section -->
+  <main class="home">
+    <!-- 1. Hero -->
     <section class="hero">
       <div class="container">
-        <h1>the world's first all-female, 
-			<br>all-technical accelerator</h1>
-        <p class="hero-subtitle">If you can build it, you should own it.</p>
+        <h1>backing the next generation of female tech billionaires</h1>
+        <p class="hero-line">
+          the world's first all-female, all-technical accelerator — and the only fund backing
+          exclusively all-female, all-technical teams.
+        </p>
+        <div class="btn-group">
+          <a href="/fund" class="btn btn-primary">The fund</a>
+          <a href="/accelerator" class="btn btn-tertiary">The accelerator</a>
+        </div>
       </div>
+
+      <!-- Full-bleed and uncropped: the t-shirt is the point. -->
       <div class="hero-image">
-        <img 
-          src="/index/hero.jpg" 
-          alt="The Tech Bros" 
-          class="hero-img" 
+        <img
+          src="/index/hero.jpg"
+          alt="A Tech Bros cohort member in a t-shirt reading 'yes Chad, I really do understand the algorithm'"
+          class="hero-img"
           fetchpriority="high"
           loading="eager"
           decoding="async"
@@ -26,304 +104,88 @@ import Footer from '../components/Footer.astro';
           height="1080"
         />
       </div>
-      <div class="container">
-        <div class="btn-group">
-          <a href="/accelerator#apply-now" class="btn btn-primary">Apply Now</a>
-          <a href="/partners" class="btn btn-tertiary">Partner With Us</a>
-          <a href="/community" class="btn btn-tertiary">Join Community</a>
-        </div>
-      </div>
     </section>
 
-    <!-- What We Do -->
+    <!-- 2. As seen in -->
+    <AsSeenIn />
+
+    <!-- 3. What we do -->
     <section class="what-we-do">
       <div class="container">
         <h2>what we do</h2>
-        <div class="card-grid">
-          <a href="/accelerator" class="card">
-            <h3>accelerator</h3>
-            <p>A fully-funded accelerator for all-female, all-technical founding teams.
-              Two weeks living and building together in Norway, followed by a six-week hybrid programme designed to take teams from zero to one, fast.</p>
-          </a>
-          <a href="/community#past-events" class="card">
-            <h3>events</h3>
-            <p>Hackathons, workshops, and build days for technical women who want to start companies.
-              These are hands-on by design: learn how to ship, meet potential co-founders, and figure out whether founding is for you.</p>
-          </a>
-          <a href="/community" class="card">
-            <h3>community</h3>
-            <p>A growing, high-signal network of technical women at different stages of the founder journey.
-              We design environments where co-founder relationships form naturally, not through forced matching.</p>
-          </a>
+        <div class="route-grid">
+          {routes.map((route) => (
+            <a href={route.href} class="route-card">
+              <span class="route-label">{route.label}</span>
+              <span class="route-body">{route.body}</span>
+              <span class="route-arrow" aria-hidden="true">→</span>
+            </a>
+          ))}
         </div>
       </div>
     </section>
 
-        <!-- Quick Stats -->
-        <section class="stats">
-          <div class="container">
-            <h2>the tech bros network</h2>
-            <div class="stats-grid">
-              <div class="stat-item">
-                <div class="stat-number">1000+</div>
-                <div class="stat-label">technical women in our community</div>
-              </div>
-              <div class="stat-item">
-                <div class="stat-number">2/3</div>
-                <div class="stat-label">met a potential co-founder at a TTB event</div>
-              </div>
-              <div class="stat-item">
-                <div class="stat-number">80%</div>
-                <div class="stat-label">report being more likely to found a startup after attending one of our events</div>
-              </div>
-            </div>
-            <div class="partners-section">
-              <h3 class="partners-heading">past partners & sponsors:</h3>
-              <div class="logo-carousel">
-                <div class="logo-carousel-track">
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/nfx.png" alt="NFX" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/amplitude.png" alt="Amplitude" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/notion.png" alt="Notion" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/nvidia.png" alt="NVIDIA" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/google_cloud.png" alt="Google Cloud" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/aws.png" alt="AWS" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/innovate-uk.png" alt="Innovate UK" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/aria.png" alt="ARIA" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/angellist.png" alt="AngelList" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/vercel.png" alt="Vercel" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/ada.png" alt="Ada" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/cursor.png" alt="Cursor" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/elevenlabs.png" alt="ElevenLabs" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/codecademy.png" alt="Codecademy" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/beringea.png" alt="Beringea" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/pillar.png" alt="Pillar" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/samos.png" alt="Samos Investments" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/goodwin.png" alt="Goodwin" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/incident.png" alt="Incident.io" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/bang-olufsen.png" alt="Bang & Olufsen" loading="lazy" decoding="async" />
-                  </div>
-                  <!-- Duplicate for seamless loop -->
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/nfx.png" alt="NFX" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/amplitude.png" alt="Amplitude" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/notion.png" alt="Notion" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/nvidia.png" alt="NVIDIA" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/google_cloud.png" alt="Google Cloud" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/aws.png" alt="AWS" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/innovate-uk.png" alt="Innovate UK" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/aria.png" alt="ARIA" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/angellist.png" alt="AngelList" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/vercel.png" alt="Vercel" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/ada.png" alt="Ada" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/cursor.png" alt="Cursor" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/elevenlabs.png" alt="ElevenLabs" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/codecademy.png" alt="Codecademy" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/beringea.png" alt="Beringea" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/pillar.png" alt="Pillar" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/samos.png" alt="Samos Investments" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/goodwin.png" alt="Goodwin" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/incident.png" alt="Incident.io" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/partner-logos/bang-olufsen.png" alt="Bang & Olufsen" loading="lazy" decoding="async" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-    <!-- About the Programme -->
-    <section class="about-programme">
+    <!-- 4. The numbers -->
+    <section class="numbers">
       <div class="container">
-        <h2>about the programme</h2>
-        <div class="programme-grid">
-          <div class="programme-text">
-            <div class="programme-content">
-              <p>Technical women should be building and owning the most valuable technology companies in the world.</p>
-              <p>Right now, many don't get the chance. Not because they lack ability, ambition, or ideas, but because the structures designed to support founders weren't created with them in mind. </p>
-              <p>So we built one that was.</p>
-              <p>We put founders into a calm, focused, in-person environment.</p>
-              <p>Think summer camp for ambitious women in STEM: space to build, think, and form friendships that last far beyond the programme.</p>
+        <div class="number-row">
+          {numbers.map((item) => (
+            <div class="number-block" style={`--stat-indent: -${item.indent}`}>
+              <span class="number-value">{item.value}</span>
+              <span class="number-label">{item.label}</span>
             </div>
-            <div class="programme-cta">
-              <a href="/accelerator" class="btn btn-primary">Read more</a>
-            </div>
-          </div>
-          <div class="cohort-image-section">
-            <img src="/index/cohort.jpg" alt="The Tech Bros Cohort" class="cohort-img" loading="lazy" decoding="async" />
-            <div class="cohort-carousel-section">
-              <p class="cohort-carousel-text">Our cohort members are alumni and engineers from:</p>
-              <div class="logo-carousel cohort-carousel">
-                <div class="logo-carousel-track cohort-track">
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/google.png" alt="Google" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/apple.png" alt="Apple" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/microsoft.png" alt="Microsoft" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/tesla.png" alt="Tesla" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/discord.png" alt="Discord" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/stanford.png" alt="Stanford" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/mit.png" alt="MIT" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/oxford.png" alt="Oxford" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/cambridge.png" alt="Cambridge" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/ethzurich.png" alt="ETH Zurich" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/ycombinator.png" alt="Y Combinator" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/meta.png" alt="Meta" loading="lazy" decoding="async" />
-                  </div>
-                  <!-- Duplicate for seamless loop -->
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/google.png" alt="Google" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/apple.png" alt="Apple" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/microsoft.png" alt="Microsoft" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/tesla.png" alt="Tesla" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/discord.png" alt="Discord" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/stanford.png" alt="Stanford" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/mit.png" alt="MIT" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/oxford.png" alt="Oxford" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/cambridge.png" alt="Cambridge" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/ethzurich.png" alt="ETH Zurich" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/ycombinator.png" alt="Y Combinator" loading="lazy" decoding="async" />
-                  </div>
-                  <div class="logo-item">
-                    <img src="/index/cohort-logos/meta.png" alt="Meta" loading="lazy" decoding="async" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
 
-
-
-    <!-- Final CTA -->
-    <section class="final-cta">
-      <div class="container text-center">
-        <h2>ready to build?</h2>
-        <p>Applications for Cohort 2 are now open.</p>
-        <div class="btn-group" style="justify-content: center;">
-          <a href="/accelerator#apply-now" class="btn btn-primary">Apply Now</a>
-          <a href="/accelerator#faq" class="btn btn-tertiary">FAQ</a>
-          <a href="/community" class="btn btn-tertiary">Join Our Community</a>
+    <!-- 5. Yes Chad -->
+    <section class="chad">
+      <div class="container">
+        <div class="holo chad-block">
+          <p>yes Chad, I really do understand the algorithm</p>
         </div>
+      </div>
+    </section>
+
+    <!-- 6. Partners & sponsors -->
+    <section class="partners">
+      <div class="container">
+        <div class="lead-sponsor">
+          <p class="partners-heading">2026 lead sponsor</p>
+          <img
+            src="/index/partner-logos/goodwin.png"
+            alt="Goodwin"
+            class="lead-sponsor-logo"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
+        <p class="partners-heading">past partners &amp; sponsors</p>
+      </div>
+
+      <div class="logo-carousel">
+        <div class="logo-carousel-track">
+          {marquee.map((logo) => (
+            <div class="logo-item">
+              <img src={`/index/partner-logos/${logo.file}`} alt={logo.name} loading="lazy" decoding="async" />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="btn-group">
+          <a href="/partners" class="btn btn-tertiary">Partners &amp; sponsors</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Closing -->
+    <section class="closing">
+      <div class="container">
+        <p>we're betting on a new kind of tech bro.</p>
       </div>
     </section>
   </main>
@@ -331,234 +193,172 @@ import Footer from '../components/Footer.astro';
 </BaseLayout>
 
 <style>
-  .hero {
-    padding: 6rem 0 4rem;
-    text-align: center;
+  .home section {
+    padding: 5rem 0;
   }
 
-  .hero h1 {
-    margin-bottom: 1.5rem;
-    font-size: clamp(2rem, 4vw, 3rem);
-  }
-
-  .hero-subtitle {
-    font-size: 1.5rem;
-    color: var(--color-primary);
-    margin-bottom: 3rem;
-    font-weight: 300;
-  }
-
-  .hero-image {
-    width: 100%;
-    margin: 3rem 0;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-  }
-
-  .hero-img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
-  }
-
-
-  .what-we-do {
-    background: rgba(0, 0, 0, 0.2);
-  }
-
-  .what-we-do .card {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-  }
-
-  .what-we-do .card:hover {
-    cursor: pointer;
-  }
-
-  .about-programme {
-    padding: 6rem 0;
-  }
-
-  .programme-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 3rem;
-    align-items: start;
-    margin-top: 3rem;
-  }
-
-  .programme-text {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-  }
-
-  .programme-subheading {
-    font-size: 1.5rem;
-    font-weight: 300;
-    text-align: left;
-    margin: 2rem 0 2.5rem;
-    color: var(--color-text);
-    line-height: 1.6;
-  }
-
-  .programme-content {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    text-align: left;
-    color: var(--color-text);
+  .home h2 {
+    font-size: var(--text-h3);
+    color: var(--color-text-muted);
+    letter-spacing: var(--tracking-subheading);
     margin-bottom: 2.5rem;
   }
 
-  .programme-content p {
-    margin-bottom: 1.5rem;
+  /* ── 1. Hero ── */
+  .hero {
+    padding: 4.5rem 0 0;
   }
 
-  .programme-content p:last-child {
+  .hero h1 {
+    max-width: 20ch;
+    margin-bottom: 2rem;
+  }
+
+  .hero-line {
+    font-size: var(--text-lead);
+    color: var(--color-text);
+    max-width: 56ch;
     margin-bottom: 0;
   }
 
-  .programme-cta {
-    margin-top: auto;
-    text-align: left;
+  .hero .btn-group {
+    margin-top: 2.5rem;
   }
 
-  .cohort-image-section {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
+  /* Full-bleed, natural proportions, no crop. */
+  .hero-image {
+    width: 100vw;
+    margin: 3.5rem 0 0;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
-  .cohort-img {
-    max-width: 100%;
+  .hero-img {
+    display: block;
     width: 100%;
     height: auto;
-    display: block;
-    border-radius: 0;
-    object-fit: contain;
   }
 
-  .cohort-carousel-section {
-    margin-top: 2rem;
-    max-width: 100%;
-    width: 100%;
-  }
-
-  .cohort-carousel-text {
-    font-family: var(--font-primary);
-    font-size: 0.95rem;
-    font-weight: 400;
-    color: var(--color-text-muted);
-    text-align: left;
-    margin-bottom: 1rem;
-    font-style: italic;
-  }
-
-  .cohort-carousel {
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      black 10%,
-      black 90%,
-      transparent
-    );
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent,
-      black 10%,
-      black 90%,
-      transparent
-    );
-  }
-
-  .cohort-carousel .cohort-track,
-  .cohort-track.logo-carousel-track {
-    animation: scroll-reverse 60s linear infinite !important;
-    gap: 0.1rem !important;
-  }
-
-  @keyframes scroll-reverse {
-    0% {
-      transform: translateX(-50%);
-    }
-    100% {
-      transform: translateX(0);
-    }
-  }
-
-  .stats {
-    background: rgba(0, 0, 0, 0.3);
-    padding: 4rem 0;
-  }
-
-  .stats-grid {
+  /* ── 3. What we do ── */
+  .route-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 3rem;
-    margin-top: 3rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.5rem;
   }
 
-  .stat-number {
-    font-size: 3rem;
-    font-weight: 700;
+  /* No borders: the cards sit straight on black. */
+  .route-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .route-label {
+    transition: color var(--transition);
+    font-size: var(--text-h3);
+    letter-spacing: var(--tracking-subheading);
+    color: var(--color-text);
+    line-height: 1.1;
+  }
+
+  .route-card:hover .route-label,
+  .route-card:focus-visible .route-label {
     color: var(--color-primary);
-    margin-bottom: 0.5rem;
   }
 
-  .stat-label {
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    letter-spacing: 0.1em;
+  .route-body {
+    color: var(--color-text-body);
+    line-height: 1.55;
   }
 
-  .partners-section {
-    margin-top: 4rem;
-    padding-top: 3rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  .route-arrow {
+    color: var(--color-primary);
+    font-size: var(--text-lead);
+    line-height: 1;
+    margin-top: auto;
   }
 
+  /* ── 4. The numbers ── */
+  .number-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem 3rem;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding: 3rem 0;
+  }
+
+  .number-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    text-align: left;
+  }
+
+  .number-value {
+    display: block;
+    white-space: nowrap;
+    /* Optical correction so the label lines up with the number's ink. */
+    text-indent: var(--stat-indent, 0);
+    font-size: var(--text-h1);
+    font-weight: var(--weight-heading);
+    letter-spacing: var(--tracking-display);
+    line-height: var(--leading-display);
+    color: var(--color-primary);
+  }
+
+  .number-label {
+    display: block;
+    font-size: var(--text-small);
+    color: var(--color-text);
+    line-height: 1.3;
+  }
+
+  /* ── 5. Yes Chad ── */
+  .chad-block {
+    padding: 4rem 3rem;
+  }
+
+  .chad-block p {
+    font-size: var(--text-h2);
+    line-height: 1.15;
+    max-width: 24ch;
+    margin-bottom: 0;
+  }
+
+  /* ── 6. Partners & sponsors ── */
   .partners-heading {
-    font-family: var(--font-primary);
-    font-size: 1rem;
-    font-weight: 400;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
     color: var(--color-text-muted);
-    text-transform: lowercase;
-    text-align: center;
-    margin-bottom: 2rem;
-    letter-spacing: 0.05em;
+    margin-bottom: 1.25rem;
+  }
+
+  .lead-sponsor {
+    margin-bottom: 3.5rem;
+  }
+
+  .lead-sponsor-logo {
+    display: block;
+    height: 56px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
   }
 
   .logo-carousel {
     overflow: hidden;
     position: relative;
     width: 100%;
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      black 10%,
-      black 90%,
-      transparent
-    );
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent,
-      black 10%,
-      black 90%,
-      transparent
-    );
+    margin-bottom: 2.5rem;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
   }
 
   .logo-carousel-track {
@@ -568,10 +368,19 @@ import Footer from '../components/Footer.astro';
     width: fit-content;
   }
 
-  /* Partner carousel: tighter spacing + slower scroll */
-  .partners-section .logo-carousel-track {
-    gap: 0.5rem;
-    animation: scroll 75s linear infinite;
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-carousel-track {
+      animation: none;
+    }
   }
 
   .logo-item {
@@ -592,105 +401,49 @@ import Footer from '../components/Footer.astro';
     object-fit: contain;
   }
 
-  @keyframes scroll {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
+  .partners .btn-group {
+    margin-top: 0;
   }
 
-  @media (max-width: 768px) {
-    .logo-item {
-      width: 120px;
-      height: 60px;
-      font-size: 0.75rem;
-    }
-
-    .logo-carousel-track {
-      gap: 2rem;
-    }
+  /* ── 7. Closing ── */
+  .closing {
+    border-top: 1px solid var(--color-border);
   }
 
-  /* Tablet and Mobile: Single column layout for programme-grid */
-  @media (max-width: 1024px) {
-    .about-programme {
-      padding: 4rem 0;
-      overflow-x: hidden;
-      width: 100%;
-    }
-
-    .about-programme .container {
-      padding: 0 1rem;
-      max-width: 100%;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    .programme-grid {
-      grid-template-columns: 1fr !important;
-      gap: 2rem;
-      margin-top: 2rem;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    .programme-text {
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
-    }
-
-    .programme-content {
-      font-size: 1rem;
-      max-width: 100%;
-      width: 100%;
-      box-sizing: border-box;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-    }
-
-    .programme-content p {
-      max-width: 100%;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-    }
-
-    .programme-cta {
-      margin-top: 2rem;
-      width: 100%;
-      max-width: 100%;
-    }
-
-    .programme-subheading {
-      font-size: 1.25rem;
-    }
-
-    .cohort-image-section {
-      max-width: 100%;
-      width: 100%;
-      box-sizing: border-box;
-    }
-  }
-
-  .final-cta {
-    padding: 6rem 0;
-  }
-
-  .final-cta p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
+  .closing p {
+    font-size: var(--text-h1);
+    font-weight: var(--weight-heading);
+    letter-spacing: var(--tracking-display);
+    line-height: 1.1;
     color: var(--color-text);
+    max-width: 20ch;
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .route-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2rem;
+    }
   }
 
   @media (max-width: 768px) {
-    .hero {
-      padding: 4rem 0 2rem;
+    .home section {
+      padding: 3.5rem 0;
     }
 
-    .hero-subtitle {
-      font-size: 1.2rem;
+    .hero {
+      padding-top: 3rem;
+    }
+
+    .number-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2rem;
+    }
+
+    .chad-block {
+      padding: 2.5rem 1.5rem;
     }
   }
 </style>
