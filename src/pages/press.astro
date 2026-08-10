@@ -125,6 +125,11 @@ const mentions = [
   },
 ].sort((a, b) => b.date.localeCompare(a.date));
 
+// HIDDEN: the podcasts section is commented out, not deleted. To restore it,
+// uncomment this data block and the matching markup below the mentions
+// section. Nothing else needs changing — the preview images are still in
+// public/press/ and the .podcasts styles are still in this file.
+/*
 // Podcasts use the same row shape as mentions, plus a description.
 const podcasts = [
   {
@@ -156,6 +161,7 @@ const podcasts = [
     url: 'https://www.heavybit.com/library/podcasts/generationship/ep-47-the-tech-bros-with-milette-gillow-and-sedinam-simpson',
   },
 ].sort((a, b) => b.date.localeCompare(a.date));
+*/
 
 /** Marks in the row lists are scaled down from the strip's tuned heights. */
 const ROW_MARK_SCALE = 0.62;
@@ -259,6 +265,9 @@ const ROW_MARK_SCALE = 0.62;
       </div>
     </section>
 
+    {/* HIDDEN: podcasts section. Uncomment this block and the `podcasts` data
+        in the frontmatter to bring it back.
+
     <!-- Podcasts -->
     <section class="podcasts">
       <div class="section-banner holo">
@@ -282,6 +291,7 @@ const ROW_MARK_SCALE = 0.62;
         </ul>
       </div>
     </section>
+    */}
 
     <!-- Press Contact -->
     <section class="press-contact">
