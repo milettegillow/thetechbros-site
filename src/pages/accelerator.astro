@@ -42,30 +42,32 @@ const cohortOnCohort = [
   { measure: 'users or pilots at selection', one: '35%', two: '90%' },
 ];
 
-// `logo` points at public/index/cohort-logos/. `height` is tuned per mark:
-// these range from square icons to wordmarks nearly five times as wide as they
-// are tall, and one shared height renders them at wildly different weights.
-// `tone` overrides the default white-out for marks that are a coloured plate
-// with the shape knocked out of it — flattening those to white fills the plate
-// solid. Entries with no file fall back to a wordmark; drop the file in and add
-// the path.
+/**
+ * Where cohort members came from. `logo` points at public/index/cohort-logos/.
+ * `height` is tuned per mark rather than shared: these range from tall icons to
+ * wordmarks five times wider than they are tall, and one height renders them at
+ * wildly different weights. `tone` overrides the default white-out for marks
+ * that are a coloured plate with the shape knocked out of it — flattening those
+ * to white fills the plate solid.
+ */
 const origins = [
   { name: 'Google', logo: '/index/cohort-logos/google.png', height: 24 },
   { name: 'Apple', logo: '/index/cohort-logos/apple.png', height: 40 },
   { name: 'Microsoft', logo: '/index/cohort-logos/microsoft.png', height: 22 },
+  { name: 'AWS', logo: '/index/cohort-logos/aws.png', height: 30 },
   { name: 'Tesla', logo: '/index/cohort-logos/tesla.png', height: 40 },
   { name: 'Meta', logo: '/index/cohort-logos/meta.png', height: 22 },
   { name: 'Discord', logo: '/index/cohort-logos/discord.png', height: 36, tone: 'threshold' },
-  { name: 'NASA' },
-  { name: 'Amazon' },
-  { name: 'Y Combinator', logo: '/index/cohort-logos/ycombinator.png', height: 34, tone: 'knockout' },
+  { name: 'NASA', logo: '/index/cohort-logos/nasa.png', height: 26 },
+  { name: 'Y Combinator', logo: '/index/cohort-logos/y-combinator.png', height: 26, tone: 'knockout' },
   { name: 'Stanford', logo: '/index/cohort-logos/stanford.png', height: 26 },
   { name: 'MIT', logo: '/index/cohort-logos/mit.png', height: 30 },
   { name: 'Oxford', logo: '/index/cohort-logos/oxford.png', height: 24, tone: 'threshold' },
   { name: 'Cambridge', logo: '/index/cohort-logos/cambridge.png', height: 22 },
-  { name: 'UC Berkeley' },
-  { name: 'Caltech' },
-  { name: 'EPFL' },
+  { name: 'UC Berkeley', logo: '/index/cohort-logos/berkeley.png', height: 20 },
+  { name: 'Caltech', logo: '/index/cohort-logos/caltech.png', height: 28 },
+  { name: 'ETH Zurich', logo: '/index/cohort-logos/ethzurich.png', height: 22 },
+  { name: 'EPFL', logo: '/index/cohort-logos/epfl.svg', height: 24 },
 ];
 
 ---
@@ -161,19 +163,19 @@ const origins = [
         <ul class="origin-strip">
           {origins.map((org) => (
             <li class="origin-item">
-              {org.logo ? (
-                <img
-                  src={org.logo}
-                  alt={org.name}
-                  class="origin-logo"
-                  data-tone={org.tone}
-                  style={org.height ? `height: ${org.height}px` : undefined}
-                  loading="lazy"
-                  decoding="async"
-                />
-              ) : (
-                <span class="origin-name">{org.name}</span>
-              )}
+              <img
+                src={org.logo}
+                alt={org.name}
+                class="origin-logo"
+                data-tone={org.tone}
+                style={`height: ${org.height}px`}
+                {/* Eager: a lazy image never fires onerror, so a missing file
+                    would sit there broken instead of falling back. */}
+                loading="eager"
+                decoding="async"
+                onerror="this.hidden = true; this.nextElementSibling.hidden = false;"
+              />
+              <span class="origin-name" hidden>{org.name}</span>
             </li>
           ))}
         </ul>
@@ -440,6 +442,10 @@ const origins = [
   }
 
   /* Wordmark fallback for organisations with no logo file yet. */
+  .origin-item [hidden] {
+    display: none !important;
+  }
+
   .origin-name {
     font-size: var(--text-body);
     color: var(--color-text);
