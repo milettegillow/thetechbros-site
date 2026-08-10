@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import AsSeenIn from '../components/AsSeenIn.astro';
-import { PUBLICATION_LOGOS } from '../config';
+import { PUBLICATION_LOGOS, PUBLICATION_LOGO_HEIGHTS } from '../config';
 
 // Tier 1. `image` and `url` are both optional: three of these have no artwork
 // yet, and the British Business Bank announcement has no public URL on file.
@@ -66,61 +66,98 @@ const featured = [
   },
 ].sort((a, b) => b.date.localeCompare(a.date));
 
-// Tier 2. These all cover the same announcement, so they share a subject line
-// rather than an invented headline. Entries without a confirmed URL render as
-// plain text; nothing is guessed.
-const BBB_SUBJECT = 'British Business Bank Microfunds announcement';
-
+// Tier 2. Headlines are the publications' own, taken from the articles
+// themselves. Entries without a confirmed URL render as plain text; nothing is
+// guessed. Beinsure is the one row with no URL on file, so it carries the
+// subject of the piece rather than an invented headline.
 const mentions = [
   {
     publication: 'The Times',
     date: '2026-07-06',
-    dateLabel: '6th July, 2026',
+    dateLabel: '6th July 2026',
     headline: 'Why vibe coders need community support to thrive',
     url: 'https://www.thetimes.com/business/entrepreneurs/article/power-communities-vibe-coders-friends-enterprise-network-379tqx8vg',
   },
   {
     publication: 'Pulse 2',
     date: '2026-06-27',
-    dateLabel: '27th June, 2026',
-    headline: BBB_SUBJECT,
+    dateLabel: '27th June 2026',
+    headline:
+      'British Business Bank Commits Up To £90 Million To Back Emerging UK Venture Capital Managers',
     url: 'https://pulse2.com/british-business-bank-commits-up-to-90-million-to-back-emerging-uk-venture-capital-managers/',
   },
   {
     publication: 'Insider Media',
     date: '2026-06-26',
-    dateLabel: '26th June, 2026',
-    headline: BBB_SUBJECT,
+    dateLabel: '26th June 2026',
+    headline:
+      'British Business Bank to commit £90m to back new generation of UK venture capital investors',
     url: 'https://www.insidermedia.com/news/national/british-business-bank-to-commit-90m-to-back-new-generation-of-uk-venture-capital-investors',
   },
   {
     publication: 'UKTN',
     date: '2026-06-25',
-    dateLabel: '25th June, 2026',
-    headline: BBB_SUBJECT,
+    dateLabel: '25th June 2026',
+    headline: 'British Business Bank commits £90m for next generation of VC investors',
     url: 'https://www.uktech.news/funding/british-business-bank-commits-90m-for-next-generation-of-vc-investors-20260625',
   },
   {
     publication: 'BeBeez International',
     date: '2026-06-25',
-    dateLabel: '25th June, 2026',
-    headline: BBB_SUBJECT,
+    dateLabel: '25th June 2026',
+    headline: 'British Business Bank commits €104 million to support UK venture capital fund managers',
     url: 'https://bebeez.eu/2026/06/25/british-business-bank-commits-e104-million-to-support-uk-venture-capital-fund-managers/',
   },
   {
     publication: 'The Southern Gazette',
     date: '2026-06-25',
-    dateLabel: '25th June, 2026',
-    headline: BBB_SUBJECT,
+    dateLabel: '25th June 2026',
+    headline:
+      'British Business Bank backs new generation of UK venture capital investors with first Investor Pathways Capital commitment of up to £90m',
     url: 'https://www.thesoutherngazette.com/financial/british-business-bank-backs-new-generation-of-uk-venture-capital-investors-with-first-investor-pathways-capital-commitment-of-up-to-90m/',
   },
   {
     publication: 'Beinsure',
     date: '2026-06-25',
-    dateLabel: '25th June, 2026',
-    headline: BBB_SUBJECT,
+    dateLabel: '25th June 2026',
+    headline: 'British Business Bank Microfunds announcement',
   },
 ].sort((a, b) => b.date.localeCompare(a.date));
+
+// Podcasts use the same row shape as mentions, plus a description.
+const podcasts = [
+  {
+    platform: 'Spotify',
+    date: '2025-05-15',
+    dateLabel: '15th May 2025',
+    title: 'the tech bros: creating and backing female-founded tech companies',
+    description:
+      'An awesome chat with the brilliant minds behind The Tech Bros. They are shaking up the male-dominated world of tech by increasing the number of all-female, all-technical startups with hackathons, panels, and workshops, plus a newly launched accelerator programme.',
+    url: 'https://open.spotify.com/episode/3z0c2V3ZU2WPhbxRQEsUJX?si=f95306ef48414e95&nd=1&dlsi=d0ff325f5499487c',
+  },
+  {
+    platform: 'YouTube',
+    date: '2025-05-20',
+    dateLabel: '20th May 2025',
+    title:
+      'how the tech bros are empowering the next Generation of technical female founders to launch startups',
+    description:
+      'In this episode, we sit down with the founders of The Tech Bros, a bold new force in Venture Capital (VC) on a mission to increase the number of all-female, all-technical startups coming into existence by enabling women in highly technical fields -- with a focus on postgrads and PhDs -- to launch their startup through their hands-on events & accelerator programme.',
+    url: 'https://www.youtube.com/watch?v=SubeLiG-jyI',
+  },
+  {
+    platform: 'Generationship',
+    date: '2025-11-13',
+    dateLabel: '13th Nov 2025',
+    title: 'ep 47: the tech bros with milette gillow and sedinam simpson',
+    description:
+      'In episode 47 of Generationship, Rachel Chalmers chats with Dr. Milette Gillow and Sedinam Simpson, co-founders of The Tech Bros, about their mission to make tech more inclusive and inventive. They unpack lessons from their first accelerator cohort, debate the future of AI, and share what it takes to build confidence and community in an evolving industry.',
+    url: 'https://www.heavybit.com/library/podcasts/generationship/ep-47-the-tech-bros-with-milette-gillow-and-sedinam-simpson',
+  },
+].sort((a, b) => b.date.localeCompare(a.date));
+
+/** Marks in the row lists are scaled down from the strip's tuned heights. */
+const ROW_MARK_SCALE = 0.62;
 ---
 
 <BaseLayout title="Press">
@@ -184,7 +221,26 @@ const mentions = [
         <ul class="mention-list">
           {mentions.map((item) => (
             <li class="mention">
-              <span class="mention-meta">{item.publication} — {item.dateLabel}</span>
+              <span class="mention-meta">
+                {PUBLICATION_LOGOS[item.publication] ? (
+                  <>
+                    <img
+                      src={PUBLICATION_LOGOS[item.publication]}
+                      alt={item.publication}
+                      class="mention-logo"
+                      style={`height: ${Math.round((PUBLICATION_LOGO_HEIGHTS[item.publication] ?? 20) * ROW_MARK_SCALE)}px`}
+                      loading="eager"
+                      decoding="async"
+                      onerror="this.hidden = true; this.nextElementSibling.hidden = false;"
+                    />
+                    <span class="mention-name" hidden>{item.publication}</span>
+                  </>
+                ) : (
+                  <span class="mention-name">{item.publication}</span>
+                )}
+                <span class="mention-sep">-</span>
+                <span class="mention-date">{item.dateLabel}</span>
+              </span>
               <span class="mention-headline">
                 {item.url ? (
                   <a href={item.url} target="_blank" rel="noopener noreferrer">{item.headline}</a>
@@ -202,44 +258,21 @@ const mentions = [
     <section class="podcasts">
       <div class="container">
         <h2>podcasts</h2>
-        <div class="press-list">
-          <article class="press-item">
-            <div class="press-item-content">
-              <div class="press-image">
-                <img src="/press/spotify-podcast.jpg" alt="Spotify Podcast" />
-              </div>
-              <div class="press-text">
-                <h3><a href="https://open.spotify.com/episode/3z0c2V3ZU2WPhbxRQEsUJX?si=f95306ef48414e95&nd=1&dlsi=d0ff325f5499487c" target="_blank" rel="noopener noreferrer">the tech bros: creating and backing female-founded tech companies</a></h3>
-                <p class="press-source">Spotify — 15th May 2025</p>
-                <p class="press-excerpt">This week, I had an awesome chat with  and , the brilliant minds behind . These ladies are shaking up the male-dominated world of tech by increasing the number of all-female, all-technical startups with hackathons, panels, and workshops…AND a newly launched accelerator programme!</p>
-              </div>
-            </div>
-          </article>
-          <article class="press-item">
-            <div class="press-item-content">
-              <div class="press-image">
-                <img src="/press/youtube-podcast.jpg" alt="YouTube Podcast" />
-              </div>
-              <div class="press-text">
-                <h3><a href="https://www.youtube.com/watch?v=SubeLiG-jyI" target="_blank" rel="noopener noreferrer">how the tech bros are empowering the next Generation of technical female founders to launch startups</a></h3>
-                <p class="press-source">YouTube — 20th May 2025</p>
-                <p class="press-excerpt">In this episode, we sit down with the founders of The Tech Bros, a bold new force in Venture Capital (VC) on a mission to increase the number of all-female, all-technical startups coming into existence by enabling women in highly technical fields -- with a focus on postgrads and PhDs -- to launch their startup through their hands-on events & accelerator programme.</p>
-              </div>
-            </div>
-          </article>
-          <article class="press-item">
-            <div class="press-item-content">
-              <div class="press-image">
-                <img src="/press/generationship-podcast.jpg" alt="Generationship Podcast" />
-              </div>
-              <div class="press-text">
-                <h3><a href="https://www.heavybit.com/library/podcasts/generationship/ep-47-the-tech-bros-with-milette-gillow-and-sedinam-simpson" target="_blank" rel="noopener noreferrer">ep 47: the tech bros with milette gillow and sedinam simpson</a></h3>
-                <p class="press-source">Generationship — 13th Nov 2025</p>
-                <p class="press-excerpt">In episode 47 of Generationship, Rachel Chalmers chats with Dr. Milette Gillow and Sedinam Simpson, co-founders of The Tech Bros, about their mission to make tech more inclusive and inventive. They unpack lessons from their first accelerator cohort, debate the future of AI, and share what it takes to build confidence and community in an evolving industry.</p>
-              </div>
-            </div>
-          </article>
-        </div>
+        <ul class="mention-list">
+          {podcasts.map((item) => (
+            <li class="mention">
+              <span class="mention-meta">
+                <span class="mention-name">{item.platform}</span>
+                <span class="mention-sep">-</span>
+                <span class="mention-date">{item.dateLabel}</span>
+              </span>
+              <span class="mention-headline">
+                <a href={item.url} target="_blank" rel="noopener noreferrer">{item.title}</a>
+                <span class="mention-note">{item.description}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
 
@@ -293,7 +326,7 @@ const mentions = [
   .mentions h2,
   .podcasts h2 {
     margin-left: -2rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1.25rem;
   }
 
   .press-item {
@@ -312,21 +345,6 @@ const mentions = [
     gap: 2.5rem;
     align-items: start;
     margin-left: -2rem;
-  }
-
-  /* Podcast cards still use a thumbnail; it fills the same column the
-     publication mark occupies on featured cards. */
-  .press-image {
-    width: 100%;
-    aspect-ratio: 1;
-    flex-shrink: 0;
-  }
-
-  .press-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
   }
 
   /* The publication mark replaces the old article screenshot. Forced white so
@@ -396,7 +414,9 @@ const mentions = [
 
   .mention {
     display: grid;
-    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+    /* Wide enough that the longest publication + date never wraps, so the
+       headline column keeps the whole of the remaining width. */
+    grid-template-columns: minmax(0, 21rem) minmax(0, 1fr);
     gap: 0.25rem 2rem;
     align-items: baseline;
     padding: 1.1rem 0;
@@ -404,13 +424,48 @@ const mentions = [
   }
 
   .mention-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-size: var(--text-small);
+    color: var(--color-text-muted);
+  }
+
+  .mention-meta [hidden] {
+    display: none !important;
+  }
+
+  /* Same white-on-black treatment as the strip, scaled down. */
+  .mention-logo {
+    display: block;
+    width: auto;
+    max-width: 9rem;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+  }
+
+  .mention-name,
+  .mention-date {
+    white-space: nowrap;
+  }
+
+  .mention-sep {
     color: var(--color-text-muted);
   }
 
   .mention-headline {
     color: var(--color-text-body);
     line-height: 1.45;
+  }
+
+  /* Podcast rows carry a description under the episode title. */
+  .mention-note {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: var(--text-small);
+    line-height: 1.7;
+    color: var(--color-text-muted);
   }
 
   .mention-headline a {

@@ -40,6 +40,7 @@ export interface Publication {
 
 export const AS_SEEN_IN: Publication[] = [
   { name: 'Sifted', logo: '/press/logos/sifted.png', height: 24 },
+  { name: 'Shifter', logo: '/press/logos/shifter.png', height: 20 },
   { name: 'British Business Bank', logo: '/press/logos/british-business-bank.svg', height: 34 },
   { name: 'The Times', logo: '/press/logos/the-times.png', height: 22 },
   { name: 'UKTN', logo: '/press/logos/uktn.svg', height: 44 },
@@ -49,6 +50,14 @@ export const AS_SEEN_IN: Publication[] = [
 /** Publication name -> logo, for pages that show a mark per publication. */
 export const PUBLICATION_LOGOS: Record<string, string> = Object.fromEntries(
   AS_SEEN_IN.filter((p) => p.logo).map((p) => [p.name, p.logo as string])
+);
+
+/**
+ * Publication name -> optical height, so a mark rendered somewhere other than
+ * the strip can scale from the same tuned value instead of a second guess.
+ */
+export const PUBLICATION_LOGO_HEIGHTS: Record<string, number> = Object.fromEntries(
+  AS_SEEN_IN.filter((p) => p.logo && p.height).map((p) => [p.name, p.height as number])
 );
 
 /**
