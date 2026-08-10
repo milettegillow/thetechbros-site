@@ -81,6 +81,8 @@ const alumni = [
           </span>
         </p>
 
+        <p class="market-frame">the data is unambiguous, and the market has not caught up.</p>
+
         <ul class="market-grid">
           {marketStats.map((stat) => (
             <li class="market-item">
@@ -90,9 +92,6 @@ const alumni = [
           ))}
         </ul>
 
-        <p class="market-close">
-          female-led startups outperform, yet remain the most chronically underfunded teams.
-        </p>
       </div>
     </section>
 
@@ -214,14 +213,12 @@ const alumni = [
   }
 
   .fund-hero h1 {
-    max-width: 18ch;
     margin-bottom: 2rem;
   }
 
   .hero-line {
     font-size: var(--text-lead);
     color: var(--color-text);
-    max-width: 48ch;
     margin-bottom: 0;
   }
 
@@ -231,7 +228,6 @@ const alumni = [
     align-items: baseline;
     flex-wrap: wrap;
     gap: 0 1.5rem;
-    max-width: 34ch;
     margin-bottom: 4rem;
   }
 
@@ -270,11 +266,10 @@ const alumni = [
     margin-bottom: 0;
   }
 
-  .market-close {
-    margin: 3.5rem 0 0;
+  .market-frame {
     font-size: var(--text-lead);
     color: var(--color-text);
-    max-width: 50ch;
+    margin-bottom: 2.5rem;
   }
 
   /* ── 3. Who we back ── */
@@ -284,14 +279,12 @@ const alumni = [
     letter-spacing: var(--tracking-heading);
     line-height: 1.2;
     color: var(--color-text);
-    max-width: 24ch;
     margin-bottom: 1.5rem;
   }
 
   .who-claim {
     font-size: var(--text-lead);
     color: var(--color-primary);
-    max-width: 46ch;
     margin-bottom: 0;
   }
 
@@ -300,7 +293,6 @@ const alumni = [
     font-size: var(--text-lead);
     line-height: 1.6;
     color: var(--color-text);
-    max-width: 62ch;
     margin-bottom: 0;
   }
 
@@ -351,6 +343,7 @@ const alumni = [
     line-height: 1.45;
   }
 
+  /* The one long run of prose on this page, so the only one still measured. */
   .flow-note {
     margin: 3.5rem 0 0;
     color: var(--color-text-body);
