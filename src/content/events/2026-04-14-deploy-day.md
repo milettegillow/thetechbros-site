@@ -2,7 +2,7 @@
 date: 2026-04-14
 title: "deploy day"
 type: "workshop"
-city: "San Francisco"
+city: "SF Bay Area"
 country: "USA"
 description: "A technical workshop and founder roundtables, run by our SF community lead Kasia Gora."
 sponsors:

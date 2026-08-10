@@ -2,7 +2,7 @@
 date: 2025-11-17
 title: "'no one asked for this'"
 type: "hackathon"
-city: "San Francisco"
+city: "SF Bay Area"
 country: "USA"
 description: "In partnership with AngelList and Glo we ran our 'no one asked for this' hackathon."
 quotes:

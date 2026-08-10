@@ -2,7 +2,7 @@
 date: 2025-10-06
 title: "bad ideas build"
 type: "workshop"
-city: "San Francisco"
+city: "SF Bay Area"
 country: "USA"
 quotes:
   - "This event was fantastic! Great group of people from different backgrounds to meet, hear from, and work with. This event reminded me that creating things with an enthusiastic team is amazing, and that yes in fact l do know what I'm doing and I can make things."

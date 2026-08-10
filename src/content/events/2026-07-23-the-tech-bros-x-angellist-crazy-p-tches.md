@@ -2,7 +2,7 @@
 date: 2026-07-23
 title: "crazy p*tches"
 type: "conference"
-city: "San Francisco"
+city: "SF Bay Area"
 country: "USA"
 description: "An evening of ideas and judging, from home-cooked food at scale to data-efficient training. The room was consistent on what's different with AI: urgency and momentum."
 sponsors:

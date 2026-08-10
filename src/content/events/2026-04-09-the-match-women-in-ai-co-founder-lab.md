@@ -2,7 +2,7 @@
 date: 2026-04-09
 title: "the match: women in AI co-founder lab"
 type: "conference"
-city: "San Francisco"
+city: "SF Bay Area"
 country: "USA"
 description: "A panel and matchmaking session on how to find your co-founder, with four very different answers from the panel."
 quotes:

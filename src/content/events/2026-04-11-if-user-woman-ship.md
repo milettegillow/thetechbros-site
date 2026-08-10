@@ -2,7 +2,7 @@
 date: 2026-04-11
 title: "if user == woman: ship()"
 type: "hackathon"
-city: "Berkeley"
+city: "SF Bay Area"
 country: "USA"
 description: "An all-day hackathon at UC Berkeley. Over 70% of participants said they met a potential co-founder."
 quotes:

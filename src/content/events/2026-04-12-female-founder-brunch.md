@@ -2,7 +2,7 @@
 date: 2026-04-12
 title: "female founder brunch"
 type: "social"
-city: "San Francisco"
+city: "SF Bay Area"
 country: "USA"
 description: "An invite-only brunch with 25 a16z- and YC-backed founders, Forbes 30U30 and leading investors."
 sponsors:
