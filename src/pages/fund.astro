@@ -2,22 +2,456 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import { PRESS_LINKS } from '../config';
+
+const marketStats = [
+  {
+    claim: 'Female-founded startups generate 78p revenue per £1 invested, versus 31p for male-founded.',
+    source: 'BCG, 2018',
+  },
+  {
+    claim: 'Female-founded startups reach exit faster.',
+    source: 'PitchBook, 2023',
+  },
+  {
+    claim: 'Female founders burn 15% less capital per month.',
+    source: 'Inc, 2025',
+  },
+  {
+    claim: 'Female teams are the most underrepresented in both decks submitted and investment received.',
+    source: 'Founders Forum Group, 2025',
+  },
+];
+
+const pipeline = [
+  { figure: '38', label: 'events across 10 cities and 4 countries' },
+  { figure: '1,500+', label: 'technical women hosted in person' },
+  { figure: '500+', label: 'applications across two cohorts, all reached organically' },
+  { figure: '40', label: 'founders selected' },
+  { figure: 'first cheques', label: '', terminal: true },
+];
+
+// Prize winners at Tech Bros events who went on to join cohort 2.
+const prizeWinners = [
+  'Dimple Amitha Garuadapuri',
+  'Amanda \u2018Mango\u2019 Simeon',
+  'Nadaa Moharram',
+  'Helena Williams',
+];
+
+const alumni = [
+  { figure: '45%', label: 'ex-big tech engineers', detail: 'Tesla, Apple, Google, NASA' },
+  { figure: '70%', label: 'attended a global top 25 university', detail: 'Stanford, MIT, Oxford, Cambridge' },
+  { figure: '100%', label: 'STEM', detail: '80% engineering, CS or AI/ML backgrounds' },
+  { figure: '8.7% / 7.4%', label: 'acceptance rate', detail: 'cohort 1 / cohort 2' },
+];
 ---
 
-<BaseLayout title="Fund">
+<BaseLayout
+  title="Fund"
+  description="We back the top 1% of technical female talent at pre-seed."
+>
   <Navigation />
-  <main>
+  <main class="fund">
+    <!-- 1. Headline -->
     <section class="fund-hero">
       <div class="container">
-        <h1>fund</h1>
+        <h1>we back the top 1% of technical female talent at pre-seed</h1>
+        <p class="hero-line">first cheques into all-female, all-technical founding teams.</p>
+      </div>
+    </section>
+
+    <!-- 2. The market case -->
+    <section class="market">
+      <div class="container">
+        <h2>the market case</h2>
+
+        <p class="lead-stat">
+          <span class="lead-stat-figure">2%</span>
+          <span class="lead-stat-text">
+            of global venture capital goes to all-female teams. In the US, that share has fallen to
+            1%.
+          </span>
+        </p>
+
+        <ul class="market-grid">
+          {marketStats.map((stat) => (
+            <li class="market-item">
+              <p class="market-claim">{stat.claim}</p>
+              <p class="market-source">{stat.source}</p>
+            </li>
+          ))}
+        </ul>
+
+        <p class="market-close">
+          female-led startups outperform, yet remain the most chronically underfunded teams.
+        </p>
+      </div>
+    </section>
+
+    <!-- 3. Who we back -->
+    <section class="who">
+      <div class="container">
+        <h2>who we back</h2>
+        <p class="who-line">All-female, all-technical founding teams. Pre-seed. First cheque.</p>
+        <p class="who-claim">
+          We are the only fund in the world backing exclusively all-female, all-technical teams.
+        </p>
+      </div>
+    </section>
+
+    <!-- 4. Backed by the British Business Bank -->
+    <section class="bbb">
+      <div class="container">
+        <h2>backed by the british business bank</h2>
+        <p class="bbb-body">
+          The British Business Bank is a cornerstone investor in The Tech Bros Fund, through the
+          first Microfunds cohort of its £400m Investor Pathways Capital initiative — £90m committed
+          across 10 funds, selected from 151 applications.
+        </p>
+        <div class="btn-group">
+          <a href="/press" class="btn btn-secondary">Read the coverage</a>
+          <a href={PRESS_LINKS.sifted} class="btn btn-tertiary" target="_blank" rel="noopener noreferrer">
+            Sifted
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Our pipeline -->
+    <section class="pipeline">
+      <div class="container">
+        <h2>our pipeline</h2>
+        <ol class="flow">
+          {pipeline.map((step) => (
+            <li class={`flow-step${step.terminal ? ' flow-step-terminal' : ''}`}>
+              <span class="flow-figure">{step.figure}</span>
+              {step.label && <span class="flow-label">{step.label}</span>}
+            </li>
+          ))}
+        </ol>
+        <p class="flow-note">
+          Four of our twenty cohort 2 founders first came to us as prize winners at Tech Bros
+          events: {prizeWinners.map((name, i) => (
+            <>
+              <span class="flow-name">{name}</span>{i < prizeWinners.length - 2 ? ', ' : i === prizeWinners.length - 2 ? ' and ' : '.'}
+            </>
+          ))}
+        </p>
+      </div>
+    </section>
+
+    <!-- 6. Alumni quality -->
+    <section class="alumni">
+      <div class="container">
+        <h2>alumni quality</h2>
+        <ul class="alumni-grid">
+          {alumni.map((item) => (
+            <li class="alumni-item">
+              <span class="alumni-figure">{item.figure}</span>
+              <span class="alumni-label">{item.label}</span>
+              <span class="alumni-detail">{item.detail}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- 7. Contact -->
+    <section class="contact">
+      <div class="container">
+        <p class="contact-line">
+          LP enquiries: <span id="lp-contact"></span>
+        </p>
       </div>
     </section>
   </main>
   <Footer />
 </BaseLayout>
 
+<script>
+  // Assembled at runtime from the central config so the address never appears
+  // in the served HTML.
+  import { CONTACT_USER, CONTACT_DOMAIN } from '../config';
+
+  const slot = document.getElementById('lp-contact');
+  if (slot) {
+    const address = `${CONTACT_USER}@${CONTACT_DOMAIN}`;
+    const link = document.createElement('a');
+    link.href = `mailto:${address}`;
+    link.textContent = address;
+    slot.appendChild(link);
+  }
+</script>
+
 <style>
+  /* ──────────────────────────────────────────────────────────────────────
+     /fund is a thesis and credibility page: black, pink and white only.
+     No holographic surface anywhere, including button hover states.
+     ────────────────────────────────────────────────────────────────────── */
+
+  .fund section {
+    padding: 5.5rem 0;
+  }
+
+  .fund h2 {
+    font-size: var(--text-h3);
+    color: var(--color-text-muted);
+    letter-spacing: var(--tracking-subheading);
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── 1. Headline ── */
   .fund-hero {
-    padding: 6rem 0 3rem;
+    padding: 5rem 0 4rem !important;
+  }
+
+  .fund-hero h1 {
+    max-width: 18ch;
+    margin-bottom: 2rem;
+  }
+
+  .hero-line {
+    font-size: var(--text-lead);
+    color: var(--color-text);
+    max-width: 48ch;
+    margin-bottom: 0;
+  }
+
+  /* ── 2. The market case ── */
+  .lead-stat {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0 1.5rem;
+    max-width: 34ch;
+    margin-bottom: 4rem;
+  }
+
+  .lead-stat-figure {
+    font-size: var(--text-display);
+    font-weight: var(--weight-heading);
+    letter-spacing: var(--tracking-display);
+    line-height: var(--leading-display);
+    color: var(--color-primary);
+  }
+
+  .lead-stat-text {
+    font-size: var(--text-h4);
+    line-height: 1.45;
+    color: var(--color-text);
+  }
+
+  .market-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2.5rem;
+    border-top: 1px solid var(--color-border);
+    padding-top: 2.5rem;
+  }
+
+  .market-claim {
+    color: var(--color-text);
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+  }
+
+  .market-source {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    margin-bottom: 0;
+  }
+
+  .market-close {
+    margin: 3.5rem 0 0;
+    font-size: var(--text-lead);
+    color: var(--color-text);
+    max-width: 50ch;
+  }
+
+  /* ── 3. Who we back ── */
+  .who-line {
+    font-size: var(--text-h2);
+    font-weight: var(--weight-heading);
+    letter-spacing: var(--tracking-heading);
+    line-height: 1.2;
+    color: var(--color-text);
+    max-width: 24ch;
+    margin-bottom: 1.5rem;
+  }
+
+  .who-claim {
+    font-size: var(--text-lead);
+    color: var(--color-primary);
+    max-width: 46ch;
+    margin-bottom: 0;
+  }
+
+  /* ── 4. British Business Bank ── */
+  .bbb-body {
+    font-size: var(--text-lead);
+    line-height: 1.6;
+    color: var(--color-text);
+    max-width: 62ch;
+    margin-bottom: 0;
+  }
+
+  /* ── 5. Pipeline flow ── */
+  .flow {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .flow-step {
+    position: relative;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  /* The connector is what makes it read as a sequence rather than a list. */
+  .flow-step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    top: 0;
+    right: -1.1rem;
+    transform: translateY(-50%);
+    color: var(--color-primary);
+    font-size: 0.9rem;
+    line-height: 1;
+  }
+
+  .flow-step-terminal {
+    border-top-color: var(--color-primary);
+  }
+
+  .flow-figure {
+    display: block;
+    font-size: var(--text-h2);
+    font-weight: var(--weight-heading);
+    letter-spacing: var(--tracking-heading);
+    line-height: 1.05;
+    color: var(--color-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .flow-label {
+    display: block;
+    font-size: var(--text-small);
+    color: var(--color-text-body);
+    line-height: 1.45;
+  }
+
+  .flow-note {
+    margin: 3.5rem 0 0;
+    color: var(--color-text-body);
+    max-width: 62ch;
+  }
+
+  /* Names lift out of the body copy; deliberately not links. */
+  .flow-name {
+    color: var(--color-text);
+  }
+
+  /* ── 6. Alumni quality ── */
+  .alumni-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2.5rem;
+  }
+
+  .alumni-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .alumni-figure {
+    font-size: var(--text-h2);
+    font-weight: var(--weight-heading);
+    letter-spacing: var(--tracking-heading);
+    line-height: 1.05;
+    color: var(--color-primary);
+  }
+
+  .alumni-label {
+    color: var(--color-text);
+    line-height: 1.4;
+  }
+
+  .alumni-detail {
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    line-height: 1.4;
+  }
+
+  /* ── 7. Contact ── */
+  .contact {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .contact-line {
+    font-size: var(--text-lead);
+    color: var(--color-text-muted);
+    margin-bottom: 0;
+  }
+
+  .contact-line a {
+    color: var(--color-primary);
+  }
+
+  .contact-line a:hover {
+    color: var(--color-primary-hover);
+  }
+
+  /* ── No holographic surface on this page ──
+     The global tertiary hover fills with foil; here it inverts to solid
+     white instead. The colour needs !important to beat the global rule that
+     forces black text on the holographic surface. */
+  .btn.btn-tertiary:hover,
+  .btn.btn-tertiary:focus-visible {
+    background: var(--color-white);
+    background-image: none;
+    border-color: var(--color-white);
+    color: var(--color-black) !important;
+  }
+
+  @media (max-width: 1024px) {
+    .market-grid,
+    .alumni-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .flow {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .flow-step:not(:last-child)::after {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .fund section {
+      padding: 3.5rem 0;
+    }
+
+    .market-grid,
+    .alumni-grid,
+    .flow {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .lead-stat {
+      display: block;
+    }
+
+    .lead-stat-figure {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
   }
 </style>
