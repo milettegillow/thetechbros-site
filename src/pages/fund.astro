@@ -10,24 +10,35 @@ const eventStats = getEventStats(await getCollection('events'));
 const marketStats = [
   {
     claim: 'Female-founded startups generate 78p revenue per £1 invested, versus 31p for male-founded.',
+    graphic: 'revenue-per-pound.png',
     source: 'BCG, 2018',
     url: 'https://www.bcg.com/publications/2018/why-women-owned-startups-are-better-bet',
   },
   {
     claim: 'Female-founded startups reach exit faster.',
+    graphic: 'time-to-exit.png',
     source: 'PitchBook, 2023',
     url: 'https://www.prnewswire.com/news-releases/pitchbook-report-on-women-in-vc-ecosystem-highlights-resilience-and-strong-performance-of-female-founders-amid-market-headwinds-301667083.html',
   },
   {
     claim: 'Female founders burn 15% less capital per month.',
+    graphic: 'burn-rate.png',
     source: 'Inc, 2025',
     url: 'https://www.inc.com/annabel-burba/female-founders-outperform-their-male-counterparts-but-receive-much-less-funding-study-finds/91212886',
   },
   {
     claim: 'Female teams are the most underrepresented in both decks submitted and investment received.',
+    graphic: 'investment-share.png',
     source: 'Founders Forum Group, 2025',
     url: 'https://ff.co/women-funding-statistics-2025/',
   },
+];
+
+// Top of funnel: reach, before anyone applies.
+const reach = [
+  { figure: '15+', label: 'universities' },
+  { figure: '10,500+', label: 'followers' },
+  { figure: '28', label: 'countries' },
 ];
 
 const pipeline = [
@@ -36,10 +47,37 @@ const pipeline = [
     label: `events across ${eventStats.cityCount} cities and ${eventStats.countryCount} countries`,
   },
   { figure: '1,500+', label: 'technical women hosted in person' },
-  { figure: '500+', label: 'applications across two cohorts, all reached organically' },
+  { figure: '500+', label: 'applications, all reached organically' },
   { figure: '40', label: 'founders selected' },
-  { figure: 'first cheques', label: '', terminal: true },
+  { figure: '2', label: 'cohorts' },
 ];
+
+/**
+ * Where alumni came from. `logo` points at public/index/cohort-logos/; entries
+ * with no file fall back to a wordmark. `tone` overrides the default white-out
+ * for marks that are a coloured plate with the shape knocked out of it.
+ */
+const alumniOrigins = [
+  { name: 'NASA' },
+  { name: 'Tesla', logo: '/index/cohort-logos/tesla.png', height: 40 },
+  { name: 'Apple', logo: '/index/cohort-logos/apple.png', height: 40 },
+  { name: 'Google', logo: '/index/cohort-logos/google.png', height: 24 },
+  { name: 'Amazon' },
+  { name: 'Microsoft', logo: '/index/cohort-logos/microsoft.png', height: 22 },
+  { name: 'Meta', logo: '/index/cohort-logos/meta.png', height: 22 },
+  { name: 'Discord', logo: '/index/cohort-logos/discord.png', height: 36, tone: 'threshold' },
+  { name: 'Stanford', logo: '/index/cohort-logos/stanford.png', height: 26 },
+  { name: 'MIT', logo: '/index/cohort-logos/mit.png', height: 30 },
+  { name: 'Oxford', logo: '/index/cohort-logos/oxford.png', height: 24, tone: 'threshold' },
+  { name: 'Cambridge', logo: '/index/cohort-logos/cambridge.png', height: 22 },
+  { name: 'UC Berkeley' },
+  { name: 'Caltech' },
+  { name: 'EPFL' },
+  { name: 'Y Combinator', logo: '/index/cohort-logos/ycombinator.png', height: 34, tone: 'knockout' },
+];
+
+// Rendered twice so the marquee loops seamlessly, as on the home page.
+const alumniMarquee = [...alumniOrigins, ...alumniOrigins];
 
 // Prize winners at Tech Bros events who went on to join cohort 2.
 const prizeWinners = [
@@ -53,7 +91,7 @@ const alumni = [
   { figure: '45%', label: 'ex-big tech engineers', detail: 'Tesla, Apple, Google, NASA' },
   { figure: '70%', label: 'attended a global top 25 university', detail: 'Stanford, MIT, Oxford, Cambridge' },
   { figure: '100%', label: 'STEM', detail: '80% engineering, CS or AI/ML backgrounds' },
-  { figure: '8.7% / 7.4%', label: 'acceptance rate', detail: 'cohort 1 / cohort 2' },
+  { figure: '7.4%', label: 'acceptance rate, cohort 2' },
 ];
 ---
 
@@ -79,8 +117,8 @@ const alumni = [
         <div class="lead-stat">
           <span class="lead-stat-figure">2%</span>
           <p class="lead-stat-text">
-            of global venture capital goes to all-female teams. In the US, that share has fallen to
-            1%.
+            Of global venture capital goes to all-female teams.
+            <span class="lead-stat-emphasis">In the US, that share has fallen to 1%.</span>
           </p>
         </div>
 
@@ -90,6 +128,16 @@ const alumni = [
           <ul class="market-grid">
             {marketStats.map((stat) => (
               <li class="market-item">
+                <div class="market-graphic">
+                  <img
+                    src={`/fund/stat-graphics/${stat.graphic}`}
+                    alt=""
+                    loading="eager"
+                    decoding="async"
+                    onerror="this.hidden = true; this.nextElementSibling.hidden = false;"
+                  />
+                  <span class="market-graphic-placeholder" hidden aria-hidden="true"></span>
+                </div>
                 <p class="market-claim">{stat.claim}</p>
                 <a class="market-source" href={stat.url} target="_blank" rel="noopener noreferrer">
                   {stat.source}
@@ -132,20 +180,23 @@ const alumni = [
     <section class="pipeline">
       <div class="container">
         <h2>our pipeline</h2>
-        <ol class="flow">
-          {pipeline.map((step) => (
-            <li class={`flow-step${step.terminal ? ' flow-step-terminal' : ''}`}>
-              {step.terminal ? (
-                <span class="flow-terminal">{step.figure}</span>
-              ) : (
-                <>
-                  <span class="flow-figure">{step.figure}</span>
-                  <span class="flow-label">{step.label}</span>
-                </>
-              )}
+        <ul class="stat-row stat-row-reach">
+          {reach.map((step) => (
+            <li class="stat-cell">
+              <span class="stat-cell-figure">{step.figure}</span>
+              <span class="stat-cell-label">{step.label}</span>
             </li>
           ))}
-        </ol>
+        </ul>
+
+        <ul class="stat-row">
+          {pipeline.map((step) => (
+            <li class="stat-cell">
+              <span class="stat-cell-figure">{step.figure}</span>
+              <span class="stat-cell-label">{step.label}</span>
+            </li>
+          ))}
+        </ul>
         <p class="flow-note">
           Four of our twenty cohort 2 founders first came to us as prize winners at Tech Bros
           events: {prizeWinners.map((name, i) => (
@@ -160,7 +211,7 @@ const alumni = [
     <!-- 6. Alumni quality -->
     <section class="alumni">
       <div class="container">
-        <h2>alumni quality</h2>
+        <h2>our alumni are exceptional</h2>
         <p class="alumni-frame">
           the accelerator is the top of our funnel. this is who comes through it.
         </p>
@@ -174,12 +225,39 @@ const alumni = [
           ))}
         </ul>
       </div>
+
+      <div class="alumni-origins">
+        <div class="container">
+          <p class="alumni-origins-heading">where they came from</p>
+        </div>
+        <div class="origin-carousel">
+          <div class="origin-track">
+            {alumniMarquee.map((org) => (
+              <div class="origin-item">
+                {org.logo ? (
+                  <img
+                    src={org.logo}
+                    alt={org.name}
+                    class="origin-logo"
+                    data-tone={org.tone}
+                    style={org.height ? `height: ${org.height}px` : undefined}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <span class="origin-name">{org.name}</span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- 7. Closing -->
     <section class="closing">
       <div class="container">
-        <p>we're backing the teams the market keeps missing.</p>
+        <p>we're betting on the founders nobody else is looking at.</p>
       </div>
     </section>
 
@@ -187,7 +265,7 @@ const alumni = [
     <section class="contact">
       <div class="container">
         <p class="contact-line">
-          lp enquiries: <span id="lp-contact"></span>
+          LP enquiries: <span id="lp-contact"></span>
         </p>
       </div>
     </section>
@@ -217,14 +295,15 @@ const alumni = [
      ────────────────────────────────────────────────────────────────────── */
 
   .fund section {
-    padding: 5.5rem 0;
+    padding: 8rem 0;
   }
 
   .fund h2 {
-    font-size: var(--text-h2);
+    font-size: var(--text-h1);
     color: var(--color-text);
-    letter-spacing: var(--tracking-heading);
-    margin-bottom: 2.5rem;
+    letter-spacing: var(--tracking-display);
+    line-height: var(--leading-display);
+    margin-bottom: 4rem;
   }
 
   /* ── 1. Headline ── */
@@ -244,6 +323,8 @@ const alumni = [
 
   /* ── 2. The market case ── */
   .lead-stat {
+    border-top: 1px solid var(--color-border);
+    padding-top: 3rem;
     margin-bottom: 4rem;
   }
 
@@ -264,6 +345,10 @@ const alumni = [
     margin-bottom: 0;
   }
 
+  .lead-stat-emphasis {
+    color: var(--color-primary);
+  }
+
   .market-supporting {
     border-top: 1px solid var(--color-border);
     padding-top: 2.5rem;
@@ -274,6 +359,34 @@ const alumni = [
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 2.5rem;
+  }
+
+  /* Fixed slot so the four claims stay on one line whatever each graphic's
+     proportions are, and so the row doesn't reflow when the files land. */
+  .market-graphic {
+    height: 120px;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .market-graphic img,
+  .market-graphic-placeholder {
+    display: block;
+    max-height: 120px;
+    max-width: 100%;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .market-graphic-placeholder {
+    width: 100%;
+    height: 120px;
+    background: var(--color-surface);
+  }
+
+  .market-graphic [hidden] {
+    display: none !important;
   }
 
   .market-claim {
@@ -305,6 +418,13 @@ const alumni = [
   }
 
   /* ── 3. Who we back ── */
+  .who .container {
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
   .who-line {
     font-size: var(--text-lead);
     line-height: 1.6;
@@ -327,52 +447,34 @@ const alumni = [
     margin-bottom: 0;
   }
 
-  /* ── 5. Pipeline flow ──
-     A vertical sequence: one stage per row, figure left, label right, with a
-     rule running down the left that links them. Read top to bottom, so the
-     labels can be any depth without knocking anything out of line. */
-  .flow {
+  /* ── 5. Pipeline ──
+     Ordinary stat rows, same shape as the alumni figures below and the numbers
+     on the home page: figure over label, no connectors. */
+  .pipeline .container {
+    border-top: 1px solid var(--color-border);
+    padding-top: 3rem;
+  }
+
+  .stat-row {
     list-style: none;
-    max-width: 62ch;
-  }
-
-  .flow-step {
-    position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 8rem) minmax(0, 1fr);
-    gap: 0 1.75rem;
-    align-items: baseline;
-    padding: 0 0 2.25rem 2.25rem;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 2.5rem;
   }
 
-  /* Drawn per step and butted end to end, so the rule is continuous rather
-     than a series of dashes. It starts on the first figure's line and stops on
-     the last stage's, so it spans exactly the sequence. */
-  .flow-step::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: var(--color-border);
+  /* Reach sits above the funnel and has three items, not five. */
+  .stat-row-reach {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-bottom: 4rem;
   }
 
-  .flow-step:first-child::before {
-    top: 0.9em;
+  .stat-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
-  .flow-step:last-child {
-    padding-bottom: 0;
-  }
-
-  .flow-step:last-child::before {
-    bottom: auto;
-    height: 0.9em;
-  }
-
-  .flow-figure {
-    display: block;
+  .stat-cell-figure {
     font-size: var(--text-h2);
     font-weight: var(--weight-heading);
     letter-spacing: var(--tracking-heading);
@@ -380,27 +482,18 @@ const alumni = [
     color: var(--color-primary);
   }
 
-  .flow-label {
-    display: block;
-    font-size: var(--text-lead);
-    color: var(--color-text-body);
-    line-height: 1.5;
+  .stat-cell-label {
+    color: var(--color-text);
+    line-height: 1.4;
   }
 
-  /* The endpoint, not a new section: label size and weight, spanning the row
-     so it isn't mistaken for another figure. */
-  .flow-terminal {
-    grid-column: 1 / -1;
-    font-size: var(--text-lead);
-    line-height: 1.5;
-    color: var(--color-primary);
-  }
-
-  /* The one long run of prose on this page, so the only one still measured. */
+  /* A highlight, not a footnote: full width and above body size. */
   .flow-note {
-    margin: 3.5rem 0 0;
+    margin: 4rem 0 0;
+    font-size: var(--text-h3);
+    line-height: 1.35;
+    letter-spacing: var(--tracking-subheading);
     color: var(--color-text-body);
-    max-width: 62ch;
   }
 
   /* Names lift out of the body copy; deliberately not links. */
@@ -446,6 +539,88 @@ const alumni = [
     font-size: var(--text-small);
     color: var(--color-text-muted);
     line-height: 1.4;
+  }
+
+  /* ── Where alumni came from: same marquee as the sponsor wall ── */
+  .alumni-origins {
+    margin-top: 4.5rem;
+  }
+
+  .alumni-origins-heading {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .origin-carousel {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    /* Fades at both ends so marks dissolve rather than being sliced. */
+    mask-image: linear-gradient(to right, transparent 0, black 6%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0, black 6%, black 92%, transparent 100%);
+  }
+
+  .origin-track {
+    display: flex;
+    gap: 4rem;
+    animation: origin-scroll 90s linear infinite;
+    width: fit-content;
+  }
+
+  @keyframes origin-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .origin-track {
+      animation: none;
+    }
+  }
+
+  .origin-item {
+    flex-shrink: 0;
+    width: 200px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
+  }
+
+  .origin-logo {
+    display: block;
+    height: 30px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+  }
+
+  /* Coloured plate with the mark knocked out of it: grayscale plus a hard
+     contrast push drops the plate to black and lifts the mark to white. */
+  .origin-logo[data-tone='threshold'] {
+    filter: grayscale(1) contrast(5);
+  }
+
+  /* Same idea, but the plate needs pulling below the contrast pivot first. */
+  .origin-logo[data-tone='knockout'] {
+    filter: grayscale(1) brightness(0.7) contrast(20);
+  }
+
+  .origin-name {
+    font-size: var(--text-body);
+    color: var(--color-text);
+    letter-spacing: var(--tracking-subheading);
+    white-space: nowrap;
   }
 
   /* ── 7. Contact ── */
@@ -500,23 +675,27 @@ const alumni = [
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .flow {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .flow-step:not(:last-child)::after {
-      display: none;
+    .stat-row {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 
   @media (max-width: 768px) {
     .fund section {
-      padding: 3.5rem 0;
+      padding: 4.5rem 0;
+    }
+
+    .fund h2 {
+      margin-bottom: 2.5rem;
+    }
+
+    .stat-row,
+    .stat-row-reach {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .market-grid,
-    .alumni-grid,
-    .flow {
+    .alumni-grid {
       grid-template-columns: minmax(0, 1fr);
     }
 
