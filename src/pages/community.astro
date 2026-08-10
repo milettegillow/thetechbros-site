@@ -13,10 +13,19 @@ function capitalize(str: string): string {
 
 const MAX_TAGS = 5;
 
+/**
+ * `indent` is an optical correction, not a layout nudge. The number and its
+ * label already share a left box edge; what doesn't line up is the ink,
+ * because a leading "1" carries ~0.087em of left side bearing while a "w" or
+ * "f" starts hard against the edge. Shifting the number left by its own
+ * bearing puts the visible stroke where the label's first letter starts.
+ * Values are in em so they track the clamped font size across viewports.
+ * Measured against Helvetica Neue: "1" 0.087em, "2" 0.024em.
+ */
 const stats = [
-  { value: '1,500+', label: 'women hosted in-person' },
-  { value: '28', label: 'countries' },
-  { value: '10,500+', label: 'followers' },
+  { value: '1,500+', label: 'women hosted in-person', indent: '0.087em' },
+  { value: '28', label: 'countries', indent: '0.024em' },
+  { value: '10,500+', label: 'followers', indent: '0.087em' },
 ];
 
 const leads = [
@@ -134,7 +143,7 @@ const locationGroups = countries.map((country) => ({
       <div class="container">
         <div class="stat-row">
           {stats.map((stat) => (
-            <div class="stat-block">
+            <div class="stat-block" style={`--stat-indent: -${stat.indent}`}>
               <span class="stat-value">{stat.value}</span>
               <span class="stat-label">{stat.label}</span>
             </div>
@@ -467,6 +476,9 @@ const locationGroups = countries.map((country) => ({
   }
 
   .stat-value {
+    display: block;
+    white-space: nowrap;
+    text-indent: var(--stat-indent, 0);
     font-size: var(--text-display);
     font-weight: var(--weight-heading);
     letter-spacing: var(--tracking-display);
@@ -475,6 +487,7 @@ const locationGroups = countries.map((country) => ({
   }
 
   .stat-label {
+    display: block;
     font-size: var(--text-lead);
     color: var(--color-text);
     line-height: 1.3;
