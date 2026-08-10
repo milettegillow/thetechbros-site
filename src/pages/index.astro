@@ -470,8 +470,13 @@ const marquee = [...partnerLogos, ...partnerLogos];
     align-items: center;
   }
 
-  /* Goodwin and the scrolling marks share one cap height, centred in boxes of
-     equal height, so they land on the same optical line. */
+  /* Centred in its column. The label above it stays left-aligned. */
+  .lead-sponsor-mark {
+    justify-content: center;
+  }
+
+  /* Goodwin and the scrolling marks are centred in boxes of equal height, so
+     they land on the same optical line whatever their cap heights. */
   .lead-sponsor-logo,
   .logo-item img {
     display: block;
@@ -492,6 +497,11 @@ const marquee = [...partnerLogos, ...partnerLogos];
      contrast push drops the plate to black and lifts the letters to white. */
   .logo-item img[data-tone='threshold'] {
     filter: grayscale(1) contrast(5);
+  }
+
+  /* The live sponsor outranks the archive, so it sits a step larger. */
+  .lead-sponsor-logo {
+    max-height: 92px;
   }
 
   .logo-carousel {
@@ -633,6 +643,10 @@ const marquee = [...partnerLogos, ...partnerLogos];
     .lead-sponsor-logo,
     .logo-item img {
       max-height: 56px;
+    }
+
+    .lead-sponsor-logo {
+      max-height: 72px;
     }
 
     .logo-item {
