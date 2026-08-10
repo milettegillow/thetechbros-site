@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import AsSeenIn from '../components/AsSeenIn.astro';
-import { PUBLICATION_LOGOS, PUBLICATION_LOGO_HEIGHTS } from '../config';
+import { PUBLICATION_LOGOS } from '../config';
 
 // Tier 1. `image` and `url` are both optional: three of these have no artwork
 // yet, and the British Business Bank announcement has no public URL on file.
@@ -162,9 +162,6 @@ const podcasts = [
   },
 ].sort((a, b) => b.date.localeCompare(a.date));
 */
-
-/** Marks in the row lists are scaled down from the strip's tuned heights. */
-const ROW_MARK_SCALE = 0.62;
 ---
 
 <BaseLayout title="Press">
@@ -178,7 +175,8 @@ const ROW_MARK_SCALE = 0.62;
       </div>
     </section>
 
-    <AsSeenIn />
+    {/* The featured banner is the divider here, so the strip drops its rule. */}
+    <AsSeenIn ruleBelow={false} />
 
     <!-- Tier 1: featured -->
     <section class="featured">
@@ -230,37 +228,23 @@ const ROW_MARK_SCALE = 0.62;
       </div>
       <div class="container">
         <ul class="mention-list">
-          {mentions.map((item) => (
-            <li class="mention">
-              <span class="mention-meta">
-                {PUBLICATION_LOGOS[item.publication] ? (
-                  <>
-                    <img
-                      src={PUBLICATION_LOGOS[item.publication]}
-                      alt={item.publication}
-                      class="mention-logo"
-                      style={`height: ${Math.round((PUBLICATION_LOGO_HEIGHTS[item.publication] ?? 20) * ROW_MARK_SCALE)}px`}
-                      loading="eager"
-                      decoding="async"
-                      onerror="this.hidden = true; this.nextElementSibling.hidden = false;"
-                    />
-                    <span class="mention-name" hidden>{item.publication}</span>
-                  </>
-                ) : (
-                  <span class="mention-name">{item.publication}</span>
-                )}
-                <span class="mention-sep">-</span>
-                <span class="mention-date">{item.dateLabel}</span>
-              </span>
-              <span class="mention-headline">
-                {item.url ? (
-                  <a href={item.url} target="_blank" rel="noopener noreferrer">{item.headline}</a>
-                ) : (
-                  item.headline
-                )}
-              </span>
-            </li>
-          ))}
+          {mentions.map((item) => {
+            const Row = item.url ? 'a' : 'div';
+            return (
+              <li class="mention">
+                <Row
+                  class="mention-row"
+                  href={item.url}
+                  target={item.url ? '_blank' : undefined}
+                  rel={item.url ? 'noopener noreferrer' : undefined}
+                >
+                  <span class="mention-pub">{item.publication}</span>
+                  <span class="mention-date">{item.dateLabel}</span>
+                  <span class="mention-headline">{item.headline}</span>
+                </Row>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </section>
@@ -321,13 +305,15 @@ const ROW_MARK_SCALE = 0.62;
     font-weight: 300;
   }
 
+  /* One value governs the space on both sides of every banner: a section's
+     bottom padding is the space above the next section's banner. */
   .featured {
-    padding: 3.5rem 0;
+    padding: 3rem 0;
   }
 
   .mentions,
   .podcasts {
-    padding: 0 0 3.5rem;
+    padding: 0 0 3rem;
   }
 
   .press-list {
@@ -339,7 +325,7 @@ const ROW_MARK_SCALE = 0.62;
      while its inner container keeps the heading on the page's text gutter.
      Deliberately shallower than the home page's statement block. */
   .section-banner {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     padding: 1.25rem 0;
   }
 
@@ -358,8 +344,12 @@ const ROW_MARK_SCALE = 0.62;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
+  /* The last card must not add its own trailing space, or the gap above the
+     next banner doubles. */
   .press-item:last-child {
     border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
   }
 
   .press-item-content {
@@ -437,15 +427,45 @@ const ROW_MARK_SCALE = 0.62;
 
   .mention {
     display: grid;
-    /* Wide enough that the longest publication + date never wraps, so the
-       headline column keeps the whole of the remaining width. */
-    grid-template-columns: minmax(0, 21rem) minmax(0, 1fr);
     gap: 0.25rem 2rem;
     align-items: baseline;
     padding: 1.1rem 0;
     border-bottom: 1px solid var(--color-border);
   }
 
+  /* Three fixed columns so publication, date and headline line up straight
+     down the list. The whole row is the hit area. */
+  .mention-row {
+    display: grid;
+    grid-template-columns: 13rem 8rem minmax(0, 1fr);
+    gap: 0.25rem 2rem;
+    align-items: baseline;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .mention-pub,
+  .mention-date {
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+  }
+
+  .mention-date {
+    white-space: nowrap;
+  }
+
+  .mention-headline {
+    color: var(--color-text);
+    line-height: 1.45;
+  }
+
+  a.mention-row:hover .mention-headline,
+  a.mention-row:focus-visible .mention-headline {
+    color: var(--color-primary);
+  }
+
+  /* Podcast rows keep the two-column meta shape. Retained while that section
+     is commented out, so uncommenting it needs no CSS changes. */
   .mention-meta {
     display: flex;
     align-items: center;
@@ -454,32 +474,12 @@ const ROW_MARK_SCALE = 0.62;
     color: var(--color-text-muted);
   }
 
-  .mention-meta [hidden] {
-    display: none !important;
-  }
-
-  /* Same white-on-black treatment as the strip, scaled down. */
-  .mention-logo {
-    display: block;
-    width: auto;
-    max-width: 9rem;
-    object-fit: contain;
-    filter: brightness(0) invert(1);
-    opacity: 0.9;
-  }
-
-  .mention-name,
-  .mention-date {
+  .mention-name {
     white-space: nowrap;
   }
 
   .mention-sep {
     color: var(--color-text-muted);
-  }
-
-  .mention-headline {
-    color: var(--color-text-body);
-    line-height: 1.45;
   }
 
   /* Podcast rows carry a description under the episode title. */
@@ -500,9 +500,24 @@ const ROW_MARK_SCALE = 0.62;
     color: var(--color-primary);
   }
 
+  /* Podcast rows are still two-column; the mentions rows carry their own. */
+  .podcasts .mention {
+    grid-template-columns: minmax(0, 21rem) minmax(0, 1fr);
+  }
+
   @media (max-width: 768px) {
-    .mention {
+    .mention,
+    .podcasts .mention {
       grid-template-columns: 1fr;
+    }
+
+    .mention-row {
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 0.4rem 1rem;
+    }
+
+    .mention-headline {
+      grid-column: 1 / -1;
     }
   }
 

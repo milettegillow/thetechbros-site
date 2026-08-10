@@ -8,12 +8,14 @@ import { AS_SEEN_IN } from '../config';
 
 interface Props {
   heading?: string;
+  /** Set false where the next section already provides the dividing edge. */
+  ruleBelow?: boolean;
 }
 
-const { heading = 'as seen in' } = Astro.props;
+const { heading = 'as seen in', ruleBelow = true } = Astro.props;
 ---
 
-<section class="as-seen-in">
+<section class="as-seen-in" data-rule-below={String(ruleBelow)}>
   <div class="container">
     <p class="as-seen-in-heading">{heading}</p>
     <ul class="as-seen-in-list">
@@ -44,6 +46,10 @@ const { heading = 'as seen in' } = Astro.props;
 </section>
 
 <style>
+  .as-seen-in[data-rule-below='false'] {
+    border-bottom: none;
+  }
+
   .as-seen-in {
     padding: 2.5rem 0;
     border-top: 1px solid var(--color-border);
