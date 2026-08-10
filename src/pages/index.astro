@@ -240,16 +240,20 @@ const marquee = [...partnerLogos, ...partnerLogos];
     overflow: hidden;
   }
 
+  /* Pinned to the left edge and run 1/0.85 wider than the frame, so the right
+     15% of the picture falls outside .hero-media and is clipped by its
+     overflow. The container's own width is untouched.
+     `object-position` Y is 42.55%, not `bottom`: zooming in for that side crop
+     also deepens the vertical crop, and 42.55% is the share that keeps exactly
+     10% coming off the top, as before. */
   .hero-img {
     position: absolute;
-    inset: 0;
+    inset: 0 auto 0 0;
     display: block;
-    width: 100%;
+    width: 117.647%;
     height: 100%;
     object-fit: cover;
-    /* Anchored to the bottom, so the crop is taken entirely off the sky and
-       treetops and the table, laptops and people sit higher in view. */
-    object-position: center bottom;
+    object-position: 0% 42.55%;
   }
 
   /* Three washes. The bottom and left ones stay light — they only set the
