@@ -67,9 +67,9 @@ const featured = [
 ].sort((a, b) => b.date.localeCompare(a.date));
 
 // Tier 2. Headlines are the publications' own, taken from the articles
-// themselves. Entries without a confirmed URL render as plain text; nothing is
-// guessed. Beinsure is the one row with no URL on file, so it carries the
-// subject of the piece rather than an invented headline.
+// themselves; nothing is guessed. Every URL is absolute and opens in a new tab
+// — a bare domain here would be read as a relative path and 404 on our own
+// origin.
 const mentions = [
   {
     publication: 'The Times',
@@ -120,7 +120,8 @@ const mentions = [
     publication: 'Beinsure',
     date: '2026-06-25',
     dateLabel: '25th June 2026',
-    headline: 'British Business Bank Microfunds announcement',
+    headline: 'UK commits £90 mn to first-time VC managers through new microfund programme',
+    url: 'https://beinsure.com/news/uk-commits-90mn-to-first-time-vc-managers/',
   },
 ].sort((a, b) => b.date.localeCompare(a.date));
 
