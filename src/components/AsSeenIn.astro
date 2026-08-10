@@ -20,7 +20,19 @@ const { heading = 'as seen in' } = Astro.props;
       {AS_SEEN_IN.map((item) => (
         <li class="as-seen-in-item">
           {item.logo ? (
-            <img src={item.logo} alt={item.name} class="as-seen-in-logo" loading="lazy" decoding="async" />
+            <>
+              <img
+                src={item.logo}
+                alt={item.name}
+                class="as-seen-in-logo"
+                {/* Eager: a lazy image below the fold never fires onerror, so a
+                    missing logo would sit there broken instead of falling back. */}
+                loading="eager"
+                decoding="async"
+                onerror="this.hidden = true; this.nextElementSibling.hidden = false;"
+              />
+              <span class="as-seen-in-name" hidden>{item.name}</span>
+            </>
           ) : (
             <span class="as-seen-in-name">{item.name}</span>
           )}
@@ -45,12 +57,26 @@ const { heading = 'as seen in' } = Astro.props;
     margin-bottom: 1.5rem;
   }
 
+  /* One row, evenly spaced across the container. */
   .as-seen-in-list {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 1.5rem 3rem;
+    justify-content: space-between;
+    gap: 1.5rem 2rem;
+  }
+
+  .as-seen-in-item {
+    display: flex;
+    align-items: center;
+  }
+
+  /* `display: block` on the logo outranks the UA [hidden] rule, so the
+     fallback swap needs this or a missing logo shows broken AND as a
+     wordmark. */
+  .as-seen-in-item [hidden] {
+    display: none !important;
   }
 
   /* Wordmark fallback until real logo files land. */
@@ -61,12 +87,16 @@ const { heading = 'as seen in' } = Astro.props;
     white-space: nowrap;
   }
 
+  /* Uniform height, and forced to white so mixed-colour marks sit evenly
+     on black whatever the source file looks like. */
   .as-seen-in-logo {
     display: block;
-    height: 28px;
+    height: 30px;
     width: auto;
-    max-width: 160px;
+    max-width: 180px;
     object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
   }
 
   @media (max-width: 768px) {

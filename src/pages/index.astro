@@ -17,12 +17,12 @@ const routes = [
   {
     label: 'accelerator',
     href: '/accelerator',
-    body: 'Six weeks, twenty founders, 7.4% acceptance rate.',
+    body: 'Eight weeks: two in person in Norway, six hybrid. Twenty founders, 7.4% acceptance rate.',
   },
   {
     label: 'community',
     href: '/community',
-    body: `${eventStats.eventCount} events, ${eventStats.cityCount} cities, 1,500+ technical women.`,
+    body: `${eventStats.eventCount} events and counting, ${eventStats.cityCount} cities, 1,500+ technical women.`,
   },
 ];
 
@@ -85,12 +85,12 @@ const marquee = [...partnerLogos, ...partnerLogos];
       <div class="container">
         <h1>backing the next generation of female tech billionaires</h1>
         <p class="hero-line">
-          the world's first all-female, all-technical accelerator — and the only fund backing
+          the world's first all-female, all-technical accelerator - and the only fund backing
           exclusively all-female, all-technical teams.
         </p>
         <div class="btn-group">
-          <a href="/fund" class="btn btn-primary">The fund</a>
-          <a href="/accelerator" class="btn btn-tertiary">The accelerator</a>
+          <a href="/fund" class="btn btn-primary">the fund</a>
+          <a href="/accelerator" class="btn btn-tertiary">the accelerator</a>
         </div>
       </div>
 
@@ -121,7 +121,6 @@ const marquee = [...partnerLogos, ...partnerLogos];
             <a href={route.href} class="route-card">
               <span class="route-label">{route.label}</span>
               <span class="route-body">{route.body}</span>
-              <span class="route-arrow" aria-hidden="true">→</span>
             </a>
           ))}
         </div>
@@ -142,16 +141,7 @@ const marquee = [...partnerLogos, ...partnerLogos];
       </div>
     </section>
 
-    <!-- 5. Yes Chad -->
-    <section class="chad">
-      <div class="container">
-        <div class="holo chad-block">
-          <p>yes Chad, I really do understand the algorithm</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 6. Partners & sponsors -->
+    <!-- Partners & sponsors -->
     <section class="partners">
       <div class="container">
         <div class="lead-sponsor">
@@ -166,26 +156,31 @@ const marquee = [...partnerLogos, ...partnerLogos];
         </div>
 
         <p class="partners-heading">past partners &amp; sponsors</p>
-      </div>
 
-      <div class="logo-carousel">
-        <div class="logo-carousel-track">
-          {marquee.map((logo) => (
-            <div class="logo-item">
-              <img src={`/index/partner-logos/${logo.file}`} alt={logo.name} loading="lazy" decoding="async" />
-            </div>
-          ))}
+        <div class="logo-carousel">
+          <div class="logo-carousel-track">
+            {marquee.map((logo) => (
+              <div class="logo-item">
+                <img src={`/index/partner-logos/${logo.file}`} alt={logo.name} loading="lazy" decoding="async" />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
 
-      <div class="container">
         <div class="btn-group">
           <a href="/partners" class="btn btn-tertiary">Partners &amp; sponsors</a>
         </div>
       </div>
     </section>
 
-    <!-- 7. Closing -->
+    <!-- Yes Chad — full-bleed, sitting directly above the closing line -->
+    <section class="chad">
+      <div class="holo chad-block">
+        <p>yes Chad, I really do understand the algorithm</p>
+      </div>
+    </section>
+
+    <!-- Closing -->
     <section class="closing">
       <div class="container">
         <p>we're betting on a new kind of tech bro.</p>
@@ -250,7 +245,9 @@ const marquee = [...partnerLogos, ...partnerLogos];
     gap: 2.5rem;
   }
 
-  /* No borders: the cards sit straight on black. */
+  /* No borders: the cards sit straight on black. The whole anchor is the
+     link, and hover lifts every part of it so the target reads as the card
+     rather than the heading. */
   .route-card {
     display: flex;
     flex-direction: column;
@@ -260,11 +257,17 @@ const marquee = [...partnerLogos, ...partnerLogos];
   }
 
   .route-label {
-    transition: color var(--transition);
     font-size: var(--text-h3);
     letter-spacing: var(--tracking-subheading);
     color: var(--color-text);
     line-height: 1.1;
+    transition: color var(--transition);
+  }
+
+  .route-body {
+    color: var(--color-text-body);
+    line-height: 1.55;
+    transition: color var(--transition);
   }
 
   .route-card:hover .route-label,
@@ -272,16 +275,9 @@ const marquee = [...partnerLogos, ...partnerLogos];
     color: var(--color-primary);
   }
 
-  .route-body {
-    color: var(--color-text-body);
-    line-height: 1.55;
-  }
-
-  .route-arrow {
-    color: var(--color-primary);
-    font-size: var(--text-lead);
-    line-height: 1;
-    margin-top: auto;
+  .route-card:hover .route-body,
+  .route-card:focus-visible .route-body {
+    color: var(--color-text);
   }
 
   /* ── 4. The numbers ── */
@@ -322,9 +318,19 @@ const marquee = [...partnerLogos, ...partnerLogos];
     line-height: 1.3;
   }
 
-  /* ── 5. Yes Chad ── */
+  /* ── Yes Chad — full-bleed, no container, text held to the right ── */
+  .chad {
+    padding: 0;
+  }
+
   .chad-block {
-    padding: 4rem 3rem;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 6rem 2rem;
+    display: flex;
+    justify-content: flex-end;
   }
 
   .chad-block p {
@@ -332,9 +338,10 @@ const marquee = [...partnerLogos, ...partnerLogos];
     line-height: 1.15;
     max-width: 24ch;
     margin-bottom: 0;
+    text-align: right;
   }
 
-  /* ── 6. Partners & sponsors ── */
+  /* ── Partners & sponsors ── */
   .partners-heading {
     font-size: var(--text-xs);
     text-transform: uppercase;
@@ -344,7 +351,7 @@ const marquee = [...partnerLogos, ...partnerLogos];
   }
 
   .lead-sponsor {
-    margin-bottom: 3.5rem;
+    margin-bottom: 3rem;
   }
 
   .lead-sponsor-logo {
@@ -360,14 +367,14 @@ const marquee = [...partnerLogos, ...partnerLogos];
     position: relative;
     width: 100%;
     margin-bottom: 2.5rem;
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(to right, black 85%, transparent);
+    -webkit-mask-image: linear-gradient(to right, black 85%, transparent);
   }
 
   .logo-carousel-track {
     display: flex;
     gap: 4rem;
-    animation: scroll 30s linear infinite;
+    animation: scroll 90s linear infinite;
     width: fit-content;
   }
 
@@ -408,7 +415,7 @@ const marquee = [...partnerLogos, ...partnerLogos];
     margin-top: 0;
   }
 
-  /* ── 7. Closing ── */
+  /* ── Closing ── */
   .closing {
     border-top: 1px solid var(--color-border);
   }
@@ -446,7 +453,17 @@ const marquee = [...partnerLogos, ...partnerLogos];
     }
 
     .chad-block {
-      padding: 2.5rem 1.5rem;
+      padding: 3.5rem 1.5rem;
+    }
+
+    /* Lead sponsor stacks above the wall. */
+    .lead-sponsor {
+      margin-bottom: 2rem;
+    }
+
+    .logo-item {
+      width: 120px;
+      height: 64px;
     }
   }
 </style>

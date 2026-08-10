@@ -17,16 +17,20 @@ export const PRESS_LINKS = {
 /**
  * Publications to show in the "as seen in" strip.
  *
- * `logo` is a path under /press/logos/. None of these exist yet, so each entry
- * falls back to its name set as a wordmark; drop a file in and set the path to
- * switch that one over without touching the component.
+ * `logo` is a path under /press/logos/. If the file is missing the component
+ * falls back to the name set as a wordmark, so a logo that hasn't landed yet
+ * never renders as a broken image.
  */
 export const AS_SEEN_IN: { name: string; logo?: string }[] = [
-  { name: 'Sifted' },
-  { name: 'British Business Bank' },
+  { name: 'Sifted', logo: '/press/logos/sifted.png' },
+  { name: 'British Business Bank', logo: '/press/logos/british-business-bank.svg' },
+  // the-times.jpg is a flattened JPEG with no alpha, so on black it renders as
+  // a white box. Re-export with transparency and restore the logo path.
   { name: 'The Times' },
-  { name: 'UKTN' },
-  { name: 'EU-Startups' },
+  { name: 'UKTN', logo: '/press/logos/uktn.svg' },
+  // tech-funding-news.png has no alpha channel — same problem. Needs a
+  // transparent PNG or an SVG.
+  { name: 'Tech Funding News' },
 ];
 
 /**
