@@ -25,6 +25,7 @@ const { heading = 'as seen in' } = Astro.props;
                 src={item.logo}
                 alt={item.name}
                 class="as-seen-in-logo"
+                style={item.height ? `height: ${item.height}px` : undefined}
                 {/* Eager: a lazy image below the fold never fires onerror, so a
                     missing logo would sit there broken instead of falling back. */}
                 loading="eager"
@@ -89,11 +90,14 @@ const { heading = 'as seen in' } = Astro.props;
 
   /* Uniform height, and forced to white so mixed-colour marks sit evenly
      on black whatever the source file looks like. */
+  /* Height is set per-logo inline for optical balance; these are the caps so
+     no single mark can dominate the row. */
   .as-seen-in-logo {
     display: block;
     height: 30px;
+    max-height: 44px;
     width: auto;
-    max-width: 180px;
+    max-width: 190px;
     object-fit: contain;
     filter: brightness(0) invert(1);
     opacity: 0.9;

@@ -15,23 +15,36 @@ export const PRESS_LINKS = {
 };
 
 /**
- * Publications to show in the "as seen in" strip.
+ * Publications shown in the "as seen in" strip and used as the mark on /press
+ * featured cards.
  *
- * `logo` is a path under /press/logos/. If the file is missing the component
- * falls back to the name set as a wordmark, so a logo that hasn't landed yet
- * never renders as a broken image.
+ * `height` is an optical size, not a uniform one. The source marks have very
+ * different proportions — The Times is 5.9:1, UKTN is a square canvas with a
+ * small wordmark inside it — so matching pixel heights would make some look
+ * tiny and others enormous. These are tuned to look evenly weighted.
+ *
+ * All marks are forced white with a CSS filter, so a source file needs a
+ * transparent background; a flattened one renders as a white box.
  */
-export const AS_SEEN_IN: { name: string; logo?: string }[] = [
-  { name: 'Sifted', logo: '/press/logos/sifted.png' },
-  { name: 'British Business Bank', logo: '/press/logos/british-business-bank.svg' },
-  // the-times.jpg is a flattened JPEG with no alpha, so on black it renders as
-  // a white box. Re-export with transparency and restore the logo path.
-  { name: 'The Times' },
-  { name: 'UKTN', logo: '/press/logos/uktn.svg' },
-  // tech-funding-news.png has no alpha channel — same problem. Needs a
-  // transparent PNG or an SVG.
-  { name: 'Tech Funding News' },
+export interface Publication {
+  name: string;
+  logo?: string;
+  /** Optical height in px for the "as seen in" strip. */
+  height?: number;
+}
+
+export const AS_SEEN_IN: Publication[] = [
+  { name: 'Sifted', logo: '/press/logos/sifted.png', height: 24 },
+  { name: 'British Business Bank', logo: '/press/logos/british-business-bank.svg', height: 34 },
+  { name: 'The Times', logo: '/press/logos/the-times.jpg', height: 22 },
+  { name: 'UKTN', logo: '/press/logos/uktn.svg', height: 44 },
+  { name: 'Tech Funding News', logo: '/press/logos/tech-funding-news.png', height: 30 },
 ];
+
+/** Publication name -> logo, for pages that show a mark per publication. */
+export const PUBLICATION_LOGOS: Record<string, string> = Object.fromEntries(
+  AS_SEEN_IN.filter((p) => p.logo).map((p) => [p.name, p.logo as string])
+);
 
 /**
  * Community leads. Single source of truth — rendered on /community and /about.
