@@ -14,11 +14,12 @@ quotes:
   - "This was such an informative session - I found myself inspired by all I learned."
   - "Really great intro to creating a successful startup and getting investors."
   - "I feel more confident, it helped me define the next steps to take"
+sponsors:
+  - "IE Cambridge: Innovation & Entrepreneurship"
+  - "Innovate Cambridge"
 inKind:
   - "The Glasshouse"
 communityPartners:
-  - "IE Cambridge: Innovation & Entrepreneurship"
-  - "Innovate Cambridge"
   - "ideaSpace"
 rating: 4.6
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7303112498885361664/"

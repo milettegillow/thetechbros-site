@@ -8,7 +8,7 @@ quotes:
   - "This event was fantastic! Great group of people from different backgrounds to meet, hear from, and work with. This event reminded me that creating things with an enthusiastic team is amazing, and that yes in fact l do know what I'm doing and I can make things."
   - "Loved the theme and so much fun with bad ideas and enabled us to think out of the box."
   - "I definitely feel less intimidated about the whole idea."
-inKind:
+sponsors:
   - "NFX"
 communityPartners:
   - "TECH WEEK by a16z"

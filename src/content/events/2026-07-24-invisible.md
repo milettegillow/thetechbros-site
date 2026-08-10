@@ -9,7 +9,7 @@ quotes:
   - "Really loved the community and the way the day was planned."
   - "Very welcoming. Feels like a safe space for folks dipping into the start-up space."
 sponsors:
-  - "Amazon Web Services"
+  - "Amazon Web Services (AWS)"
   - "Goodwin"
 inKind:
   - "Halkin Offices"

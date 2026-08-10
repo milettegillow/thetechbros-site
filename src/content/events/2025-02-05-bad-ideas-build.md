@@ -9,9 +9,10 @@ quotes:
   - "Amazing event. It was really nice to get back to hands-on coding. I actually came in thinking that the time planned for hacking would not be even close to enough for an MVP. However, all groups were able to execute their projects, which was great to see. The food was great too ;) Overall, a day spent productively well."
   - "The atmosphere was harmonious yet professional beyond my expectations. Loved it!"
 sponsors:
-  - "Codecademy"
+  - "Advanced Research + Invention Agency (ARIA)"
 inKind:
   - "COLONY"
+  - "Codecademy"
 communityPartners:
   - "Women in Science and Engineering - UoM"
 rating: 5.0

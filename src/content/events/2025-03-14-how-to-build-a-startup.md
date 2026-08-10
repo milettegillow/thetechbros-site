@@ -16,9 +16,9 @@ quotes:
   - "Flawlessly designed and executed. I have decided to build a startup and now have the connections and information required to do so. Phenomenal outcome. Thank you!"
 sponsors:
   - "Innovate UK"
-  - "NVIDIA"
 inKind:
   - "x+why"
+  - "NVIDIA"
 communityPartners:
   - "Women in High Performance Computing (WHPC)"
 rating: 4.7

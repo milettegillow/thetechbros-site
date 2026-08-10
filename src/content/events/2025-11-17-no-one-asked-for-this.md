@@ -11,10 +11,11 @@ quotes:
   - "Was great! Great idea for women to get together and network:) Loved the open format"
 sponsors:
   - "AngelList"
-  - "GLO (Global Entrepreneurs Hub)"
 inKind:
   - "Cursor"
   - "Vercel"
+communityPartners:
+  - "GLO (Global Entrepreneurs Hub)"
 rating: 4.75
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7396486491318820864/"
 lumaUrl: "https://luma.com/qe3bfkhn"

@@ -9,8 +9,9 @@ quotes:
   - "Love how fun it was!!! The organizers were incredibly welcoming, creating a warm and low-pressure environment"
   - "So fun! Love meeting ambitious women"
 sponsors:
-  - "Cursor"
   - "Goodwin"
+inKind:
+  - "Cursor"
 communityPartners:
   - "UC Berkeley School of Information"
   - "Girls Into VC at Berkeley"

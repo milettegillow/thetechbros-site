@@ -10,10 +10,10 @@ quotes:
   - "The atmosphere was great and loved how non-serious it was, made it all feel very comfortable. It was a first time for me attending such an event and it definitely has opened my mind up to possibilities!"
   - "It has been a lovely day and I met lots of wonderful people at the event. I'm definitely more interested in founding my own startup after the event, and feel more confident about doing so:)"
 sponsors:
-  - "Codecademy"
   - "Advanced Research + Invention Agency (ARIA)"
 inKind:
   - "Patch"
+  - "Codecademy"
 communityPartners:
   - "Women in Science and Engineering (WISE) at York University"
 rating: 4.9

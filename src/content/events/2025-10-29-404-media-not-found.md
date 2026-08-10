@@ -10,11 +10,11 @@ quotes:
   - "It's been a lovely event to brainstorm and network! I definitely feel even more inspired to become a founder in future, knowing I have a solid foundation for that. Thank you once again for the event 💞"
   - "I had so much fun! I thought the set up was amazing and I really appreciated the panel in the morning. The whole experience has definitely improved my confidence and the panel made me really excited about the idea to found or co-found my own startup. I would love to attend future events!"
 sponsors:
+  - "Mercuri VC"
+inKind:
   - "ElevenLabs"
   - "Canva"
   - "Hugging Face"
-inKind:
-  - "Mercuri VC"
 communityPartners:
   - "Invest in Women Taskforce"
 rating: 4.5

@@ -14,6 +14,8 @@ sponsors:
   - "Oxford Science Enterprises"
 communityPartners:
   - "University of Oxford"
+  - "Mathematrix"
+  - "Mirzakhani"
 rating: 5.0
 linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7260284056666279939/"
 lumaUrl: "https://luma.com/8eznsdmx"

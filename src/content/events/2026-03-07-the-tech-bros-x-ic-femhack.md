@@ -10,12 +10,13 @@ quotes:
   - "The best hackathon I've been to yet! I loved working alongside women, especially my team."
   - "It was great fun getting to use hardware for the first time in an all women empowering, nonjudgmental environment!"
 sponsors:
-  - "Halkin Offices"
-  - "RS"
   - "Fivium"
   - "Goodwin"
   - "Imperial Enterprise Lab"
   - "Imperial Department of Chemical Engineering"
+inKind:
+  - "Halkin Offices"
+  - "RS"
 communityPartners:
   - "Women In STEM @ IC"
   - "Imperial College Prototyping and Hacking Society"
