@@ -3,6 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import NewsletterSignup from '../components/NewsletterSignup.astro';
+import PeopleGrid from '../components/PeopleGrid.astro';
+import { VENTURE_PARTNERS, COHORT_2 } from '../data/people';
 
 const programme = [
   'Two weeks in person at a hacker house in Norway.',
@@ -60,12 +62,6 @@ const origins = [
   { name: 'EPFL' },
 ];
 
-// Placeholders until the real bench is supplied. Deliberately not fake people.
-const venturePartners = Array.from({ length: 12 }, (_, i) => ({
-  name: `Venture partner ${String(i + 1).padStart(2, '0')}`,
-  credential: 'Credential to come',
-  photo: undefined as string | undefined,
-}));
 ---
 
 <BaseLayout
@@ -187,23 +183,20 @@ const venturePartners = Array.from({ length: 12 }, (_, i) => ({
     <section class="partners">
       <div class="container">
         <h2>venture partners</h2>
-        <div class="person-grid">
-          {venturePartners.map((partner) => (
-            <div class="person-card">
-              {partner.photo ? (
-                <img src={partner.photo} alt={partner.name} class="person-photo" loading="lazy" decoding="async" />
-              ) : (
-                <div class="person-photo person-photo-placeholder" aria-hidden="true"></div>
-              )}
-              <p class="person-name">{partner.name}</p>
-              <p class="person-meta">{partner.credential}</p>
-            </div>
-          ))}
-        </div>
+        <PeopleGrid people={VENTURE_PARTNERS} photoBase="/accelerator/venture-partners" />
       </div>
     </section>
 
-    <!-- 9. Newsletter -->
+    <!-- 9. Cohort 2 -->
+    <section class="cohort-2">
+      <div class="container">
+        <h2>cohort 2</h2>
+        <p class="cohort-2-line">270+ applied. Twenty selected. A 7.4% acceptance rate.</p>
+        <PeopleGrid people={COHORT_2} photoBase="/accelerator/cohort-2" />
+      </div>
+    </section>
+
+    <!-- 10. Newsletter -->
     <section class="newsletter" id="newsletter">
       <div class="container">
         <h2>hear when cohort 3 opens</h2>
@@ -425,48 +418,15 @@ const venturePartners = Array.from({ length: 12 }, (_, i) => ({
     margin-bottom: 0;
   }
 
-  /* ── 8. Venture partners — same treatment as the community leads ── */
-  .person-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 3rem 2rem;
-  }
-
-  .person-card {
-    max-width: 320px;
-  }
-
-  .person-photo {
-    display: block;
-    height: 320px;
-    width: auto;
-    max-width: 100%;
-    object-fit: contain;
-    margin-bottom: 1rem;
-  }
-
-  /* Placeholder stands in at the same height so the layout is real. */
-  .person-photo-placeholder {
-    width: 240px;
-    background: var(--color-surface);
-  }
-
-  .person-name {
+  /* ── 9. Cohort 2 ── */
+  .cohort-2-line {
+    margin-top: -1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: var(--text-lead);
     color: var(--color-text);
-    font-size: var(--text-h4);
-    letter-spacing: var(--tracking-subheading);
-    line-height: 1.2;
-    margin-bottom: 0.25rem;
   }
 
-  .person-meta {
-    color: var(--color-primary);
-    font-size: var(--text-small);
-    letter-spacing: var(--tracking-subheading);
-    margin-bottom: 0;
-  }
-
-  /* ── 9. Newsletter ── */
+  /* ── 10. Newsletter ── */
   .newsletter {
     border-top: 1px solid var(--color-border);
   }
@@ -487,9 +447,6 @@ const venturePartners = Array.from({ length: 12 }, (_, i) => ({
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .person-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
   }
 
   @media (max-width: 768px) {
@@ -501,8 +458,7 @@ const venturePartners = Array.from({ length: 12 }, (_, i) => ({
       padding: 2rem 1.5rem;
     }
 
-    .stat-grid,
-    .person-grid {
+    .stat-grid {
       grid-template-columns: minmax(0, 1fr);
     }
 
