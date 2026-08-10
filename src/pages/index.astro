@@ -49,13 +49,20 @@ const numbers = [
 ].map((n) => ({ ...n, indent: indentFor(n.value) }));
 
 // Amplitude removed at the client's request.
+// Most marks are white-on-transparent, so the default brightness(0) invert(1)
+// is a no-op that only bites on the few coloured ones. `tone` overrides it for
+// artwork that carries its own light/dark structure and would flatten into a
+// solid white slab.
 const partnerLogos = [
   { file: 'nfx.png', name: 'NFX' },
-  { file: 'notion.png', name: 'Notion' },
+  // White plate with a knocked-out black N — forcing white loses the mark.
+  { file: 'notion.png', name: 'Notion', tone: 'invert' },
   { file: 'nvidia.png', name: 'NVIDIA' },
   { file: 'google_cloud.png', name: 'Google Cloud' },
   { file: 'aws.png', name: 'AWS' },
-  { file: 'innovate-uk.png', name: 'Innovate UK' },
+  // UKRI's block is a solid coloured plate; no filter renders it legibly in
+  // mono. Needs a reversed/white asset from UKRI's brand pack.
+  { file: 'innovate-uk.png', name: 'Innovate UK', tone: 'none' },
   { file: 'aria.png', name: 'ARIA' },
   { file: 'angellist.png', name: 'AngelList' },
   { file: 'vercel.png', name: 'Vercel' },
@@ -172,7 +179,13 @@ const marquee = [...partnerLogos, ...partnerLogos];
               <div class="logo-carousel-track">
                 {marquee.map((logo) => (
                   <div class="logo-item">
-                    <img src={`/index/partner-logos/${logo.file}`} alt={logo.name} loading="lazy" decoding="async" />
+                    <img
+                      src={`/index/partner-logos/${logo.file}`}
+                      alt={logo.name}
+                      data-tone={logo.tone}
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
                 ))}
               </div>
@@ -209,7 +222,9 @@ const marquee = [...partnerLogos, ...partnerLogos];
   }
 
   /* ── 1. Hero ── */
-  .hero {
+  /* Selector has to out-specify `.home section` above, or the generic block
+     padding wins and reopens the gap under the hero image. */
+  .home section.hero {
     padding: 4.5rem 0 0;
   }
 
@@ -325,7 +340,8 @@ const marquee = [...partnerLogos, ...partnerLogos];
   }
 
   /* ── Yes Chad — full-bleed, no container, text held to the right ── */
-  .chad {
+  /* No padding at all: the block butts straight onto the hero image. */
+  .home section.chad {
     padding: 0;
   }
 
@@ -353,9 +369,15 @@ const marquee = [...partnerLogos, ...partnerLogos];
     text-transform: uppercase;
     letter-spacing: var(--tracking-label);
     color: var(--color-text-muted);
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.5rem;
     /* Both labels sit on the same line above their content. */
     min-height: 1.2em;
+  }
+
+  /* The live sponsor is called out; the archive stays muted. */
+  .lead-sponsor .partners-heading {
+    color: var(--color-primary);
+    font-weight: 700;
   }
 
   .partner-row {
@@ -371,25 +393,43 @@ const marquee = [...partnerLogos, ...partnerLogos];
      Goodwin mark lines up with the scrolling logos beside it. */
   .lead-sponsor-mark,
   .logo-item {
-    height: 80px;
+    height: 112px;
     display: flex;
     align-items: center;
   }
 
-  .lead-sponsor-logo {
+  /* Goodwin and the scrolling marks share one cap height, centred in boxes of
+     equal height, so they land on the same optical line. */
+  .lead-sponsor-logo,
+  .logo-item img {
     display: block;
-    height: 48px;
     width: auto;
+    height: auto;
+    max-height: 72px;
     max-width: 100%;
     object-fit: contain;
+    /* Same treatment as the as-seen-in strip: white on black, whatever the
+       source artwork's colours. */
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+  }
+
+  .logo-item img[data-tone='invert'] {
+    filter: invert(1);
+  }
+
+  .logo-item img[data-tone='none'] {
+    filter: none;
   }
 
   .logo-carousel {
     overflow: hidden;
     position: relative;
     width: 100%;
-    mask-image: linear-gradient(to right, black 85%, transparent);
-    -webkit-mask-image: linear-gradient(to right, black 85%, transparent);
+    /* Fades at both ends so marks dissolve instead of being sliced by the
+       overflow edge on the way in and out. */
+    mask-image: linear-gradient(to right, transparent 0, black 6%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0, black 6%, black 92%, transparent 100%);
   }
 
   .logo-carousel-track {
@@ -416,17 +456,9 @@ const marquee = [...partnerLogos, ...partnerLogos];
 
   .logo-item {
     flex-shrink: 0;
-    width: 150px;
+    width: 220px;
     justify-content: center;
-    padding: 1rem;
-  }
-
-  .logo-item img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
+    padding: 0 1rem;
   }
 
   .partners .btn-group {
@@ -460,7 +492,7 @@ const marquee = [...partnerLogos, ...partnerLogos];
       padding: 3.5rem 0;
     }
 
-    .hero {
+    .home section.hero {
       padding-top: 3rem;
     }
 
@@ -482,11 +514,16 @@ const marquee = [...partnerLogos, ...partnerLogos];
 
     .lead-sponsor-mark,
     .logo-item {
-      height: 64px;
+      height: 88px;
+    }
+
+    .lead-sponsor-logo,
+    .logo-item img {
+      max-height: 56px;
     }
 
     .logo-item {
-      width: 120px;
+      width: 170px;
     }
   }
 </style>
