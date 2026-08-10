@@ -92,8 +92,8 @@ const marquee = [...partnerLogos, ...partnerLogos];
       <div class="container">
         <h1>backing the next generation of female tech billionaires</h1>
         <p class="hero-line">
-          the world's first all-female, all-technical accelerator - and the only fund backing
-          exclusively all-female, all-technical teams.
+          the world's first all-female, all-technical accelerator,<br class="hero-line-break" />
+          and the only fund backing all-female, all-technical teams.
         </p>
         <div class="btn-group">
           <a href="/fund" class="btn btn-primary">the fund</a>
@@ -116,13 +116,6 @@ const marquee = [...partnerLogos, ...partnerLogos];
       </div>
     </section>
 
-    <!-- Yes Chad — full-bleed, sitting directly under the hero -->
-    <section class="chad">
-      <div class="holo chad-block">
-        <p>yes Chad, I really do understand the algorithm</p>
-      </div>
-    </section>
-
     <!-- As seen in -->
     <AsSeenIn />
 
@@ -138,6 +131,13 @@ const marquee = [...partnerLogos, ...partnerLogos];
             </a>
           ))}
         </div>
+      </div>
+    </section>
+
+    <!-- Yes Chad — full-bleed, between what we do and the numbers -->
+    <section class="chad">
+      <div class="holo chad-block">
+        <p>yes Chad, I really do understand the algorithm</p>
       </div>
     </section>
 
@@ -236,7 +236,8 @@ const marquee = [...partnerLogos, ...partnerLogos];
   .hero-line {
     font-size: var(--text-lead);
     color: var(--color-text);
-    max-width: 56ch;
+    /* Wide enough that neither hand-broken line wraps again at desktop. */
+    max-width: 64ch;
     margin-bottom: 0;
   }
 
@@ -251,6 +252,18 @@ const marquee = [...partnerLogos, ...partnerLogos];
     position: relative;
     left: 50%;
     transform: translateX(-50%);
+  }
+
+  /* Dissolves the page ground into the top of the photograph so the two don't
+     meet on a hard horizontal edge. Sits over the image, under nothing else —
+     the hero copy is above the picture, not on it. */
+  .hero-image::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 22%;
+    background: linear-gradient(to bottom, var(--color-bg) 0%, rgba(0, 0, 0, 0) 100%);
+    pointer-events: none;
   }
 
   .hero-img {
@@ -494,6 +507,10 @@ const marquee = [...partnerLogos, ...partnerLogos];
 
     .home section.hero {
       padding-top: 3rem;
+    }
+
+    .hero-line-break {
+      display: none;
     }
 
     .number-row {
