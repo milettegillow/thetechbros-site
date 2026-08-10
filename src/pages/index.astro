@@ -55,14 +55,13 @@ const numbers = [
 // solid white slab.
 const partnerLogos = [
   { file: 'nfx.png', name: 'NFX' },
-  // White plate with a knocked-out black N — forcing white loses the mark.
-  { file: 'notion.png', name: 'Notion', tone: 'invert' },
+  // Knocked-out artwork: flattening to white would fill the plate solid.
+  { file: 'notion.png', name: 'Notion', tone: 'threshold' },
   { file: 'nvidia.png', name: 'NVIDIA' },
   { file: 'google_cloud.png', name: 'Google Cloud' },
   { file: 'aws.png', name: 'AWS' },
-  // UKRI's block is a solid coloured plate; no filter renders it legibly in
-  // mono. Needs a reversed/white asset from UKRI's brand pack.
-  { file: 'innovate-uk.png', name: 'Innovate UK', tone: 'none' },
+  // Coloured plate with the letters knocked out of it, same as Notion.
+  { file: 'innovate-uk.png', name: 'Innovate UK', tone: 'threshold' },
   { file: 'aria.png', name: 'ARIA' },
   { file: 'angellist.png', name: 'AngelList' },
   { file: 'vercel.png', name: 'Vercel' },
@@ -364,6 +363,11 @@ const marquee = [...partnerLogos, ...partnerLogos];
      `.home section` above, which would otherwise reimpose 5rem. */
   .home section.numbers {
     padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .home section.partners {
+    padding-top: 2rem;
   }
 
   .number-row {
@@ -413,7 +417,8 @@ const marquee = [...partnerLogos, ...partnerLogos];
     position: relative;
     left: 50%;
     transform: translateX(-50%);
-    padding: 6rem 2rem;
+    /* Sized to the two lines of type, not the other way round. */
+    padding: 3rem 2rem;
     display: flex;
     justify-content: flex-end;
   }
@@ -477,12 +482,12 @@ const marquee = [...partnerLogos, ...partnerLogos];
     opacity: 0.9;
   }
 
-  .logo-item img[data-tone='invert'] {
-    filter: invert(1);
-  }
-
-  .logo-item img[data-tone='none'] {
-    filter: none;
+  /* Artwork whose meaning lives in its own light/dark structure — a coloured
+     plate with the letters knocked out of it. Flattening that to white fills
+     the plate solid and loses the mark, so instead grayscale plus a hard
+     contrast push drops the plate to black and lifts the letters to white. */
+  .logo-item img[data-tone='threshold'] {
+    filter: grayscale(1) contrast(5);
   }
 
   .logo-carousel {
@@ -593,6 +598,11 @@ const marquee = [...partnerLogos, ...partnerLogos];
 
     .home section.numbers {
       padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+
+    .home section.partners {
+      padding-top: 1.5rem;
     }
 
     .number-row {
@@ -602,7 +612,7 @@ const marquee = [...partnerLogos, ...partnerLogos];
     }
 
     .chad-block {
-      padding: 3.5rem 1.5rem;
+      padding: 2.25rem 1.5rem;
     }
 
     /* Lead sponsor stacks above the carousel. */
