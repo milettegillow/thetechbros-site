@@ -28,3 +28,44 @@ export const AS_SEEN_IN: { name: string; logo?: string }[] = [
   { name: 'UKTN' },
   { name: 'EU-Startups' },
 ];
+
+/**
+ * Community leads. Single source of truth — rendered on /community and /about.
+ * `photo` is a filename under /community/leads/; omit it and the card falls
+ * back to a placeholder block at the same height.
+ */
+export const COMMUNITY_LEADS: {
+  name: string;
+  city: string;
+  role: string;
+  linkedin: string;
+  photo?: string;
+}[] = [
+  {
+    name: 'Kasia Gora',
+    city: 'San Francisco',
+    role: 'Community lead',
+    linkedin: 'https://www.linkedin.com/in/kasia-gora/',
+    photo: 'kasia-gora.png',
+  },
+  {
+    name: 'Lucy Daly',
+    city: 'Dublin',
+    role: 'Community lead',
+    linkedin: 'https://www.linkedin.com/in/lucy-daly-ireland/',
+    photo: 'lucy-daly.png',
+  },
+  {
+    name: 'Laurence Maeter',
+    city: 'London',
+    role: 'Community lead',
+    linkedin: 'https://www.linkedin.com/in/laurence-maeter-743581188/',
+    photo: 'laurence-maeter.png',
+  },
+  {
+    name: 'Emile Shah',
+    city: 'Singapore',
+    role: 'Community lead',
+    linkedin: '',
+  },
+];
