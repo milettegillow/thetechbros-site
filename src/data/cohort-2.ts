@@ -7,7 +7,6 @@ import type { Person } from './people';
  *   photo    filename only, in public/accelerator/cohort-2/.
  *   linkedin full profile URL. Leave it off and no icon is shown.
  *
- * Two surnames are still outstanding; the entries are otherwise complete.
  */
 export const COHORT_2: Person[] = [
   {
@@ -15,9 +14,8 @@ export const COHORT_2: Person[] = [
     photo: 'almeena.png',
     linkedin: 'https://www.linkedin.com/in/almeena-shaikh/',
   },
-  // Surname to follow.
   {
-    name: 'Alveera',
+    name: 'Alveera Khan',
     photo: 'alveera.png',
     linkedin: 'https://www.linkedin.com/in/alveera/',
   },
@@ -81,9 +79,8 @@ export const COHORT_2: Person[] = [
     photo: 'naama.png',
     linkedin: 'https://www.linkedin.com/in/naamapaulemont/',
   },
-  // Surname to follow.
   {
-    name: 'Nabanita',
+    name: 'Nabanita De',
     photo: 'nabanita.png',
     linkedin: 'https://www.linkedin.com/in/nabanitaai/',
   },
