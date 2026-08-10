@@ -23,6 +23,7 @@ const featured = [
     headline: 'Official announcement: £90m across 10 microfunds',
     description:
       'The British Business Bank announces cornerstone commitments to ten emerging managers under its £400m Investor Pathways Capital initiative.',
+    url: 'https://www.british-business-bank.co.uk/news-and-events/news/british-business-bank-backs-new-generation-uk-venture-capital-investors-first-investor-pathways',
   },
   {
     publication: 'Shifter',
@@ -32,6 +33,16 @@ const featured = [
     description:
       "Norwegian coverage of the British Business Bank commitment and the accelerator's Norway cohort.",
     url: 'https://www.shifter.no/nyheter/the-tech-bros-far-deler-av-milliardfond-til-a-investere-i-startups-av-og-med-kvinner/468672',
+  },
+  {
+    publication: 'Tech Funding News',
+    date: '2026-06-25',
+    dateLabel: '25th June, 2026',
+    headline:
+      'British Business Bank backs 10 microfunds with £90M, with most GPs women or from ethnic minority backgrounds',
+    description:
+      'The Tech Bros: Fund I profiled as investing in female technical founders, primarily graduates of the accelerator, led by Dr Milette Gillow.',
+    url: 'https://techfundingnews.com/british-business-bank-90m-microfunds/',
   },
   {
     publication: 'Shifter',
@@ -56,8 +67,9 @@ const featured = [
   },
 ].sort((a, b) => b.date.localeCompare(a.date));
 
-// Tier 2. `headline` is absent where only the publication was supplied; those
-// entries carry the shared subject instead. No URLs are guessed.
+// Tier 2. These all cover the same announcement, so they share a subject line
+// rather than an invented headline. Entries without a confirmed URL render as
+// plain text; nothing is guessed.
 const BBB_SUBJECT = 'British Business Bank Microfunds announcement';
 
 const mentions = [
@@ -68,14 +80,47 @@ const mentions = [
     headline: 'Why vibe coders need community support to thrive',
     url: 'https://www.thetimes.com/business/entrepreneurs/article/power-communities-vibe-coders-friends-enterprise-network-379tqx8vg',
   },
-  ...['UKTN', 'EU-Startups', 'FStech', 'Insider Media', 'IT Brief UK', 'Pulse 2', 'BeBeez', 'Beinsure'].map(
-    (publication) => ({
-      publication,
-      date: '2026-06-25',
-      dateLabel: '25th June, 2026',
-      headline: BBB_SUBJECT,
-    })
-  ),
+  {
+    publication: 'Pulse 2',
+    date: '2026-06-27',
+    dateLabel: '27th June, 2026',
+    headline: BBB_SUBJECT,
+    url: 'https://pulse2.com/british-business-bank-commits-up-to-90-million-to-back-emerging-uk-venture-capital-managers/',
+  },
+  {
+    publication: 'Insider Media',
+    date: '2026-06-26',
+    dateLabel: '26th June, 2026',
+    headline: BBB_SUBJECT,
+    url: 'https://www.insidermedia.com/news/national/british-business-bank-to-commit-90m-to-back-new-generation-of-uk-venture-capital-investors',
+  },
+  {
+    publication: 'UKTN',
+    date: '2026-06-25',
+    dateLabel: '25th June, 2026',
+    headline: BBB_SUBJECT,
+    url: 'https://www.uktech.news/funding/british-business-bank-commits-90m-for-next-generation-of-vc-investors-20260625',
+  },
+  {
+    publication: 'BeBeez International',
+    date: '2026-06-25',
+    dateLabel: '25th June, 2026',
+    headline: BBB_SUBJECT,
+    url: 'https://bebeez.eu/2026/06/25/british-business-bank-commits-e104-million-to-support-uk-venture-capital-fund-managers/',
+  },
+  {
+    publication: 'The Southern Gazette',
+    date: '2026-06-25',
+    dateLabel: '25th June, 2026',
+    headline: BBB_SUBJECT,
+    url: 'https://www.thesoutherngazette.com/financial/british-business-bank-backs-new-generation-of-uk-venture-capital-investors-with-first-investor-pathways-capital-commitment-of-up-to-90m/',
+  },
+  {
+    publication: 'Beinsure',
+    date: '2026-06-25',
+    dateLabel: '25th June, 2026',
+    headline: BBB_SUBJECT,
+  },
 ].sort((a, b) => b.date.localeCompare(a.date));
 ---
 
