@@ -38,13 +38,18 @@ export interface Publication {
   height?: number;
 }
 
+/**
+ * `height` is tuned per mark, not shared: these lockups differ in proportion
+ * (a one-line wordmark, a three-line stack, a wordmark over a strapline), so a
+ * single height renders them at wildly different visual weights.
+ */
 export const AS_SEEN_IN: Publication[] = [
-  { name: 'Sifted', logo: '/press/logos/sifted.png', height: 24 },
-  { name: 'Shifter', logo: '/press/logos/shifter.png', height: 20 },
-  { name: 'British Business Bank', logo: '/press/logos/british-business-bank.svg', height: 34 },
-  { name: 'The Times', logo: '/press/logos/the-times.png', height: 22 },
-  { name: 'UKTN', logo: '/press/logos/uktn.svg', height: 44 },
-  { name: 'Tech Funding News', logo: '/press/logos/tech-funding-news.png', height: 30 },
+  { name: 'Sifted', logo: '/press/logos/sifted.png', height: 26 },
+  { name: 'Shifter', logo: '/press/logos/shifter.png', height: 22 },
+  { name: 'British Business Bank', logo: '/press/logos/british-business-bank.svg', height: 33 },
+  { name: 'The Times', logo: '/press/logos/the-times.png', height: 20 },
+  { name: 'UKTN', logo: '/press/logos/uktn.svg', height: 25 },
+  { name: 'Tech Funding News', logo: '/press/logos/tech-funding-news.png', height: 38 },
 ];
 
 /** Publication name -> logo, for pages that show a mark per publication. */

@@ -175,8 +175,10 @@ const ROW_MARK_SCALE = 0.62;
 
     <!-- Tier 1: featured -->
     <section class="featured">
+      <div class="section-banner holo">
+        <div class="container"><h2>featured</h2></div>
+      </div>
       <div class="container">
-        <h2>featured</h2>
         <div class="press-list">
           {featured.map((item) => (
             <article class="press-item">
@@ -216,8 +218,10 @@ const ROW_MARK_SCALE = 0.62;
 
     <!-- Tier 2: mentions -->
     <section class="mentions">
+      <div class="section-banner holo">
+        <div class="container"><h2>mentions</h2></div>
+      </div>
       <div class="container">
-        <h2>mentions</h2>
         <ul class="mention-list">
           {mentions.map((item) => (
             <li class="mention">
@@ -256,8 +260,10 @@ const ROW_MARK_SCALE = 0.62;
 
     <!-- Podcasts -->
     <section class="podcasts">
+      <div class="section-banner holo">
+        <div class="container"><h2>podcasts</h2></div>
+      </div>
       <div class="container">
-        <h2>podcasts</h2>
         <ul class="mention-list">
           {podcasts.map((item) => (
             <li class="mention">
@@ -305,16 +311,12 @@ const ROW_MARK_SCALE = 0.62;
   }
 
   .featured {
-    padding: 4rem 0 3rem;
+    padding: 3.5rem 0;
   }
 
-  .mentions {
-    padding: 0 0 4rem;
-  }
-
+  .mentions,
   .podcasts {
-    background: rgba(0, 0, 0, 0.2);
-    padding: 4rem 0;
+    padding: 0 0 3.5rem;
   }
 
   .press-list {
@@ -322,11 +324,21 @@ const ROW_MARK_SCALE = 0.62;
     margin: 0 auto;
   }
 
-  .featured h2,
-  .mentions h2,
-  .podcasts h2 {
-    margin-left: -2rem;
-    margin-bottom: 1.25rem;
+  /* Full-bleed divider: a direct child of the section, so it runs edge to edge
+     while its inner container keeps the heading on the page's text gutter.
+     Deliberately shallower than the home page's statement block. */
+  .section-banner {
+    margin-bottom: 2rem;
+    padding: 1.25rem 0;
+  }
+
+  .section-banner h2 {
+    margin: 0;
+    text-align: left;
+    font-size: var(--text-h3);
+    font-weight: var(--weight-holo);
+    letter-spacing: var(--tracking-holo);
+    line-height: 1.1;
   }
 
   .press-item {
@@ -503,12 +515,6 @@ const ROW_MARK_SCALE = 0.62;
     .press-item {
       margin-bottom: 2rem;
       padding-bottom: 2rem;
-    }
-
-    .featured h2,
-    .mentions h2,
-    .podcasts h2 {
-      margin-left: 0;
     }
 
     .press-item-content {
