@@ -1,0 +1,331 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+import ContactButton from '../../components/ContactButton.astro';
+---
+
+<BaseLayout
+  title="Partner with us: universities"
+  description="How The Tech Bros partners with universities."
+>
+  <Navigation />
+  <main>
+    <!-- universities, moved from /partner/universities -->
+    <section class="partner-group" id="universities">
+      <div class="container">
+        <h1 class="partner-group-title">partner with us: universities</h1>
+      </div>
+    </section>
+    <section class="universities-partner">
+      <div class="container">
+        <div class="partner-content">
+          <h2>why partner with the tech bros</h2>
+          <p class="section-intro">We work with universities to help technical women move from theory to practice.</p>
+          <p>Our programmes and events expose students and researchers to startup thinking, technical entrepreneurship, and real-world company building, without assuming prior founder experience.</p>
+          
+          <h3>we partner with:</h3>
+          <ul class="partner-list">
+            <li>Departments</li>
+            <li>Enterprise teams</li>
+            <li>Student societies</li>
+            <li>Innovation hubs</li>
+          </ul>
+
+          <h2>what partnership looks like</h2>
+          <p>We collaborate on hands-on, educational events that complement academic learning.</p>
+          
+          <h3>typical formats include:</h3>
+          <ul class="partner-list">
+            <li>Startup weekends</li>
+            <li>Hackathons</li>
+            <li>Founder workshops and panels</li>
+          </ul>
+          <p>We bring external perspective, industry context, and a strong peer cohort.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="spotlight-hero-image">
+      <img 
+        src="/partners/unit-m-startup-weekend-hero.jpg" 
+        alt="Unit M Startup Weekend"
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+        width="1920"
+        height="1080"
+      />
+    </div>
+
+    <section class="spotlight-section">
+      <div class="container">
+        <div class="spotlight-content">
+          <div class="spotlight-images-left">
+            <img src="/partners/unit-m-1.jpg" alt="Unit M Startup Weekend" />
+            <img src="/partners/unit-m-2.jpg" alt="Unit M Startup Weekend" />
+            <img src="/partners/unit-m-3.jpg" alt="Unit M Startup Weekend" />
+          </div>
+          <div class="spotlight-text-column">
+            <h2>spotlight: unit m startup weekend</h2>
+            <p>We partnered with Unit M at the University of Manchester to run a startup weekend designed for technical women exploring entrepreneurship.</p>
+            <p>The focus was on:</p>
+            <ul class="partner-list">
+              <li>Practical company-building skills</li>
+              <li>Team formation and collaboration</li>
+              <li>Exposure to founders and operators</li>
+            </ul>
+            <p>The event supported students and early-career researchers in seeing entrepreneurship as a realistic and accessible path.</p>
+            
+            <div class="spotlight-stats">
+              <div class="spotlight-stat">
+                <div class="spotlight-number">4.7 / 5</div>
+                <div class="spotlight-label">Average event rating</div>
+              </div>
+              <div class="spotlight-stat">
+                <div class="spotlight-number">80%</div>
+                <div class="spotlight-label">Met potential co-founders</div>
+              </div>
+              <div class="spotlight-stat">
+                <div class="spotlight-number">93%</div>
+                <div class="spotlight-label">More likely to start a company</div>
+              </div>
+            </div>
+            
+            <div class="spotlight-quotes">
+              <blockquote>Thank you so much for organising this! I've left with such a desire to actually take action on ideas I have after seeing how much I could do in just a day! We were staying up late, waking up at 5, working non stop but it didn't feel like work at all. Also was amazing to meet so many cool women!!</blockquote>
+              <blockquote>I think the presentations were SO SO helpful because they really gave us a foundation of the basics from scratch. I think I left with a much more informed and confident mindset. I think even if business basics are available on the internet, the whole investor/vc angle is near impossible for newcomers to find. Really really loved that!</blockquote>
+              <blockquote>Seeing how quickly we can create an idea from nothing in such a short amount of time and building something with my teammate and feeling passionate about it and learning as we went.</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="universities-partner">
+      <div class="container">
+        <div class="partner-content">
+
+          <h2>who should get in touch</h2>
+          <ul class="partner-list">
+            <li>University departments with funding for enterprise initiatives</li>
+            <li>Innovation and commercialisation teams</li>
+            <li>Student societies looking to run high-quality technical events</li>
+          </ul>
+          <p>We tailor each partnership to the audience and learning goals.</p>
+          <p>If you want to give technical women a clearer path from university to startup, we'd love to work with you.</p>
+
+          <div class="text-center" style="margin-top: 3rem;">
+            <ContactButton label="Start a Conversation" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="partner-outro">
+      <div class="container">
+        <p>
+          <a href="/partners">Back to partners &amp; sponsors</a>
+        </p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .partner-group {
+    padding: 4rem 0 0;
+  }
+
+  .partner-group-title {
+    border-top: 1px solid var(--color-border);
+    padding-top: 3rem;
+  }
+
+  .partner-outro {
+    padding: 4rem 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .partner-outro p {
+    font-size: var(--text-lead);
+    margin-bottom: 0;
+  }
+
+  .partner-outro a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .partner-outro a:hover {
+    color: var(--color-primary-hover);
+  }
+
+  /* ── from /partner/universities ── */
+.universities-partner {
+    padding: 4rem 0;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .partner-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .partner-content h2 {
+    color: var(--color-text);
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+  }
+
+  .partner-content h2:first-of-type {
+    margin-top: 0;
+  }
+
+  .partner-content h3 {
+    color: var(--color-text);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+  }
+
+  .section-intro {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-text);
+    line-height: 1.8;
+  }
+
+  .partner-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-muted);
+  }
+
+  .partner-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 1.5rem 0;
+  }
+
+  .partner-list li {
+    padding: 0.75rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    font-size: 1.05rem;
+  }
+
+  .partner-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+  }
+
+  .spotlight-hero-image {
+    width: 100%;
+    margin: 4rem 0;
+  }
+
+  .spotlight-hero-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  .spotlight-section {
+    padding: 4rem 0;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .spotlight-content {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .spotlight-images-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .spotlight-images-left img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0;
+    object-fit: cover;
+  }
+
+  .spotlight-text-column h2 {
+    color: var(--color-text);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .spotlight-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+
+  .spotlight-stat {
+    text-align: center;
+  }
+
+  .spotlight-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .spotlight-label {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .spotlight-quotes {
+    margin-top: 2rem;
+  }
+
+  .spotlight-quotes blockquote {
+    font-style: italic;
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    border-left: 3px solid var(--color-primary);
+    font-size: 1.05rem;
+  }
+
+  @media (max-width: 768px) {
+    .spotlight-content {
+      grid-template-columns: 1fr;
+    }
+
+    .spotlight-text-column {
+      order: 1;
+    }
+
+    .spotlight-images-left {
+      order: 2;
+    }
+
+    .spotlight-stats {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

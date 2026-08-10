@@ -8,6 +8,11 @@ export const CONTACT_USER = 'team';
 export const CONTACT_DOMAIN = 'thetechbros.io';
 export const CONTACT_EMAIL = `${CONTACT_USER}@${CONTACT_DOMAIN}`;
 
+/** Partnership enquiries. Split for the same reason as CONTACT_USER. */
+export const PARTNERSHIPS_USER = 'partnerships';
+export const PARTNERSHIPS_DOMAIN = 'thetechbros.io';
+export const PARTNERSHIPS_EMAIL = `${PARTNERSHIPS_USER}@${PARTNERSHIPS_DOMAIN}`;
+
 /** Press coverage referenced from more than one page. */
 export const PRESS_LINKS = {
   sifted:

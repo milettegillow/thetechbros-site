@@ -1,0 +1,27 @@
+---
+/**
+ * A button that mails partnership enquiries.
+ *
+ * The address is assembled at runtime from the central config, so it never
+ * appears in the served HTML. The anchor ships without an href and gets one
+ * on load; any number of these can sit on a page.
+ */
+interface Props {
+  label: string;
+  variant?: 'secondary' | 'tertiary' | 'primary';
+}
+
+const { label, variant = 'secondary' } = Astro.props;
+---
+
+<a class={`btn btn-${variant}`} data-partnerships-contact role="button">{label}</a>
+
+<script>
+  import { PARTNERSHIPS_USER, PARTNERSHIPS_DOMAIN } from '../config';
+
+  const address = `${PARTNERSHIPS_USER}@${PARTNERSHIPS_DOMAIN}`;
+  document.querySelectorAll<HTMLAnchorElement>('[data-partnerships-contact]').forEach((link) => {
+    link.href = `mailto:${address}`;
+    link.removeAttribute('role');
+  });
+</script>
