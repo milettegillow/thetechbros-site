@@ -100,17 +100,17 @@ const hasPhotos = people.some((person) => person.photo);
 
   .people-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 3rem 2rem;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 2.5rem 2rem;
   }
 
-  .people-card {
-    max-width: 320px;
-  }
-
-  .people-photo {
+  /* Same treatment as the team grid on /about: a fixed-height box with the
+     photo sat on its floor, so names line up across a row whatever each
+     portrait's proportions are. Contained, never cropped, no border. */
+  .people-photo,
+  .people-photo-placeholder {
     display: block;
-    height: 320px;
+    height: 170px;
     width: auto;
     max-width: 100%;
     object-fit: contain;
@@ -119,8 +119,14 @@ const hasPhotos = people.some((person) => person.photo);
 
   /* Stands in at the same height so the grid doesn't reflow once photos land. */
   .people-photo-placeholder {
-    width: 240px;
+    width: 128px;
     background: var(--color-surface);
+  }
+
+  /* Two lines' worth of space whether the name needs it or not, so the rows
+     stay level when a long name wraps. */
+  .people-grid .people-name {
+    min-height: 2.4em;
   }
 
   .people-name-row {
@@ -161,15 +167,27 @@ const hasPhotos = people.some((person) => person.photo);
     display: block;
   }
 
+  @media (max-width: 1200px) {
+    .people-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
   @media (max-width: 1024px) {
-    .people-grid,
+    .people-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
     .people-list {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
   @media (max-width: 768px) {
-    .people-grid,
+    .people-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .people-list {
       grid-template-columns: minmax(0, 1fr);
     }
