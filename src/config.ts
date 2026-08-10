@@ -13,3 +13,18 @@ export const PRESS_LINKS = {
   sifted:
     'https://sifted.eu/articles/meet-the-women-behind-the-tech-bros-were-laying-claim-to-the-term',
 };
+
+/**
+ * Publications to show in the "as seen in" strip.
+ *
+ * `logo` is a path under /press/logos/. None of these exist yet, so each entry
+ * falls back to its name set as a wordmark; drop a file in and set the path to
+ * switch that one over without touching the component.
+ */
+export const AS_SEEN_IN: { name: string; logo?: string }[] = [
+  { name: 'Sifted' },
+  { name: 'British Business Bank' },
+  { name: 'The Times' },
+  { name: 'UKTN' },
+  { name: 'EU-Startups' },
+];

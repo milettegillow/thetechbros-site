@@ -1,0 +1,81 @@
+---
+/**
+ * "As seen in" strip. Reusable across pages — pass a heading or let it use the
+ * default. Publications come from the central config so /press and the home
+ * page can't drift apart.
+ */
+import { AS_SEEN_IN } from '../config';
+
+interface Props {
+  heading?: string;
+}
+
+const { heading = 'as seen in' } = Astro.props;
+---
+
+<section class="as-seen-in">
+  <div class="container">
+    <p class="as-seen-in-heading">{heading}</p>
+    <ul class="as-seen-in-list">
+      {AS_SEEN_IN.map((item) => (
+        <li class="as-seen-in-item">
+          {item.logo ? (
+            <img src={item.logo} alt={item.name} class="as-seen-in-logo" loading="lazy" decoding="async" />
+          ) : (
+            <span class="as-seen-in-name">{item.name}</span>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .as-seen-in {
+    padding: 2.5rem 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .as-seen-in-heading {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .as-seen-in-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem 3rem;
+  }
+
+  /* Wordmark fallback until real logo files land. */
+  .as-seen-in-name {
+    font-size: var(--text-lead);
+    letter-spacing: var(--tracking-subheading);
+    color: var(--color-text);
+    white-space: nowrap;
+  }
+
+  .as-seen-in-logo {
+    display: block;
+    height: 28px;
+    width: auto;
+    max-width: 160px;
+    object-fit: contain;
+  }
+
+  @media (max-width: 768px) {
+    .as-seen-in-list {
+      gap: 1rem 2rem;
+    }
+
+    .as-seen-in-name {
+      font-size: var(--text-body);
+    }
+  }
+</style>

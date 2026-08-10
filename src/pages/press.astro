@@ -2,6 +2,81 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import AsSeenIn from '../components/AsSeenIn.astro';
+
+// Tier 1. `image` and `url` are both optional: three of these have no artwork
+// yet, and the British Business Bank announcement has no public URL on file.
+const featured = [
+  {
+    publication: 'Sifted',
+    date: '2026-06-25',
+    dateLabel: '25th June, 2026',
+    headline: 'Exclusive: British Business Bank backs 10 VC funds with £90m pot',
+    description:
+      "The Tech Bros Fund named as one of ten microfunds selected from 151 applications for the British Business Bank's first Microfunds cohort.",
+    url: 'https://sifted.eu/articles/exclusive-bbb-10-vc-funds-90m',
+  },
+  {
+    publication: 'British Business Bank',
+    date: '2026-06-25',
+    dateLabel: '25th June, 2026',
+    headline: 'Official announcement: £90m across 10 microfunds',
+    description:
+      'The British Business Bank announces cornerstone commitments to ten emerging managers under its £400m Investor Pathways Capital initiative.',
+  },
+  {
+    publication: 'Shifter',
+    date: '2026-06-25',
+    dateLabel: '25th June, 2026',
+    headline: 'The Tech Bros får deler av milliardfond',
+    description:
+      "Norwegian coverage of the British Business Bank commitment and the accelerator's Norway cohort.",
+    url: 'https://www.shifter.no/nyheter/the-tech-bros-far-deler-av-milliardfond-til-a-investere-i-startups-av-og-med-kvinner/468672',
+  },
+  {
+    publication: 'Shifter',
+    date: '2025-08-05',
+    dateLabel: '5th Aug 2025',
+    headline:
+      'på en hytte på hafjell har the tech bros samlet noen av verdens mest ambisiøse gründere – og alle er kvinner',
+    description:
+      "On a cabin at Hafjell, The Tech Bros has gathered some of the world's most ambitious founders – and they're all women.",
+    url: 'https://www.shifter.no/nyheter/pa-en-hytte-pa-hafjell-har-the-tech-bros-samlet-noen-av-verdens-mest-ambisiose-grundere-og-alle-er-kvinner/412703',
+    image: '/press/shifter-article.jpg',
+  },
+  {
+    publication: 'Sifted',
+    date: '2025-07-02',
+    dateLabel: '2nd July, 2025',
+    headline: "meet the women behind the tech bros: 'we're laying claim to the term'",
+    description:
+      "Fed up of women being 'overlooked and undervalued' by VCs, two UK-based founders have started an all-female accelerator.",
+    url: 'https://sifted.eu/articles/meet-the-women-behind-the-tech-bros-were-laying-claim-to-the-term',
+    image: '/press/sifted-article.jpg',
+  },
+].sort((a, b) => b.date.localeCompare(a.date));
+
+// Tier 2. `headline` is absent where only the publication was supplied; those
+// entries carry the shared subject instead. No URLs are guessed.
+const BBB_SUBJECT = 'British Business Bank Microfunds announcement';
+
+const mentions = [
+  {
+    publication: 'The Times',
+    date: '2026-07-06',
+    dateLabel: '6th July, 2026',
+    headline: 'Why vibe coders need community support to thrive',
+    url: 'https://www.thetimes.com/business/entrepreneurs/article/power-communities-vibe-coders-friends-enterprise-network-379tqx8vg',
+  },
+  ...['UKTN', 'EU-Startups', 'FStech', 'Insider Media', 'IT Brief UK', 'Pulse 2', 'BeBeez', 'Beinsure'].map(
+    (publication) => ({
+      publication,
+      date: '2026-06-25',
+      dateLabel: '25th June, 2026',
+      headline: BBB_SUBJECT,
+    })
+  ),
+].sort((a, b) => b.date.localeCompare(a.date));
 ---
 
 <BaseLayout title="Press">
@@ -15,36 +90,57 @@ import Footer from '../components/Footer.astro';
       </div>
     </section>
 
-    <!-- Articles -->
-    <section class="articles">
+    <AsSeenIn />
+
+    <!-- Tier 1: featured -->
+    <section class="featured">
       <div class="container">
-        <h2>articles</h2>
+        <h2>featured</h2>
         <div class="press-list">
-          <article class="press-item">
-            <div class="press-item-content">
-              <div class="press-image">
-                <img src="/press/sifted-article.jpg" alt="Sifted Article" />
+          {featured.map((item) => (
+            <article class={`press-item${item.image ? '' : ' press-item-no-image'}`}>
+              <div class="press-item-content">
+                {item.image && (
+                  <div class="press-image">
+                    <img src={item.image} alt={`${item.publication} coverage`} loading="lazy" decoding="async" />
+                  </div>
+                )}
+                <div class="press-text">
+                  <p class="press-source">{item.publication} — {item.dateLabel}</p>
+                  <h3>
+                    {item.url ? (
+                      <a href={item.url} target="_blank" rel="noopener noreferrer">{item.headline}</a>
+                    ) : (
+                      item.headline
+                    )}
+                  </h3>
+                  <p class="press-excerpt">{item.description}</p>
+                </div>
               </div>
-              <div class="press-text">
-                <h3><a href="https://sifted.eu/articles/meet-the-women-behind-the-tech-bros-were-laying-claim-to-the-term" target="_blank" rel="noopener noreferrer">meet the women behind the tech bros: 'we're laying claim to the term'</a></h3>
-                <p class="press-source">Sifted — 2nd July, 2025</p>
-                <p class="press-excerpt">Fed up of women being 'overlooked and undervalued' by VCs, two UK-based founders have started an all-female accelerator.</p>
-              </div>
-            </div>
-          </article>
-          <article class="press-item">
-            <div class="press-item-content">
-              <div class="press-image">
-                <img src="/press/shifter-article.jpg" alt="Shifter Article" />
-              </div>
-              <div class="press-text">
-                <h3><a href="https://www.shifter.no/nyheter/pa-en-hytte-pa-hafjell-har-the-tech-bros-samlet-noen-av-verdens-mest-ambisiose-grundere-og-alle-er-kvinner/412703" target="_blank" rel="noopener noreferrer">på en hytte på hafjell har the tech bros samlet noen av verdens mest ambisiøse gründere – og alle er kvinner</a></h3>
-                <p class="press-source">Shifter — 5th Aug 2025</p>
-                <p class="press-excerpt">On a cabin at Hafjell, The Tech Bros has gathered some of the world's most ambitious founders – and they're all women.</p>
-              </div>
-            </div>
-          </article>
+            </article>
+          ))}
         </div>
+      </div>
+    </section>
+
+    <!-- Tier 2: mentions -->
+    <section class="mentions">
+      <div class="container">
+        <h2>mentions</h2>
+        <ul class="mention-list">
+          {mentions.map((item) => (
+            <li class="mention">
+              <span class="mention-meta">{item.publication} — {item.dateLabel}</span>
+              <span class="mention-headline">
+                {item.url ? (
+                  <a href={item.url} target="_blank" rel="noopener noreferrer">{item.headline}</a>
+                ) : (
+                  item.headline
+                )}
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
 
@@ -121,8 +217,12 @@ import Footer from '../components/Footer.astro';
     font-weight: 300;
   }
 
-  .articles {
-    padding: 4rem 0;
+  .featured {
+    padding: 4rem 0 3rem;
+  }
+
+  .mentions {
+    padding: 0 0 4rem;
   }
 
   .podcasts {
@@ -135,7 +235,8 @@ import Footer from '../components/Footer.astro';
     margin: 0 auto;
   }
 
-  .articles h2,
+  .featured h2,
+  .mentions h2,
   .podcasts h2 {
     margin-left: -2rem;
     margin-bottom: 3rem;
@@ -149,6 +250,11 @@ import Footer from '../components/Footer.astro';
 
   .press-item:last-child {
     border-bottom: none;
+  }
+
+  /* Cards with no artwork drop the image column rather than leave a gap. */
+  .press-item-no-image .press-item-content {
+    grid-template-columns: 1fr;
   }
 
   .press-item-content {
@@ -201,6 +307,47 @@ import Footer from '../components/Footer.astro';
     font-size: 1rem;
   }
 
+  /* ── Tier 2: mentions. Deliberately lighter than the featured cards:
+     a dated list, no artwork, no description. ── */
+  .mention-list {
+    list-style: none;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .mention {
+    display: grid;
+    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+    gap: 0.25rem 2rem;
+    align-items: baseline;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .mention-meta {
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+  }
+
+  .mention-headline {
+    color: var(--color-text-body);
+    line-height: 1.45;
+  }
+
+  .mention-headline a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .mention-headline a:hover {
+    color: var(--color-primary);
+  }
+
+  @media (max-width: 768px) {
+    .mention {
+      grid-template-columns: 1fr;
+    }
+  }
+
   .press-contact {
     padding: 4rem 0;
   }
@@ -223,7 +370,8 @@ import Footer from '../components/Footer.astro';
       padding-bottom: 2rem;
     }
 
-    .articles h2,
+    .featured h2,
+    .mentions h2,
     .podcasts h2 {
       margin-left: 0;
     }
