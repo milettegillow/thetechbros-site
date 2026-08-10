@@ -369,6 +369,11 @@ const locationGroups = countries.map((country) => ({
             );
           })}
         </div>
+
+        <p class="events-outro">
+          We run these with partners and sponsors.
+          <a href="/partners">Partner with us</a>.
+        </p>
       </div>
     </section>
 
@@ -674,6 +679,21 @@ const locationGroups = countries.map((country) => ({
   /* ── Past events, moved from /about ── */
   .past-events {
     padding: 4rem 0;
+  }
+
+  .events-outro {
+    margin-top: 3rem;
+    color: var(--color-text-muted);
+  }
+
+  .events-outro a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .events-outro a:hover {
+    color: var(--color-primary-hover);
   }
 
   /* Counters — values come from the events collection */

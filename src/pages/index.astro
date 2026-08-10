@@ -109,10 +109,17 @@ const marquee = [...partnerLogos, ...partnerLogos];
       </div>
     </section>
 
-    <!-- 2. As seen in -->
+    <!-- Yes Chad — full-bleed, sitting directly under the hero -->
+    <section class="chad">
+      <div class="holo chad-block">
+        <p>yes Chad, I really do understand the algorithm</p>
+      </div>
+    </section>
+
+    <!-- As seen in -->
     <AsSeenIn />
 
-    <!-- 3. What we do -->
+    <!-- What we do -->
     <section class="what-we-do">
       <div class="container">
         <h2>what we do</h2>
@@ -127,7 +134,7 @@ const marquee = [...partnerLogos, ...partnerLogos];
       </div>
     </section>
 
-    <!-- 4. The numbers -->
+    <!-- The numbers -->
     <section class="numbers">
       <div class="container">
         <div class="number-row">
@@ -144,39 +151,38 @@ const marquee = [...partnerLogos, ...partnerLogos];
     <!-- Partners & sponsors -->
     <section class="partners">
       <div class="container">
-        <div class="lead-sponsor">
-          <p class="partners-heading">2026 lead sponsor</p>
-          <img
-            src="/index/partner-logos/goodwin.png"
-            alt="Goodwin"
-            class="lead-sponsor-logo"
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
+        <div class="partner-row">
+          <!-- Fixed: sits on the same line as the scrolling logos but never moves. -->
+          <div class="lead-sponsor">
+            <p class="partners-heading">2026 lead sponsor</p>
+            <div class="lead-sponsor-mark">
+              <img
+                src="/index/partner-logos/goodwin.png"
+                alt="Goodwin"
+                class="lead-sponsor-logo"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
 
-        <p class="partners-heading">past partners &amp; sponsors</p>
-
-        <div class="logo-carousel">
-          <div class="logo-carousel-track">
-            {marquee.map((logo) => (
-              <div class="logo-item">
-                <img src={`/index/partner-logos/${logo.file}`} alt={logo.name} loading="lazy" decoding="async" />
+          <div class="partner-wall">
+            <p class="partners-heading">past partners &amp; sponsors</p>
+            <div class="logo-carousel">
+              <div class="logo-carousel-track">
+                {marquee.map((logo) => (
+                  <div class="logo-item">
+                    <img src={`/index/partner-logos/${logo.file}`} alt={logo.name} loading="lazy" decoding="async" />
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
         </div>
 
         <div class="btn-group">
-          <a href="/partners" class="btn btn-tertiary">Partners &amp; sponsors</a>
+          <a href="/partners" class="btn btn-tertiary">partners &amp; sponsors</a>
         </div>
-      </div>
-    </section>
-
-    <!-- Yes Chad — full-bleed, sitting directly above the closing line -->
-    <section class="chad">
-      <div class="holo chad-block">
-        <p>yes Chad, I really do understand the algorithm</p>
       </div>
     </section>
 
@@ -348,15 +354,31 @@ const marquee = [...partnerLogos, ...partnerLogos];
     letter-spacing: var(--tracking-label);
     color: var(--color-text-muted);
     margin-bottom: 1.25rem;
+    /* Both labels sit on the same line above their content. */
+    min-height: 1.2em;
   }
 
-  .lead-sponsor {
-    margin-bottom: 3rem;
+  .partner-row {
+    display: grid;
+    /* Fixed left column so the two labels never crowd each other. */
+    grid-template-columns: 210px minmax(0, 1fr);
+    gap: 3rem;
+    align-items: start;
+    margin-bottom: 2.5rem;
+  }
+
+  /* The lockup and the carousel share a baseline: same box height, so the
+     Goodwin mark lines up with the scrolling logos beside it. */
+  .lead-sponsor-mark,
+  .logo-item {
+    height: 80px;
+    display: flex;
+    align-items: center;
   }
 
   .lead-sponsor-logo {
     display: block;
-    height: 56px;
+    height: 48px;
     width: auto;
     max-width: 100%;
     object-fit: contain;
@@ -366,7 +388,6 @@ const marquee = [...partnerLogos, ...partnerLogos];
     overflow: hidden;
     position: relative;
     width: 100%;
-    margin-bottom: 2.5rem;
     mask-image: linear-gradient(to right, black 85%, transparent);
     -webkit-mask-image: linear-gradient(to right, black 85%, transparent);
   }
@@ -396,9 +417,6 @@ const marquee = [...partnerLogos, ...partnerLogos];
   .logo-item {
     flex-shrink: 0;
     width: 150px;
-    height: 80px;
-    display: flex;
-    align-items: center;
     justify-content: center;
     padding: 1rem;
   }
@@ -456,14 +474,19 @@ const marquee = [...partnerLogos, ...partnerLogos];
       padding: 3.5rem 1.5rem;
     }
 
-    /* Lead sponsor stacks above the wall. */
-    .lead-sponsor {
-      margin-bottom: 2rem;
+    /* Lead sponsor stacks above the carousel. */
+    .partner-row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2rem;
+    }
+
+    .lead-sponsor-mark,
+    .logo-item {
+      height: 64px;
     }
 
     .logo-item {
       width: 120px;
-      height: 64px;
     }
   }
 </style>
