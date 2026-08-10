@@ -75,7 +75,7 @@ const mentions = [
     publication: 'The Times',
     date: '2026-07-06',
     dateLabel: '6th July 2026',
-    headline: 'Why vibe coders need community support to thrive',
+    headline: 'The secret sauce that turns start-ups into successes is community',
     url: 'https://www.thetimes.com/business/entrepreneurs/article/power-communities-vibe-coders-friends-enterprise-network-379tqx8vg',
   },
   {
@@ -297,15 +297,16 @@ const podcasts = [
     text-align: center;
   }
 
-  /* One value governs the space on both sides of every banner: a section's
-     bottom padding is the space above the next section's banner. */
+  /* A section's bottom padding is the space above the next section's banner.
+     Deliberately larger than the banner's own bottom margin, so each banner
+     reads as belonging to the section under it rather than floating between. */
   .featured {
-    padding: 3rem 0;
+    padding: 2rem 0;
   }
 
   .mentions,
   .podcasts {
-    padding: 0 0 3rem;
+    padding: 0 0 2rem;
   }
 
   .press-list {
@@ -316,18 +317,20 @@ const podcasts = [
   /* Full-bleed divider: a direct child of the section, so it runs edge to edge
      while its inner container keeps the heading on the page's text gutter.
      Deliberately shallower than the home page's statement block. */
+  /* The band is sized by its type, not the other way round: the padding is
+     just enough to clear the ascenders and descenders. */
   .section-banner {
-    margin-bottom: 3rem;
-    padding: 1.25rem 0;
+    margin-bottom: 1.25rem;
+    padding: 0.5rem 0;
   }
 
   .section-banner h2 {
     margin: 0;
     text-align: left;
-    font-size: var(--text-h3);
+    font-size: var(--text-h2);
     font-weight: var(--weight-holo);
     letter-spacing: var(--tracking-holo);
-    line-height: 1.1;
+    line-height: 1.05;
   }
 
   .press-item {
