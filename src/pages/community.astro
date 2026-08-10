@@ -179,7 +179,7 @@ const locationGroups = countries.map((country) => ({
                 alt={`${lead.name}, ${lead.role.toLowerCase()} in ${lead.city}`}
                 class="person-photo"
                 width="600"
-                height="800"
+                height="600"
                 loading="lazy"
                 decoding="async"
               />
@@ -560,14 +560,13 @@ const locationGroups = countries.map((country) => ({
 
   .person-photo {
     display: block;
-    width: 100%;
-    /* height:auto is load-bearing — the width/height attributes are a
-       presentational hint that would otherwise pin the height and make
-       aspect-ratio a no-op. */
-    height: auto;
-    aspect-ratio: 3 / 4;
-    object-fit: cover;
-    object-position: 50% 25%;
+    /* Constrained by height, never cropped: width follows each image's own
+       proportions. The uniform 320px height is what puts every name/role on
+       the same baseline, whatever shape the source photo is. */
+    height: 320px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
     margin-bottom: 1rem;
   }
 
