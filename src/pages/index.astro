@@ -89,20 +89,8 @@ const marquee = [...partnerLogos, ...partnerLogos];
   <main class="home">
     <!-- 1. Hero -->
     <section class="hero">
-      <div class="container">
-        <h1>backing the next generation of female tech billionaires</h1>
-        <p class="hero-line">
-          the world's first all-female, all-technical accelerator,<br class="hero-line-break" />
-          and the only fund backing all-female, all-technical teams.
-        </p>
-        <div class="btn-group">
-          <a href="/fund" class="btn btn-primary">the fund</a>
-          <a href="/accelerator" class="btn btn-tertiary">the accelerator</a>
-        </div>
-      </div>
-
-      <!-- Full-bleed and uncropped: the t-shirt is the point. -->
-      <div class="hero-image">
+      <!-- Full-bleed picture starting under the nav; the copy sits on it. -->
+      <div class="hero-media">
         <img
           src="/index/hero.jpg"
           alt="A Tech Bros cohort member in a t-shirt reading 'yes Chad, I really do understand the algorithm'"
@@ -113,6 +101,18 @@ const marquee = [...partnerLogos, ...partnerLogos];
           width="1920"
           height="1080"
         />
+        <div class="hero-scrim"></div>
+        <div class="container hero-content">
+          <h1>backing the next generation of female tech <span class="accent">billionaires</span></h1>
+          <p class="hero-line">
+            the world's first all-female, all-technical accelerator,<br class="hero-line-break" />
+            and the only fund backing all-female, all-technical teams.
+          </p>
+          <div class="btn-group">
+            <a href="/fund" class="btn btn-primary">the fund</a>
+            <a href="/accelerator" class="btn btn-tertiary">the accelerator</a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -223,14 +223,85 @@ const marquee = [...partnerLogos, ...partnerLogos];
 
   /* ── 1. Hero ── */
   /* Selector has to out-specify `.home section` above, or the generic block
-     padding wins and reopens the gap under the hero image. */
+     padding would reopen a gap under the nav. */
   .home section.hero {
-    padding: 4.5rem 0 0;
+    padding: 0;
+  }
+
+  /* Height follows the photograph's own 16:9 (56.25vw), capped so it can't eat
+     a short screen. Expressed as a height rather than `aspect-ratio`, because
+     aspect-ratio under a max-height makes Chrome shrink the *width* to keep the
+     ratio — which would letterbox the hero instead of running it full-bleed. */
+  .hero-media {
+    position: relative;
+    width: 100%;
+    height: min(56.25vw, 90vh);
+    min-height: 34rem;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Any residual crop comes off the sky, not the table and laptops. */
+    object-position: center 62%;
+  }
+
+  /* Three washes. The bottom and left ones stay light — they only set the
+     mood. The work of making the copy legible is done by a third wash pinned
+     to the bottom-left corner, so the darkness is spent where the words are
+     instead of being spread over the whole frame; the top two thirds of the
+     picture stay close to untouched. Held in custom properties so the narrow
+     breakpoint re-tunes the same three layers rather than redefining them. */
+  .hero-scrim {
+    --scrim-bottom: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.52) 22%,
+      rgba(0, 0, 0, 0.24) 50%,
+      rgba(0, 0, 0, 0.06) 75%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    --scrim-left: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.26) 0%,
+      rgba(0, 0, 0, 0.08) 45%,
+      rgba(0, 0, 0, 0) 70%
+    );
+    --scrim-copy: radial-gradient(
+      145% 100% at 0% 100%,
+      rgba(0, 0, 0, 0.93) 0%,
+      rgba(0, 0, 0, 0.8) 40%,
+      rgba(0, 0, 0, 0.38) 70%,
+      rgba(0, 0, 0, 0) 92%
+    );
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: var(--scrim-copy), var(--scrim-bottom), var(--scrim-left);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding-top: 8rem;
+    padding-bottom: 4rem;
   }
 
   .hero h1 {
     max-width: 20ch;
     margin-bottom: 2rem;
+  }
+
+  .hero h1 .accent {
+    color: var(--color-primary);
   }
 
   .hero-line {
@@ -243,33 +314,6 @@ const marquee = [...partnerLogos, ...partnerLogos];
 
   .hero .btn-group {
     margin-top: 2.5rem;
-  }
-
-  /* Full-bleed, natural proportions, no crop. */
-  .hero-image {
-    width: 100vw;
-    margin: 3.5rem 0 0;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  /* Dissolves the page ground into the top of the photograph so the two don't
-     meet on a hard horizontal edge. Sits over the image, under nothing else —
-     the hero copy is above the picture, not on it. */
-  .hero-image::before {
-    content: '';
-    position: absolute;
-    inset: 0 0 auto;
-    height: 22%;
-    background: linear-gradient(to bottom, var(--color-bg) 0%, rgba(0, 0, 0, 0) 100%);
-    pointer-events: none;
-  }
-
-  .hero-img {
-    display: block;
-    width: 100%;
-    height: auto;
   }
 
   /* ── 3. What we do ── */
@@ -505,8 +549,39 @@ const marquee = [...partnerLogos, ...partnerLogos];
       padding: 3.5rem 0;
     }
 
-    .home section.hero {
-      padding-top: 3rem;
+    .hero-media {
+      /* Too narrow for 16:9 to be tall enough to hold the copy. */
+      height: auto;
+      min-height: 72vh;
+    }
+
+    .hero-scrim {
+      --scrim-bottom: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.76) 0%,
+        rgba(0, 0, 0, 0.6) 25%,
+        rgba(0, 0, 0, 0.32) 52%,
+        rgba(0, 0, 0, 0.12) 75%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      --scrim-left: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.24) 0%,
+        rgba(0, 0, 0, 0.12) 60%,
+        rgba(0, 0, 0, 0.08) 100%
+      );
+      --scrim-copy: radial-gradient(
+        170% 90% at 0% 100%,
+        rgba(0, 0, 0, 0.93) 0%,
+        rgba(0, 0, 0, 0.82) 45%,
+        rgba(0, 0, 0, 0.45) 75%,
+        rgba(0, 0, 0, 0) 95%
+      );
+    }
+
+    .hero-content {
+      padding-top: 6rem;
+      padding-bottom: 2.5rem;
     }
 
     .hero-line-break {
