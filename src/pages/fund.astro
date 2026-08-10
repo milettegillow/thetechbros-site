@@ -406,17 +406,20 @@ const alumni = [
   /* All four graphics are square canvases with the chart drawn inside, so they
      need real height to be legible. One height across the three keeps the row
      even. */
+  /* The graphics are now cropped to the chart itself, so one height across the
+     three gives them the same footprint. Centred, so a wider-than-tall chart
+     and the standalone figure sit on the same line. */
   .market-graphic {
-    height: 180px;
-    margin-bottom: 1.25rem;
+    height: 150px;
+    margin-bottom: 1.5rem;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
   }
 
   .market-graphic img,
   .market-graphic-placeholder {
     display: block;
-    max-height: 180px;
+    max-height: 150px;
     max-width: 100%;
     width: auto;
     object-fit: contain;
@@ -424,7 +427,7 @@ const alumni = [
 
   .market-graphic-placeholder {
     width: 100%;
-    height: 180px;
+    height: 150px;
     background: var(--color-surface);
   }
 
@@ -432,6 +435,7 @@ const alumni = [
      claims still sit on one line. */
   .market-graphic-figure {
     align-items: center;
+    justify-content: flex-start;
   }
 
   .market-figure {
@@ -485,7 +489,7 @@ const alumni = [
      the chart instead of being pushed to the far side of the page. */
   .gap-layout {
     display: grid;
-    grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
     gap: 3.5rem;
     align-items: center;
   }
@@ -495,14 +499,15 @@ const alumni = [
   .gap-graphic-placeholder {
     display: block;
     width: 100%;
-    max-width: 260px;
-    max-height: 260px;
+    /* Capped well inside half the content width, so it reads as a step up
+       from the three above rather than as the page's subject. */
+    max-width: min(100%, 380px);
     height: auto;
     object-fit: contain;
   }
 
   .gap-graphic-placeholder {
-    height: 260px;
+    height: 316px;
     background: var(--color-surface);
   }
 
