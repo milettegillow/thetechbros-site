@@ -103,5 +103,6 @@ export const COMMUNITY_LEADS: {
     city: 'Singapore',
     role: 'Community lead',
     linkedin: '',
+    photo: 'emile-shah.png',
   },
 ];

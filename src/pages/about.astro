@@ -4,52 +4,86 @@ import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import { getCollection } from 'astro:content';
 import { COMMUNITY_LEADS } from '../config';
-import { getEventStats } from '../lib/eventStats';
+import { getEventStats, getEventsByYear } from '../lib/eventStats';
 
-const eventStats = getEventStats(await getCollection('events'));
+const events = await getCollection('events');
+const eventStats = getEventStats(events);
+const eventYears = getEventsByYear(events);
+// The bars are proportional, so the tallest year sets the scale.
+const peakYear = Math.max(...eventYears.map((y) => y.count));
+// Only the most recent year is part-run; the rest are complete.
+const currentYear = eventYears[eventYears.length - 1]?.year;
 
-const built = [
+const pillars = [
   {
-    figure: String(eventStats.eventCount),
-    label: 'events',
-    detail: `across ${eventStats.cityCount} cities and ${eventStats.countryCount} countries`,
+    label: 'the fund',
+    href: '/fund',
+    line: 'First cheques into all-female, all-technical teams at pre-seed.',
   },
-  { figure: '1,500+', label: 'technical women hosted in person' },
-  { figure: '2', label: 'accelerator cohorts' },
-  { figure: '40', label: 'founders selected' },
+  {
+    label: 'the accelerator',
+    href: '/accelerator',
+    line: 'Eight weeks, twice a year, for technical founders at idea stage.',
+  },
+  {
+    label: 'the community',
+    href: '/community',
+    line: `${eventStats.eventCount} events across ${eventStats.cityCount} cities, and the network that comes with them.`,
+  },
 ];
 
+const cohorts = [
+  { label: 'cohort 1', rate: '8.7%' },
+  { label: 'cohort 2', rate: '7.4%' },
+];
+
+const lead = {
+  name: 'Milette Gillow',
+  role: 'CEO',
+  photo: '/about/milette.png',
+  linkedin: 'https://www.linkedin.com/in/milettegillow/',
+  bio: [
+    'PhD mathematics, Leeds, started university aged 16.',
+    'Investor and founder-in-residence at Entrepreneurs First; VC analyst in Berlin and Hong Kong; EWOR venture scout.',
+    'Governing board, Oxford High School GDST.',
+  ],
+};
+
+// Everyone else, name and role only. Community leads come from the shared
+// config so /about and /community can't drift apart. `linkedin: undefined`
+// means we don't have the URL yet — the icon is left off rather than pointed
+// somewhere wrong.
 const team = [
-  {
-    name: 'Milette Gillow',
-    role: 'CEO',
-    photo: '/about/milette.png',
-    linkedin: 'https://www.linkedin.com/in/milettegillow/',
-    bio: [
-      'PhD mathematics, Leeds, started university aged 16.',
-      'Investor and founder-in-residence at Entrepreneurs First; VC analyst in Berlin and Hong Kong; EWOR venture scout.',
-      'Governing board, Oxford High School GDST.',
-    ],
-  },
   {
     name: 'Sara Patti',
     role: 'Partnerships',
-    photo: undefined as string | undefined,
+    photo: '/about/sara-patti.png',
     linkedin: undefined as string | undefined,
-    bio: [] as string[],
   },
+  {
+    name: 'Shameem Golestaneh',
+    role: 'University partnerships',
+    photo: undefined as string | undefined,
+    linkedin: 'https://www.linkedin.com/in/shameem-golestaneh-3378b3194/' as string | undefined,
+  },
+  ...COMMUNITY_LEADS.map((person) => ({
+    name: person.name,
+    role: `${person.role}, ${person.city}`,
+    photo: person.photo ? `/community/leads/${person.photo}` : undefined,
+    linkedin: person.linkedin || undefined,
+  })),
 ];
 
 const stats = [
   {
     figure: '70%',
-    label: 'of participants met a potential co-founder',
-    source: 'UC Berkeley, April 2026',
+    label: 'of participants met a potential co-founder at a bros event',
+    source: 'post-event surveys, 2024-25',
   },
   {
     figure: '80%',
     label: 'report being more likely to found a startup after attending one of our events',
-    source: 'post-event surveys, 2024–25',
+    source: 'post-event surveys, 2024-25',
   },
 ];
 ---
@@ -74,114 +108,161 @@ const stats = [
           community of technical women.
         </p>
         <p>
-          We back women in highly technical fields to launch their startup — from idea stage to
+          We back women in highly technical fields to launch their startup - from idea stage to
           pre-seed, and all the way through to exit or IPO.
         </p>
       </div>
     </section>
 
-    <!-- 2. What we've built -->
-    <section class="built">
+    <!-- 2. The three things we do -->
+    <section class="pillars">
       <div class="container">
-        <h2>what we've built</h2>
-        <ul class="built-grid">
-          {built.map((item) => (
-            <li class="built-item">
-              <span class="built-figure">{item.figure}</span>
-              <span class="built-label">{item.label}</span>
-              {item.detail && <span class="built-detail">{item.detail}</span>}
+        <h2>what we do</h2>
+        <ul class="pillar-grid">
+          {pillars.map((pillar) => (
+            <li class="pillar">
+              <a href={pillar.href} class="pillar-link">{pillar.label}</a>
+              <p class="pillar-line">{pillar.line}</p>
             </li>
           ))}
         </ul>
-        <p class="built-note">
+      </div>
+    </section>
+
+    <!-- 3. Trajectory. Year counts come from the events collection. -->
+    <section class="trajectory">
+      <div class="container">
+        <h2>where we are</h2>
+        <ol class="year-list">
+          {eventYears.map((year) => (
+            <li class="year">
+              <span class="year-label">{year.year}</span>
+              <span class="year-bar" style={`--fill: ${(year.count / peakYear) * 100}%`}></span>
+              <span class="year-count">
+                {year.count} events
+                {year.year === currentYear && <span class="year-note"> by {year.latestMonth}</span>}
+              </span>
+            </li>
+          ))}
+        </ol>
+
+        <p class="trajectory-note">
+          Two accelerator cohorts and 500+ applications, all reached organically.
+        </p>
+
+        <ul class="acceptance">
+          {cohorts.map((cohort) => (
+            <li class="acceptance-item">
+              <span class="acceptance-rate">{cohort.rate}</span>
+              <span class="acceptance-label">acceptance rate, {cohort.label}</span>
+            </li>
+          ))}
+        </ul>
+
+        <p class="trajectory-note">
           And a fund cornerstone-backed by the British Business Bank.
         </p>
       </div>
     </section>
 
-    <!-- 3. Team. `id="team"` is the target of the /team redirect. -->
+    <!-- 4. Team. `id="team"` is the target of the /team redirect. -->
     <section class="team" id="team">
       <div class="container">
         <h2>team</h2>
-        <div class="person-grid">
-          {team.map((person) => (
-            <div class="person-card">
-              {person.photo ? (
-                <img src={person.photo} alt={person.name} class="person-photo" loading="lazy" decoding="async" />
-              ) : (
-                <div class="person-photo person-photo-placeholder" aria-hidden="true"></div>
-              )}
-              <div class="person-name-row">
-                <p class="person-name">{person.name}</p>
-                {person.linkedin && (
-                  <a
-                    href={person.linkedin}
-                    class="event-link"
-                    title={`View ${person.name} on LinkedIn`}
-                    aria-label={`View ${person.name} on LinkedIn`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                    </svg>
-                  </a>
-                )}
-              </div>
-              <p class="person-meta">{person.role}</p>
-              {person.bio.length > 0 && (
-                <ul class="person-bio">
-                  {person.bio.map((line) => <li>{line}</li>)}
-                </ul>
+
+        <div class="team-layout">
+          <!-- Lead: larger photo, the only bio on the page. -->
+          <div class="person person-lead">
+            <div class="person-portrait person-portrait-lead">
+              <img
+                src={lead.photo}
+                alt={lead.name}
+                class="person-photo"
+                loading="lazy"
+                decoding="async"
+                onerror="this.hidden = true; this.nextElementSibling.hidden = false;"
+              />
+              <span class="person-photo-placeholder" hidden aria-hidden="true"></span>
+            </div>
+            <div class="person-name-row">
+              <p class="person-name">{lead.name}</p>
+              {lead.linkedin && (
+                <a
+                  href={lead.linkedin}
+                  class="event-link"
+                  title={`View ${lead.name} on LinkedIn`}
+                  aria-label={`View ${lead.name} on LinkedIn`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                </a>
               )}
             </div>
-          ))}
-        </div>
+            <p class="person-meta">{lead.role}</p>
+            <ul class="person-bio">
+              {lead.bio.map((line) => <li>{line}</li>)}
+            </ul>
+          </div>
 
-        <h3 class="leads-heading">community leads</h3>
-        <div class="person-grid">
-          {COMMUNITY_LEADS.map((lead) => (
-            <div class="person-card">
-              {lead.photo ? (
-                <img
-                  src={`/community/leads/${lead.photo}`}
-                  alt={`${lead.name}, ${lead.role.toLowerCase()} in ${lead.city}`}
-                  class="person-photo"
-                  loading="lazy"
-                  decoding="async"
-                />
-              ) : (
-                <div class="person-photo person-photo-placeholder" aria-hidden="true"></div>
-              )}
-              <div class="person-name-row">
-                <p class="person-name">{lead.name}</p>
-                {lead.linkedin && (
-                  <a
-                    href={lead.linkedin}
-                    class="event-link"
-                    title={`View ${lead.name} on LinkedIn`}
-                    aria-label={`View ${lead.name} on LinkedIn`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                    </svg>
-                  </a>
-                )}
+          <!-- Everyone else: two columns, smaller photos, no bios. -->
+          <div class="team-others">
+            {team.map((person) => (
+              <div class="person">
+                <div class="person-portrait">
+                  {person.photo ? (
+                    <>
+                      <img
+                        src={person.photo}
+                        alt={person.name}
+                        class="person-photo"
+                        loading="lazy"
+                        decoding="async"
+                        onerror="this.hidden = true; this.nextElementSibling.hidden = false;"
+                      />
+                      <span class="person-photo-placeholder" hidden aria-hidden="true"></span>
+                    </>
+                  ) : (
+                    <span class="person-photo-placeholder" aria-hidden="true"></span>
+                  )}
+                </div>
+                <div class="person-name-row">
+                  <p class="person-name">{person.name}</p>
+                  {person.linkedin && (
+                    <a
+                      href={person.linkedin}
+                      class="event-link"
+                      title={`View ${person.name} on LinkedIn`}
+                      aria-label={`View ${person.name} on LinkedIn`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                      </svg>
+                    </a>
+                  )}
+                </div>
+                <p class="person-meta">{person.role}</p>
               </div>
-              <p class="person-meta">{lead.role}, {lead.city}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <p class="leads-cta">
-          <a href="/community">become a community lead for your city</a>
+        <p class="team-aside">
+          Our venture partners work with the accelerator cohorts -
+          <a href="/accelerator#venture-partners">meet them on the accelerator page</a>.
         </p>
+
+        <div class="leads-cta">
+          <a href="/community" class="btn btn-primary">become a community lead for your city</a>
+        </div>
       </div>
     </section>
 
-    <!-- 4. Stats -->
+    <!-- 5. Stats -->
     <section class="stats">
       <div class="container">
         <ul class="stat-grid">
@@ -200,6 +281,12 @@ const stats = [
 </BaseLayout>
 
 <style>
+  /* One measure governs every run of body copy on the page, so nothing reads
+     as cut off against the rest. */
+  .about {
+    --measure: 82ch;
+  }
+
   .about section {
     padding: 5rem 0;
   }
@@ -226,31 +313,121 @@ const stats = [
     letter-spacing: var(--tracking-subheading);
     line-height: 1.3;
     color: var(--color-text);
-    max-width: 34ch;
+    max-width: 45ch;
     margin-bottom: 2rem;
   }
 
   .why p {
-    max-width: 62ch;
+    max-width: var(--measure);
     font-size: var(--text-lead);
     line-height: 1.6;
   }
 
-  /* ── 2. What we've built ── */
-  .built-grid {
+  /* ── 2. The three things we do ── */
+  .pillars {
+    padding-top: 0;
+  }
+
+  .pillar-grid {
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 2.5rem;
+    border-top: 1px solid var(--color-border);
+    padding-top: 2.5rem;
   }
 
-  .built-item {
+  .pillar-link {
+    display: inline-block;
+    font-size: var(--text-h4);
+    letter-spacing: var(--tracking-subheading);
+    color: var(--color-text);
+    text-decoration: none;
+    margin-bottom: 0.75rem;
+  }
+
+  .pillar-link:hover,
+  .pillar-link:focus-visible {
+    color: var(--color-primary);
+  }
+
+  .pillar-line {
+    color: var(--color-text-body);
+    line-height: 1.5;
+    margin-bottom: 0;
+    max-width: 34ch;
+  }
+
+  /* ── 3. Trajectory ── */
+  .year-list {
+    list-style: none;
+    max-width: var(--measure);
+  }
+
+  .year {
+    display: grid;
+    grid-template-columns: 5rem minmax(0, 1fr) 12rem;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .year-label {
+    font-size: var(--text-h4);
+    letter-spacing: var(--tracking-subheading);
+    color: var(--color-text-muted);
+  }
+
+  /* Proportional to the busiest year, so the growth is visible, not asserted. */
+  .year-bar {
+    display: block;
+    height: 10px;
+    background: var(--color-surface);
+    position: relative;
+  }
+
+  .year-bar::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: var(--fill);
+    background: var(--color-primary);
+  }
+
+  .year-count {
+    font-size: var(--text-lead);
+    color: var(--color-text);
+    white-space: nowrap;
+  }
+
+  .year-note {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .trajectory-note {
+    margin: 2.5rem 0 0;
+    font-size: var(--text-lead);
+    color: var(--color-text);
+    max-width: var(--measure);
+  }
+
+  .acceptance {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    margin-top: 2.5rem;
+  }
+
+  .acceptance-item {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.35rem;
   }
 
-  .built-figure {
+  .acceptance-rate {
     font-size: var(--text-h2);
     font-weight: var(--weight-heading);
     letter-spacing: var(--tracking-heading);
@@ -258,54 +435,62 @@ const stats = [
     color: var(--color-primary);
   }
 
-  .built-label {
-    color: var(--color-text);
-    line-height: 1.4;
-  }
-
-  .built-detail {
+  .acceptance-label {
     font-size: var(--text-small);
     color: var(--color-text-muted);
-    line-height: 1.4;
   }
 
-  .built-note {
-    margin: 2.5rem 0 0;
-    font-size: var(--text-lead);
-    color: var(--color-text);
-    max-width: 50ch;
-  }
-
-  /* ── 3. Team — same treatment as the community leads on /community ── */
-  .person-grid {
+  /* ── 4. Team: one block, lead on the left, everyone else on the right ── */
+  .team-layout {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 3rem 2rem;
+    grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+    gap: 4rem;
+    align-items: start;
   }
 
-  .person-card {
-    max-width: 320px;
+  .team-others {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.5rem 2rem;
   }
 
-  .person-photo {
-    display: block;
-    height: 320px;
-    width: auto;
-    max-width: 100%;
-    object-fit: contain;
+  .person-portrait {
     margin-bottom: 1rem;
   }
 
+  .person-photo,
   .person-photo-placeholder {
-    width: 240px;
+    display: block;
+    height: 170px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+  .person-portrait-lead .person-photo,
+  .person-portrait-lead .person-photo-placeholder {
+    height: 320px;
+  }
+
+  .person-photo-placeholder {
+    width: 128px;
     background: var(--color-surface);
   }
 
+  .person-portrait-lead .person-photo-placeholder {
+    width: 240px;
+  }
+
+  /* Beats the placeholder's own `display: block` when the image loads. */
+  .person-portrait [hidden] {
+    display: none !important;
+  }
+
+  /* Icon sits next to the name, not pushed to the far edge of the column. */
   .person-name-row {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
+    gap: 0.75rem;
   }
 
   .person-name {
@@ -323,6 +508,7 @@ const stats = [
     margin-bottom: 0;
   }
 
+  /* Same icon treatment as the event cards. */
   .event-link {
     display: inline-flex;
     align-items: center;
@@ -366,28 +552,27 @@ const stats = [
     color: var(--color-primary);
   }
 
-  .leads-heading {
-    font-size: var(--text-h3);
-    color: var(--color-text-muted);
-    letter-spacing: var(--tracking-subheading);
-    margin: 4rem 0 2.5rem;
+  .team-aside {
+    margin: 3rem 0 0;
+    max-width: var(--measure);
+    color: var(--color-text-body);
   }
 
-  .leads-cta {
-    margin: 2.5rem 0 0;
-  }
-
-  .leads-cta a {
+  .team-aside a {
     color: var(--color-primary);
     text-decoration: underline;
     text-underline-offset: 0.2em;
   }
 
-  .leads-cta a:hover {
+  .team-aside a:hover {
     color: var(--color-primary-hover);
   }
 
-  /* ── 4. Stats ── */
+  .leads-cta {
+    margin-top: 2rem;
+  }
+
+  /* ── 5. Stats ── */
   .stats {
     border-top: 1px solid var(--color-border);
   }
@@ -417,7 +602,7 @@ const stats = [
     font-size: var(--text-lead);
     color: var(--color-text);
     line-height: 1.35;
-    max-width: 32ch;
+    max-width: 42ch;
   }
 
   .stat-source {
@@ -426,9 +611,14 @@ const stats = [
   }
 
   @media (max-width: 1024px) {
-    .built-grid,
-    .person-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .pillar-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2rem;
+    }
+
+    .team-layout {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 3rem;
     }
   }
 
@@ -437,8 +627,16 @@ const stats = [
       padding: 3.5rem 0;
     }
 
-    .built-grid,
-    .person-grid,
+    .year {
+      grid-template-columns: 4rem minmax(0, 1fr);
+      gap: 0.5rem 1rem;
+    }
+
+    .year-count {
+      grid-column: 2;
+    }
+
+    .team-others,
     .stat-grid {
       grid-template-columns: minmax(0, 1fr);
     }

@@ -37,3 +37,35 @@ export function getEventStats(events: CollectionEntry<'events'>[]): EventStats {
     organisationCount: organisations.size,
   };
 }
+
+/** One year of the events collection, for showing the trajectory rather than a total. */
+export interface EventYear {
+  year: number;
+  count: number;
+  /** Month name of the latest event that year, so a part-year can say so. */
+  latestMonth: string;
+}
+
+/**
+ * Events grouped by calendar year, oldest first. Derived from the same
+ * collection as the totals above, so the progression can never disagree with
+ * the headline count.
+ */
+export function getEventsByYear(events: CollectionEntry<'events'>[]): EventYear[] {
+  const byYear = new Map<number, Date[]>();
+  for (const e of events) {
+    const date = new Date(e.data.date);
+    const year = date.getUTCFullYear();
+    byYear.set(year, [...(byYear.get(year) ?? []), date]);
+  }
+  return [...byYear.entries()]
+    .sort(([a], [b]) => a - b)
+    .map(([year, dates]) => ({
+      year,
+      count: dates.length,
+      latestMonth: new Date(Math.max(...dates.map((d) => d.getTime()))).toLocaleString('en-GB', {
+        month: 'long',
+        timeZone: 'UTC',
+      }),
+    }));
+}
