@@ -4,6 +4,7 @@ import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import { getCollection } from 'astro:content';
 import { COMMUNITY_LEADS } from '../config';
+import { VENTURE_PARTNERS } from '../data/people';
 import { getEventStats, getEventsByYear } from '../lib/eventStats';
 
 const events = await getCollection('events');
@@ -14,21 +15,50 @@ const peakYear = Math.max(...eventYears.map((y) => y.count));
 // Only the most recent year is part-run; the rest are complete.
 const currentYear = eventYears[eventYears.length - 1]?.year;
 
+const NUMBER_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
+const venturePartnerCount = NUMBER_WORDS[VENTURE_PARTNERS.length] ?? String(VENTURE_PARTNERS.length);
+
+// The evidence, with the source under each. Entries without a headline figure
+// carry the finding itself — nothing is invented to fill the slot.
+const marketCase = [
+  {
+    figure: '78p',
+    label: 'revenue per £1 invested for female-founded startups, against 31p for male-founded',
+    source: 'BCG, 2018',
+  },
+  {
+    label: 'Female-founded startups reach exit faster.',
+    source: 'PitchBook, 2023',
+  },
+  {
+    figure: '15%',
+    label: 'less capital burned per month',
+    source: 'Inc, 2025',
+  },
+  {
+    label: 'Female teams remain the most underrepresented in both decks submitted and investment received.',
+    source: 'Founders Forum Group, 2025',
+  },
+];
+
 const pillars = [
   {
     label: 'the fund',
     href: '/fund',
-    line: 'First cheques into all-female, all-technical teams at pre-seed.',
+    line: 'first cheques into all-female, all-technical teams at pre-seed.',
   },
   {
     label: 'the accelerator',
     href: '/accelerator',
-    line: 'Eight weeks, twice a year, for technical founders at idea stage.',
+    line: "eight weeks, twice a year; the world's first all-female, all-technical accelerator",
   },
   {
     label: 'the community',
     href: '/community',
-    line: `${eventStats.eventCount} events across ${eventStats.cityCount} cities, and the network that comes with them.`,
+    // Event and city counts derive from the collection; the community figures
+    // are not derivable from it and stay written out.
+    line: `we've hosted 1,500+ technical women at ${eventStats.eventCount} live events across ${eventStats.cityCount} cities. our whatsapp community has 250+ curated members from 26 countries. apply to join `,
+    cta: { text: 'here', href: '/community#apply' },
   },
 ];
 
@@ -50,21 +80,19 @@ const lead = {
 };
 
 // Everyone else, name and role only. Community leads come from the shared
-// config so /about and /community can't drift apart. `linkedin: undefined`
-// means we don't have the URL yet — the icon is left off rather than pointed
-// somewhere wrong.
+// config so /about and /community can't drift apart.
 const team = [
   {
     name: 'Sara Patti',
     role: 'Partnerships',
-    photo: '/about/sara-patti.png',
-    linkedin: undefined as string | undefined,
+    photo: '/community/leads/sara-patti.png',
+    linkedin: 'https://www.linkedin.com/in/sara-patti/',
   },
   {
     name: 'Shameem Golestaneh',
     role: 'University partnerships',
-    photo: undefined as string | undefined,
-    linkedin: 'https://www.linkedin.com/in/shameem-golestaneh-3378b3194/' as string | undefined,
+    photo: '/community/leads/shameem-golestaneh.png',
+    linkedin: 'https://www.linkedin.com/in/shameem-golestaneh-3378b3194/',
   },
   ...COMMUNITY_LEADS.map((person) => ({
     name: person.name,
@@ -114,7 +142,29 @@ const stats = [
       </div>
     </section>
 
-    <!-- 2. The three things we do -->
+    <!-- 2. The market case -->
+    <section class="market">
+      <div class="container">
+        <h2>the market case</h2>
+        <ul class="market-grid">
+          {marketCase.map((item) => (
+            <li class="market-item">
+              {item.figure ? (
+                <>
+                  <span class="market-figure">{item.figure}</span>
+                  <span class="market-label">{item.label}</span>
+                </>
+              ) : (
+                <span class="market-statement">{item.label}</span>
+              )}
+              <span class="market-source">{item.source}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. The three things we do -->
     <section class="pillars">
       <div class="container">
         <h2>what we do</h2>
@@ -122,14 +172,17 @@ const stats = [
           {pillars.map((pillar) => (
             <li class="pillar">
               <a href={pillar.href} class="pillar-link">{pillar.label}</a>
-              <p class="pillar-line">{pillar.line}</p>
+              <p class="pillar-line">
+                {pillar.line}
+                {pillar.cta && <><a href={pillar.cta.href} class="pillar-cta">{pillar.cta.text}</a>.</>}
+              </p>
             </li>
           ))}
         </ul>
       </div>
     </section>
 
-    <!-- 3. Trajectory. Year counts come from the events collection. -->
+    <!-- 4. Trajectory. Year counts come from the events collection. -->
     <section class="trajectory">
       <div class="container">
         <h2>where we are</h2>
@@ -140,7 +193,7 @@ const stats = [
               <span class="year-bar" style={`--fill: ${(year.count / peakYear) * 100}%`}></span>
               <span class="year-count">
                 {year.count} events
-                {year.year === currentYear && <span class="year-note"> by {year.latestMonth}</span>}
+                {year.year === currentYear && <span class="year-note"> so far</span>}
               </span>
             </li>
           ))}
@@ -165,10 +218,12 @@ const stats = [
       </div>
     </section>
 
-    <!-- 4. Team. `id="team"` is the target of the /team redirect. -->
+    <!-- 5. Team. `id="team"` is the target of the /team redirect. -->
     <section class="team" id="team">
+      <div class="section-banner holo">
+        <div class="container"><h2>team</h2></div>
+      </div>
       <div class="container">
-        <h2>team</h2>
 
         <div class="team-layout">
           <!-- Lead: larger photo, the only bio on the page. -->
@@ -252,8 +307,8 @@ const stats = [
         </div>
 
         <p class="team-aside">
-          Our venture partners work with the accelerator cohorts -
-          <a href="/accelerator#venture-partners">meet them on the accelerator page</a>.
+          {venturePartnerCount} <a href="/accelerator#venture-partners">venture partners</a> work with
+          every cohort.
         </p>
 
         <div class="leads-cta">
@@ -262,7 +317,7 @@ const stats = [
       </div>
     </section>
 
-    <!-- 5. Stats -->
+    <!-- 6. Stats -->
     <section class="stats">
       <div class="container">
         <ul class="stat-grid">
@@ -292,10 +347,30 @@ const stats = [
   }
 
   .about h2 {
-    font-size: var(--text-h3);
-    color: var(--color-text-muted);
-    letter-spacing: var(--tracking-subheading);
+    font-size: var(--text-h2);
+    color: var(--color-text);
+    letter-spacing: var(--tracking-heading);
     margin-bottom: 2.5rem;
+  }
+
+  /* Full-bleed divider, same treatment as the section banners on /press.
+     Direct child of the section, so it runs edge to edge. */
+  .section-banner {
+    margin-bottom: 3rem;
+    padding: 0.5rem 0;
+  }
+
+  .section-banner h2 {
+    margin: 0;
+    text-align: left;
+    font-weight: var(--weight-holo);
+    letter-spacing: var(--tracking-holo);
+    line-height: 1.05;
+  }
+
+  /* The banner carries the section's top edge. */
+  .about section.team {
+    padding-top: 3rem;
   }
 
   /* ── 1. Why we exist ── */
@@ -323,7 +398,49 @@ const stats = [
     line-height: 1.6;
   }
 
-  /* ── 2. The three things we do ── */
+  /* ── 2. The market case ── */
+  .market-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2.5rem;
+  }
+
+  .market-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .market-figure {
+    font-size: var(--text-h2);
+    font-weight: var(--weight-heading);
+    letter-spacing: var(--tracking-heading);
+    line-height: 1.05;
+    color: var(--color-primary);
+  }
+
+  .market-label {
+    color: var(--color-text);
+    line-height: 1.45;
+  }
+
+  /* Findings without a headline number carry their own weight instead. */
+  .market-statement {
+    font-size: var(--text-h4);
+    letter-spacing: var(--tracking-subheading);
+    line-height: 1.3;
+    color: var(--color-text);
+  }
+
+  .market-source {
+    margin-top: auto;
+    padding-top: 0.5rem;
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+
+  /* ── 3. The three things we do ── */
   .pillars {
     padding-top: 0;
   }
@@ -355,10 +472,20 @@ const stats = [
     color: var(--color-text-body);
     line-height: 1.5;
     margin-bottom: 0;
-    max-width: 34ch;
+    max-width: 40ch;
   }
 
-  /* ── 3. Trajectory ── */
+  .pillar-cta {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .pillar-cta:hover {
+    color: var(--color-primary-hover);
+  }
+
+  /* ── 4. Trajectory ── */
   .year-list {
     list-style: none;
     max-width: var(--measure);
@@ -440,22 +567,38 @@ const stats = [
     color: var(--color-text-muted);
   }
 
-  /* ── 4. Team: one block, lead on the left, everyone else on the right ── */
+  /* ── 5. Team: one block, lead on the left, everyone else on the right ── */
   .team-layout {
     display: grid;
-    grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
     gap: 4rem;
     align-items: start;
   }
 
+  /* Two rows of three. */
   .team-others {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 2.5rem 2rem;
   }
 
+  /* Fixed-height box with the photo sat on its floor, so names and roles line
+     up across the row whatever each portrait's proportions are. */
   .person-portrait {
+    display: flex;
+    align-items: flex-end;
+    height: 170px;
     margin-bottom: 1rem;
+  }
+
+  .person-portrait-lead {
+    height: 320px;
+  }
+
+  /* Two lines' worth of space whether the name needs it or not, so every role
+     in a row sits on the same line. */
+  .team-others .person-name {
+    min-height: 2.4em;
   }
 
   .person-photo,
@@ -572,7 +715,7 @@ const stats = [
     margin-top: 2rem;
   }
 
-  /* ── 5. Stats ── */
+  /* ── 6. Stats ── */
   .stats {
     border-top: 1px solid var(--color-border);
   }
@@ -611,6 +754,10 @@ const stats = [
   }
 
   @media (max-width: 1024px) {
+    .market-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .pillar-grid {
       grid-template-columns: minmax(0, 1fr);
       gap: 2rem;
@@ -636,9 +783,13 @@ const stats = [
       grid-column: 2;
     }
 
-    .team-others,
+    .market-grid,
     .stat-grid {
       grid-template-columns: minmax(0, 1fr);
+    }
+
+    .team-others {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 </style>

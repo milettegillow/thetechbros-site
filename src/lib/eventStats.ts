@@ -42,8 +42,6 @@ export function getEventStats(events: CollectionEntry<'events'>[]): EventStats {
 export interface EventYear {
   year: number;
   count: number;
-  /** Month name of the latest event that year, so a part-year can say so. */
-  latestMonth: string;
 }
 
 /**
@@ -52,20 +50,12 @@ export interface EventYear {
  * the headline count.
  */
 export function getEventsByYear(events: CollectionEntry<'events'>[]): EventYear[] {
-  const byYear = new Map<number, Date[]>();
+  const byYear = new Map<number, number>();
   for (const e of events) {
-    const date = new Date(e.data.date);
-    const year = date.getUTCFullYear();
-    byYear.set(year, [...(byYear.get(year) ?? []), date]);
+    const year = new Date(e.data.date).getUTCFullYear();
+    byYear.set(year, (byYear.get(year) ?? 0) + 1);
   }
   return [...byYear.entries()]
     .sort(([a], [b]) => a - b)
-    .map(([year, dates]) => ({
-      year,
-      count: dates.length,
-      latestMonth: new Date(Math.max(...dates.map((d) => d.getTime()))).toLocaleString('en-GB', {
-        month: 'long',
-        timeZone: 'UTC',
-      }),
-    }));
+    .map(([year, count]) => ({ year, count }));
 }

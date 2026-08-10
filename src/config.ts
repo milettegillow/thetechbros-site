@@ -102,7 +102,7 @@ export const COMMUNITY_LEADS: {
     name: 'Emile Shah',
     city: 'Singapore',
     role: 'Community lead',
-    linkedin: '',
+    linkedin: 'https://www.linkedin.com/in/emile-shah/',
     photo: 'emile-shah.png',
   },
 ];
