@@ -4,14 +4,15 @@ import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import NewsletterSignup from '../components/NewsletterSignup.astro';
 import PeopleGrid from '../components/PeopleGrid.astro';
-import { VENTURE_PARTNERS, COHORT_2 } from '../data/people';
+import { VENTURE_PARTNERS } from '../data/venture-partners';
+import { COHORT_2 } from '../data/cohort-2';
 
 const programme = [
-  'Two weeks in person at a hacker house in Norway.',
-  'A six-week hybrid programme.',
-  'A twelve-strong venture partner bench.',
-  'Workshops.',
-  'A demo day for invited investors.',
+  'two weeks in person at a hacker house in norway.',
+  'six weeks hybrid, following the two in norway.',
+  'a twelve-strong venture partner bench.',
+  'workshops.',
+  'a demo day for invited investors.',
 ];
 
 const whoGetsIn = [
@@ -36,27 +37,32 @@ const whoGetsIn = [
 ];
 
 const cohortOnCohort = [
-  { measure: 'Repeat founders', one: '10%', two: '45%' },
-  { measure: 'Hardware founders', one: '5%', two: '45%' },
-  { measure: 'Users or pilots at selection', one: '35%', two: '90%' },
+  { measure: 'repeat founders', one: '10%', two: '45%' },
+  { measure: 'hardware founders', one: '5%', two: '45%' },
+  { measure: 'users or pilots at selection', one: '35%', two: '90%' },
 ];
 
-// `logo` points at public/index/cohort-logos/. Five of these have no file yet
-// and fall back to a wordmark; drop the file in and add the path.
+// `logo` points at public/index/cohort-logos/. `height` is tuned per mark:
+// these range from square icons to wordmarks nearly five times as wide as they
+// are tall, and one shared height renders them at wildly different weights.
+// `tone` overrides the default white-out for marks that are a coloured plate
+// with the shape knocked out of it — flattening those to white fills the plate
+// solid. Entries with no file fall back to a wordmark; drop the file in and add
+// the path.
 const origins = [
-  { name: 'Google', logo: '/index/cohort-logos/google.png' },
-  { name: 'Apple', logo: '/index/cohort-logos/apple.png' },
-  { name: 'Microsoft', logo: '/index/cohort-logos/microsoft.png' },
-  { name: 'Tesla', logo: '/index/cohort-logos/tesla.png' },
-  { name: 'Meta', logo: '/index/cohort-logos/meta.png' },
-  { name: 'Discord', logo: '/index/cohort-logos/discord.png' },
+  { name: 'Google', logo: '/index/cohort-logos/google.png', height: 24 },
+  { name: 'Apple', logo: '/index/cohort-logos/apple.png', height: 40 },
+  { name: 'Microsoft', logo: '/index/cohort-logos/microsoft.png', height: 22 },
+  { name: 'Tesla', logo: '/index/cohort-logos/tesla.png', height: 40 },
+  { name: 'Meta', logo: '/index/cohort-logos/meta.png', height: 22 },
+  { name: 'Discord', logo: '/index/cohort-logos/discord.png', height: 36, tone: 'threshold' },
   { name: 'NASA' },
   { name: 'Amazon' },
-  { name: 'Y Combinator', logo: '/index/cohort-logos/ycombinator.png' },
-  { name: 'Stanford', logo: '/index/cohort-logos/stanford.png' },
-  { name: 'MIT', logo: '/index/cohort-logos/mit.png' },
-  { name: 'Oxford', logo: '/index/cohort-logos/oxford.png' },
-  { name: 'Cambridge', logo: '/index/cohort-logos/cambridge.png' },
+  { name: 'Y Combinator', logo: '/index/cohort-logos/ycombinator.png', height: 34, tone: 'knockout' },
+  { name: 'Stanford', logo: '/index/cohort-logos/stanford.png', height: 26 },
+  { name: 'MIT', logo: '/index/cohort-logos/mit.png', height: 30 },
+  { name: 'Oxford', logo: '/index/cohort-logos/oxford.png', height: 24, tone: 'threshold' },
+  { name: 'Cambridge', logo: '/index/cohort-logos/cambridge.png', height: 22 },
   { name: 'UC Berkeley' },
   { name: 'Caltech' },
   { name: 'EPFL' },
@@ -75,7 +81,7 @@ const origins = [
       <div class="container">
         <h1>the world's first all-female, all-technical accelerator</h1>
         <p class="hero-line">
-          six weeks. twenty founders. 500+ applications, all reached organically.
+          eight weeks. twenty founders. 500+ applications, all reached organically.
         </p>
       </div>
     </section>
@@ -85,9 +91,9 @@ const origins = [
     <section class="status" id="apply-now">
       <div class="container">
         <div class="holo status-block">
-          <p class="status-headline">Cohort 3 applications open next spring.</p>
+          <p class="status-headline">cohort 3 applications open next spring.</p>
           <p class="status-sub">
-            <a href="#newsletter">Sign up to our newsletter to hear first.</a>
+            <a href="#newsletter">sign up to our newsletter to hear first.</a>
           </p>
         </div>
       </div>
@@ -100,7 +106,7 @@ const origins = [
         <ul class="programme-list">
           {programme.map((item) => <li>{item}</li>)}
         </ul>
-        <p class="programme-terms">Investment terms are confirmed at offer stage.</p>
+        <p class="programme-terms">investment terms are confirmed at offer stage.</p>
       </div>
     </section>
 
@@ -108,6 +114,7 @@ const origins = [
     <section class="who-gets-in">
       <div class="container">
         <h2>who gets in</h2>
+        <p class="who-frame">this is who you'd be joining.</p>
         <ul class="stat-grid">
           {whoGetsIn.map((item) => (
             <li class="stat-item">
@@ -128,8 +135,8 @@ const origins = [
           <thead>
             <tr>
               <th scope="col">&nbsp;</th>
-              <th scope="col">Cohort 1</th>
-              <th scope="col">Cohort 2</th>
+              <th scope="col">cohort 1</th>
+              <th scope="col">cohort 2</th>
             </tr>
           </thead>
           <tbody>
@@ -142,7 +149,7 @@ const origins = [
             ))}
           </tbody>
         </table>
-        <p class="cohort-note">The programme is getting more competitive.</p>
+        <p class="cohort-note">the programme is getting more competitive.</p>
       </div>
     </section>
 
@@ -150,12 +157,20 @@ const origins = [
     <section class="origins">
       <div class="container">
         <h2>our founders come from</h2>
-        <p class="origins-note">Where cohort members came from before the programme.</p>
+        <p class="origins-note">where cohort members came from before the programme.</p>
         <ul class="origin-strip">
           {origins.map((org) => (
             <li class="origin-item">
               {org.logo ? (
-                <img src={org.logo} alt={org.name} class="origin-logo" loading="lazy" decoding="async" />
+                <img
+                  src={org.logo}
+                  alt={org.name}
+                  class="origin-logo"
+                  data-tone={org.tone}
+                  style={org.height ? `height: ${org.height}px` : undefined}
+                  loading="lazy"
+                  decoding="async"
+                />
               ) : (
                 <span class="origin-name">{org.name}</span>
               )}
@@ -192,7 +207,7 @@ const origins = [
     <section class="cohort-2">
       <div class="container">
         <h2>cohort 2</h2>
-        <p class="cohort-2-line">270+ applied. Twenty selected. A 7.4% acceptance rate.</p>
+        <p class="cohort-2-line">270+ applied. twenty selected. a 7.4% acceptance rate.</p>
         <PeopleGrid people={COHORT_2} photoBase="/accelerator/cohort-2" />
       </div>
     </section>
@@ -205,7 +220,7 @@ const origins = [
           Applications open next spring. The newsletter is how you find out first.
         </p>
         <div class="newsletter-wrap">
-          <NewsletterSignup buttonText="Subscribe" />
+          <NewsletterSignup buttonText="subscribe" variant="primary" />
         </div>
       </div>
     </section>
@@ -219,9 +234,15 @@ const origins = [
   }
 
   .accelerator h2 {
-    font-size: var(--text-h3);
-    color: var(--color-text-muted);
-    letter-spacing: var(--tracking-subheading);
+    font-size: var(--text-h2);
+    color: var(--color-text);
+    letter-spacing: var(--tracking-heading);
+    margin-bottom: 2.5rem;
+  }
+
+  .who-frame {
+    font-size: var(--text-lead);
+    color: var(--color-text);
     margin-bottom: 2.5rem;
   }
 
@@ -397,11 +418,25 @@ const origins = [
 
   .origin-logo {
     display: block;
-    height: 34px;
+    height: 30px;
     width: auto;
     max-width: 100%;
     object-fit: contain;
-    opacity: 0.85;
+    /* Same treatment as the as-seen-in strip and the partner wall. */
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+  }
+
+  /* Coloured plate with the mark knocked out of it: grayscale plus a hard
+     contrast push drops the plate to black and lifts the mark to white. */
+  .origin-logo[data-tone='threshold'] {
+    filter: grayscale(1) contrast(5);
+  }
+
+  /* Same idea, but the plate sits light enough that it needs pulling down
+     below the contrast pivot first, or it whites out instead. */
+  .origin-logo[data-tone='knockout'] {
+    filter: grayscale(1) brightness(0.7) contrast(20);
   }
 
   /* Wordmark fallback for organisations with no logo file yet. */

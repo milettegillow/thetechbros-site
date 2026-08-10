@@ -8,9 +8,11 @@
 
 interface Props {
   buttonText?: string;
+  /** Button weight. `primary` is the holographic variant. */
+  variant?: 'primary' | 'secondary' | 'tertiary';
 }
 
-const { buttonText = 'Subscribe' } = Astro.props;
+const { buttonText = 'Subscribe', variant = 'tertiary' } = Astro.props;
 ---
 
 <form class="newsletter-signup" id="newsletter-signup-form">
@@ -61,7 +63,7 @@ const { buttonText = 'Subscribe' } = Astro.props;
       aria-hidden="true"
     />
   </div>
-  <button type="submit" class="btn btn-tertiary" id="newsletter-submit">
+  <button type="submit" class={`btn btn-${variant}`} id="newsletter-submit">
     {buttonText}
   </button>
   <div id="newsletter-message" role="status" aria-live="polite" class="newsletter-message"></div>

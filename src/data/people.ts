@@ -1,28 +1,16 @@
 /**
- * People shown on /accelerator.
+ * Shared shape for the people lists. One file per section holds the entries:
  *
- * Edit this file to fill in the real entries — nothing else needs changing.
- * Both lists render through the same component, so they stay identical.
+ *   src/data/venture-partners.ts  -> /accelerator and /about
+ *   src/data/cohort-2.ts          -> /accelerator
  *
- *   name     required. Shown in white beneath the photo.
- *   photo    optional. Filename only. Venture partners resolve against
- *            /accelerator/venture-partners/, cohort 2 against
- *            /accelerator/cohort-2/. Omit it and a placeholder block stands in
- *            at the same height so the layout doesn't move.
- *   linkedin optional. Full profile URL. Omit it and no icon is shown.
+ * Both render through PeopleGrid, which falls back to a plain list of names
+ * until photos exist, so an empty grid is never shown.
  */
 export interface Person {
   name: string;
+  /** Filename only, e.g. `jane-doe.png`. Resolved against the section's photo directory. */
   photo?: string;
+  /** Full profile URL. Omit it and no icon is shown. */
   linkedin?: string;
 }
-
-/** Twelve venture partners. Placeholder entries — replace with real names. */
-export const VENTURE_PARTNERS: Person[] = Array.from({ length: 12 }, (_, i) => ({
-  name: `Venture partner ${String(i + 1).padStart(2, '0')}`,
-}));
-
-/** Twenty cohort 2 founders. Placeholder entries — replace with real names. */
-export const COHORT_2: Person[] = Array.from({ length: 20 }, (_, i) => ({
-  name: `Founder ${String(i + 1).padStart(2, '0')}`,
-}));
