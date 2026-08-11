@@ -59,7 +59,7 @@ const origins = [
   { name: 'Meta', logo: '/index/cohort-logos/meta.png', height: 22 },
   { name: 'Discord', logo: '/index/cohort-logos/discord.png', height: 36, tone: 'threshold' },
   { name: 'NASA', logo: '/index/cohort-logos/nasa.png', height: 26 },
-  { name: 'Y Combinator', logo: '/index/cohort-logos/y-combinator.png', height: 26, tone: 'knockout' },
+  { name: 'Y Combinator', logo: '/index/cohort-logos/y-combinator.png', height: 26, tone: 'plate' },
   { name: 'Stanford', logo: '/index/cohort-logos/stanford.png', height: 26 },
   { name: 'MIT', logo: '/index/cohort-logos/mit.png', height: 30 },
   { name: 'Oxford', logo: '/index/cohort-logos/oxford.png', height: 24, tone: 'threshold' },
@@ -439,6 +439,14 @@ const origins = [
      below the contrast pivot first, or it whites out instead. */
   .origin-logo[data-tone='knockout'] {
     filter: grayscale(1) brightness(0.7) contrast(20);
+  }
+
+  /* A lockup that is both a coloured plate and dark type beside it. Inverting
+     first drops the plate below the contrast pivot and lifts the type above
+     it, so one pass keeps the knocked-out glyph *and* the wordmark — every
+     other treatment loses one or the other. */
+  .origin-logo[data-tone='plate'] {
+    filter: invert(1) grayscale(1) brightness(1.2) contrast(3);
   }
 
   /* Wordmark fallback for organisations with no logo file yet. */
