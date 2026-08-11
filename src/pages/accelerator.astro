@@ -142,15 +142,17 @@ const origins = [
             </ul>
             <p class="programme-terms">investment terms are confirmed at offer stage.</p>
           </div>
-          <img
-            src="/accelerator/norway-cohort.jpg"
-            alt="Cohort founders at the hacker house in Norway"
-            class="section-photo"
-            width="1066"
-            height="1600"
-            loading="lazy"
-            decoding="async"
-          />
+          <div class="programme-photo-frame">
+            <img
+              src="/accelerator/norway-cohort.jpg"
+              alt="Cohort founders at the hacker house in Norway"
+              class="section-photo"
+              width="1066"
+              height="1600"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -499,6 +501,10 @@ const origins = [
     object-fit: cover;
   }
 
+  .programme-layout .section-photo {
+    object-position: center;
+  }
+
   /* ── 1. Headline ── */
   /* Out-specifies `.accelerator section`, which would otherwise reimpose 5rem
      and pull the banner away from the hero. */
@@ -556,7 +562,25 @@ const origins = [
 
   /* ── 3. The programme ── */
   .programme-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 32rem);
+  }
+
+  /* The frame is the height of the list beside it; the picture inside is run
+     125% of that height and pulled up an eighth, so exactly the top and bottom
+     tenth of the image fall outside it. Doing it here rather than through
+     `cover` geometry keeps the crop at 10/10 whatever the column width or the
+     list's height turn out to be. */
+  .programme-photo-frame {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .programme-photo-frame .section-photo {
+    position: absolute;
+    top: -12.5%;
+    left: 0;
+    width: 100%;
+    height: 125%;
   }
 
   .programme-list {
@@ -765,7 +789,12 @@ const origins = [
       order: -1;
     }
 
-    .programme-layout .section-photo,
+    /* Stacked: the frame gets an explicit height, since there is no longer a
+       list beside it to take its height from. */
+    .programme-photo-frame {
+      height: 22rem;
+    }
+
     .cohorts-layout .section-photo {
       height: auto;
       max-height: 26rem;
