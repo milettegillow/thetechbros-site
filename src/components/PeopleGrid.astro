@@ -20,16 +20,38 @@ interface Props {
    */
   photoBase?: string;
   /** Columns at desktop width. Steps down to 4 and then 3 as the page narrows. */
-  columns?: 5 | 6;
+  columns?: 3 | 5 | 6;
+  /**
+   * Portrait diameter in pixels. The default suits a full grid; a short row
+   * can afford to go bigger. Reverts to the default on mobile either way.
+   */
+  photoSize?: number;
+  /**
+   * `start` fills the width in equal columns — right for a grid that runs to
+   * several rows. `center` sizes the columns to their content and centres the
+   * group, which is what a row of two or three needs so it isn't stranded
+   * against the left margin.
+   */
+  align?: 'start' | 'center';
 }
 
-const { people, photoBase, columns = 6 } = Astro.props;
+const {
+  people,
+  photoBase,
+  columns = 6,
+  photoSize = 120,
+  align = 'start',
+} = Astro.props;
 
 const srcFor = (photo: string) =>
   photo.startsWith('/') ? photo : `${photoBase}/${photo}`;
 ---
 
-<ul class="people-grid" style={`--people-columns: ${columns}`}>
+<ul
+  class="people-grid"
+  data-align={align}
+  style={`--people-columns: ${columns}; --people-photo-size: ${photoSize}px`}
+>
   {people.map((person) => {
     const Tile = person.linkedin ? 'a' : 'div';
     return (
@@ -96,8 +118,8 @@ const srcFor = (photo: string) =>
   .people-photo,
   .people-photo-placeholder {
     display: block;
-    width: 120px;
-    height: 120px;
+    width: var(--people-photo-size, 120px);
+    height: var(--people-photo-size, 120px);
     border-radius: 50%;
     object-fit: cover;
     object-position: center top;
@@ -148,6 +170,13 @@ const srcFor = (photo: string) =>
     letter-spacing: var(--tracking-subheading);
   }
 
+  /* Centred variant: tracks take a fixed width rather than a share of the
+     line, which is what lets `justify-content` have anything to centre. */
+  .people-grid[data-align='center'] {
+    grid-template-columns: repeat(var(--people-columns, 6), minmax(0, 12rem));
+    justify-content: center;
+  }
+
   @media (max-width: 1024px) {
     .people-grid {
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -157,6 +186,19 @@ const srcFor = (photo: string) =>
   @media (max-width: 768px) {
     .people-grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    /* Three enlarged portraits don't fit a phone, so the size reverts and the
+       centred variant goes back to sharing the line like any other grid. */
+    .people-grid[data-align='center'] {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      justify-content: normal;
+    }
+
+    .people-photo,
+    .people-photo-placeholder {
+      width: 120px;
+      height: 120px;
     }
   }
 </style>
