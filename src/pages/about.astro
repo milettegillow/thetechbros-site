@@ -15,12 +15,23 @@ const peakYear = Math.max(...eventYears.map((y) => y.count));
 // Only the most recent year is part-run; the rest are complete.
 const currentYear = eventYears[eventYears.length - 1]?.year;
 
-// The research behind the thesis. The detail lives on /fund; this is the case
-// in brief.
+// The research behind the thesis, each point with the study it comes from.
 const whyPoints = [
-  'When presented with identical pitches, both male and female investors rate those pitched by men more favourably.',
-  'Both male and female investors rate identical pitches more highly when told a male investor had already invested.',
-  'Male founders are more often asked "promotion" questions about what might go right, while female founders are asked "prevention" questions about what might go wrong. In comparable companies, entrepreneurs asked primarily prevention questions raise an average of seven times less.',
+  {
+    text: 'When presented with identical pitches, both male and female investors rate those pitched by men more favourably.',
+    source: 'Brooks et al., PNAS, 2014',
+    url: 'https://www.pnas.org/doi/10.1073/pnas.1321202111',
+  },
+  {
+    text: 'Female-founded firms whose first-round backing came from female rather than male investors are twice as likely to fail to raise a further round. There is no equivalent effect for male-founded firms.',
+    source: 'Snellman & Solal, Organization Science',
+    url: 'https://pubsonline.informs.org/doi/10.1287/orsc.2022.1594',
+  },
+  {
+    text: 'Male founders are more often asked "promotion" questions about what might go right, while female founders are asked "prevention" questions about what might go wrong. In comparable companies, entrepreneurs asked primarily prevention questions raise an average of seven times less.',
+    source: 'Kanze et al., Harvard Business Review, 2017',
+    url: 'https://hbr.org/2017/06/male-and-female-entrepreneurs-get-asked-different-questions-by-vcs-and-it-affects-how-much-funding-they-get',
+  },
 ];
 
 const pillars = [
@@ -169,9 +180,16 @@ const stats = [
           Female-founded startups consistently outperform startups with all-male teams, yet receive
           a fraction of the venture funding.
         </p>
-        <ul class="why-points">
-          {whyPoints.map((point) => <li>{point}</li>)}
-        </ul>
+        <div class="why-points">
+          {whyPoints.map((point) => (
+            <div class="why-point">
+              <p class="why-point-text">{point.text}</p>
+              <a class="why-source" href={point.url} target="_blank" rel="noopener noreferrer">
+                {point.source}
+              </a>
+            </div>
+          ))}
+        </div>
         <p class="why-close">
           We believe in creating an entirely new pipeline for backing exceptional female founders,
           from idea stage to pre-seed and all the way through to exit or IPO.
@@ -416,24 +434,36 @@ const stats = [
     color: var(--color-text);
   }
 
+  /* No markers: the indent and the spacing between points do the work. */
   .why-points {
-    list-style: none;
-    margin: 0 0 2rem;
+    margin: 0 0 2.5rem;
+    padding-left: 1.5rem;
   }
 
-  .why-points li {
+  .why-point + .why-point {
+    margin-top: 2rem;
+  }
+
+  .why-point-text {
     color: var(--color-text-body);
     line-height: 1.6;
-    padding: 0 0 0 1.5rem;
-    margin-bottom: 1rem;
-    position: relative;
+    margin-bottom: 0.5rem;
   }
 
-  .why-points li::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    color: var(--color-primary);
+  /* Same citation treatment as the market case on /fund. */
+  .why-source {
+    display: inline-block;
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-decoration: underline;
+    text-decoration-color: var(--color-border);
+    text-underline-offset: 0.25em;
+  }
+
+  .why-source:hover,
+  .why-source:focus-visible {
+    color: var(--color-text);
+    text-decoration-color: currentColor;
   }
 
   .why-close {
