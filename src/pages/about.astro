@@ -208,7 +208,7 @@ const stats = [
               <span class="year-bar" style={`--fill: ${(year.count / peakYear) * 100}%`}></span>
               <span class="year-count">
                 {year.count} events
-                {year.year === currentYear && <span class="year-note"> so far</span>}
+                {year.year === currentYear && <span class="year-note">...so far!</span>}
               </span>
             </li>
           ))}
@@ -585,9 +585,13 @@ const stats = [
     white-space: nowrap;
   }
 
+  /* An aside, not a trailing fragment: enough space to read as a separate
+     remark, and white so it carries. */
   .year-note {
-    color: var(--color-text-muted);
+    margin-left: 1.5rem;
+    color: var(--color-text);
     font-size: var(--text-small);
+    font-weight: var(--weight-holo);
   }
 
   .trajectory-note {
