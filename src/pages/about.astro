@@ -175,7 +175,7 @@ const stats = [
     <section class="why-we-do-it">
       <div class="container">
         <h2>why we do it</h2>
-        <a href="/fund" class="why-claim holo-hover">women-owned businesses are a better bet.</a>
+        <a href="/fund" class="why-claim">women-owned businesses are a better bet.</a>
         <p class="why-body">
           Female-founded startups consistently outperform startups with all-male teams, yet receive
           a fraction of the venture funding.
@@ -404,11 +404,13 @@ const stats = [
   }
 
   /* ── 2. Why we do it ── */
-  /* Pink at rest, like every other link. On hover the foil comes in behind the
-     words as a surface — inline-block so it hugs the line rather than spanning
-     the column — and the text goes black and bold, same as the primary button.
-     The surface itself comes from `.holo-hover` in the global sheet; nothing
-     here paints the gradient, and it never touches the type. */
+  /* Pink at rest, like every other link. On hover the foil fills the
+     letterforms themselves via background-clip.
+
+     This is the one place on the site where the holographic surface is used as
+     a text effect rather than a background — a deliberate exception, made here
+     and nowhere else. The gradient comes from the same `--holo-surface-image`
+     token as every real surface, so the two can't drift apart. */
   .why-claim {
     display: inline-block;
     font-size: var(--text-h3);
@@ -416,15 +418,25 @@ const stats = [
     line-height: 1.25;
     color: var(--color-primary);
     text-decoration: none;
-    padding: 0.35em 0.5em;
-    margin: 0 0 2rem -0.5em;
-    transition: color var(--transition-btn), background-color var(--transition-btn);
+    margin-bottom: 2rem;
+    background-color: transparent;
+    background-image: var(--holo-surface-image);
+    background-size: 100% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* The gradient is painted but masked out until hover, so only the colour
+       has to change and the fill doesn't have to be built mid-transition. */
+    -webkit-text-fill-color: var(--color-primary);
+    transition: -webkit-text-fill-color var(--transition-btn), font-weight var(--transition-btn);
   }
 
   .why-claim:hover,
   .why-claim:focus-visible,
   .why-claim.is-hover {
+    /* Heavier so the pastels hold their own against black — a hairline stroke
+       in these tints reads as washed out. */
     font-weight: var(--weight-holo);
+    -webkit-text-fill-color: transparent;
   }
 
   .why-body,

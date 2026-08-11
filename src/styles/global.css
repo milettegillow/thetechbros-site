@@ -150,6 +150,48 @@
   --transition: 0.2s ease;
   /* Buttons resolve fast and decisively — no soft fades. */
   --transition-btn: 80ms linear;
+  /* The surface itself, as a token, so anything that needs the same foil
+     references it rather than restating four gradients. */
+  --holo-surface-image:
+    repeating-conic-gradient(
+      from var(--holo-ray-from) at var(--holo-ray-x) var(--holo-ray-y),
+      var(--holo-ray-fade) 0deg,
+      var(--holo-ray) var(--holo-ray-width),
+      var(--holo-ray-fade) var(--holo-ray-gap)
+    ),
+    radial-gradient(
+      circle at var(--holo-centre-x) var(--holo-centre-y),
+      var(--holo-bloom) 0%,
+      var(--holo-bloom-mid) var(--holo-bloom-core),
+      var(--holo-bloom-fade) var(--holo-bloom-size)
+    ),
+    conic-gradient(
+      from var(--holo-break-from) at var(--holo-break-x) var(--holo-break-y),
+      var(--holo-break-lilac) 0deg,
+      var(--holo-break-mint) 95deg,
+      var(--holo-break-pink) 180deg,
+      var(--holo-break-peach) 275deg,
+      var(--holo-break-lilac) 360deg
+    ),
+    conic-gradient(
+      from var(--holo-sweep-from) at var(--holo-centre-x) var(--holo-centre-y),
+      var(--holo-lilac) 0deg,
+      var(--holo-blue) 24deg,
+      var(--holo-mint) 48deg,
+      var(--holo-peach) 72deg,
+      var(--holo-pink) 96deg,
+      var(--holo-lilac) 120deg,
+      var(--holo-blue) 144deg,
+      var(--holo-mint) 168deg,
+      var(--holo-peach) 192deg,
+      var(--holo-pink) 216deg,
+      var(--holo-lilac) 240deg,
+      var(--holo-blue) 264deg,
+      var(--holo-mint) 288deg,
+      var(--holo-peach) 312deg,
+      var(--holo-pink) 336deg,
+      var(--holo-lilac) 360deg
+    );
 }
 
 /* ==========================================================================
@@ -288,9 +330,6 @@ a:hover {
    ========================================================================== */
 
 .holo,
-.holo-hover:hover,
-.holo-hover:focus-visible,
-.holo-hover.is-hover,
 .btn.btn-primary,
 .btn.btn-tertiary:hover,
 .btn.btn-tertiary:focus-visible,
@@ -301,46 +340,7 @@ a:hover {
        2. bloom     — a soft round core of converging light
        3. breakup   — a faint larger conic, off-axis, to break the regularity
        4. base      — the pastel sweep, cycled three times so hues stay distinct */
-  background-image:
-    repeating-conic-gradient(
-      from var(--holo-ray-from) at var(--holo-ray-x) var(--holo-ray-y),
-      var(--holo-ray-fade) 0deg,
-      var(--holo-ray) var(--holo-ray-width),
-      var(--holo-ray-fade) var(--holo-ray-gap)
-    ),
-    radial-gradient(
-      circle at var(--holo-centre-x) var(--holo-centre-y),
-      var(--holo-bloom) 0%,
-      var(--holo-bloom-mid) var(--holo-bloom-core),
-      var(--holo-bloom-fade) var(--holo-bloom-size)
-    ),
-    conic-gradient(
-      from var(--holo-break-from) at var(--holo-break-x) var(--holo-break-y),
-      var(--holo-break-lilac) 0deg,
-      var(--holo-break-mint) 95deg,
-      var(--holo-break-pink) 180deg,
-      var(--holo-break-peach) 275deg,
-      var(--holo-break-lilac) 360deg
-    ),
-    conic-gradient(
-      from var(--holo-sweep-from) at var(--holo-centre-x) var(--holo-centre-y),
-      var(--holo-lilac) 0deg,
-      var(--holo-blue) 24deg,
-      var(--holo-mint) 48deg,
-      var(--holo-peach) 72deg,
-      var(--holo-pink) 96deg,
-      var(--holo-lilac) 120deg,
-      var(--holo-blue) 144deg,
-      var(--holo-mint) 168deg,
-      var(--holo-peach) 192deg,
-      var(--holo-pink) 216deg,
-      var(--holo-lilac) 240deg,
-      var(--holo-blue) 264deg,
-      var(--holo-mint) 288deg,
-      var(--holo-peach) 312deg,
-      var(--holo-pink) 336deg,
-      var(--holo-lilac) 360deg
-    );
+  background-image: var(--holo-surface-image);
   color: var(--color-on-holo);
 }
 
@@ -349,12 +349,6 @@ a:hover {
    and put white or pink text on a pale surface. */
 .holo,
 .holo *,
-.holo-hover:hover,
-.holo-hover:hover *,
-.holo-hover:focus-visible,
-.holo-hover:focus-visible *,
-.holo-hover.is-hover,
-.holo-hover.is-hover *,
 .btn.btn-primary,
 .btn.btn-tertiary:hover,
 .btn.btn-tertiary:focus-visible,
