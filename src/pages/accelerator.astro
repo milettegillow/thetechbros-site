@@ -180,7 +180,7 @@ const origins = [
     <!-- 4b. FAQ. `id="faq"` is the target of the /apply/faq redirect. -->
     <section class="faq" id="faq">
       <div class="section-banner holo">
-        <div class="container"><h2>questions</h2></div>
+        <div class="container"><h2>common questions</h2></div>
       </div>
 
       <div class="container">
@@ -249,7 +249,6 @@ const origins = [
       </div>
 
       <div class="container">
-        <p class="origins-note">where cohort members came from before the programme.</p>
         <ul class="origin-strip">
           {origins.map((org) => (
             <li class="origin-item">
@@ -685,12 +684,6 @@ const origins = [
   }
 
   /* ── 6. Origins strip ── */
-  .origins-note {
-    margin-top: -1.5rem;
-    margin-bottom: 2.5rem;
-    color: var(--color-text-muted);
-  }
-
   .origin-strip {
     list-style: none;
     display: grid;
