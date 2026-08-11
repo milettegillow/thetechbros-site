@@ -234,11 +234,11 @@ const stats = [
     <!-- 5. Team. `id="team"` is the target of the /team redirect. -->
     <section class="team" id="team">
       <div class="section-banner holo">
-        <div class="container"><h2>team</h2></div>
+        <div class="container"><h2>founder</h2></div>
       </div>
 
       <div class="container">
-        <!-- Lead sits on her own, and carries the only bio on the page. -->
+        <!-- The founder, centred, carrying the only bio on the page. -->
         <div class="person team-lead">
           <div class="person-portrait person-portrait-lead">
             <img
@@ -274,6 +274,13 @@ const stats = [
           </ul>
         </div>
 
+      </div>
+
+      <div class="section-banner holo">
+        <div class="container"><h2>team</h2></div>
+      </div>
+
+      <div class="container">
         <!-- Everyone else: circular portrait, name, whole tile links out. -->
         <ul class="team-grid">
           {team.map((person) => {
@@ -396,6 +403,13 @@ const stats = [
 
   .team .section-banner {
     margin-bottom: 2rem;
+  }
+
+  /* The second banner heads the grid, so it needs air above it as well as
+     below — the founder block ends right against it otherwise. */
+  .team .section-banner + .container + .section-banner,
+  .team .container + .section-banner {
+    margin-top: 3.5rem;
   }
 
   /* ── 1. The three things we do — the page now opens here ── */
@@ -628,14 +642,22 @@ const stats = [
   }
 
   /* ── 5. Team: the lead on her own, then everyone else in a tight grid ── */
+  /* Centred as a unit and roughly twice as wide as before, so the bio lines
+     don't break mid-phrase. */
   .team-lead {
-    max-width: 22rem;
-    margin-bottom: 2.5rem;
+    max-width: 44rem;
+    margin: 0 auto 3rem;
+    text-align: center;
   }
 
   .person-portrait-lead {
     display: block;
     margin-bottom: 1rem;
+  }
+
+  .person-portrait-lead .person-photo,
+  .person-portrait-lead .person-photo-placeholder {
+    margin: 0 auto;
   }
 
   .person-portrait-lead .person-photo,
@@ -659,6 +681,7 @@ const stats = [
   .person-name-row {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.75rem;
   }
 
@@ -767,9 +790,12 @@ const stats = [
     display: block;
   }
 
+  /* The block is centred by its parent; the list itself reads left — a centred
+     list of bullets is unreadable. */
   .person-bio {
     list-style: none;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
+    text-align: left;
   }
 
   .person-bio li {
