@@ -31,20 +31,19 @@ const pillars = [
   {
     label: 'the fund',
     href: '/fund',
-    line: 'first cheques into all-female, all-technical teams at pre-seed.',
+    line: 'first cheques into all-female, all-technical teams at pre-seed. cornerstone-backed by the British Business Bank.',
   },
   {
     label: 'the accelerator',
     href: '/accelerator',
-    line: "eight weeks, twice a year; the world's first all-female, all-technical accelerator",
+    line: "eight weeks, twice a year. two in person in Norway, six hybrid. the world's first all-female, all-technical accelerator.",
   },
   {
     label: 'the community',
     href: '/community',
-    // Event and city counts derive from the collection; the community figures
-    // are not derivable from it and stay written out.
-    line: `we've hosted 1,500+ technical women at ${eventStats.eventCount} live events across ${eventStats.cityCount} cities. our whatsapp community has 250+ curated members from 26 countries. apply to join `,
-    cta: { text: 'here', href: '/community#apply' },
+    // Event, city and country counts derive from the collection; the 1,500+
+    // figure is not derivable from it and stays written out.
+    line: `${eventStats.eventCount} events across ${eventStats.cityCount} cities and ${eventStats.countryCount} countries. 1,500+ technical women hosted in person.`,
   },
 ];
 
@@ -130,14 +129,17 @@ const stats = [
     <section class="pillars">
       <div class="container">
         <h1>what we do</h1>
+        <p class="opening">
+          we back technical women to build and own the most valuable technology companies in the
+          world. we do it through a fund, an accelerator, and a global community.
+        </p>
         <ul class="pillar-grid">
           {pillars.map((pillar) => (
             <li class="pillar">
-              <a href={pillar.href} class="pillar-link">{pillar.label}</a>
-              <p class="pillar-line">
-                {pillar.line}
-                {pillar.cta && <><a href={pillar.cta.href} class="pillar-cta">{pillar.cta.text}</a>.</>}
-              </p>
+              <a href={pillar.href} class="holo pillar-card">
+                <span class="pillar-label">{pillar.label}</span>
+                <span class="pillar-line">{pillar.line}</span>
+              </a>
             </li>
           ))}
         </ul>
@@ -390,43 +392,46 @@ const stats = [
     color: var(--color-primary);
   }
 
+  /* Larger than body copy, smaller than a heading, and full width rather than
+     held to a measure. */
+  .opening {
+    font-size: var(--text-h4);
+    line-height: 1.45;
+    color: var(--color-text);
+    margin-bottom: 3rem;
+  }
+
   .pillar-grid {
     list-style: none;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 2.5rem;
-    border-top: 1px solid var(--color-border);
-    padding-top: 2.5rem;
+    gap: 1.5rem;
   }
 
-  .pillar-link {
-    display: inline-block;
-    font-size: var(--text-h4);
-    letter-spacing: var(--tracking-subheading);
-    color: var(--color-text);
+  /* The whole card is the link. The holographic surface carries it, and the
+     global `.holo` rule forces black text on top. */
+  .pillar-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-height: 20rem;
+    padding: 2.5rem;
     text-decoration: none;
-    margin-bottom: 0.75rem;
+    border: 0;
+    border-radius: 0;
   }
 
-  .pillar-link:hover,
-  .pillar-link:focus-visible {
-    color: var(--color-primary);
+  .pillar-label {
+    font-size: var(--text-h3);
+    font-weight: var(--weight-holo);
+    letter-spacing: var(--tracking-holo);
+    line-height: 1.1;
   }
 
   .pillar-line {
-    color: var(--color-text-body);
-    line-height: 1.5;
-    margin-bottom: 0;
-  }
-
-  .pillar-cta {
-    color: var(--color-primary);
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-  }
-
-  .pillar-cta:hover {
-    color: var(--color-primary-hover);
+    font-size: var(--text-lead);
+    font-weight: var(--weight-holo);
+    line-height: 1.4;
   }
 
   /* ── 4. Trajectory ── */
@@ -758,7 +763,6 @@ const stats = [
 
     .pillar-grid {
       grid-template-columns: minmax(0, 1fr);
-      gap: 2rem;
     }
 
     .team-grid {
