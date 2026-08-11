@@ -37,12 +37,21 @@ const gap = {
   url: 'https://ff.co/women-funding-statistics-2025/',
 };
 
+// A digit's left side bearing varies, so a number set flush left doesn't put
+// its *ink* flush left. These pull the glyph back so the label lines up with
+// it, same correction as the home page and /community.
+const LEADING_DIGIT_INDENT: Record<string, string> = {
+  '1': '0.087em',
+  '3': '0.029em',
+};
+const indentFor = (value: string) => LEADING_DIGIT_INDENT[value[0]] ?? '0em';
+
 // Top of funnel: reach, before anyone applies.
 const reach = [
   { figure: '15+', label: 'universities' },
   { figure: '10,500+', label: 'followers' },
   { figure: '28', label: 'countries' },
-];
+].map((item) => ({ ...item, indent: indentFor(item.figure) }));
 
 const pipeline = [
   {
@@ -53,7 +62,7 @@ const pipeline = [
   { figure: '500+', label: 'applications, all reached organically' },
   { figure: '40', label: 'founders selected' },
   { figure: '2', label: 'cohorts' },
-];
+].map((item) => ({ ...item, indent: indentFor(item.figure) }));
 
 /**
  * Where alumni came from. `logo` points at public/index/cohort-logos/; entries
@@ -221,7 +230,7 @@ const alumni = [
         <p class="row-label">reach</p>
         <ul class="stat-row stat-row-reach">
           {reach.map((step) => (
-            <li class="stat-cell">
+            <li class="stat-cell" style={`--stat-indent: -${step.indent}`}>
               <span class="stat-cell-figure">{step.figure}</span>
               <span class="stat-cell-label">{step.label}</span>
             </li>
@@ -231,7 +240,7 @@ const alumni = [
         <p class="row-label row-label-second">conversion</p>
         <ul class="stat-row">
           {pipeline.map((step) => (
-            <li class="stat-cell">
+            <li class="stat-cell" style={`--stat-indent: -${step.indent}`}>
               <span class="stat-cell-figure">{step.figure}</span>
               <span class="stat-cell-label">{step.label}</span>
             </li>
@@ -575,9 +584,10 @@ const alumni = [
     gap: 2.5rem;
   }
 
-  /* Reach sits above the funnel and has three items, not five. */
+  /* Reach has three items, but stays on the same five columns so its cells sit
+     directly above the conversion cells. The last two columns are left empty
+     rather than the three being stretched across the width. */
   .stat-row-reach {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
     margin-bottom: 2.5rem;
   }
 
@@ -596,10 +606,16 @@ const alumni = [
   .stat-cell {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 0.5rem;
+    text-align: left;
   }
 
   .stat-cell-figure {
+    display: block;
+    white-space: nowrap;
+    /* Optical correction so the label lines up with the number's ink. */
+    text-indent: var(--stat-indent, 0);
     font-size: var(--text-h2);
     font-weight: var(--weight-heading);
     letter-spacing: var(--tracking-heading);
@@ -806,7 +822,8 @@ const alumni = [
       gap: 2.5rem;
     }
 
-    .stat-row {
+    .stat-row,
+    .stat-row-reach {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
