@@ -288,6 +288,9 @@ a:hover {
    ========================================================================== */
 
 .holo,
+.holo-hover:hover,
+.holo-hover:focus-visible,
+.holo-hover.is-hover,
 .btn.btn-primary,
 .btn.btn-tertiary:hover,
 .btn.btn-tertiary:focus-visible,
@@ -346,6 +349,12 @@ a:hover {
    and put white or pink text on a pale surface. */
 .holo,
 .holo *,
+.holo-hover:hover,
+.holo-hover:hover *,
+.holo-hover:focus-visible,
+.holo-hover:focus-visible *,
+.holo-hover.is-hover,
+.holo-hover.is-hover *,
 .btn.btn-primary,
 .btn.btn-tertiary:hover,
 .btn.btn-tertiary:focus-visible,
