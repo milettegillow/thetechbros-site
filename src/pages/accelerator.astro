@@ -103,19 +103,6 @@ const origins = [
       </div>
     </section>
 
-    <!-- 2. Applications status. `id="apply-now"` is the target of the
-         /apply/accelerator#apply-now redirect, which is still in circulation. -->
-    <section class="status" id="apply-now">
-      <div class="container">
-        <div class="holo status-block">
-          <p class="status-headline">cohort 3 applications open next spring.</p>
-          <p class="status-sub">
-            <a href="#newsletter">sign up to our newsletter to hear first.</a>
-          </p>
-        </div>
-      </div>
-    </section>
-
     <!-- 3. The programme -->
     <section class="programme">
       <div class="section-banner holo">
@@ -284,18 +271,21 @@ const origins = [
       </div>
     </section>
 
-    <!-- 10. Newsletter -->
-    <section class="newsletter" id="newsletter">
-      <div class="container">
-        <h2>hear when cohort 3 opens</h2>
-        <p class="newsletter-line">
-          Applications open next spring. The newsletter is how you find out first.
-        </p>
-        <div class="newsletter-wrap">
-          <NewsletterSignup buttonText="subscribe" variant="primary" />
+    <!-- 10. Applications status and sign-up. `id="apply-now"` is the target of
+         the /apply/accelerator#apply-now redirect, which is still in
+         circulation, and `id="newsletter"` of links to the sign-up. -->
+    <section class="status" id="apply-now">
+      <div class="holo status-block" id="newsletter">
+        <div class="container">
+          <p class="status-headline">cohort 3 applications open next spring.</p>
+          <p class="status-sub">sign up to hear first.</p>
+          <div class="newsletter-wrap">
+            <NewsletterSignup buttonText="subscribe" variant="on-holo" />
+          </div>
         </div>
       </div>
     </section>
+
   </main>
   <Footer />
 </BaseLayout>
@@ -433,30 +423,29 @@ const origins = [
     padding-top: 0;
   }
 
-  /* Spans the same content width as the hero above it — headline column plus
-     photo column, edge to edge. */
+  /* Full-bleed closing block: the foil runs edge to edge and everything on it
+     is centred. */
+  .accelerator section.status {
+    padding: 0;
+  }
+
   .status-block {
-    padding: 3rem;
-    width: 100%;
+    padding: 4rem 0;
+    text-align: center;
   }
 
   .status-headline {
     font-size: var(--text-h2);
+    font-weight: var(--weight-holo);
+    letter-spacing: var(--tracking-holo);
     line-height: 1.15;
-    margin-bottom: 1rem;
+    margin: 0 auto 1rem;
     max-width: 22ch;
   }
 
   .status-sub {
     font-size: var(--text-lead);
-    margin-bottom: 0;
-  }
-
-  /* Buttons can't sit on the foil — black text is enforced there — so this is
-     a plain underlined link instead. */
-  .status-sub a {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
+    margin-bottom: 2rem;
   }
 
   /* ── 3. The programme ── */
@@ -638,27 +627,11 @@ const origins = [
     color: var(--color-text);
   }
 
-  /* ── 10. Newsletter ── */
-  .newsletter {
-    border-top: 1px solid var(--color-border);
-  }
-
-  /* The whole block is centred: heading, copy, fields and button. */
-  .newsletter .container {
-    text-align: center;
-  }
-
-  .newsletter-line {
-    font-size: var(--text-lead);
-    color: var(--color-text);
-    max-width: 52ch;
-    margin: 0 auto 2rem;
-  }
-
+  /* The form sits inside the foil block, centred, at a readable width. */
   .newsletter-wrap {
     max-width: 34rem;
     margin: 0 auto;
-    /* The form's own fields read left; only the block is centred. */
+    /* The fields themselves read left; only the block is centred. */
     text-align: left;
   }
 
@@ -694,7 +667,7 @@ const origins = [
     }
 
     .status-block {
-      padding: 2rem 1.5rem;
+      padding: 2.5rem 0;
     }
 
     .stat-grid {

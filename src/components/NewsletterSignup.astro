@@ -8,14 +8,17 @@
 
 interface Props {
   buttonText?: string;
-  /** Button weight. `primary` is the holographic variant. */
-  variant?: 'primary' | 'secondary' | 'tertiary';
+  /**
+   * Button weight. `primary` is the holographic variant; `on-holo` is for a
+   * form sitting *on* the foil — black text and borders, transparent fields.
+   */
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'on-holo';
 }
 
 const { buttonText = 'Subscribe', variant = 'tertiary' } = Astro.props;
 ---
 
-<form class="newsletter-signup" id="newsletter-signup-form">
+<form class={`newsletter-signup${variant === 'on-holo' ? ' newsletter-on-holo' : ''}`} id="newsletter-signup-form">
   <div class="newsletter-name-fields">
     <div class="newsletter-field">
       <label for="newsletter-first-name" class="visually-hidden">First name</label>
@@ -63,7 +66,7 @@ const { buttonText = 'Subscribe', variant = 'tertiary' } = Astro.props;
       aria-hidden="true"
     />
   </div>
-  <button type="submit" class={`btn btn-${variant}`} id="newsletter-submit">
+  <button type="submit" class={`btn ${variant === 'on-holo' ? 'btn-on-holo' : `btn-${variant}`}`} id="newsletter-submit">
     {buttonText}
   </button>
   <div id="newsletter-message" role="status" aria-live="polite" class="newsletter-message"></div>
@@ -143,6 +146,36 @@ const { buttonText = 'Subscribe', variant = 'tertiary' } = Astro.props;
 </script>
 
 <style>
+  /* On the holographic surface: transparent fields with black rules, so the
+     foil shows through and the form reads as part of the block. */
+  .newsletter-on-holo :global(input) {
+    background: transparent;
+    border-color: var(--color-black);
+    color: var(--color-black);
+  }
+
+  .newsletter-on-holo :global(input::placeholder) {
+    color: rgba(0, 0, 0, 0.55);
+  }
+
+  .newsletter-on-holo :global(input:focus) {
+    border-color: var(--color-black);
+    outline: 1px solid var(--color-black);
+    outline-offset: 0;
+  }
+
+  .newsletter-on-holo :global(.btn-on-holo) {
+    background: transparent;
+    border: 1px solid var(--color-black);
+    color: var(--color-black) !important;
+  }
+
+  .newsletter-on-holo :global(.btn-on-holo:hover),
+  .newsletter-on-holo :global(.btn-on-holo:focus-visible) {
+    background: var(--color-black);
+    color: var(--color-white) !important;
+  }
+
   .newsletter-signup {
     display: flex;
     flex-direction: column;
