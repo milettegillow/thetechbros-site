@@ -485,11 +485,14 @@ const alumni = [
 
   /* A fixed graphic column rather than half the width, so the copy sits beside
      the chart instead of being pushed to the far side of the page. */
+  /* A fixed, narrow graphic column with the copy right beside it, both
+     starting on the same line — centring left the copy floating against the
+     chart's height. */
   .gap-layout {
     display: grid;
-    grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
-    gap: 3.5rem;
-    align-items: center;
+    grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+    gap: 2.5rem;
+    align-items: start;
   }
 
   /* A step up from the three above it, not a different order of magnitude. */
@@ -499,13 +502,13 @@ const alumni = [
     width: 100%;
     /* Capped well inside half the content width, so it reads as a step up
        from the three above rather than as the page's subject. */
-    max-width: min(100%, 380px);
+    max-width: min(100%, 300px);
     height: auto;
     object-fit: contain;
   }
 
   .gap-graphic-placeholder {
-    height: 316px;
+    height: 250px;
     background: var(--color-surface);
   }
 
