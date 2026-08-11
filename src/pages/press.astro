@@ -301,12 +301,12 @@ const podcasts = [
      Deliberately larger than the banner's own bottom margin, so each banner
      reads as belonging to the section under it rather than floating between. */
   .featured {
-    padding: 2rem 0;
+    padding: 3.5rem 0;
   }
 
   .mentions,
   .podcasts {
-    padding: 0 0 2rem;
+    padding: 0 0 3.5rem;
   }
 
   .press-list {
@@ -319,9 +319,12 @@ const podcasts = [
      Deliberately shallower than the home page's statement block. */
   /* The band is sized by its type, not the other way round: the padding is
      just enough to clear the ascenders and descenders. */
+  /* The band gives its heading room; the gap under it gives the section room.
+     Still smaller than the gap above, so the banner reads as the head of what
+     follows rather than a divider parked between two blocks. */
   .section-banner {
-    margin-bottom: 1.25rem;
-    padding: 0.5rem 0;
+    margin-bottom: 2.5rem;
+    padding: 1.25rem 0;
   }
 
   .section-banner h2 {
