@@ -81,10 +81,24 @@ const origins = [
     <!-- 1. Headline -->
     <section class="acc-hero">
       <div class="container">
-        <h1>the world's first all-female, all-technical accelerator</h1>
-        <p class="hero-line">
-          eight weeks. twenty founders. 500+ applications, all reached organically.
-        </p>
+        <div class="acc-hero-layout">
+          <div class="acc-hero-copy">
+            <h1>the world's first all-female, all-technical accelerator</h1>
+            <p class="hero-line">
+              eight weeks. twenty founders. 500+ applications, all reached organically.
+            </p>
+          </div>
+          <img
+            src="/accelerator/hero.jpg"
+            alt="Cohort founders at a Tech Bros accelerator session"
+            class="section-photo"
+            width="6000"
+            height="4000"
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
       </div>
     </section>
 
@@ -146,6 +160,17 @@ const origins = [
     <section class="cohorts">
       <div class="container">
         <h2>cohort on cohort</h2>
+        <div class="cohorts-layout">
+          <img
+            src="/accelerator/cohort-on-cohort.jpg"
+            alt="Cohort founders working together"
+            class="section-photo"
+            width="5926"
+            height="3951"
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="cohorts-detail">
         <table class="cohort-table">
           <thead>
             <tr>
@@ -165,6 +190,8 @@ const origins = [
           </tbody>
         </table>
         <p class="cohort-note">the programme is getting more competitive.</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -259,6 +286,33 @@ const origins = [
     font-size: var(--text-lead);
     color: var(--color-text);
     margin-bottom: 2.5rem;
+  }
+
+  /* Photographs sit straight on black: contained so nothing is cropped, no
+     border, no radius. */
+  .section-photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .acc-hero-layout,
+  .cohorts-layout {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .acc-hero-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 32rem);
+  }
+
+  .cohorts-layout {
+    grid-template-columns: minmax(0, 28rem) minmax(0, 1fr);
   }
 
   /* ── 1. Headline ── */
@@ -507,15 +561,23 @@ const origins = [
     border-top: 1px solid var(--color-border);
   }
 
+  /* The whole block is centred: heading, copy, fields and button. */
+  .newsletter .container {
+    text-align: center;
+  }
+
   .newsletter-line {
     font-size: var(--text-lead);
     color: var(--color-text);
     max-width: 52ch;
-    margin-bottom: 2rem;
+    margin: 0 auto 2rem;
   }
 
   .newsletter-wrap {
     max-width: 34rem;
+    margin: 0 auto;
+    /* The form's own fields read left; only the block is centred. */
+    text-align: left;
   }
 
   @media (max-width: 1024px) {
@@ -530,10 +592,16 @@ const origins = [
       padding: 3.5rem 0;
     }
 
-    /* Photo stacks below the list. */
-    .programme-layout {
+    /* Photos stack: below the list and the headline, above the table. */
+    .programme-layout,
+    .acc-hero-layout,
+    .cohorts-layout {
       grid-template-columns: minmax(0, 1fr);
       gap: 2.5rem;
+    }
+
+    .cohorts-layout .section-photo {
+      order: -1;
     }
 
     .programme-photo {
