@@ -15,16 +15,12 @@ const peakYear = Math.max(...eventYears.map((y) => y.count));
 // Only the most recent year is part-run; the rest are complete.
 const currentYear = eventYears[eventYears.length - 1]?.year;
 
-// Single bold statements, each pointing at the page that backs it up. The
-// event count derives from the collection; the 1,500+ figure is not derivable
-// from it and stays written out.
-const headlines = [
-  { text: 'women-founded businesses are a better bet.', href: '/fund' },
-  {
-    text: `we've hosted 1,500+ technical women across ${eventStats.eventCount} events.`,
-    href: '/community',
-  },
-  { text: "the world's first all-female, all-technical accelerator.", href: '/accelerator' },
+// The research behind the thesis. The detail lives on /fund; this is the case
+// in brief.
+const whyPoints = [
+  'When presented with identical pitches, both male and female investors rate those pitched by men more favourably.',
+  'Both male and female investors rate identical pitches more highly when told a male investor had already invested.',
+  'Male founders are more often asked "promotion" questions about what might go right, while female founders are asked "prevention" questions about what might go wrong. In comparable companies, entrepreneurs asked primarily prevention questions raise an average of seven times less.',
 ];
 
 const pillars = [
@@ -96,11 +92,29 @@ const team = [
 ];
 
 /**
- * Institutions the team and partners come from. Filenames resolve against
- * /about/institutions/. Empty until the logos are supplied — the strip renders
- * a short note instead of an empty scroller.
+ * Institutions the team and partners come from. `height` is tuned per mark, and
+ * `tone` overrides the default white-out for artwork that is a coloured plate
+ * with the shape knocked out of it — flattening those to white fills the plate.
  */
-const INSTITUTIONS: { file: string; name: string }[] = [];
+const INSTITUTIONS = [
+  { file: 'google.png', name: 'Google', height: 24 },
+  { file: 'apple.png', name: 'Apple', height: 40 },
+  { file: 'microsoft.png', name: 'Microsoft', height: 22 },
+  { file: 'aws.png', name: 'AWS', height: 30 },
+  { file: 'tesla.png', name: 'Tesla', height: 40 },
+  { file: 'meta.png', name: 'Meta', height: 22 },
+  { file: 'discord.png', name: 'Discord', height: 36, tone: 'threshold' },
+  { file: 'nasa.png', name: 'NASA', height: 26 },
+  { file: 'y-combinator.png', name: 'Y Combinator', height: 26, tone: 'plate' },
+  { file: 'stanford.png', name: 'Stanford', height: 26 },
+  { file: 'mit.png', name: 'MIT', height: 30 },
+  { file: 'oxford.png', name: 'Oxford', height: 24, tone: 'threshold' },
+  { file: 'cambridge.png', name: 'Cambridge', height: 22 },
+  { file: 'berkeley.png', name: 'UC Berkeley', height: 20 },
+  { file: 'caltech.png', name: 'Caltech', height: 28 },
+  { file: 'ethzurich.png', name: 'ETH Zurich', height: 22 },
+  { file: 'epfl.svg', name: 'EPFL', height: 24 },
+];
 
 // Rendered twice so the marquee can loop seamlessly, as on the home page.
 const institutionMarquee = [...INSTITUTIONS, ...INSTITUTIONS];
@@ -130,8 +144,8 @@ const stats = [
       <div class="container">
         <h1>what we do</h1>
         <p class="opening">
-          we back technical women to build and own the most valuable technology companies in the
-          world. we do it through a fund, an accelerator, and a global community.
+          we back the most ambitious technical women to build technology companies from scratch,
+          through our 3 pillars: our fund, accelerator, and global community.
         </p>
         <ul class="pillar-grid">
           {pillars.map((pillar) => (
@@ -146,16 +160,22 @@ const stats = [
       </div>
     </section>
 
-    <!-- Headline claims, each linking to the page that carries the detail -->
-    <section class="headlines">
+    <!-- Why we do it -->
+    <section class="why-we-do-it">
       <div class="container">
-        <ul class="headline-list">
-          {headlines.map((item) => (
-            <li class="headline">
-              <a href={item.href}>{item.text}</a>
-            </li>
-          ))}
+        <h2>why we do it</h2>
+        <a href="/fund" class="why-claim">women-owned businesses are a better bet.</a>
+        <p class="why-body">
+          Female-founded startups consistently outperform startups with all-male teams, yet receive
+          a fraction of the venture funding.
+        </p>
+        <ul class="why-points">
+          {whyPoints.map((point) => <li>{point}</li>)}
         </ul>
+        <p class="why-close">
+          We believe in creating an entirely new pipeline for backing exceptional female founders,
+          from idea stage to pre-seed and all the way through to exit or IPO.
+        </p>
       </div>
     </section>
 
@@ -177,7 +197,8 @@ const stats = [
         </ol>
 
         <p class="trajectory-note">
-          Two accelerator cohorts and 500+ applications, all reached organically.
+          Two accelerator cohorts and 500+ applications, all reached organically, and a fund
+          cornerstone-backed by the British Business Bank.
         </p>
 
         <ul class="acceptance">
@@ -189,9 +210,6 @@ const stats = [
           ))}
         </ul>
 
-        <p class="trajectory-note">
-          And a fund cornerstone-backed by the British Business Bank.
-        </p>
       </div>
     </section>
 
@@ -261,6 +279,8 @@ const stats = [
               </div>
               <div class="person-name-row">
                 <p class="person-name">{person.name}</p>
+              </div>
+              <div class="person-link-row">
                 {person.linkedin && (
                   <a
                     href={person.linkedin}
@@ -291,21 +311,22 @@ const stats = [
         <div class="container">
           <p class="institutions-heading">our team and partners come from</p>
         </div>
-        {institutionMarquee.length > 0 ? (
-          <div class="institution-carousel">
-            <div class="institution-track">
-              {institutionMarquee.map((logo) => (
-                <div class="institution-item">
-                  <img src={`/about/institutions/${logo.file}`} alt={logo.name} loading="lazy" decoding="async" />
-                </div>
-              ))}
-            </div>
+        <div class="institution-carousel">
+          <div class="institution-track">
+            {institutionMarquee.map((logo) => (
+              <div class="institution-item">
+                <img
+                  src={`/index/cohort-logos/${logo.file}`}
+                  alt={logo.name}
+                  data-tone={logo.tone}
+                  style={`height: ${logo.height}px`}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            ))}
           </div>
-        ) : (
-          <div class="container">
-            <p class="institutions-empty">Logos to come.</p>
-          </div>
-        )}
+        </div>
       </div>
     </section>
 
@@ -367,29 +388,51 @@ const stats = [
     padding-top: 4.5rem;
   }
 
-  /* ── 2. Headline claims ── */
-  .headline-list {
-    list-style: none;
-  }
-
-  /* Rules sit between the statements, not around the block. */
-  .headline + .headline {
-    border-top: 1px solid var(--color-border);
-  }
-
-  .headline a {
+  /* ── 2. Why we do it ── */
+  .why-claim {
     display: block;
-    padding: 1.75rem 0;
     font-size: var(--text-h3);
     letter-spacing: var(--tracking-subheading);
     line-height: 1.25;
     color: var(--color-text);
     text-decoration: none;
+    margin-bottom: 2rem;
   }
 
-  .headline a:hover,
-  .headline a:focus-visible {
+  .why-claim:hover,
+  .why-claim:focus-visible {
     color: var(--color-primary);
+  }
+
+  .why-body,
+  .why-close {
+    font-size: var(--text-lead);
+    line-height: 1.6;
+    color: var(--color-text);
+  }
+
+  .why-points {
+    list-style: none;
+    margin: 0 0 2rem;
+  }
+
+  .why-points li {
+    color: var(--color-text-body);
+    line-height: 1.6;
+    padding: 0 0 0 1.5rem;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .why-points li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+  }
+
+  .why-close {
+    margin-bottom: 0;
   }
 
   /* Larger than body copy, smaller than a heading, and full width rather than
@@ -417,8 +460,27 @@ const stats = [
     min-height: 20rem;
     padding: 2.5rem;
     text-decoration: none;
-    border: 0;
+    border: 1px solid transparent;
     border-radius: 0;
+    transition: background-color var(--transition-btn), color var(--transition-btn);
+  }
+
+  /* Same inversion as the primary button: solid black, white text, and the
+     foil reduced to a 1px border. */
+  .pillar-card:hover,
+  .pillar-card:focus-visible {
+    background-color: var(--color-black);
+    background-image: none;
+    border-color: transparent;
+    border-image-source: var(--holo-border-image);
+    border-image-slice: 1;
+  }
+
+  .pillar-card:hover,
+  .pillar-card:hover *,
+  .pillar-card:focus-visible,
+  .pillar-card:focus-visible * {
+    color: var(--color-white) !important;
   }
 
   .pillar-label {
@@ -575,11 +637,16 @@ const stats = [
     display: none !important;
   }
 
-  /* Icon sits next to the name, not pushed to the far edge of the column. */
+  /* The icon sits under the full name rather than beside its first line, so a
+     name that wraps doesn't leave the icon stranded. */
   .person-name-row {
+    display: block;
+  }
+
+  .person-link-row {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    margin-top: 0.5rem;
   }
 
   .person-name {
@@ -643,6 +710,7 @@ const stats = [
 
   .leads-cta {
     margin-top: 3rem;
+    text-align: center;
   }
 
   /* ── Institutions: same marquee as the sponsor wall on the home page ── */
@@ -656,11 +724,6 @@ const stats = [
     letter-spacing: var(--tracking-label);
     color: var(--color-text-muted);
     margin-bottom: 1.5rem;
-  }
-
-  .institutions-empty {
-    color: var(--color-text-muted);
-    margin-bottom: 0;
   }
 
   .institution-carousel {
@@ -707,12 +770,20 @@ const stats = [
   .institution-item img {
     display: block;
     width: auto;
-    height: auto;
-    max-height: 72px;
     max-width: 100%;
     object-fit: contain;
     filter: brightness(0) invert(1);
     opacity: 0.9;
+  }
+
+  /* Coloured plate with the mark knocked out of it. */
+  .institution-item img[data-tone='threshold'] {
+    filter: grayscale(1) contrast(5);
+  }
+
+  /* A plate and dark type side by side; inverting first keeps both. */
+  .institution-item img[data-tone='plate'] {
+    filter: invert(1) grayscale(1) brightness(1.2) contrast(3);
   }
 
   /* ── 6. Stats ── */
