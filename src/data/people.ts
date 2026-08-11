@@ -14,3 +14,21 @@ export interface Person {
   /** Full profile URL. Omit it and no icon is shown. */
   linkedin?: string;
 }
+
+const HONORIFIC = /^(dr|prof|professor|mr|mrs|ms|miss|mx)\.?\s+/i;
+
+/**
+ * Orders people by first name, so a grid reads alphabetically.
+ *
+ * An honorific is dropped before comparing, so `Dr Jan Cosgrave` files under J
+ * rather than D. The full name is the tie-break, so two people sharing a first
+ * name have a stable order rather than whatever the source list happened to be.
+ */
+export function byFirstName(a: Person, b: Person): number {
+  const key = (name: string) => name.replace(HONORIFIC, '');
+  const first = (name: string) => key(name).split(' ')[0];
+  return (
+    first(a.name).localeCompare(first(b.name), 'en') ||
+    key(a.name).localeCompare(key(b.name), 'en')
+  );
+}

@@ -20,6 +20,11 @@ export const COHORT_2: Person[] = [
     linkedin: 'https://www.linkedin.com/in/alveera/',
   },
   {
+    name: 'Amanda ‘Mango’ Simeon',
+    photo: 'mango.png',
+    linkedin: 'https://www.linkedin.com/in/amanda-simeon/',
+  },
+  {
     name: 'Chloe Hughes',
     photo: 'chloe.png',
     linkedin: 'https://www.linkedin.com/in/chloeahughes/',
@@ -68,11 +73,6 @@ export const COHORT_2: Person[] = [
     name: 'Malia Smith',
     photo: 'malia.png',
     linkedin: 'https://www.linkedin.com/in/maliacsmith/',
-  },
-  {
-    name: 'Amanda ‘Mango’ Simeon',
-    photo: 'mango.png',
-    linkedin: 'https://www.linkedin.com/in/amanda-simeon/',
   },
   {
     name: 'Naama Paulemont',

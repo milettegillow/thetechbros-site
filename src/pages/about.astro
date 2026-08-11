@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import { getCollection } from 'astro:content';
 import { COMMUNITY_LEADS } from '../config';
 import { VENTURE_PARTNERS } from '../data/venture-partners';
+import { byFirstName } from '../data/people';
 import PeopleGrid from '../components/PeopleGrid.astro';
 import { getEventStats, getEventsByYear } from '../lib/eventStats';
 
@@ -72,10 +73,11 @@ const lead = {
   ],
 };
 
-// One flat grid: the rest of the core team, then the venture partners. Name
-// and LinkedIn only — no roles in here, so everyone reads at the same weight.
-// Community leads come from the shared config, and the venture partners from
-// the same list /accelerator renders, so nothing is retyped.
+// One flat grid: the rest of the core team and the venture partners, in one
+// alphabetical run. Name and LinkedIn only — no roles in here, so everyone
+// reads at the same weight. Community leads come from the shared config, and
+// the venture partners from the same list /accelerator renders, so nothing is
+// retyped. Milette is above this grid, not in it.
 const core = [
   {
     name: 'Sara Patti',
@@ -101,7 +103,7 @@ const team = [
     photo: person.photo ? `/accelerator/venture-partners/${person.photo}` : undefined,
     linkedin: person.linkedin || undefined,
   })),
-];
+].sort(byFirstName);
 
 /**
  * Institutions the team and partners come from. `height` is tuned per mark, and
