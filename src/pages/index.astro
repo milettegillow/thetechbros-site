@@ -452,6 +452,13 @@ const marquee = [...partnerLogos, ...partnerLogos];
     font-weight: 700;
   }
 
+  /* Label and mark centre on the same axis, so the two read as one lockup.
+     This is the exception on the row: the wall beside it is left-aligned to
+     the start of its logos, and the difference is deliberate. */
+  .lead-sponsor {
+    text-align: center;
+  }
+
   .partner-row {
     display: grid;
     /* Fixed left column so the two labels never crowd each other. */
@@ -470,7 +477,7 @@ const marquee = [...partnerLogos, ...partnerLogos];
     align-items: center;
   }
 
-  /* Centred in its column. The label above it stays left-aligned. */
+  /* Centred in its column, on the same axis as the label above it. */
   .lead-sponsor-mark {
     justify-content: center;
   }
@@ -629,10 +636,16 @@ const marquee = [...partnerLogos, ...partnerLogos];
       padding: 2.25rem 1.5rem;
     }
 
-    /* Lead sponsor stacks above the carousel. */
+    /* Lead sponsor stacks above the carousel. Once they're one above the
+       other rather than side by side, the desktop split — centred lockup,
+       left-aligned wall — has nothing to express, so both centre. */
     .partner-row {
       grid-template-columns: minmax(0, 1fr);
       gap: 2rem;
+    }
+
+    .partner-wall {
+      text-align: center;
     }
 
     .lead-sponsor-mark,
