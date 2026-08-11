@@ -4,6 +4,7 @@ import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import { getCollection } from 'astro:content';
 import { getEventStats } from '../lib/eventStats';
+import { COHORT_2 } from '../data/cohort-2';
 
 const eventStats = getEventStats(await getCollection('events'));
 
@@ -49,15 +50,15 @@ const indentFor = (value: string) => LEADING_DIGIT_INDENT[value[0]] ?? '0em';
 // Top of funnel: reach, before anyone applies.
 const reach = [
   { figure: '15+', label: 'universities' },
-  { figure: '10,500+', label: 'followers' },
   { figure: '28', label: 'countries' },
-].map((item) => ({ ...item, indent: indentFor(item.figure) }));
-
-const pipeline = [
+  { figure: '10,500+', label: 'followers' },
   {
     figure: String(eventStats.eventCount),
     label: `events across ${eventStats.cityCount} cities and ${eventStats.countryCount} countries`,
   },
+].map((item) => ({ ...item, indent: indentFor(item.figure) }));
+
+const pipeline = [
   { figure: '1,500+', label: 'technical women hosted in person' },
   { figure: '500+', label: 'applications, all reached organically' },
   { figure: '40', label: 'founders selected' },
@@ -91,13 +92,20 @@ const alumniOrigins = [
 // Rendered twice so the marquee loops seamlessly, as on the home page.
 const alumniMarquee = [...alumniOrigins, ...alumniOrigins];
 
-// Prize winners at Tech Bros events who went on to join cohort 2.
-const prizeWinners = [
+// Prize winners at Tech Bros events who went on to join cohort 2. Looked up in
+// the cohort 2 data file so the profile links have one source of truth; a name
+// that doesn't match there simply renders unlinked rather than pointing wrong.
+const PRIZE_WINNER_NAMES = [
   'Dimple Amitha Garuadapuri',
   'Amanda \u2018Mango\u2019 Simeon',
   'Nadaa Moharram',
   'Helena Williams',
 ];
+
+const prizeWinners = PRIZE_WINNER_NAMES.map((name) => ({
+  name,
+  linkedin: COHORT_2.find((person) => person.name === name)?.linkedin,
+}));
 
 const alumni = [
   { figure: '45%', label: 'ex-big tech engineers', detail: 'Tesla, Apple, Google, NASA' },
@@ -237,10 +245,8 @@ const alumni = [
         </ul>
         <p class="flow-note">
           Four of our twenty cohort 2 founders first came to us as prize winners at Tech Bros
-          events: {prizeWinners.map((name, i) => (
-            <>
-              <span class="flow-name">{name}</span>{i < prizeWinners.length - 2 ? ', ' : i === prizeWinners.length - 2 ? ' and ' : '.'}
-            </>
+          events: {prizeWinners.map((winner, i) => (
+            <>{winner.linkedin ? (<a class="flow-name" href={winner.linkedin} target="_blank" rel="noopener noreferrer">{winner.name}</a>) : (<span class="flow-name">{winner.name}</span>)}{i < prizeWinners.length - 2 ? ', ' : i === prizeWinners.length - 2 ? ' and ' : '.'}</>
           ))}
         </p>
       </div>
@@ -547,16 +553,15 @@ const alumni = [
     padding-top: 3rem;
   }
 
+  /* Both rows carry four items on the same four columns, so every cell sits
+     directly above its opposite number. */
   .stat-row {
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 2.5rem;
   }
 
-  /* Reach has three items, but stays on the same five columns so its cells sit
-     directly above the conversion cells. The last two columns are left empty
-     rather than the three being stretched across the width. */
   .stat-row-reach {
     margin-bottom: 2.5rem;
   }
@@ -607,9 +612,17 @@ const alumni = [
     color: var(--color-text-body);
   }
 
-  /* Names lift out of the body copy; deliberately not links. */
+  /* Each name links to that founder's profile. */
   .flow-name {
-    color: var(--color-text);
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  a.flow-name:hover,
+  a.flow-name:focus-visible {
+    color: var(--color-primary-hover);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
 
   /* ── 6. Alumni quality ── */
@@ -794,7 +807,7 @@ const alumni = [
 
     .stat-row,
     .stat-row-reach {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
