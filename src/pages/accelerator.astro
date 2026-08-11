@@ -8,10 +8,11 @@ import { VENTURE_PARTNERS } from '../data/venture-partners';
 import { COHORT_2 } from '../data/cohort-2';
 
 const programme = [
+  'a two-day in-person kickoff in london.',
   'two weeks in person at a hacker house in norway.',
   'six weeks hybrid, following the two in norway.',
   'an eleven-strong venture partner bench.',
-  'workshops.',
+  'weekly workshops from industry leaders.',
   'a demo day for invited investors.',
 ];
 
@@ -21,7 +22,7 @@ const whoGetsIn = [
     label: 'applications across two cohorts',
     detail: 'all reached organically',
   },
-  { figure: '40', label: 'founders selected' },
+  { figure: '40', label: 'founders selected', detail: 'solo or in teams of 2-3' },
   {
     figure: '8.7% / 7.4%',
     label: 'acceptance rate, cohort 1 / cohort 2',
@@ -51,23 +52,23 @@ const cohortOnCohort = [
  * to white fills the plate solid.
  */
 const origins = [
-  { name: 'Google', logo: '/index/cohort-logos/google.png', height: 24 },
+  { name: 'Google', logo: '/index/cohort-logos/google.png', height: 28 },
   { name: 'Apple', logo: '/index/cohort-logos/apple.png', height: 40 },
-  { name: 'Microsoft', logo: '/index/cohort-logos/microsoft.png', height: 22 },
-  { name: 'AWS', logo: '/index/cohort-logos/aws.png', height: 30 },
-  { name: 'Tesla', logo: '/index/cohort-logos/tesla.png', height: 40 },
-  { name: 'Meta', logo: '/index/cohort-logos/meta.png', height: 22 },
-  { name: 'Discord', logo: '/index/cohort-logos/discord.png', height: 36, tone: 'threshold' },
   { name: 'NASA', logo: '/index/cohort-logos/nasa.png', height: 26 },
+  { name: 'Tesla', logo: '/index/cohort-logos/tesla.png', height: 40 },
+  { name: 'Microsoft', logo: '/index/cohort-logos/microsoft.png', height: 22 },
+  { name: 'Meta', logo: '/index/cohort-logos/meta.png', height: 20 },
+  { name: 'AWS', logo: '/index/cohort-logos/aws.png', height: 34 },
+  { name: 'Discord', logo: '/index/cohort-logos/discord.png', height: 36, tone: 'threshold' },
   { name: 'Y Combinator', logo: '/index/cohort-logos/y-combinator.png', height: 26, tone: 'plate' },
-  { name: 'Stanford', logo: '/index/cohort-logos/stanford.png', height: 26 },
+  { name: 'Stanford', logo: '/index/cohort-logos/stanford.png', height: 28 },
   { name: 'MIT', logo: '/index/cohort-logos/mit.png', height: 30 },
-  { name: 'Oxford', logo: '/index/cohort-logos/oxford.png', height: 24, tone: 'threshold' },
-  { name: 'Cambridge', logo: '/index/cohort-logos/cambridge.png', height: 22 },
-  { name: 'UC Berkeley', logo: '/index/cohort-logos/berkeley.png', height: 20 },
-  { name: 'Caltech', logo: '/index/cohort-logos/caltech.png', height: 28 },
-  { name: 'ETH Zurich', logo: '/index/cohort-logos/ethzurich.png', height: 22 },
+  { name: 'Oxford', logo: '/index/cohort-logos/oxford.png', height: 26, tone: 'threshold' },
+  { name: 'Cambridge', logo: '/index/cohort-logos/cambridge.png', height: 20 },
+  { name: 'UC Berkeley', logo: '/index/cohort-logos/berkeley.png', height: 18 },
+  { name: 'Caltech', logo: '/index/cohort-logos/caltech.png', height: 22 },
   { name: 'EPFL', logo: '/index/cohort-logos/epfl.svg', height: 24 },
+  { name: 'ETH Zurich', logo: '/index/cohort-logos/ethzurich.png', height: 17 },
 ];
 
 ---
@@ -117,8 +118,11 @@ const origins = [
 
     <!-- 3. The programme -->
     <section class="programme">
+      <div class="section-banner holo">
+        <div class="container"><h2>the programme</h2></div>
+      </div>
+
       <div class="container">
-        <h2>the programme</h2>
         <div class="programme-layout">
           <div class="programme-detail">
             <ul class="programme-list">
@@ -129,7 +133,7 @@ const origins = [
           <img
             src="/accelerator/norway-cohort.jpg"
             alt="Cohort founders at the hacker house in Norway"
-            class="programme-photo"
+            class="section-photo"
             width="1066"
             height="1600"
             loading="lazy"
@@ -139,10 +143,24 @@ const origins = [
       </div>
     </section>
 
+    <!-- 3b. Eligibility -->
+    <section class="eligibility">
+      <div class="container">
+        <h3>who can apply</h3>
+        <p>
+          We don't do co-founder matching. Every member of an applying team must be female and have
+          a STEM background.
+        </p>
+      </div>
+    </section>
+
     <!-- 4. Who gets in -->
     <section class="who-gets-in">
+      <div class="section-banner holo">
+        <div class="container"><h2>who gets in</h2></div>
+      </div>
+
       <div class="container">
-        <h2>who gets in</h2>
         <p class="who-frame">this is who you'd be joining.</p>
         <ul class="stat-grid">
           {whoGetsIn.map((item) => (
@@ -158,8 +176,11 @@ const origins = [
 
     <!-- 5. Cohort on cohort -->
     <section class="cohorts">
+      <div class="section-banner holo">
+        <div class="container"><h2>cohort on cohort</h2></div>
+      </div>
+
       <div class="container">
-        <h2>cohort on cohort</h2>
         <div class="cohorts-layout">
           <img
             src="/accelerator/cohort-on-cohort.jpg"
@@ -197,8 +218,11 @@ const origins = [
 
     <!-- 6. Where founders came from. Not partners or sponsors — those live on /partners. -->
     <section class="origins">
+      <div class="section-banner holo">
+        <div class="container"><h2>our founders come from</h2></div>
+      </div>
+
       <div class="container">
-        <h2>our founders come from</h2>
         <p class="origins-note">where cohort members came from before the programme.</p>
         <ul class="origin-strip">
           {origins.map((org) => (
@@ -239,16 +263,22 @@ const origins = [
 
     <!-- 8. Venture partners -->
     <section class="partners" id="venture-partners">
+      <div class="section-banner holo">
+        <div class="container"><h2>venture partners</h2></div>
+      </div>
+
       <div class="container">
-        <h2>venture partners</h2>
         <PeopleGrid people={VENTURE_PARTNERS} photoBase="/accelerator/venture-partners" columns={6} />
       </div>
     </section>
 
     <!-- 9. Cohort 2 -->
     <section class="cohort-2">
+      <div class="section-banner holo">
+        <div class="container"><h2>cohort 2</h2></div>
+      </div>
+
       <div class="container">
-        <h2>cohort 2</h2>
         <p class="cohort-2-line">270+ applied. twenty selected. a 7.4% acceptance rate.</p>
         <PeopleGrid people={COHORT_2} photoBase="/accelerator/cohort-2" columns={5} />
       </div>
@@ -282,6 +312,53 @@ const origins = [
     margin-bottom: 2.5rem;
   }
 
+  /* Full-bleed divider, same treatment as the section banners on /press: a
+     direct child of the section so it runs edge to edge, with its inner
+     container keeping the heading on the page's text gutter. Deliberately
+     shallow — a divider, not a statement block. */
+  .section-banner {
+    margin-bottom: 3rem;
+    padding: 1.25rem 0;
+  }
+
+  .section-banner h2 {
+    margin: 0;
+    text-align: left;
+    font-weight: var(--weight-holo);
+    letter-spacing: var(--tracking-holo);
+    line-height: 1.05;
+  }
+
+  /* The banner carries each section's top edge. */
+  .accelerator section.programme,
+  .accelerator section.who-gets-in,
+  .accelerator section.cohorts,
+  .accelerator section.origins,
+  .accelerator section.partners,
+  .accelerator section.cohort-2 {
+    padding-top: 3rem;
+  }
+
+  /* ── Eligibility ── */
+  .eligibility {
+    padding-top: 0 !important;
+  }
+
+  .eligibility h3 {
+    font-size: var(--text-h4);
+    letter-spacing: var(--tracking-subheading);
+    color: var(--color-text);
+    margin-bottom: 1rem;
+  }
+
+  .eligibility p {
+    font-size: var(--text-lead);
+    line-height: 1.6;
+    color: var(--color-text);
+    max-width: 62ch;
+    margin-bottom: 0;
+  }
+
   .who-frame {
     font-size: var(--text-lead);
     color: var(--color-text);
@@ -300,24 +377,41 @@ const origins = [
     border-radius: 0;
   }
 
-  .acc-hero-layout,
-  .cohorts-layout {
+  .acc-hero-layout {
     display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 32rem);
     gap: 3rem;
     align-items: center;
   }
 
-  .acc-hero-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 32rem);
+  /* The photo fills the full height of the block beside it. `cover` rather
+     than `contain`: matching the height exactly means losing a little off the
+     top and bottom, which is preferable to a short photo against a long list. */
+  .programme-layout,
+  .cohorts-layout {
+    display: grid;
+    gap: 2rem;
+    align-items: stretch;
   }
 
   .cohorts-layout {
     grid-template-columns: minmax(0, 28rem) minmax(0, 1fr);
   }
 
+  .programme-layout .section-photo,
+  .cohorts-layout .section-photo {
+    object-fit: cover;
+  }
+
   /* ── 1. Headline ── */
-  .acc-hero {
-    padding: 4.5rem 0 3rem;
+  /* Out-specifies `.accelerator section`, which would otherwise reimpose 5rem
+     and pull the banner away from the hero. */
+  .accelerator section.acc-hero {
+    padding: 4.5rem 0 1.25rem;
+  }
+
+  .accelerator section.status {
+    padding-top: 0;
   }
 
   .acc-hero h1 {
@@ -339,8 +433,11 @@ const origins = [
     padding-top: 0;
   }
 
+  /* Spans the same content width as the hero above it — headline column plus
+     photo column, edge to edge. */
   .status-block {
     padding: 3rem;
+    width: 100%;
   }
 
   .status-headline {
@@ -363,23 +460,8 @@ const origins = [
   }
 
   /* ── 3. The programme ── */
-  /* List left, portrait right. The photo column stretches to the row height so
-     the picture ends up roughly as tall as the list beside it. */
   .programme-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 18rem);
-    gap: 3rem;
-    align-items: stretch;
-  }
-
-  .programme-photo {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: right top;
-    border: 0;
-    border-radius: 0;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
   }
 
   .programme-list {
@@ -604,12 +686,11 @@ const origins = [
       order: -1;
     }
 
-    .programme-photo {
-      width: auto;
+    .programme-layout .section-photo,
+    .cohorts-layout .section-photo {
       height: auto;
-      max-width: 100%;
       max-height: 26rem;
-      object-position: left center;
+      object-fit: cover;
     }
 
     .status-block {
