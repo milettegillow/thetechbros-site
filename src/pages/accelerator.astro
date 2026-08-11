@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
-import NewsletterSignup from '../components/NewsletterSignup.astro';
 import PeopleGrid from '../components/PeopleGrid.astro';
 import { VENTURE_PARTNERS } from '../data/venture-partners';
 import { COHORT_2 } from '../data/cohort-2';
@@ -313,13 +312,12 @@ const origins = [
          the /apply/accelerator#apply-now redirect, which is still in
          circulation, and `id="newsletter"` of links to the sign-up. -->
     <section class="status" id="apply-now">
-      <div class="holo status-block" id="newsletter">
-        <div class="container">
+      <div class="container">
+        <div class="holo status-block">
           <p class="status-headline">cohort 3 applications open next spring.</p>
-          <p class="status-sub">sign up to hear first.</p>
-          <div class="newsletter-wrap">
-            <NewsletterSignup buttonText="subscribe" variant="on-holo" />
-          </div>
+          <p class="status-sub">
+            sign up to <a href="/community#newsletter">our newsletter</a> to hear first.
+          </p>
         </div>
       </div>
     </section>
@@ -511,9 +509,6 @@ const origins = [
     padding: 4.5rem 0 1.25rem;
   }
 
-  .accelerator section.status {
-    padding-top: 0;
-  }
 
   .acc-hero h1 {
     max-width: 20ch;
@@ -528,21 +523,14 @@ const origins = [
   }
 
   /* ── 2. Applications status ──
-     The first question anyone arrives with, so it gets the foil and sits
-     above everything else on the page. */
-  .status {
-    padding-top: 0;
-  }
-
-  /* Full-bleed closing block: the foil runs edge to edge and everything on it
-     is centred. */
-  .accelerator section.status {
-    padding: 0;
-  }
-
+     The closing block, and the answer to the first question anyone arrives
+     with. Deliberately NOT full-bleed, unlike the section banners above it:
+     it sits inside the container so its edges line up with the section
+     headings' text, which is what makes it read as a block on the page rather
+     than another band across it. */
   .status-block {
-    padding: 4rem 0;
-    text-align: center;
+    padding: 5rem 4rem;
+    text-align: left;
   }
 
   .status-headline {
@@ -550,13 +538,22 @@ const origins = [
     font-weight: var(--weight-holo);
     letter-spacing: var(--tracking-holo);
     line-height: 1.15;
-    margin: 0 auto 1rem;
+    margin: 0 0 1.25rem;
+    /* Narrow enough to break after "applications", so the headline sets in
+       two lines rather than one long one. */
     max-width: 22ch;
   }
 
   .status-sub {
     font-size: var(--text-lead);
-    margin-bottom: 2rem;
+    margin-bottom: 0;
+  }
+
+  /* Buttons can't sit on the foil — black text is enforced there — so the
+     newsletter is a plain underlined link instead. */
+  .status-sub a {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
 
   /* ── 3. The programme ── */
@@ -750,14 +747,6 @@ const origins = [
     color: var(--color-text);
   }
 
-  /* The form sits inside the foil block, centred, at a readable width. */
-  .newsletter-wrap {
-    max-width: 34rem;
-    margin: 0 auto;
-    /* The fields themselves read left; only the block is centred. */
-    text-align: left;
-  }
-
   @media (max-width: 1024px) {
     .stat-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -795,7 +784,7 @@ const origins = [
     }
 
     .status-block {
-      padding: 2.5rem 0;
+      padding: 3rem 1.75rem;
     }
 
     .stat-grid {
