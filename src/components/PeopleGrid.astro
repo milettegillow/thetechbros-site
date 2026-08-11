@@ -56,7 +56,10 @@ const srcFor = (photo: string) =>
           ) : (
             <span class="people-photo-placeholder" aria-hidden="true"></span>
           )}
-          <span class="people-name">{person.name}</span>
+          <span class="people-label">
+            <span class="people-name">{person.name}</span>
+            {person.meta && <span class="people-meta">{person.meta}</span>}
+          </span>
         </Tile>
       </li>
     );
@@ -116,15 +119,33 @@ const srcFor = (photo: string) =>
     color: var(--color-primary);
   }
 
+  /* Two lines' worth whether the text needs it or not, so rows stay level.
+     It's the block rather than the name that reserves them, so a grid carrying
+     a meta line spends the second line on that instead of on empty space. */
+  .people-label {
+    display: block;
+    min-height: 2.6em;
+  }
+
   .people-name {
     display: block;
     text-align: center;
     font-size: var(--text-small);
     line-height: 1.3;
     color: var(--color-text);
-    /* Two lines' worth whether the name needs it or not, so rows stay level. */
-    min-height: 2.6em;
     transition: color var(--transition-btn);
+  }
+
+  /* Optional second line, used only where the grid carries a place. Same size
+     as the name so the tile keeps one text scale; the colour is what separates
+     them. It sits inside the flex column, so it takes the tile's own gap. */
+  .people-meta {
+    display: block;
+    text-align: center;
+    font-size: var(--text-small);
+    line-height: 1.3;
+    color: var(--color-primary);
+    letter-spacing: var(--tracking-subheading);
   }
 
   @media (max-width: 1024px) {

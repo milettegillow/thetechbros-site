@@ -98,11 +98,4 @@ export const COMMUNITY_LEADS: {
     linkedin: 'https://www.linkedin.com/in/laurence-maeter-743581188/',
     photo: 'laurence-maeter.png',
   },
-  {
-    name: 'Emile Shah',
-    city: 'Singapore',
-    role: 'Community lead',
-    linkedin: 'https://www.linkedin.com/in/emile-shah/',
-    photo: 'emile-shah.png',
-  },
 ];

@@ -13,6 +13,11 @@ export interface Person {
   photo?: string;
   /** Full profile URL. Omit it and no icon is shown. */
   linkedin?: string;
+  /**
+   * A short second line under the name. Only /community sets it, to carry each
+   * lead's city; the other grids are name-only and leave it off.
+   */
+  meta?: string;
 }
 
 const HONORIFIC = /^(dr|prof|professor|mr|mrs|ms|miss|mx)\.?\s+/i;
