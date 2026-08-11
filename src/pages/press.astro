@@ -3,10 +3,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import AsSeenIn from '../components/AsSeenIn.astro';
-import { PUBLICATION_LOGOS } from '../config';
+import { PUBLICATION_LOGOS, PUBLICATION_LOGO_HEIGHTS } from '../config';
 
 // Tier 1. `image` and `url` are both optional: three of these have no artwork
 // yet, and the British Business Bank announcement has no public URL on file.
+/**
+ * Card marks scale from the strip's tuned heights rather than sharing one cap.
+ * A single max-height renders a bold all-caps wordmark far heavier than a
+ * lowercase one at the same pixel height.
+ */
+const CARD_MARK_SCALE = 1.4;
+
 const featured = [
   {
     publication: 'Sifted',
@@ -193,6 +200,7 @@ const podcasts = [
                       src={PUBLICATION_LOGOS[item.publication]}
                       alt={item.publication}
                       class="press-mark-logo"
+                      style={`height: ${Math.round((PUBLICATION_LOGO_HEIGHTS[item.publication] ?? 26) * CARD_MARK_SCALE)}px`}
                       loading="eager"
                       decoding="async"
                       onerror="this.hidden = true; this.nextElementSibling.hidden = false;"
@@ -302,12 +310,12 @@ const podcasts = [
      Deliberately larger than the banner's own bottom margin, so each banner
      reads as belonging to the section under it rather than floating between. */
   .featured {
-    padding: 3.5rem 0;
+    padding: 2.5rem 0;
   }
 
   .mentions,
   .podcasts {
-    padding: 0 0 3.5rem;
+    padding: 0 0 2.5rem;
   }
 
   .press-list {
@@ -324,7 +332,7 @@ const podcasts = [
      Still smaller than the gap above, so the banner reads as the head of what
      follows rather than a divider parked between two blocks. */
   .section-banner {
-    margin-bottom: 2.5rem;
+    margin-bottom: 3.5rem;
     padding: 1.25rem 0;
   }
 
@@ -373,7 +381,6 @@ const podcasts = [
 
   .press-mark-logo {
     display: block;
-    max-height: 40px;
     max-width: 100%;
     width: auto;
     object-fit: contain;
