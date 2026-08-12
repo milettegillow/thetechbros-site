@@ -649,6 +649,47 @@ const locationGroups = countries.map((country) => ({
       gap: 2rem;
     }
 
+    /* ── 1. Community leads ──
+       Three across leaves 106px cells: "San Francisco" broke over four lines
+       and "Laurence Maeter" over two. Trimming the type alone wasn't enough —
+       that pill needs ~112px on one line — so the row drops to two.
+       The grid comes from the shared PeopleGrid, whose styles are scoped to
+       the component, so `:global` is the only way in; the `.leads` ancestor
+       keeps the reach to this page, and the attribute keeps these ahead of
+       the component's own mobile rule. */
+    .leads :global(.people-grid[data-align='center']) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .leads :global(.people-name) {
+      font-size: 0.875rem;
+    }
+
+    .leads :global(.people-meta) {
+      font-size: 0.875rem;
+      white-space: nowrap;
+    }
+
+    /* ── 2. Clear filters ──
+       `margin-left: auto` pushed it to the far right of its own wrapped row,
+       227px clear of the dropdowns above it. Aligned to the same left edge
+       instead, and trimmed so it reads as a compact control.
+       Qualified by the parent because the desktop `.clear-filters` rule is
+       further down this stylesheet than this media block, so a bare selector
+       of equal specificity loses to it on source order. */
+    .event-filters .clear-filters {
+      margin-left: 0;
+      margin-top: 0.25rem;
+      padding: 0.6rem 1.1rem;
+    }
+
+    /* ── 4. Accelerator CTA ──
+       Less height, and a gutter of its own so the button isn't tight to the
+       screen edge — the container's 1rem was all it had. */
+    .cta-section {
+      padding: 2.5rem 1rem;
+    }
+
     .community-options {
       grid-template-columns: 1fr;
     }
@@ -1179,11 +1220,19 @@ const locationGroups = countries.map((country) => ({
     z-index: 1001;
   }
 
+  /* Sticky rather than absolute: `.modal-content` is the scroll container, and
+     an absolutely positioned child scrolls away with its content. In flow and
+     stuck to the top it stays reachable however far down the modal you are.
+     `margin-bottom` cancels the line it now occupies, so nothing below it
+     moves, and it carries the modal's own background so text passing beneath
+     doesn't show through the glyph. */
   .modal-close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
+    position: sticky;
+    top: 0;
+    margin-left: auto;
+    margin-bottom: -2rem;
+    z-index: 2;
+    background: var(--color-bg);
     border: none;
     color: var(--color-text);
     font-size: 2rem;
