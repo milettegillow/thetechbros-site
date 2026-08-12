@@ -3,9 +3,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import { getCollection } from 'astro:content';
-import { COMMUNITY_LEADS } from '../config';
+import { COMMUNITY_LEADS, cohortLogo } from '../config';
 import { VENTURE_PARTNERS } from '../data/venture-partners';
-import { byFirstName } from '../data/people';
+import { byLastName } from '../data/people';
 import PeopleGrid from '../components/PeopleGrid.astro';
 import { getEventStats, getEventsByYear } from '../lib/eventStats';
 
@@ -40,19 +40,19 @@ const pillars = [
   {
     label: 'the fund',
     href: '/fund',
-    line: 'first cheques into all-female, all-technical teams at pre-seed. cornerstone-backed by the British Business Bank.',
+    line: 'first cheques into all-female, all-technical teams at pre-seed; cornerstone-backed by the British Business Bank.',
   },
   {
     label: 'the accelerator',
     href: '/accelerator',
-    line: "eight weeks, twice a year. two in person in Norway, six hybrid. the world's first all-female, all-technical accelerator.",
+    line: "eight weeks, two in-person in Norway, six hybrid; the world's first all-female, all-technical accelerator.",
   },
   {
     label: 'the community',
     href: '/community',
     // Event, city and country counts derive from the collection; the 1,500+
     // figure is not derivable from it and stays written out.
-    line: `${eventStats.eventCount} events across ${eventStats.cityCount} cities and ${eventStats.countryCount} countries. 1,500+ technical women hosted in person.`,
+    line: `${eventStats.eventCount} events across ${eventStats.cityCount} cities and ${eventStats.countryCount} countries; 1,500+ technical women hosted in person.`,
   },
 ];
 
@@ -66,14 +66,14 @@ const lead = {
   photo: '/about/milette.png',
   linkedin: 'https://www.linkedin.com/in/milettegillow/',
   bio: [
-    'PhD mathematics, Leeds, started university aged 16.',
+    'PhD mathematics, Leeds; started university aged 16.',
     'Investor and founder-in-residence at Entrepreneurs First; VC analyst in Berlin and Hong Kong; EWOR venture scout.',
     'Governing board, Oxford High School GDST.',
   ],
 };
 
 // One flat grid: the rest of the core team and the venture partners, in one
-// alphabetical run. Name and LinkedIn only — no roles in here, so everyone
+// run alphabetised by last name. Name and LinkedIn only — no roles in here, so everyone
 // reads at the same weight. Community leads come from the shared config, and
 // the venture partners from the same list /accelerator renders, so nothing is
 // retyped. Milette is above this grid, not in it.
@@ -102,34 +102,33 @@ const team = [
     photo: person.photo ? `/accelerator/venture-partners/${person.photo}` : undefined,
     linkedin: person.linkedin || undefined,
   })),
-].sort(byFirstName);
+].sort(byLastName);
 
 /**
- * Institutions the team and partners come from. `height` is tuned per mark, and
- * `tone` overrides the default white-out for artwork that is a coloured plate
- * with the shape knocked out of it — flattening those to white fills the plate.
+ * Institutions the team and partners come from, in display order. Names,
+ * heights and tones come from the shared table in the config, so this strip
+ * and the one on /accelerator stay in step.
  */
 const INSTITUTIONS = [
-  { file: 'google.png', name: 'Google', height: 24 },
-  { file: 'apple.png', name: 'Apple', height: 40 },
-  { file: 'microsoft.png', name: 'Microsoft', height: 22 },
-  { file: 'aws.png', name: 'AWS', height: 30 },
-  { file: 'tesla.png', name: 'Tesla', height: 40 },
-  { file: 'meta.png', name: 'Meta', height: 22 },
-  { file: 'discord.png', name: 'Discord', height: 36, tone: 'threshold' },
-  { file: 'nasa.png', name: 'NASA', height: 26 },
-  { file: 'y-combinator.png', name: 'Y Combinator', height: 26, tone: 'plate' },
-  { file: 'stanford.png', name: 'Stanford', height: 26 },
-  { file: 'mit.png', name: 'MIT', height: 30 },
-  { file: 'oxford.png', name: 'Oxford', height: 24, tone: 'threshold' },
-  { file: 'cambridge.png', name: 'Cambridge', height: 22 },
-  { file: 'berkeley.png', name: 'UC Berkeley', height: 20 },
-  { file: 'caltech.png', name: 'Caltech', height: 28 },
-  { file: 'ethzurich.png', name: 'ETH Zurich', height: 22 },
-  { file: 'epfl.svg', name: 'EPFL', height: 24 },
-];
+  'google.png',
+  'apple.png',
+  'microsoft.png',
+  'aws.png',
+  'tesla.png',
+  'meta.png',
+  'discord.png',
+  'nasa.png',
+  'y-combinator.png',
+  'stanford.png',
+  'mit.png',
+  'oxford.png',
+  'cambridge.png',
+  'berkeley.png',
+  'caltech.png',
+  'ethzurich.png',
+  'epfl.svg',
+].map(cohortLogo);
 
-// Rendered twice so the marquee can loop seamlessly, as on the home page.
 const institutionMarquee = [...INSTITUTIONS, ...INSTITUTIONS];
 
 const stats = [
@@ -140,7 +139,7 @@ const stats = [
   },
   {
     figure: '80%',
-    label: 'report being more likely to found a startup after attending one of our events',
+    label: 'report being more likely to found a startup after attending a bros events',
     source: 'post-event surveys, 2024-25',
   },
 ];
@@ -157,7 +156,7 @@ const stats = [
       <div class="container">
         <h1>what we do</h1>
         <p class="opening">
-          we back the most ambitious technical women to build technology companies from scratch,
+          we back the most ambitious technical women to build startups from scratch,
           through our 3 pillars: our fund, accelerator, and global community.
         </p>
         <ul class="pillar-grid">
@@ -296,7 +295,7 @@ const stats = [
             {institutionMarquee.map((logo) => (
               <div class="institution-item">
                 <img
-                  src={`/index/cohort-logos/${logo.file}`}
+                  src={logo.src}
                   alt={logo.name}
                   data-tone={logo.tone}
                   style={`height: ${logo.height}px`}

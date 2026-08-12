@@ -37,3 +37,23 @@ export function byFirstName(a: Person, b: Person): number {
     key(a.name).localeCompare(key(b.name), 'en')
   );
 }
+
+/**
+ * Orders people by last name — the final word of the name, which is where a
+ * grid of colleagues is normally filed from.
+ *
+ * The honorific is dropped first, and the full name is the tie-break so two
+ * people sharing a surname keep a stable order.
+ *
+ * A single trailing word is all this takes, so a name carrying two surnames
+ * files under the second of them. Worth knowing if that's not what you want
+ * for a particular person.
+ */
+export function byLastName(a: Person, b: Person): number {
+  const key = (name: string) => name.replace(HONORIFIC, '');
+  const last = (name: string) => key(name).split(' ').pop() ?? '';
+  return (
+    last(a.name).localeCompare(last(b.name), 'en') ||
+    key(a.name).localeCompare(key(b.name), 'en')
+  );
+}

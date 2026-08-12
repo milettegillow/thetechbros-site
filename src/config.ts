@@ -99,3 +99,52 @@ export const COMMUNITY_LEADS: {
     photo: 'laurence-maeter.png',
   },
 ];
+
+/**
+ * Logo marks for the institution strips: "our team and partners come from" on
+ * /about and "our founders come from" on /accelerator. Both draw on the same
+ * files in public/index/cohort-logos/, so the sizing lives here rather than
+ * twice over.
+ *
+ * `height` is the element height in pixels, tuned per mark rather than shared.
+ * A single height renders these at wildly different weights, for two reasons:
+ * they run from square icons to wordmarks six times wider than they are tall,
+ * and several — Stanford, Oxford, Cambridge, the Air Force — are a crest set
+ * over one or two lines of type, so their readable content is a fraction of
+ * the box. Each was sized against the others until they carry equivalent
+ * visual weight, not equal height.
+ *
+ * `tone` overrides the default white-out for artwork that is a coloured plate
+ * with the mark knocked out of it; flattening those to white fills the plate
+ * solid and loses the mark.
+ */
+export const COHORT_LOGOS: Record<
+  string,
+  { name: string; height: number; tone?: 'threshold' | 'plate' }
+> = {
+  'google.png': { name: 'Google', height: 24 },
+  'apple.png': { name: 'Apple', height: 42 },
+  'microsoft.png': { name: 'Microsoft', height: 22 },
+  'aws.png': { name: 'AWS', height: 30 },
+  'tesla.png': { name: 'Tesla', height: 42 },
+  'meta.png': { name: 'Meta', height: 24 },
+  'discord.png': { name: 'Discord', height: 44, tone: 'threshold' },
+  'nasa.png': { name: 'NASA', height: 22 },
+  'us-air-force.webp': { name: 'US Air Force', height: 48 },
+  'y-combinator.png': { name: 'Y Combinator', height: 32, tone: 'plate' },
+  'stanford.png': { name: 'Stanford', height: 44 },
+  'mit.png': { name: 'MIT', height: 26 },
+  'oxford.png': { name: 'Oxford', height: 46, tone: 'threshold' },
+  'cambridge.png': { name: 'Cambridge', height: 34 },
+  'berkeley.png': { name: 'UC Berkeley', height: 22 },
+  'caltech.png': { name: 'Caltech', height: 22 },
+  'ethzurich.png': { name: 'ETH Zurich', height: 20 },
+  'epfl.svg': { name: 'EPFL', height: 20 },
+};
+
+/** Resolves a mark from COHORT_LOGOS into everything a strip needs to render it. */
+export function cohortLogo(file: string) {
+  const mark = COHORT_LOGOS[file];
+  if (!mark) throw new Error(`Unknown cohort logo: ${file}`);
+  return { file, src: `/index/cohort-logos/${file}`, ...mark };
+}

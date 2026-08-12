@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import PeopleGrid from '../components/PeopleGrid.astro';
 import { VENTURE_PARTNERS } from '../data/venture-partners';
 import { COHORT_2 } from '../data/cohort-2';
+import { cohortLogo } from '../config';
 
 const programme = [
   'a two-day in-person kickoff in london.',
@@ -67,33 +68,30 @@ const cohortOnCohort = [
 ];
 
 /**
- * Where cohort members came from. `logo` points at public/index/cohort-logos/.
- * `height` is tuned per mark rather than shared: these range from tall icons to
- * wordmarks five times wider than they are tall, and one height renders them at
- * wildly different weights. `tone` overrides the default white-out for marks
- * that are a coloured plate with the shape knocked out of it — flattening those
- * to white fills the plate solid.
+ * Where cohort members came from, in display order. Names, heights and tones
+ * come from the shared table in the config, so this strip and the one on
+ * /about stay in step.
  */
 const origins = [
-  { name: 'Google', logo: '/index/cohort-logos/google.png', height: 28 },
-  { name: 'Apple', logo: '/index/cohort-logos/apple.png', height: 40 },
-  { name: 'NASA', logo: '/index/cohort-logos/nasa.png', height: 26 },
-  { name: 'US Air Force', logo: '/index/cohort-logos/us-air-force.webp', height: 40 },
-  { name: 'Tesla', logo: '/index/cohort-logos/tesla.png', height: 40 },
-  { name: 'Microsoft', logo: '/index/cohort-logos/microsoft.png', height: 22 },
-  { name: 'Meta', logo: '/index/cohort-logos/meta.png', height: 20 },
-  { name: 'AWS', logo: '/index/cohort-logos/aws.png', height: 34 },
-  { name: 'Discord', logo: '/index/cohort-logos/discord.png', height: 36, tone: 'threshold' },
-  { name: 'Y Combinator', logo: '/index/cohort-logos/y-combinator.png', height: 26, tone: 'plate' },
-  { name: 'Stanford', logo: '/index/cohort-logos/stanford.png', height: 28 },
-  { name: 'MIT', logo: '/index/cohort-logos/mit.png', height: 30 },
-  { name: 'Oxford', logo: '/index/cohort-logos/oxford.png', height: 26, tone: 'threshold' },
-  { name: 'Cambridge', logo: '/index/cohort-logos/cambridge.png', height: 20 },
-  { name: 'UC Berkeley', logo: '/index/cohort-logos/berkeley.png', height: 18 },
-  { name: 'Caltech', logo: '/index/cohort-logos/caltech.png', height: 22 },
-  { name: 'EPFL', logo: '/index/cohort-logos/epfl.svg', height: 24 },
-  { name: 'ETH Zurich', logo: '/index/cohort-logos/ethzurich.png', height: 17 },
-];
+  'google.png',
+  'apple.png',
+  'nasa.png',
+  'us-air-force.webp',
+  'tesla.png',
+  'microsoft.png',
+  'meta.png',
+  'aws.png',
+  'discord.png',
+  'y-combinator.png',
+  'stanford.png',
+  'mit.png',
+  'oxford.png',
+  'cambridge.png',
+  'berkeley.png',
+  'caltech.png',
+  'epfl.svg',
+  'ethzurich.png',
+].map(cohortLogo);
 
 ---
 
@@ -252,7 +250,7 @@ const origins = [
           {origins.map((org) => (
             <li class="origin-item">
               <img
-                src={org.logo}
+                src={org.src}
                 alt={org.name}
                 class="origin-logo"
                 data-tone={org.tone}
