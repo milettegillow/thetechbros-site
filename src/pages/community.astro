@@ -183,7 +183,7 @@ const locationGroups = countries.map((country) => ({
     </section>
 
     <!-- Past Events -->
-    <section class="leads">
+    <section class="leads" id="community-leads">
       <div class="container">
         <h2>community leads</h2>
         <PeopleGrid
@@ -460,7 +460,24 @@ const locationGroups = countries.map((country) => ({
   window.addEventListener('load', () => {
     if (window.location.hash === '#apply') {
       (window as any).openApplyModal && (window as any).openApplyModal();
+      return;
     }
+
+    // Re-run the jump to a hash target once everything has loaded. The events
+    // grid fills in lazily, so the browser's own jump happens while the page
+    // is still short and lands well above the section asked for. `load` fires
+    // after the images are in, when the layout has settled, and
+    // `scrollIntoView` honours the target's `scroll-margin-top` so the sticky
+    // nav doesn't cover the heading.
+    const { hash } = window.location;
+    if (!hash || hash.length < 2) return;
+    let target: Element | null = null;
+    try {
+      target = document.querySelector(hash);
+    } catch {
+      return; // Not a usable selector — leave the browser's behaviour alone.
+    }
+    target?.scrollIntoView();
   });
 </script>
 
@@ -574,6 +591,13 @@ const locationGroups = countries.map((country) => ({
   }
 
   /* ── Your city? ── */
+  /* Landing target for /about's "become a community lead" button. The sticky
+     nav would otherwise cover the heading it scrolls to, so the section
+     reserves the bar's height above itself. */
+  .leads {
+    scroll-margin-top: 7rem;
+  }
+
   /* The heading sits well clear of the portraits: three large circles need
      air above them or they read as crowding the section title. */
   .leads > .container > h2 {
