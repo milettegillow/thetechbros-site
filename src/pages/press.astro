@@ -182,7 +182,7 @@ const podcasts = [
     </section>
 
     {/* The featured banner is the divider here, so the strip drops its rule. */}
-    <AsSeenIn ruleBelow={false} />
+    <AsSeenIn ruleBelow={false} layout="grid" />
 
     <!-- Tier 1: featured -->
     <section class="featured">
@@ -334,6 +334,12 @@ const podcasts = [
   .section-banner {
     margin-bottom: 3.5rem;
     padding: 1.25rem 0;
+  }
+
+  /* The first banner on the page opens the article list, so it is given
+     half again the gap the later banners take. */
+  .featured .section-banner {
+    margin-bottom: 5.25rem;
   }
 
   .section-banner h2 {

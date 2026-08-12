@@ -10,24 +10,36 @@ interface Props {
   heading?: string;
   /** Set false where the next section already provides the dividing edge. */
   ruleBelow?: boolean;
+  /**
+   * `row` packs the marks along a flex line — the original treatment.
+   * `grid` gives every mark an equal-width cell and centres it in both axes,
+   * which stops a wide wordmark from crowding its neighbours. In grid mode the
+   * per-logo heights from the config are ignored in favour of a shared cap and
+   * per-mark steps below, since what balances a free-flowing row is not what
+   * balances a set of fixed cells.
+   */
+  layout?: 'row' | 'grid';
 }
 
-const { heading = 'as seen in', ruleBelow = true } = Astro.props;
+const { heading = 'as seen in', ruleBelow = true, layout = 'row' } = Astro.props;
+
+/** Stable hook for the per-mark optical steps in the grid layout. */
+const markId = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 ---
 
 <section class="as-seen-in" data-rule-below={String(ruleBelow)}>
   <div class="container">
     <p class="as-seen-in-heading">{heading}</p>
-    <ul class="as-seen-in-list">
+    <ul class="as-seen-in-list" data-layout={layout}>
       {AS_SEEN_IN.map((item) => (
-        <li class="as-seen-in-item">
+        <li class="as-seen-in-item" data-mark={markId(item.name)}>
           {item.logo ? (
             <>
               <img
                 src={item.logo}
                 alt={item.name}
                 class="as-seen-in-logo"
-                style={item.height ? `height: ${item.height}px` : undefined}
+                style={layout === 'row' && item.height ? `height: ${item.height}px` : undefined}
                 {/* Eager: a lazy image below the fold never fires onerror, so a
                     missing logo would sit there broken instead of falling back. */}
                 loading="eager"
@@ -109,9 +121,67 @@ const { heading = 'as seen in', ruleBelow = true } = Astro.props;
     opacity: 0.9;
   }
 
+  /* ── Grid layout ──
+     Six equal cells, each mark centred in its own. Sizing moves entirely into
+     CSS here: a shared max-height normalises the set, and the marks that read
+     heavier than the rest are stepped down from it. The steps are not equal
+     pixel heights and are not meant to be — The Times is a wide, dense serif
+     wordmark that carries roughly six times the ink of Tech Funding News at
+     the same height, and at its row height it overran a cell outright. */
+  .as-seen-in-list[data-layout='grid'] {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.5rem 2rem;
+  }
+
+  .as-seen-in-list[data-layout='grid'] .as-seen-in-item {
+    justify-content: center;
+    align-items: center;
+    /* A common floor for every cell, so the marks share a centre line rather
+       than each sitting in the middle of its own height. */
+    min-height: 44px;
+  }
+
+  .as-seen-in-list[data-layout='grid'] .as-seen-in-logo {
+    /* Clears the row layout's fixed height so the cap governs. */
+    height: auto;
+    max-height: 32px;
+    max-width: 100%;
+  }
+
+  /* Stepped down from the shared cap, heaviest first. */
+  .as-seen-in-list[data-layout='grid'] [data-mark='the-times'] .as-seen-in-logo {
+    max-height: 17px;
+  }
+
+  .as-seen-in-list[data-layout='grid'] [data-mark='shifter'] .as-seen-in-logo {
+    max-height: 20px;
+  }
+
+  .as-seen-in-list[data-layout='grid'] [data-mark='uktn'] .as-seen-in-logo {
+    max-height: 24px;
+  }
+
+  .as-seen-in-list[data-layout='grid'] [data-mark='sifted'] .as-seen-in-logo {
+    max-height: 28px;
+  }
+
+  /* Lifted above the cap instead: the lightest mark in the set, and the only
+     one that is nearly square rather than a wordmark. */
+  .as-seen-in-list[data-layout='grid'] [data-mark='tech-funding-news'] .as-seen-in-logo {
+    max-height: 40px;
+  }
+
   @media (max-width: 768px) {
     .as-seen-in-list {
       gap: 1rem 2rem;
+    }
+
+    /* Six cells across is unreadable on a phone; two rows of three keeps the
+       equal-width treatment intact. */
+    .as-seen-in-list[data-layout='grid'] {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem 1.5rem;
     }
 
     .as-seen-in-name {
