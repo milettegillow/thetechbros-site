@@ -88,7 +88,14 @@ const srcFor = (photo: string) =>
           )}
           <span class="people-label">
             <span class="people-name">{person.name}</span>
-            {person.meta && <span class="people-meta">{person.meta}</span>}
+            {person.meta && (
+              <span class="people-meta holo">
+                {/* The text sits in its own span so `.holo span` picks it up
+                    and gives it the system's on-holo weight and tracking,
+                    rather than restating either here. */}
+                <span>{person.meta}</span>
+              </span>
+            )}
           </span>
         </Tile>
       </li>
@@ -166,16 +173,19 @@ const srcFor = (photo: string) =>
     transition: color var(--transition-btn);
   }
 
-  /* Optional second line, used only where the grid carries a place. Same size
-     as the name so the tile keeps one text scale; the colour is what separates
-     them. It sits inside the flex column, so it takes the tile's own gap. */
+  /* Optional second line, used only where the grid carries a place. It sits on
+     a holographic chip: `.holo` supplies the surface and the enforced black
+     text, so neither is restated here. Square, like every other holographic
+     surface on the site. The chip hugs its text rather than filling the tile,
+     and is centred under the name by its own auto margins. */
   .people-meta {
     display: block;
+    width: fit-content;
+    margin-inline: auto;
+    padding: 0.2rem 0.6rem;
     text-align: center;
     font-size: var(--text-small);
     line-height: 1.3;
-    color: var(--color-primary);
-    letter-spacing: var(--tracking-subheading);
   }
 
   /* Centred variant: tracks take a fixed width rather than a share of the

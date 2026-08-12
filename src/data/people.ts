@@ -14,8 +14,9 @@ export interface Person {
   /** Full profile URL. Omit it and no icon is shown. */
   linkedin?: string;
   /**
-   * A short second line under the name. Only /community sets it, to carry each
-   * lead's city; the other grids are name-only and leave it off.
+   * A short second line under the name, shown on a holographic chip. Only
+   * /community sets it, to carry each lead's city; the other grids are
+   * name-only and leave it off, so no chip is rendered for them.
    */
   meta?: string;
 }
