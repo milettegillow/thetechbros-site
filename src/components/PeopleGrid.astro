@@ -33,6 +33,13 @@ interface Props {
    * against the left margin.
    */
   align?: 'start' | 'center';
+  /**
+   * Track width in pixels for the centred variant, which is what sets how far
+   * apart the tiles sit: each portrait centres in its own track, so a wider
+   * track spreads a short row across more of the page. Ignored when `align` is
+   * `start`, where the tracks share the line equally.
+   */
+  columnWidth?: number;
 }
 
 const {
@@ -41,6 +48,7 @@ const {
   columns = 6,
   photoSize = 120,
   align = 'start',
+  columnWidth = 192,
 } = Astro.props;
 
 const srcFor = (photo: string) =>
@@ -50,7 +58,7 @@ const srcFor = (photo: string) =>
 <ul
   class="people-grid"
   data-align={align}
-  style={`--people-columns: ${columns}; --people-photo-size: ${photoSize}px`}
+  style={`--people-columns: ${columns}; --people-photo-size: ${photoSize}px; --people-column: ${columnWidth}px`}
 >
   {people.map((person) => {
     const Tile = person.linkedin ? 'a' : 'div';
@@ -173,13 +181,21 @@ const srcFor = (photo: string) =>
   /* Centred variant: tracks take a fixed width rather than a share of the
      line, which is what lets `justify-content` have anything to centre. */
   .people-grid[data-align='center'] {
-    grid-template-columns: repeat(var(--people-columns, 6), minmax(0, 12rem));
+    grid-template-columns: repeat(var(--people-columns, 6), minmax(0, var(--people-column, 192px)));
     justify-content: center;
   }
 
   @media (max-width: 1024px) {
     .people-grid {
       grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    /* An enlarged portrait steps down once before the layout stacks, so it
+       doesn't crowd its track. `min` leaves the default 120px untouched. */
+    .people-photo,
+    .people-photo-placeholder {
+      width: min(var(--people-photo-size, 120px), 150px);
+      height: min(var(--people-photo-size, 120px), 150px);
     }
   }
 

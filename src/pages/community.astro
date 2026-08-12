@@ -184,7 +184,8 @@ const locationGroups = countries.map((country) => ({
           people={leads}
           photoBase="/community/leads"
           columns={3}
-          photoSize={176}
+          photoSize={220}
+          columnWidth={350}
           align="center"
         />
 
@@ -540,6 +541,12 @@ const locationGroups = countries.map((country) => ({
   }
 
   /* ── Your city? ── */
+  /* The heading sits well clear of the portraits: three large circles need
+     air above them or they read as crowding the section title. */
+  .leads > .container > h2 {
+    margin-bottom: 4rem;
+  }
+
   .your-city {
     margin-top: 5rem;
     padding: 3rem;
