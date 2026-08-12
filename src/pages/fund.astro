@@ -414,8 +414,11 @@ const alumni = [
      three gives them the same footprint. Centred, so a wider-than-tall chart
      and the standalone figure sit on the same line. */
   .market-graphic {
+    /* Fixed height with the graphic centred in it, so all three claims start
+       on the same line whatever each chart's proportions are; the margin below
+       therefore reads identically across the row. */
     height: 150px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.75rem;
     display: flex;
     align-items: center;
   }
@@ -479,7 +482,9 @@ const alumni = [
   .market-frame {
     font-size: var(--text-lead);
     color: var(--color-text);
-    margin-bottom: 2.5rem;
+    /* Set on the framing line rather than the grid, so the gap above the row
+       is one value for all three columns and can't drift apart. */
+    margin-bottom: 4.5rem;
   }
 
   /* ── 2b. And yet ──
