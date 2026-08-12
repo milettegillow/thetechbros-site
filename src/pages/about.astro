@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import { getCollection } from 'astro:content';
-import { COMMUNITY_LEADS, cohortLogo } from '../config';
+import { COMMUNITY_LEADS, TEAM_LOGOS, teamLogo } from '../config';
 import { VENTURE_PARTNERS } from '../data/venture-partners';
 import { byLastName } from '../data/people';
 import PeopleGrid from '../components/PeopleGrid.astro';
@@ -105,29 +105,11 @@ const team = [
 ].sort(byLastName);
 
 /**
- * Institutions the team and partners come from, in display order. Names,
- * heights and tones come from the shared table in the config, so this strip
- * and the one on /accelerator stay in step.
+ * Institutions the team and partners come from, in display order: the most
+ * widely recognised names lead the scroll. Names, heights and tones come from
+ * the shared table in the config.
  */
-const INSTITUTIONS = [
-  'google.png',
-  'apple.png',
-  'microsoft.png',
-  'aws.png',
-  'tesla.png',
-  'meta.png',
-  'discord.png',
-  'nasa.png',
-  'y-combinator.png',
-  'stanford.png',
-  'mit.png',
-  'oxford.png',
-  'cambridge.png',
-  'berkeley.png',
-  'caltech.png',
-  'ethzurich.png',
-  'epfl.svg',
-].map(cohortLogo);
+const INSTITUTIONS = Object.keys(TEAM_LOGOS).map(teamLogo);
 
 const institutionMarquee = [...INSTITUTIONS, ...INSTITUTIONS];
 
@@ -768,14 +750,28 @@ const stats = [
     opacity: 0.9;
   }
 
-  /* Coloured plate with the mark knocked out of it. */
+  /* ── Marks on an opaque background ──
+     `brightness(0) invert(1)` whitens every non-transparent pixel, so artwork
+     that ships with a background flattens to a solid white rectangle. These
+     three treatments drop the background to black and lift the mark to white
+     instead; which one works depends on where the background sits relative to
+     the contrast pivot. */
+
+  /* Dark or saturated background, mark already light. */
   .institution-item img[data-tone='threshold'] {
     filter: grayscale(1) contrast(5);
   }
 
-  /* A plate and dark type side by side; inverting first keeps both. */
-  .institution-item img[data-tone='plate'] {
-    filter: invert(1) grayscale(1) brightness(1.2) contrast(3);
+  /* Background sits mid-to-light, so it needs pulling under the pivot first
+     or it whites out. */
+  .institution-item img[data-tone='knockout'] {
+    filter: grayscale(1) brightness(0.7) contrast(20);
+  }
+
+  /* The mirror case: a background dark enough that the mark needs lifting
+     over the pivot rather than the background pushed under it. */
+  .institution-item img[data-tone='knockout-dark'] {
+    filter: grayscale(1) brightness(1.2) contrast(20);
   }
 
   /* ── 6. Stats ── */

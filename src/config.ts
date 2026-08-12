@@ -148,3 +148,62 @@ export function cohortLogo(file: string) {
   if (!mark) throw new Error(`Unknown cohort logo: ${file}`);
   return { file, src: `/index/cohort-logos/${file}`, ...mark };
 }
+
+/**
+ * Logo marks for the "our team and partners come from" strip on /about, from
+ * public/index/team-logos/. Separate from COHORT_LOGOS, which serves the
+ * "our founders come from" strip on /accelerator — different institutions,
+ * different files, no overlap in sizing.
+ *
+ * `height` is the element height in pixels, tuned per mark. These arrived as
+ * 600x600 exports with anything up to 45% of the canvas empty, so they were
+ * first cropped to their ink bounds; even so a single height renders them at
+ * wildly different weights, because the set runs from one-line wordmarks nine
+ * times wider than they are tall to square crests. Each was sized against the
+ * others until they carry equivalent visual weight, not equal height.
+ *
+ * `tone` overrides the default white-out for artwork with an opaque
+ * background. Those would otherwise flatten to a solid white rectangle, since
+ * `brightness(0) invert(1)` whitens every non-transparent pixel.
+ */
+export const TEAM_LOGOS: Record<
+  string,
+  { name: string; height: number; tone?: 'threshold' | 'knockout' | 'knockout-dark' }
+> = {
+  'google.png': { name: 'Google', height: 40 },
+  'a16z.png': { name: 'a16z', height: 29 },
+  'y-combinator.png': { name: 'Y Combinator', height: 72, tone: 'knockout' },
+  'waymo.png': { name: 'Waymo', height: 38 },
+  'goldman-sachs.png': { name: 'Goldman Sachs', height: 76, tone: 'knockout' },
+  'pfizer.png': { name: 'Pfizer', height: 29 },
+  'entrepreneurs-first.png': { name: 'Entrepreneurs First', height: 68, tone: 'knockout-dark' },
+  'stanford.png': { name: 'Stanford University', height: 30 },
+  'mit.png': { name: 'MIT', height: 30 },
+  'oxford.png': { name: 'University of Oxford', height: 40, tone: 'threshold' },
+  'berkeley.png': { name: 'UC Berkeley', height: 23 },
+  'caltech.png': { name: 'Caltech', height: 22 },
+  'imperial.png': { name: 'Imperial College London', height: 19 },
+  'ucl.png': { name: 'UCL', height: 26 },
+  'kcl.png': { name: "King's College London", height: 35 },
+  'edinburgh.png': { name: 'University of Edinburgh', height: 60, tone: 'threshold' },
+  'trinity.png': { name: 'Trinity College Dublin', height: 42 },
+  'upenn.png': { name: 'University of Pennsylvania', height: 27 },
+  'tum.png': { name: 'Technical University of Munich', height: 32 },
+  'crick.png': { name: 'The Francis Crick Institute', height: 44, tone: 'threshold' },
+  'forbes.png': { name: 'Forbes 30 Under 30', height: 40 },
+  'tedx.png': { name: 'TEDx', height: 26 },
+  'ewor.png': { name: 'EWOR', height: 40 },
+  'alchemist.png': { name: 'Alchemist Accelerator', height: 42 },
+  'south-park-commons.png': { name: 'South Park Commons', height: 32 },
+  'founders-inc.png': { name: 'Founders Inc', height: 21 },
+  'foxglove.png': { name: 'Foxglove Defence', height: 25 },
+  'generationship.png': { name: 'Generationship', height: 46, tone: 'threshold' },
+  'ose.png': { name: 'Oxford Science Enterprises', height: 30 },
+};
+
+/** Resolves a mark from TEAM_LOGOS into everything the strip needs to render it. */
+export function teamLogo(file: string) {
+  const mark = TEAM_LOGOS[file];
+  if (!mark) throw new Error(`Unknown team logo: ${file}`);
+  return { file, src: `/index/team-logos/${file}`, ...mark };
+}

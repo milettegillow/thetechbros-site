@@ -244,7 +244,7 @@ const alumni = [
           ))}
         </ul>
         <p class="flow-note">
-          Four of our twenty cohort 2 founders first came to us as prize winners at Tech Bros
+          Four of our twenty cohort 2 founders first came to us as prize winners at bros
           events: {prizeWinners.map((winner, i) => (
             <>{winner.linkedin ? (<a class="flow-name" href={winner.linkedin} target="_blank" rel="noopener noreferrer">{winner.name}</a>) : (<span class="flow-name">{winner.name}</span>)}{i < prizeWinners.length - 2 ? ', ' : i === prizeWinners.length - 2 ? ' and ' : '.'}</>
           ))}
