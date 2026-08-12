@@ -207,3 +207,30 @@ export function teamLogo(file: string) {
   if (!mark) throw new Error(`Unknown team logo: ${file}`);
   return { file, src: `/index/team-logos/${file}`, ...mark };
 }
+
+/**
+ * The cohort strip, resolved and in display order. Shared by "our founders come
+ * from" on /accelerator and "where they came from" on /fund: both describe the
+ * same founders, so they show the same institutions in the same sequence, and
+ * neither page carries its own copy of the list.
+ */
+export const COHORT_STRIP = [
+  'google.png',
+  'apple.png',
+  'nasa.png',
+  'us-air-force.webp',
+  'tesla.png',
+  'microsoft.png',
+  'meta.png',
+  'aws.png',
+  'discord.png',
+  'y-combinator.png',
+  'stanford.png',
+  'mit.png',
+  'oxford.png',
+  'cambridge.png',
+  'berkeley.png',
+  'caltech.png',
+  'epfl.svg',
+  'ethzurich.png',
+].map(cohortLogo);

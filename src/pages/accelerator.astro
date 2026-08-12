@@ -5,7 +5,7 @@ import Footer from '../components/Footer.astro';
 import PeopleGrid from '../components/PeopleGrid.astro';
 import { VENTURE_PARTNERS } from '../data/venture-partners';
 import { COHORT_2 } from '../data/cohort-2';
-import { cohortLogo } from '../config';
+import { COHORT_STRIP } from '../config';
 
 const programme = [
   'a two-day in-person kickoff in london.',
@@ -68,30 +68,11 @@ const cohortOnCohort = [
 ];
 
 /**
- * Where cohort members came from, in display order. Names, heights and tones
- * come from the shared table in the config, so this strip and the one on
- * /about stay in step.
+ * Where cohort members came from. The list, its order, and each mark's tuned
+ * height all live in the shared config, so this strip and "where they came
+ * from" on /fund cannot drift apart.
  */
-const origins = [
-  'google.png',
-  'apple.png',
-  'nasa.png',
-  'us-air-force.webp',
-  'tesla.png',
-  'microsoft.png',
-  'meta.png',
-  'aws.png',
-  'discord.png',
-  'y-combinator.png',
-  'stanford.png',
-  'mit.png',
-  'oxford.png',
-  'cambridge.png',
-  'berkeley.png',
-  'caltech.png',
-  'epfl.svg',
-  'ethzurich.png',
-].map(cohortLogo);
+const origins = COHORT_STRIP;
 
 ---
 
@@ -273,8 +254,7 @@ const origins = [
       <div class="container">
         <h2>many of our founders find us at an event first</h2>
         <p class="from-events-line">
-          Four of our twenty cohort 2 founders first came to us as prize winners at Tech Bros
-          events.
+          Four of our twenty cohort 2 founders first came to us as prize winners at bros events.
         </p>
         <div class="btn-group">
           <a href="/community" class="btn btn-tertiary">see the community</a>

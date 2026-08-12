@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import { getCollection } from 'astro:content';
 import { getEventStats } from '../lib/eventStats';
 import { COHORT_2 } from '../data/cohort-2';
+import { COHORT_STRIP } from '../config';
 
 const eventStats = getEventStats(await getCollection('events'));
 
@@ -66,28 +67,12 @@ const pipeline = [
 ].map((item) => ({ ...item, indent: indentFor(item.figure) }));
 
 /**
- * Where alumni came from. `logo` points at public/index/cohort-logos/; entries
- * with no file fall back to a wordmark. `tone` overrides the default white-out
- * for marks that are a coloured plate with the shape knocked out of it.
+ * Where alumni came from — the same institutions as the "our founders come
+ * from" strip on /accelerator, in the same order, because both are describing
+ * the same founders. The list, the ordering and each mark's tuned height live
+ * in the shared config; nothing about the set is restated here.
  */
-const alumniOrigins = [
-  { name: 'NASA' },
-  { name: 'Tesla', logo: '/index/cohort-logos/tesla.png', height: 40 },
-  { name: 'Apple', logo: '/index/cohort-logos/apple.png', height: 40 },
-  { name: 'Google', logo: '/index/cohort-logos/google.png', height: 24 },
-  { name: 'Amazon' },
-  { name: 'Microsoft', logo: '/index/cohort-logos/microsoft.png', height: 22 },
-  { name: 'Meta', logo: '/index/cohort-logos/meta.png', height: 22 },
-  { name: 'Discord', logo: '/index/cohort-logos/discord.png', height: 36, tone: 'threshold' },
-  { name: 'Stanford', logo: '/index/cohort-logos/stanford.png', height: 26 },
-  { name: 'MIT', logo: '/index/cohort-logos/mit.png', height: 30 },
-  { name: 'Oxford', logo: '/index/cohort-logos/oxford.png', height: 24, tone: 'threshold' },
-  { name: 'Cambridge', logo: '/index/cohort-logos/cambridge.png', height: 22 },
-  { name: 'UC Berkeley' },
-  { name: 'Caltech' },
-  { name: 'EPFL' },
-  { name: 'Y Combinator', logo: '/index/cohort-logos/ycombinator.png', height: 34, tone: 'knockout' },
-];
+const alumniOrigins = COHORT_STRIP;
 
 // Rendered twice so the marquee loops seamlessly, as on the home page.
 const alumniMarquee = [...alumniOrigins, ...alumniOrigins];
@@ -278,19 +263,15 @@ const alumni = [
           <div class="origin-track">
             {alumniMarquee.map((org) => (
               <div class="origin-item">
-                {org.logo ? (
-                  <img
-                    src={org.logo}
-                    alt={org.name}
-                    class="origin-logo"
-                    data-tone={org.tone}
-                    style={org.height ? `height: ${org.height}px` : undefined}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                ) : (
-                  <span class="origin-name">{org.name}</span>
-                )}
+                <img
+                  src={org.src}
+                  alt={org.name}
+                  class="origin-logo"
+                  data-tone={org.tone}
+                  style={`height: ${org.height}px`}
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
             ))}
           </div>
@@ -745,11 +726,11 @@ const alumni = [
     filter: grayscale(1) brightness(0.7) contrast(20);
   }
 
-  .origin-name {
-    font-size: var(--text-body);
-    color: var(--color-text);
-    letter-spacing: var(--tracking-subheading);
-    white-space: nowrap;
+  /* A lockup that is both a coloured plate and dark type beside it. Inverting
+     first drops the plate below the contrast pivot and lifts the type above
+     it, so one pass keeps the knocked-out glyph *and* the wordmark. */
+  .origin-logo[data-tone='plate'] {
+    filter: invert(1) grayscale(1) brightness(1.2) contrast(3);
   }
 
   /* ── 7. Contact ── */
