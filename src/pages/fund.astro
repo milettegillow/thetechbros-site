@@ -824,5 +824,62 @@ const alumni = [
       display: block;
       margin-bottom: 0.5rem;
     }
+
+    /* ── 1. Hero to the 2% ──
+       Three paddings stacked between the hero line and the figure: the hero's
+       own bottom, the market section's top, and the rule's offset above the
+       stat — 184px in total on a phone. Trimmed at all three rather than
+       flattening one, so the rule keeps air on both sides. The `!important`
+       matches the desktop declaration's, which would otherwise win. */
+    .fund-hero {
+      padding: 5rem 0 2rem !important;
+    }
+
+    .fund section.market {
+      padding-top: 3rem;
+    }
+
+    .lead-stat {
+      padding-top: 2rem;
+    }
+
+    /* ── 2. The 15% figure ──
+       The other two items in this row are 150px-tall charts, and the slot is
+       sized for them. A figure alone in that slot reads small and sits a full
+       2.75rem clear of its own caption. Here the slot hugs the figure and the
+       gap closes, so the two read as one unit. Scoped to the figure variant,
+       so the two chart slots keep their shared height and spacing. */
+    .market-graphic-figure {
+      height: auto;
+      margin-bottom: 0.75rem;
+    }
+
+    .market-figure {
+      font-size: 4rem;
+    }
+
+    /* ── 3. Between stat items ──
+       One per row here, so the grid gap is doing the vertical separation on
+       its own. */
+    .market-grid {
+      gap: 4.5rem;
+    }
+
+    /* ── 4. Where they came from ──
+       4rem between marks left barely one visible, and the item box is wide
+       for a phone. */
+    .origin-item {
+      width: 150px;
+      margin-right: 1.5rem;
+    }
+
+    .origin-track {
+      /* Spacing moves off the flex gap and onto the items. With a gap, the 2N
+         doubled items carry 2N-1 gaps, so half the track width falls half a
+         gap short of the true repeat period and the -50% translate lands off
+         the seam — a visible black jump each cycle. As a right margin every
+         item occupies exactly width + margin, so 50% is exactly N of them. */
+      gap: 0;
+    }
   }
 </style>
