@@ -141,6 +141,10 @@ const stats = [
           we back the most ambitious technical women to build startups from scratch,
           through our 3 pillars: our fund, accelerator, and global community.
         </p>
+        <p class="opening">
+          37.5% of our accelerator alumni are based in the Bay Area, 30% in the UK,
+          and the rest across Europe and beyond.
+        </p>
         <ul class="pillar-grid">
           {pillars.map((pillar) => (
             <li class="pillar">
@@ -442,11 +446,16 @@ const stats = [
   }
 
   /* Larger than body copy, smaller than a heading, and full width rather than
-     held to a measure. */
+     held to a measure. Two lines share it: they sit a line apart from each
+     other, and only the last carries the full gap down to the cards. */
   .opening {
     font-size: var(--text-h4);
     line-height: 1.45;
     color: var(--color-text);
+    margin-bottom: 1rem;
+  }
+
+  .opening:last-of-type {
     margin-bottom: 3rem;
   }
 
