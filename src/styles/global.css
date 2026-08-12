@@ -225,7 +225,9 @@ body {
   font-weight: var(--weight-body);
   line-height: var(--leading-body);
   letter-spacing: var(--tracking-body);
-  min-height: 100vh;
+  /* Dynamic, not static: 100vh measures behind mobile browser chrome, so it
+     overshoots what is actually visible. */
+  min-height: 100dvh;
   position: relative;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

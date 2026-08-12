@@ -105,8 +105,13 @@
   }
 
   @media (max-width: 768px) {
+    /* Was 15rem — 240px of empty padding under the last line of the footer.
+       Since the footer's background is rgba(0, 0, 0, 0.3) over a black page,
+       that space is indistinguishable from empty page, which is what made it
+       read as a gap below the footer rather than as part of it. Nothing is
+       pinned to the bottom of the viewport that needed the clearance. */
     .footer {
-      padding-bottom: 15rem;
+      padding-bottom: 2rem;
     }
 
     .footer-container {
