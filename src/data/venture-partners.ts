@@ -10,44 +10,14 @@ import type { Person } from './people';
  */
 export const VENTURE_PARTNERS: Person[] = [
   {
-    name: 'Bella Poll',
-    photo: 'bella-poll.png',
-    linkedin: 'https://www.linkedin.com/in/bella-poll-961291168/',
-  },
-  {
-    name: 'Dr Jan Cosgrave',
-    photo: 'jan-cosgrave.png',
-    linkedin: 'https://www.linkedin.com/in/dr-jan-cosgrave-b89b211ab/',
-  },
-  {
-    name: 'Katherine Mahony',
-    photo: 'katherine-mahony.png',
-    linkedin: 'https://www.linkedin.com/in/katherine-mahony-7366b8276/',
-  },
-  {
-    name: 'Kirsty Lloyd-Jukes',
-    photo: 'kirsty-lloyd-jukes.png',
-    linkedin: 'https://www.linkedin.com/in/kirstylloydjukes/',
-  },
-  {
-    name: 'Luca Mezossy-Dona',
-    photo: 'luca-mezossy-dona.png',
-    linkedin: 'https://www.linkedin.com/in/lucamdona/',
-  },
-  {
-    name: 'Maria Luque Anguita',
-    photo: 'maria-luque.png',
-    linkedin: 'https://www.linkedin.com/in/marialuqueanguita/',
-  },
-  {
     name: 'Mariam Ahmed',
     photo: 'mariam-ahmed.png',
     linkedin: 'https://www.linkedin.com/in/mariamaahmed/',
   },
   {
-    name: 'Michelle Yi',
-    photo: 'michelle-yi.png',
-    linkedin: 'https://www.linkedin.com/in/michelleyulleyi/',
+    name: 'Maria Luque Anguita',
+    photo: 'maria-luque.png',
+    linkedin: 'https://www.linkedin.com/in/marialuqueanguita/',
   },
   {
     name: 'Prachie Banthia',
@@ -60,8 +30,38 @@ export const VENTURE_PARTNERS: Person[] = [
     linkedin: 'https://www.linkedin.com/in/rachalmers/',
   },
   {
+    name: 'Dr. Jan Cosgrave',
+    photo: 'jan-cosgrave.png',
+    linkedin: 'https://www.linkedin.com/in/dr-jan-cosgrave-b89b211ab/',
+  },
+  {
     name: 'Sophie Defauw',
     photo: 'sophie-defauw.png',
     linkedin: 'https://www.linkedin.com/in/sophiedefauw/',
+  },
+  {
+    name: 'Kirsty Lloyd-Jukes',
+    photo: 'kirsty-lloyd-jukes.png',
+    linkedin: 'https://www.linkedin.com/in/kirstylloydjukes/',
+  },
+  {
+    name: 'Katherine Mahony',
+    photo: 'katherine-mahony.png',
+    linkedin: 'https://www.linkedin.com/in/katherine-mahony-7366b8276/',
+  },
+  {
+    name: 'Luca Mezossy-Dona',
+    photo: 'luca-mezossy-dona.png',
+    linkedin: 'https://www.linkedin.com/in/lucamdona/',
+  },
+  {
+    name: 'Bella Poll',
+    photo: 'bella-poll.png',
+    linkedin: 'https://www.linkedin.com/in/bella-poll-961291168/',
+  },
+  {
+    name: 'Michelle Yi',
+    photo: 'michelle-yi.png',
+    linkedin: 'https://www.linkedin.com/in/michelleyulleyi/',
   },
 ];
