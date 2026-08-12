@@ -822,6 +822,48 @@ const stats = [
       padding: 3.5rem 0;
     }
 
+    /* Last section on the page, so its bottom padding stacks with the
+       footer's own. Out-specifies `.about section`. */
+    .about section.stats {
+      padding-bottom: 1.5rem;
+    }
+
+    /* One per row here, so the 20rem floor that keeps three cards level at
+       desktop only leaves dead foil under the text. Let each hug instead. */
+    .pillar-card {
+      min-height: 0;
+    }
+
+    /* Both sizes are fluid, and at phone widths they bottom out at the low
+       end of their clamp — 22px and 18px against the 30px and 21px desktop
+       renders. Pinned to the upper bound of the same two tokens so a
+       full-width card carries type at the proportions it has on desktop. */
+    .pillar-label {
+      font-size: 1.875rem;
+    }
+
+    .pillar-line {
+      font-size: 1.3125rem;
+    }
+
+    /* 4rem between marks left barely one visible, and the item box is wide
+       for a phone. Narrower box plus a tighter gap puts two to three on
+       screen. */
+    .institution-item {
+      width: 150px;
+      margin-right: 1.5rem;
+    }
+
+    .institution-track {
+      /* Spacing moves off the flex gap and onto the items. With a gap, the
+         2N doubled items carry 2N-1 gaps, so half the track width falls half
+         a gap short of the true repeat period and the -50% translate lands
+         off the seam — a visible black jump each cycle. As a right margin
+         every item occupies exactly width + margin, so 50% is exactly N of
+         them. */
+      gap: 0;
+    }
+
     .year {
       grid-template-columns: 4rem minmax(0, 1fr);
       gap: 0.5rem 1rem;
