@@ -733,8 +733,28 @@ const origins = COHORT_STRIP;
   }
 
   @media (max-width: 768px) {
+    /* Top only; the bottom stays where it was. */
     .accelerator section {
-      padding: 3.5rem 0;
+      padding: 2.5rem 0 3.5rem;
+    }
+
+    /* The banner-led sections carry their own top padding at every width —
+       the rule above can't reach them, since its selector is a step less
+       specific. Repeated here so they come down too. */
+    .accelerator section.programme,
+    .accelerator section.who-gets-in,
+    .accelerator section.faq,
+    .accelerator section.cohorts,
+    .accelerator section.origins,
+    .accelerator section.partners,
+    .accelerator section.cohort-2 {
+      padding-top: 2rem;
+    }
+
+    /* The other half of the run-up: the band's own padding sits between the
+       section edge and the heading. */
+    .section-banner {
+      padding: 1rem 0;
     }
 
     /* Photos stack: below the list and the headline, above the table. */
@@ -749,10 +769,20 @@ const origins = COHORT_STRIP;
       order: -1;
     }
 
-    /* Stacked: the frame gets an explicit height, since there is no longer a
-       list beside it to take its height from. */
+    /* Stacked, there is no list beside the photo to match, and nothing to be
+       gained by holding a fixed height — so the crop comes off entirely and
+       the picture runs at its own ratio. The frame takes its height from the
+       image rather than imposing one, and the image leaves the absolute
+       positioning that produced the 10% top-and-bottom trim. */
     .programme-photo-frame {
-      height: 22rem;
+      height: auto;
+    }
+
+    .programme-photo-frame .section-photo {
+      position: static;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
     }
 
     .cohorts-layout .section-photo {
