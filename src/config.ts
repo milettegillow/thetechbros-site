@@ -78,7 +78,7 @@ export const COMMUNITY_LEADS: {
   photo?: string;
 }[] = [
   {
-    name: 'Kasia Gora',
+    name: 'Dr. Kasia Gora',
     city: 'San Francisco',
     role: 'Community lead',
     linkedin: 'https://www.linkedin.com/in/kasia-gora/',

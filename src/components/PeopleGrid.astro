@@ -181,6 +181,9 @@ const srcFor = (photo: string) =>
   .people-meta {
     display: block;
     width: fit-content;
+    /* The chip needs air under the name — set apart from `margin-inline` so
+       the top gap reads as deliberate spacing rather than part of centring. */
+    margin-top: 0.5rem;
     margin-inline: auto;
     padding: 0.2rem 0.6rem;
     text-align: center;
