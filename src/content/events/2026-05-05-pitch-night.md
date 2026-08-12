@@ -1,7 +1,7 @@
 ---
 date: 2026-05-05
 title: "pitch night"
-type: "conference"
+type: "pitch night"
 city: "London"
 country: "UK"
 description: "How to pitch yourself in 60 seconds, what makes a company VC-backable, and what puts investors off - followed by a live pitch competition."

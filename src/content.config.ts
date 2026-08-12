@@ -5,6 +5,7 @@ const EVENT_TYPES = [
   'hackathon',
   'workshop',
   'conference',
+  'pitch night',
   'co-working day',
   'social',
   'other',

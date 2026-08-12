@@ -1,7 +1,7 @@
 ---
 date: 2026-04-10
 title: "pitch night"
-type: "conference"
+type: "pitch night"
 city: "SF Bay Area"
 country: "USA"
 description: "A panel on pitching yourself to VCs, followed by a live elevator pitch competition with 17 founders."
