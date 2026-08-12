@@ -550,6 +550,14 @@ const podcasts = [
   }
 
   @media (max-width: 768px) {
+    /* The site-wide h1 clamp bottoms out at its 2.5rem minimum on a phone —
+       a long way under the 4.25rem this heading takes on desktop, because the
+       fluid middle term collapses at narrow widths. Lifted so it still reads
+       as the page's statement rather than a label. Alignment is untouched. */
+    .press-hero h1 {
+      font-size: 3.25rem;
+    }
+
     .press-item {
       margin-bottom: 2rem;
       padding-bottom: 2rem;
