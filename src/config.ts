@@ -69,6 +69,10 @@ export const PUBLICATION_LOGO_HEIGHTS: Record<string, number> = Object.fromEntri
  * Community leads. Single source of truth — rendered on /community and /about.
  * `photo` is a filename under /community/leads/; omit it and the card falls
  * back to a placeholder block at the same height.
+ *
+ * The order here is deliberate, not alphabetical: /community renders the list
+ * as given. The team grid on /about pulls the same entries but re-sorts them
+ * by last name, so this order doesn't reach it.
  */
 export const COMMUNITY_LEADS: {
   name: string;
@@ -85,18 +89,18 @@ export const COMMUNITY_LEADS: {
     photo: 'kasia-gora.png',
   },
   {
-    name: 'Lucy Daly',
-    city: 'Dublin',
-    role: 'Community lead',
-    linkedin: 'https://www.linkedin.com/in/lucy-daly-ireland/',
-    photo: 'lucy-daly.png',
-  },
-  {
     name: 'Laurence Maeter',
     city: 'London',
     role: 'Community lead',
     linkedin: 'https://www.linkedin.com/in/laurence-maeter-743581188/',
     photo: 'laurence-maeter.png',
+  },
+  {
+    name: 'Lucy Daly',
+    city: 'Dublin',
+    role: 'Community lead',
+    linkedin: 'https://www.linkedin.com/in/lucy-daly-ireland/',
+    photo: 'lucy-daly.png',
   },
 ];
 
