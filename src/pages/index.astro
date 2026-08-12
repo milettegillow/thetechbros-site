@@ -587,6 +587,16 @@ const marquee = [...partnerLogos, ...partnerLogos];
       min-height: 72vh;
     }
 
+    /* The desktop treatment runs the picture 1/0.85 wider than the frame and
+       pins it left, so the right 15% is clipped. At phone widths that crop
+       compounds with the narrow frame and cuts the group on the right off
+       entirely. Full width and centred horizontally instead; the vertical
+       framing is unchanged, so the same 10% still comes off the top. */
+    .hero-img {
+      width: 100%;
+      object-position: 50% 42.55%;
+    }
+
     .hero-scrim {
       --scrim-bottom: linear-gradient(
         to top,
@@ -626,6 +636,13 @@ const marquee = [...partnerLogos, ...partnerLogos];
       padding-top: 1.5rem;
     }
 
+    /* Out-specifies `.home section`, as the other per-section overrides here
+       do. The container gives 1rem of gutter, which is not enough for type
+       this large — the extra 0.75rem keeps the line off the screen edge. */
+    .home section.closing {
+      padding: 2.25rem 0.75rem;
+    }
+
     .number-row {
       flex-direction: column;
       align-items: flex-start;
@@ -641,7 +658,13 @@ const marquee = [...partnerLogos, ...partnerLogos];
        left-aligned wall — has nothing to express, so both centre. */
     .partner-row {
       grid-template-columns: minmax(0, 1fr);
-      gap: 2rem;
+      gap: 3rem;
+    }
+
+    /* Stacked, the lockup had the section edge tight above it and the
+       carousel tight below. */
+    .lead-sponsor {
+      margin-top: 1.5rem;
     }
 
     .partner-wall {
@@ -662,8 +685,20 @@ const marquee = [...partnerLogos, ...partnerLogos];
       max-height: 72px;
     }
 
+    /* 4rem between marks left only one visible at a time, with the rest of
+       the strip reading as black voids. */
+    .logo-carousel-track {
+      /* Spacing moves off the flex gap and onto the items themselves. With a
+         gap, 2N doubled items carry 2N-1 gaps, so half the track width is
+         half a gap short of the true repeat period and -50% lands off the
+         seam — a visible jump every cycle. As a right margin, every item
+         occupies exactly width + margin, so 50% is exactly N of them. */
+      gap: 0;
+    }
+
     .logo-item {
       width: 170px;
+      margin-right: 1.5rem;
     }
   }
 </style>

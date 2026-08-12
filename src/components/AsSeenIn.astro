@@ -184,6 +184,28 @@ const markId = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       gap: 2rem 1.5rem;
     }
 
+    /* The row variant (the home page) wraps into an uneven pack at phone
+       widths. Two equal cells instead, each mark centred in its own — the
+       grid variant's treatment, without changing the grid variant. */
+    .as-seen-in-list[data-layout='row'] {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem 1.5rem;
+    }
+
+    .as-seen-in-list[data-layout='row'] .as-seen-in-item {
+      justify-content: center;
+      /* A common floor so the two marks in a row share a centre line. */
+      min-height: 44px;
+    }
+
+    /* The per-logo heights still do the optical normalising and the 44px cap
+       still holds; this only stops a wide mark — The Times is 168px at its
+       tuned height — from overrunning a half-width cell. */
+    .as-seen-in-list[data-layout='row'] .as-seen-in-logo {
+      max-width: 100%;
+    }
+
     .as-seen-in-name {
       font-size: var(--text-body);
     }
